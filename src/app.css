@@ -8,10 +8,10 @@
   --bg-raised:      #1a1a2e;
   --bg-sidebar:     #13131f;
   --border:         #2a2a3e;
-  --border-accent:  #d4a017;
-  --accent:         #d4a017;
-  --accent-hover:   #e8b420;
-  --accent-dim:     #7a5c0a;
+  --border-accent:  #f5a623;
+  --accent:         #f5a623;
+  --accent-hover:   #ffb83a;
+  --accent-dim:     #8a5c0a;
   --accent-text:    #0f0f1a;
   --text-primary:   #e0e0ff;
   --text-muted:     #a0a0c0;
@@ -19,13 +19,13 @@
   --success:        #4ade80;
   --error:          #f87171;
   --warning:        #fb923c;
-  --focus-ring:     #d4a017;
+  --focus-ring:     #f5a623;
   --overlay-bg:     rgba(0, 0, 0, 0.6);
 
   /* Typography — families */
-  --font-display: 'Orbitron', monospace;
-  --font-mono:    'JetBrains Mono', 'Fira Mono', monospace;
-  --font-body:    system-ui, -apple-system, sans-serif;
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body:    'Sora', system-ui, sans-serif;
+  --font-mono:    'IBM Plex Mono', 'Fira Mono', monospace;
 
   /* Typography — scale */
   --text-xs:   11px;
@@ -70,7 +70,7 @@
   --transition-slow: 300ms ease-out;
 
   /* Depth */
-  --shadow-glow:    0 0 12px rgba(212, 160, 23, 0.25);
+  --shadow-glow:    0 0 12px rgba(245, 166, 35, 0.25);
   --shadow-surface: 0 2px 8px rgba(0, 0, 0, 0.4);
 
   /* Z-index */
