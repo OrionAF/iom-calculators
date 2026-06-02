@@ -95,8 +95,8 @@
     align-items: center;
     justify-content: center;
     position: fixed;
-    top: var(--space-3);
-    left: var(--space-3);
+    top: calc(var(--space-3) + env(safe-area-inset-top));
+    left: calc(var(--space-3) + env(safe-area-inset-left));
     z-index: var(--z-drawer);
   }
   .hamburger span {
@@ -131,6 +131,7 @@
     display: flex;
     flex-direction: column;
     padding: var(--space-4);
+    padding-bottom: max(var(--space-4), env(safe-area-inset-bottom));
     overflow-y: auto;
     z-index: var(--z-drawer);
     transform: none;

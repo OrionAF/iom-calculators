@@ -67,6 +67,7 @@
   @media (max-width: 1023px) {
     .main-content {
       padding-top: calc(var(--space-12) + var(--space-4));
+      padding-bottom: calc(var(--space-6) + env(safe-area-inset-bottom));
     }
   }
 </style>
