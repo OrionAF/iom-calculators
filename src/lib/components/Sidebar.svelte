@@ -35,11 +35,12 @@
 
 <!-- Mobile backdrop -->
 {#if drawerOpen}
-  <div
+  <button
     class="backdrop"
     onclick={closeDrawer}
-    aria-hidden="true"
-  ></div>
+    aria-label="Close navigation"
+    tabindex="-1"
+  ></button>
 {/if}
 
 <!-- Sidebar / Drawer -->
@@ -114,6 +115,9 @@
     inset: 0;
     background: var(--overlay-bg);
     z-index: var(--z-overlay);
+    border: none;
+    padding: 0;
+    cursor: pointer;
   }
 
   .sidebar {

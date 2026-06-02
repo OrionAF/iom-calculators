@@ -56,7 +56,7 @@
     class="status-row"
     onclick={() => (collapsed = !collapsed)}
     aria-expanded={!collapsed}
-    aria-label={$stats ? 'Stats loaded — click to update' : 'No stats — click to paste'}
+    aria-controls="stat-paste-panel"
   >
     <span class="dot" class:loaded={!!$stats} aria-hidden="true"></span>
     <span class="status-text">
@@ -71,14 +71,15 @@
 
   <!-- Collapsible paste panel -->
   {#if !collapsed}
-    <div class="paste-panel">
+    <div class="paste-panel" id="stat-paste-panel">
       <textarea
         class="paste-area"
         bind:value={textValue}
         onpaste={handlePaste}
         onkeydown={handleKeydown}
-        placeholder='Paste your EXPORT JSON here...'
+        placeholder='Paste your EXPORT JSON here…'
         aria-label="Stat export JSON"
+        spellcheck="false"
         rows="5"
       ></textarea>
 

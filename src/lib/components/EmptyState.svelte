@@ -1,6 +1,4 @@
-<script lang="ts">
-  import { navigate } from '$lib/stores/router'
-</script>
+<script lang="ts"></script>
 
 <div class="empty-state" role="status">
   <div class="icon" aria-hidden="true">⛏</div>
