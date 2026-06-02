@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
 /* ── Theme tokens ─────────────────────────────────────────── */
 :root {
+  color-scheme: dark;
+
   /* Color */
   --bg-base:        #0f0f1a;
   --bg-surface:     #1e1e2e;
@@ -15,7 +15,7 @@
   --accent-text:    #0f0f1a;
   --text-primary:   #e0e0ff;
   --text-muted:     #a0a0c0;
-  --text-dim:       #555555;
+  --text-dim:       #9090a8;
   --success:        #4ade80;
   --error:          #f87171;
   --warning:        #fb923c;
@@ -25,12 +25,12 @@
   /* Typography — families */
   --font-display: 'Orbitron', monospace;
   --font-mono:    'JetBrains Mono', 'Fira Mono', monospace;
-  --font-body:    'Inter', system-ui, sans-serif;
+  --font-body:    system-ui, -apple-system, sans-serif;
 
   /* Typography — scale */
   --text-xs:   11px;
   --text-sm:   12px;
-  --text-base: 14px;
+  --text-base: 16px;
   --text-lg:   16px;
   --text-xl:   20px;
   --text-2xl:  26px;
@@ -117,7 +117,7 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   opacity: 0.025;
   pointer-events: none;
-  z-index: var(--z-toast);
+  z-index: var(--z-base);
 }
 
 /* ── Focus rings ──────────────────────────────────────────── */
