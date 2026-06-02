@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Info } from 'lucide-svelte'
   import { stats } from '$lib/stores/stats'
   import { fishingIncome } from './logic/fishing'
   import ResultCard from '$lib/components/ResultCard.svelte'
@@ -33,7 +34,8 @@
 
     <section class="inputs">
       <p class="inputs-note">
-        ℹ️ This is a placeholder formula (rod power × income multiplier).
+        <Info size={14} aria-hidden="true" />
+        This is a placeholder formula (rod power × income multiplier).
         The full fishing calculator spec will replace this.
       </p>
     </section>
@@ -71,11 +73,20 @@
   }
 
   .inputs-note {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
     font-size: var(--text-sm);
     color: var(--text-dim);
     background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: var(--space-3) var(--space-4);
+  }
+
+  .inputs-note :global(svg) {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--accent);
   }
 </style>

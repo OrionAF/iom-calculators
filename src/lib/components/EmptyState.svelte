@@ -1,7 +1,9 @@
-<script lang="ts"></script>
+<script lang="ts">
+  import { Pickaxe } from 'lucide-svelte'
+</script>
 
 <div class="empty-state" role="status">
-  <div class="icon" aria-hidden="true">⛏</div>
+  <Pickaxe class="icon" size={48} strokeWidth={1.25} aria-hidden="true" />
   <h2 class="title">No stats loaded</h2>
   <p class="description">
     Paste your IOM stat export to use this calculator.
@@ -22,10 +24,9 @@
     min-height: 300px;
   }
 
-  .icon {
-    font-size: 48px;
-    line-height: 1;
+  :global(.icon) {
     opacity: 0.4;
+    color: var(--text-muted);
   }
 
   .title {

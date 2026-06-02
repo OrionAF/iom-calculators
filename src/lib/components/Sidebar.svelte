@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { X } from 'lucide-svelte'
+  import { X, Pickaxe } from 'lucide-svelte'
   import { destinations } from '$lib/calculators/registry'
   import { currentRoute } from '$lib/stores/router'
   import StatInput from './StatInput.svelte'
@@ -51,7 +51,7 @@
   use:focusTrap={drawerOpen}
 >
   <div class="sidebar-header">
-    <span class="sidebar-logo" aria-hidden="true">⛏</span>
+    <Pickaxe class="sidebar-logo" size={20} aria-hidden="true" />
     <span class="sidebar-title">IOM Calc</span>
     <button class="close-btn" onclick={closeDrawer} aria-label="Close navigation">
     <X size={18} aria-hidden="true" />
@@ -146,7 +146,7 @@
     border-bottom: 1px solid var(--border);
   }
 
-  .sidebar-logo { font-size: var(--text-xl); }
+  :global(.sidebar-logo) { color: var(--accent); }
 
   .sidebar-title {
     font-family: var(--font-display);

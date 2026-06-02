@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { ChevronDown } from 'lucide-svelte'
   import { loadStats, clearStats, stats } from '$lib/stores/stats'
   import type { ParseError } from '$lib/stores/stats'
 
@@ -66,7 +67,7 @@
         No stats — paste export
       {/if}
     </span>
-    <span class="chevron" class:open={!collapsed} aria-hidden="true">›</span>
+    <ChevronDown class="chevron {!collapsed ? 'open' : ''}" size={16} aria-hidden="true" />
   </button>
 
   <!-- Collapsible paste panel -->
@@ -139,12 +140,11 @@
 
   .status-text { flex: 1; }
 
-  .chevron {
-    font-size: var(--text-lg);
-    transform: rotate(90deg);
+  :global(.chevron) {
+    color: var(--text-muted);
     transition: transform var(--transition-fast);
   }
-  .chevron.open { transform: rotate(-90deg); }
+  :global(.chevron.open) { transform: rotate(180deg); }
 
   .paste-panel {
     display: flex;
