@@ -6,6 +6,7 @@
   let textValue = $state('')
   let error = $state<ParseError | null>(null)
   let collapsed = $state(true)
+  let flash = $state(false)
 
   function errorMessage(e: ParseError): string {
     switch (e.kind) {
@@ -18,6 +19,11 @@
     }
   }
 
+  function triggerFlash() {
+    flash = true
+    setTimeout(() => { flash = false }, 600)
+  }
+
   function submit() {
     if (!textValue.trim()) return
     const result = loadStats(textValue.trim())
@@ -25,6 +31,7 @@
       error = null
       textValue = ''
       collapsed = true
+      triggerFlash()
     } else {
       error = result.error
     }
@@ -39,6 +46,7 @@
         error = null
         textValue = ''
         collapsed = true
+        triggerFlash()
       } else {
         error = result.error
         textValue = pasted
@@ -59,7 +67,7 @@
     aria-expanded={!collapsed}
     aria-controls="stat-paste-panel"
   >
-    <span class="dot" class:loaded={!!$stats} aria-hidden="true"></span>
+    <span class="dot" class:loaded={!!$stats} class:flash aria-hidden="true"></span>
     <span class="status-text">
       {#if $stats}
         Stats loaded ({$stats.version})
@@ -137,6 +145,16 @@
     transition: background var(--transition-fast);
   }
   .dot.loaded { background: var(--success); }
+
+  .dot.flash {
+    animation: dot-pulse 600ms ease-out;
+  }
+
+  @keyframes dot-pulse {
+    0%   { transform: scale(1);   box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 60%, transparent); }
+    50%  { transform: scale(1.4); box-shadow: 0 0 0 6px color-mix(in srgb, var(--success) 0%, transparent); }
+    100% { transform: scale(1);   box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 0%, transparent); }
+  }
 
   .status-text { flex: 1; }
 

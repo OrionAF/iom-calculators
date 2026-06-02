@@ -49,6 +49,7 @@
     font-weight: var(--weight-bold);
     color: var(--accent);
     line-height: var(--leading-tight);
+    font-variant-numeric: tabular-nums;
   }
 
   .unit {

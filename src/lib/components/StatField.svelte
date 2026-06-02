@@ -101,6 +101,7 @@
     min-height: 44px;
     display: flex;
     align-items: center;
+    font-variant-numeric: tabular-nums;
   }
 
   .field-input {
