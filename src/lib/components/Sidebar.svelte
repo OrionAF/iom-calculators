@@ -8,6 +8,10 @@
   let drawerOpen = $state(false)
   let hamburgerEl: HTMLButtonElement
 
+  const dataDestinations = $derived(
+    destinations.filter(d => d.kind === 'data')
+  )
+
   const utilityDestinations = $derived(
     destinations.filter(d => d.kind === 'utility')
   )
@@ -63,6 +67,30 @@
   </div>
 
   <StatInput />
+
+  {#if dataDestinations.length}
+    <nav class="data-nav" aria-label="Data">
+      <p class="nav-section-label">Data</p>
+      <ul class="nav-list" role="list">
+        {#each dataDestinations as dest}
+          {@const isActive = $currentRoute?.hash === dest.hash}
+          {@const Icon = dest.icon}
+          <li>
+            <a
+              class="nav-item"
+              class:active={isActive}
+              href={'#' + dest.hash}
+              onclick={closeDrawer}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              <Icon class="nav-icon" size={16} aria-hidden="true" />
+              <span>{dest.label}</span>
+            </a>
+          </li>
+        {/each}
+      </ul>
+    </nav>
+  {/if}
 
   <nav aria-label="Calculators">
     <p class="nav-section-label">Calculators</p>
@@ -215,6 +243,10 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
+  }
+
+  .data-nav {
+    margin-bottom: var(--space-6);
   }
 
   .utility-nav {
