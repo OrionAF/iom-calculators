@@ -1,0 +1,293 @@
+export interface StatCategory {
+  id: string
+  label: string
+  statKeys: string[]
+}
+
+export const STAT_CATALOG: readonly StatCategory[] = [
+  { id: 'prestige', label: 'Prestige', statKeys: [
+    'artifact_cap_increase',
+    'artifact_tier4_cap_increase',
+    'prestige_point_multi',
+  ] },
+
+  { id: 'drones', label: 'Drones', statKeys: [
+    'coal_capacity_multi',
+    'coal_drone_exp_multi',
+    'coal_fuel_duration_multi',
+    'coal_fuel_save_chance',
+    'coal_generation_seconds',
+    'drone_attack_speed_percent',
+    'drone_count',
+    'drone_damage_percent',
+    'drone_movespeed_percent',
+    'drone_radius_percent',
+    'drone_rapid_fire_chance',
+    'drone_suit_cap',
+    'drone_triple_damage_chance',
+    'elixir_crit_chance',
+    'elixir_crit_multi',
+    'golden_void_portal_chance',
+    'golden_void_portal_multi',
+    'rainbow_void_portal_chance',
+    'rainbow_void_portal_multi',
+    'void_portal_base_multi',
+    'void_portal_chance',
+  ] },
+
+  { id: 'stars', label: 'Stars', statKeys: [
+    'all_star_multi',
+    'candy_eaten',
+    'novagiant_combo_multi',
+    'star_auto_catch_chance',
+    'star_double_spawn_chance',
+    'star_radiant_chance',
+    'star_radiant_multi',
+    'star_spawn_rate',
+    'star_supergiant_chance',
+    'star_supergiant_multi',
+    'star_supernova_chance',
+    'star_supernova_multi',
+    'star_triple_spawn_chance',
+    'super_star_10x_chance',
+    'super_star_radiant_chance',
+    'super_star_radiant_multi',
+    'super_star_spawn_multi',
+    'super_star_supergiant_chance',
+    'super_star_supergiant_multi',
+    'super_star_supernova_chance',
+    'super_star_supernova_multi',
+    'super_star_triple_chance',
+  ] },
+
+  { id: 'statues', label: 'Statues', statKeys: [
+    'statue_0_set1', 'statue_0_set2', 'statue_0_set3',
+    'statue_1_set1', 'statue_1_set2', 'statue_1_set3',
+    'statue_2_set1', 'statue_2_set2', 'statue_2_set3',
+    'statue_3_set1', 'statue_3_set2', 'statue_3_set3',
+    'statue_4_set1', 'statue_4_set2', 'statue_4_set3',
+    'statue_5_set1', 'statue_5_set2', 'statue_5_set3',
+    'statue_6_set1', 'statue_6_set2', 'statue_6_set3',
+    'statue_7_set1', 'statue_7_set2', 'statue_7_set3',
+    'statue_8_set1', 'statue_8_set2', 'statue_8_set3',
+  ] },
+
+  { id: 'chests-and-items', label: 'Chests & Items', statKeys: [
+    'candy_eaten',
+    'chest_double_chance',
+    'chest_items_bonus',
+    'chest_meter_multi',
+    'item_duration_multi',
+    'pizzas_eaten',
+    'steak_eaten',
+  ] },
+
+  { id: 'contracts', label: 'Contracts', statKeys: [
+    'contract_10x_points_chance',
+    'contract_5x_points_chance',
+    'contract_cap_increase',
+    'contract_cost_reduction',
+    'contract_double_points_chance',
+    'contract_points_rewarded',
+    'contract_triple_points_chance',
+    'contract_upgrade_cost_reduction',
+  ] },
+
+  { id: 'floors', label: 'Floors', statKeys: [
+    'all_floor_multipliers',
+    'galactic_floor_chance',
+    'galactic_floor_multi',
+    'game_speed_multi',
+    'floor_clear_requirement_multi',
+    'golden_floor_chance',
+    'golden_floor_multi',
+    'prismatic_floor_chance',
+    'prismatic_floor_multi',
+    'rainbow_floor_chance',
+    'rainbow_floor_multi',
+  ] },
+
+  { id: 'crafting-and-ores', label: 'Crafting & Ores', statKeys: [
+    'bar_craft_cost_multi',
+    'bar_output_multi',
+    'bar_upgrade_cost_reduction',
+    'craft_100x_chance',
+    'craft_10x_chance',
+    'craft_20x_chance',
+    'craft_5x_chance',
+    'double_craft_chance',
+    'free_craft_chance',
+    'golden_ore_chance',
+    'golden_ore_multi',
+    'multi_rock_chance',
+    'ore_income_multi',
+    'ore_sell_price_multi',
+    'pizzas_eaten',
+    'steak_eaten',
+    'triple_craft_chance',
+  ] },
+
+  { id: 'bombs', label: 'Bombs', statKeys: [
+    'bomb_additional_multiplier',
+    'bomb_battery_cap_increases',
+    'bomb_cap_multiplier',
+    'bomb_capacity',
+    'bomb_cherry3x_chance',
+    'bomb_crit_chance',
+    'bomb_crit_damage',
+    'bomb_damage',
+    'bomb_free_chance',
+    'bomb_of_plenty_make_gold_chance',
+    'bomb_of_plenty_multi',
+    'bomb_omega_crit_chance',
+    'bomb_omega_crit_damage',
+    'bomb_recharge_speed',
+    'bomb_super_crit_chance',
+    'bomb_super_crit_damage',
+    'bomb_trans_apply_bop_chance',
+    'bomb_transmuter_multi',
+    'bomb_ultra_crit_chance',
+    'bomb_ultra_crit_damage',
+    'bomb_workshop_cap_increase',
+  ] },
+
+  { id: 'lootfrogs', label: 'Lootfrogs', statKeys: [
+    'golden_lootfrogs_caught',
+    'lootfrog_10x_spawn_chance',
+    'lootfrog_big_chance',
+    'lootfrog_big_multi',
+    'lootfrog_capacity',
+    'lootfrog_golden_chance',
+    'lootfrog_golden_multi',
+    'lootfrog_lanterns_used',
+    'lootfrog_loot_multi',
+    'lootfrog_triple_spawn_chance',
+    'lootfrogs_caught',
+  ] },
+
+  { id: 'xp-and-pets', label: 'XP & Pets', statKeys: [
+    'experience_multi',
+    'gem_upgrade_cap_increase',
+    'pet_levelup_chance_multi',
+    'xp_level_cap',
+  ] },
+
+  { id: 'fishing', label: 'Fishing', statKeys: [
+    'fishing_5x_tick_chance',
+    'fishing_double_tick_chance',
+    'fishing_drone_capacity',
+    'fishing_drone_multiplier',
+    'fishing_drone_power',
+    'fishing_income_multi',
+    'fishing_notice_requirement',
+    'fishing_rod_power',
+    'fishing_shiny_chance',
+    'fishing_shiny_multi',
+    'fishing_super_shiny_chance',
+    'fishing_super_shiny_multi',
+    'fishing_tick_reduction_seconds',
+    'fishing_tick_speed',
+    'fishing_tier2_dock_multi',
+    'fishing_tiny_notice_chance',
+    'fishing_token_multi',
+    'fishing_triple_tick_chance',
+  ] },
+
+  { id: 'freebies-and-stonks', label: 'Freebies & Stonks', statKeys: [
+    'freebie_5x_chance',
+    'freebie_bank_cap',
+    'freebie_cooldown_seconds',
+    'freebie_gems_bonus',
+    'freebie_refresh_chance',
+    'stonks_chance',
+    'stonks_multi',
+    'super_stonks_chance',
+    'super_stonks_multi',
+    'ultra_stonks_chance',
+    'ultra_stonks_multi',
+  ] },
+
+  { id: 'pickaxe', label: 'Pickaxe', statKeys: [
+    'pickaxe_attack_speed_per_second',
+    'pickaxe_crit_chance',
+    'pickaxe_crit_damage',
+    'pickaxe_damage',
+    'pickaxe_omega_crit_chance',
+    'pickaxe_omega_crit_damage',
+    'pickaxe_radius_percent',
+    'pickaxe_super_crit_chance',
+    'pickaxe_super_crit_damage',
+    'pickaxe_ultra_crit_chance',
+    'pickaxe_ultra_crit_damage',
+  ] },
+
+  { id: 'lootbugs', label: 'Lootbugs', statKeys: [
+    'lootbug_bank_cap',
+    'lootbug_gem_cost_reduction',
+    'lootbug_golden_chance',
+    'lootbug_loot_multi',
+    'lootbug_spawn_rate',
+    'lootbug_triple_chance',
+  ] },
+
+  { id: 'obelisk', label: 'Obelisk', statKeys: [
+    'obelisk_armor_reduction',
+    'obelisk_cooldown_multi',
+    'obelisk_timer_add',
+  ] },
+
+  { id: 'veins', label: 'Veins', statKeys: [
+    'gleaming_vein_chance',
+    'gleaming_vein_multi',
+    'golden_vein_chance',
+    'golden_vein_multi',
+    'vein_income_multi',
+    'vein_spawn_rate_multi',
+  ] },
+
+  { id: 'meta', label: 'Meta', statKeys: [
+    'time',
+    'version',
+  ] },
+]
+
+// Statue-specific enrichment table: name + world per statKey.
+// Source: `Copy of JSON Tablifier.xlsx` columns P/Q rows 4–30.
+export interface StatueEnrichment {
+  name: string
+  world: 1 | 2 | 3
+}
+
+export const STATUE_ENRICHMENT: Readonly<Record<string, StatueEnrichment>> = {
+  statue_0_set1: { name: 'Rhythmn',      world: 1 },
+  statue_0_set2: { name: 'Craftmanship', world: 2 },
+  statue_0_set3: { name: 'Comfort',      world: 3 },
+  statue_1_set1: { name: 'Awareness',    world: 1 },
+  statue_1_set2: { name: 'Propulsion',   world: 2 },
+  statue_1_set3: { name: 'Timekeeping',  world: 3 },
+  statue_2_set1: { name: 'Slaying',      world: 1 },
+  statue_2_set2: { name: 'Safety',       world: 2 },
+  statue_2_set3: { name: 'Combat',       world: 3 },
+  statue_3_set1: { name: 'Appetite',     world: 1 },
+  statue_3_set2: { name: 'Ignition',     world: 2 },
+  statue_3_set3: { name: 'Nature',       world: 3 },
+  statue_4_set1: { name: 'Friendship',   world: 1 },
+  statue_4_set2: { name: 'Warmth',       world: 2 },
+  statue_4_set3: { name: 'Semblance',    world: 3 },
+  statue_5_set1: { name: 'Hygiene',      world: 1 },
+  statue_5_set2: { name: 'Feline',       world: 2 },
+  statue_5_set3: { name: 'Crochet',      world: 3 },
+  statue_6_set1: { name: 'Artistry',     world: 1 },
+  statue_6_set2: { name: 'Affluence',    world: 2 },
+  statue_6_set3: { name: 'Antagonism',   world: 3 },
+  statue_7_set1: { name: 'Randomness',   world: 1 },
+  statue_7_set2: { name: 'Eastwood',     world: 2 },
+  statue_7_set3: { name: 'Fallacy',      world: 3 },
+  statue_8_set1: { name: 'Childhood',    world: 1 },
+  statue_8_set2: { name: 'Soprano',      world: 2 },
+  statue_8_set3: { name: 'Rodentia',     world: 3 },
+}
+
+// State labels driven by the raw integer value 0/1/2/3.
+// Source: in-game build state for each statue tier.
+export const STATUE_STATE_LABELS = ['Unbuilt', 'Normal', 'Gilded', 'Platinized'] as const
