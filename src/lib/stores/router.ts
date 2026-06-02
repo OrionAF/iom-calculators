@@ -1,15 +1,15 @@
 import { readable } from 'svelte/store'
-import { routes, type RouteDescriptor } from '../../routes'
+import { findDestination, type Destination } from '../calculators/registry'
 
 export interface ResolvedRoute {
-  descriptor: RouteDescriptor
+  destination: Destination
   hash: string
 }
 
 function resolveHash(rawHash: string): ResolvedRoute | null {
   const hash = rawHash.replace(/^#\/?/, '')
-  const descriptor = routes.find(r => r.hash === hash) ?? null
-  return descriptor ? { descriptor, hash } : null
+  const destination = findDestination(hash)
+  return destination ? { destination, hash } : null
 }
 
 export const currentRoute = readable<ResolvedRoute | null>(

@@ -5,10 +5,6 @@
   import Sidebar from './lib/components/Sidebar.svelte'
   import HomeGrid from './lib/components/HomeGrid.svelte'
 
-  // Vite glob import — includes all calculator components in the bundle
-  // Each calculator file must be lowercase and match its route hash
-  const calculators = import.meta.glob<{ default: Component }>('./lib/calculators/*.svelte')
-
   let activeComponent: Component | null = $state(null)
 
   $effect(() => {
@@ -19,19 +15,13 @@
     }
 
     let cancelled = false
-    const key = `./lib/calculators/${route.hash}.svelte`
-    const loader = calculators[key]
-
-    if (!loader) {
-      activeComponent = null
-      return
-    }
-
-    loader().then(m => {
-      if (!cancelled) activeComponent = m.default
-    }).catch(() => {
-      if (!cancelled) activeComponent = null
-    })
+    route.destination.loader()
+      .then(m => {
+        if (!cancelled) activeComponent = m.default
+      })
+      .catch(() => {
+        if (!cancelled) activeComponent = null
+      })
 
     return () => { cancelled = true }
   })

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { X } from 'lucide-svelte'
-  import { routes } from '../../routes'
+  import { destinations } from '$lib/calculators/registry'
   import { currentRoute } from '$lib/stores/router'
   import StatInput from './StatInput.svelte'
   import { focusTrap } from '$lib/actions/focusTrap'
@@ -63,17 +63,17 @@
   <nav aria-label="Calculators">
     <p class="nav-section-label">Calculators</p>
     <ul class="nav-list" role="list">
-      {#each routes as route}
-        {@const isActive = $currentRoute?.hash === route.hash}
+      {#each destinations.filter(d => d.kind === 'calculator') as dest}
+        {@const isActive = $currentRoute?.hash === dest.hash}
         <li>
           <a
             class="nav-item"
             class:active={isActive}
-            href={'#' + route.hash}
+            href={'#' + dest.hash}
             onclick={closeDrawer}
             aria-current={isActive ? 'page' : undefined}
           >
-            {route.label}
+            {dest.label}
           </a>
         </li>
       {/each}

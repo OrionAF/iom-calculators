@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ChevronRight } from 'lucide-svelte'
-  import { routes } from '../../routes'
+  import { destinations } from '$lib/calculators/registry'
 </script>
 
 <div class="home">
@@ -10,13 +10,13 @@
   </header>
 
   <div class="grid">
-    {#each routes as route}
+    {#each destinations.filter(d => d.kind === 'calculator') as dest}
       <a
         class="calc-card"
-        href={'#' + route.hash}
-        aria-label="Open {route.label} calculator"
+        href={'#' + dest.hash}
+        aria-label="Open {dest.label} calculator"
       >
-        <span class="card-label">{route.label}</span>
+        <span class="card-label">{dest.label}</span>
         <ChevronRight size={18} class="card-arrow" aria-hidden="true" />
       </a>
     {/each}
