@@ -65,6 +65,7 @@
     <ul class="nav-list" role="list">
       {#each destinations.filter(d => d.kind === 'calculator') as dest}
         {@const isActive = $currentRoute?.hash === dest.hash}
+        {@const Icon = dest.icon}
         <li>
           <a
             class="nav-item"
@@ -73,7 +74,8 @@
             onclick={closeDrawer}
             aria-current={isActive ? 'page' : undefined}
           >
-            {dest.label}
+            <Icon class="nav-icon" size={16} aria-hidden="true" />
+            <span>{dest.label}</span>
           </a>
         </li>
       {/each}
@@ -190,6 +192,7 @@
   .nav-item {
     display: flex;
     align-items: center;
+    gap: var(--space-2);
     width: 100%;
     min-height: 44px;
     padding: var(--space-2) var(--space-3);
@@ -216,6 +219,17 @@
     background: var(--bg-surface);
     border-left-color: var(--accent);
     box-shadow: inset var(--shadow-glow);
+  }
+
+  .nav-item :global(.nav-icon) {
+    flex-shrink: 0;
+    color: var(--text-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .nav-item:hover :global(.nav-icon),
+  .nav-item.active :global(.nav-icon) {
+    color: var(--accent);
   }
 
   /* ── Mobile (<1024px) ────────────────────────────────── */

@@ -11,11 +11,13 @@
 
   <div class="grid">
     {#each destinations.filter(d => d.kind === 'calculator') as dest}
+      {@const Icon = dest.icon}
       <a
         class="calc-card"
         href={'#' + dest.hash}
         aria-label="Open {dest.label} calculator"
       >
+        <Icon class="card-icon" size={24} aria-hidden="true" />
         <span class="card-label">{dest.label}</span>
         <ChevronRight size={18} class="card-arrow" aria-hidden="true" />
       </a>
@@ -65,6 +67,7 @@
     color: inherit;
     display: flex;
     align-items: center;
+    gap: var(--space-3);
     justify-content: space-between;
     min-height: 80px;
     transition:
@@ -81,9 +84,15 @@
   }
 
   .card-label {
+    flex: 1;
     font-size: var(--text-lg);
     font-weight: var(--weight-medium);
     color: var(--text-primary);
+  }
+
+  .calc-card :global(.card-icon) {
+    flex-shrink: 0;
+    color: var(--accent);
   }
 
   .card-arrow {
