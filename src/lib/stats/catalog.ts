@@ -259,8 +259,8 @@ export interface StatueEnrichment {
 }
 
 export const STATUE_ENRICHMENT: Readonly<Record<string, StatueEnrichment>> = {
-  statue_0_set1: { name: 'Rhythmn',      world: 1 },
-  statue_0_set2: { name: 'Craftmanship', world: 2 },
+  statue_0_set1: { name: 'Rhythm',        world: 1 },
+  statue_0_set2: { name: 'Craftsmanship', world: 2 },
   statue_0_set3: { name: 'Comfort',      world: 3 },
   statue_1_set1: { name: 'Awareness',    world: 1 },
   statue_1_set2: { name: 'Propulsion',   world: 2 },
