@@ -1,7 +1,7 @@
 <script lang="ts">
   import { X } from 'lucide-svelte'
   import { routes } from '../../routes'
-  import { currentRoute, navigate } from '$lib/stores/router'
+  import { currentRoute } from '$lib/stores/router'
   import StatInput from './StatInput.svelte'
   import { focusTrap } from '$lib/actions/focusTrap'
 
@@ -65,14 +65,15 @@
       {#each routes as route}
         {@const isActive = $currentRoute?.hash === route.hash}
         <li>
-          <button
+          <a
             class="nav-item"
             class:active={isActive}
-            onclick={() => { navigate(route.hash); closeDrawer() }}
+            href={'#' + route.hash}
+            onclick={closeDrawer}
             aria-current={isActive ? 'page' : undefined}
           >
             {route.label}
-          </button>
+          </a>
         </li>
       {/each}
     </ul>
@@ -197,6 +198,7 @@
     font-family: var(--font-body);
     cursor: pointer;
     text-align: left;
+    text-decoration: none;
     transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
   }
 

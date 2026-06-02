@@ -1,7 +1,6 @@
 <script lang="ts">
   import { ChevronRight } from 'lucide-svelte'
   import { routes } from '../../routes'
-  import { navigate } from '$lib/stores/router'
 </script>
 
 <div class="home">
@@ -10,17 +9,16 @@
     <p class="home-subtitle">Select a calculator to get started</p>
   </header>
 
-  <div class="grid" role="list">
+  <div class="grid">
     {#each routes as route}
-      <button
+      <a
         class="calc-card"
-        onclick={() => navigate(route.hash)}
-        role="listitem"
+        href={'#' + route.hash}
         aria-label="Open {route.label} calculator"
       >
         <span class="card-label">{route.label}</span>
         <ChevronRight size={18} class="card-arrow" aria-hidden="true" />
-      </button>
+      </a>
     {/each}
   </div>
 </div>
@@ -63,6 +61,8 @@
     padding: var(--space-6);
     cursor: pointer;
     text-align: left;
+    text-decoration: none;
+    color: inherit;
     display: flex;
     align-items: center;
     justify-content: space-between;
