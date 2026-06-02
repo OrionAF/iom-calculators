@@ -2,3 +2,7 @@ iom_wiki/
 .superpowers/
 docs/
 .claude/
+node_modules/
+dist/
+dist-ssr/
+*.local
