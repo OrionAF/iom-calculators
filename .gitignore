@@ -1,8 +1,20 @@
-iom_wiki/
-.superpowers/
-docs/
-.claude/
+# Dependencies & build output
 node_modules/
 dist/
 dist-ssr/
+
+# Editor / OS
 *.local
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local notes & project context (not for distribution)
+iom_wiki/
+docs/
+
+# Agent / tooling scratch
+.cave/
+.claude/
+.superpowers/
