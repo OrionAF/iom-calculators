@@ -61,15 +61,15 @@ export const STAT_CATALOG: readonly StatCategory[] = [
   ] },
 
   { id: 'statues', label: 'Statues', statKeys: [
-    'statue_0_set1', 'statue_0_set2', 'statue_0_set3',
-    'statue_1_set1', 'statue_1_set2', 'statue_1_set3',
-    'statue_2_set1', 'statue_2_set2', 'statue_2_set3',
-    'statue_3_set1', 'statue_3_set2', 'statue_3_set3',
-    'statue_4_set1', 'statue_4_set2', 'statue_4_set3',
-    'statue_5_set1', 'statue_5_set2', 'statue_5_set3',
-    'statue_6_set1', 'statue_6_set2', 'statue_6_set3',
-    'statue_7_set1', 'statue_7_set2', 'statue_7_set3',
-    'statue_8_set1', 'statue_8_set2', 'statue_8_set3',
+    'statue_0_set1', 'statue_1_set1', 'statue_2_set1',
+    'statue_3_set1', 'statue_4_set1', 'statue_5_set1',
+    'statue_6_set1', 'statue_7_set1', 'statue_8_set1',
+    'statue_0_set2', 'statue_1_set2', 'statue_2_set2',
+    'statue_3_set2', 'statue_4_set2', 'statue_5_set2',
+    'statue_6_set2', 'statue_7_set2', 'statue_8_set2',
+    'statue_0_set3', 'statue_1_set3', 'statue_2_set3',
+    'statue_3_set3', 'statue_4_set3', 'statue_5_set3',
+    'statue_6_set3', 'statue_7_set3', 'statue_8_set3',
   ] },
 
   { id: 'chests-and-items', label: 'Chests & Items', statKeys: [
@@ -255,37 +255,37 @@ export const STAT_CATALOG: readonly StatCategory[] = [
 // Source: `Copy of JSON Tablifier.xlsx` columns P/Q rows 4–30.
 export interface StatueEnrichment {
   name: string
-  world: 1 | 2 | 3
+  world: 1 | 3 | 4
 }
 
 export const STATUE_ENRICHMENT: Readonly<Record<string, StatueEnrichment>> = {
   statue_0_set1: { name: 'Rhythm',        world: 1 },
-  statue_0_set2: { name: 'Craftsmanship', world: 2 },
-  statue_0_set3: { name: 'Comfort',      world: 3 },
   statue_1_set1: { name: 'Awareness',    world: 1 },
-  statue_1_set2: { name: 'Propulsion',   world: 2 },
-  statue_1_set3: { name: 'Timekeeping',  world: 3 },
   statue_2_set1: { name: 'Slaying',      world: 1 },
-  statue_2_set2: { name: 'Safety',       world: 2 },
-  statue_2_set3: { name: 'Combat',       world: 3 },
   statue_3_set1: { name: 'Appetite',     world: 1 },
-  statue_3_set2: { name: 'Ignition',     world: 2 },
-  statue_3_set3: { name: 'Nature',       world: 3 },
   statue_4_set1: { name: 'Friendship',   world: 1 },
-  statue_4_set2: { name: 'Warmth',       world: 2 },
-  statue_4_set3: { name: 'Semblance',    world: 3 },
   statue_5_set1: { name: 'Hygiene',      world: 1 },
-  statue_5_set2: { name: 'Feline',       world: 2 },
-  statue_5_set3: { name: 'Crochet',      world: 3 },
   statue_6_set1: { name: 'Artistry',     world: 1 },
-  statue_6_set2: { name: 'Affluence',    world: 2 },
-  statue_6_set3: { name: 'Antagonism',   world: 3 },
   statue_7_set1: { name: 'Randomness',   world: 1 },
-  statue_7_set2: { name: 'Eastwood',     world: 2 },
-  statue_7_set3: { name: 'Fallacy',      world: 3 },
   statue_8_set1: { name: 'Childhood',    world: 1 },
-  statue_8_set2: { name: 'Soprano',      world: 2 },
-  statue_8_set3: { name: 'Rodentia',     world: 3 },
+  statue_0_set2: { name: 'Craftsmanship', world: 3 },
+  statue_1_set2: { name: 'Propulsion',   world: 3 },
+  statue_2_set2: { name: 'Safety',       world: 3 },
+  statue_3_set2: { name: 'Ignition',     world: 3 },
+  statue_4_set2: { name: 'Warmth',       world: 3 },
+  statue_5_set2: { name: 'Feline',       world: 3 },
+  statue_6_set2: { name: 'Affluence',    world: 3 },
+  statue_7_set2: { name: 'Eastwood',     world: 3 },
+  statue_8_set2: { name: 'Soprano',      world: 3 },
+  statue_0_set3: { name: 'Comfort',      world: 4 },
+  statue_1_set3: { name: 'Timekeeping',  world: 4 },
+  statue_2_set3: { name: 'Combat',       world: 4 },
+  statue_3_set3: { name: 'Nature',       world: 4 },
+  statue_4_set3: { name: 'Semblance',    world: 4 },
+  statue_5_set3: { name: 'Crochet',      world: 4 },
+  statue_6_set3: { name: 'Antagonism',   world: 4 },
+  statue_7_set3: { name: 'Fallacy',      world: 4 },
+  statue_8_set3: { name: 'Rodentia',     world: 4 },
 }
 
 // State labels driven by the raw integer value 0/1/2/3.

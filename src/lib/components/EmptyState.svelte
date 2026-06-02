@@ -7,7 +7,7 @@
   <h2 class="title">No stats loaded</h2>
   <p class="description">
     Paste your IOM stat export to use this calculator.
-    In-game: <strong>Options → Gift Code → type EXPORT</strong>.
+    In-game: <strong>Options → Enter Code → type 'EXPORTSTATS'</strong>.
   </p>
   <p class="hint">Your stats are saved locally and shared across all calculators.</p>
 </div>
