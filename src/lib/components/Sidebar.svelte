@@ -131,7 +131,6 @@
     display: flex;
     flex-direction: column;
     padding: var(--space-4);
-    padding-bottom: max(var(--space-4), env(safe-area-inset-bottom));
     overflow-y: auto;
     z-index: var(--z-drawer);
     transform: none;
@@ -228,6 +227,7 @@
 
     .sidebar {
       transform: translateX(-100%);
+      padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
     }
     .sidebar.open {
       transform: translateX(0);

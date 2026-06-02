@@ -135,7 +135,7 @@ button, a, [role="button"] {
 .skip-link {
   position: absolute;
   top: -100%;
-  left: var(--space-4);
+  left: calc(var(--space-4) + env(safe-area-inset-left));
   background: var(--accent);
   color: var(--accent-text);
   padding: var(--space-2) var(--space-4);
@@ -146,7 +146,7 @@ button, a, [role="button"] {
   transition: top var(--transition-fast);
 }
 .skip-link:focus {
-  top: var(--space-4);
+  top: calc(var(--space-4) + env(safe-area-inset-top));
 }
 
 /* ── Scrollbar styling ────────────────────────────────────── */
