@@ -1,14 +1,15 @@
 <script lang="ts">
   import './app.css'
+  import type { Component } from 'svelte'
   import { currentRoute } from './lib/stores/router'
   import Sidebar from './lib/components/Sidebar.svelte'
   import HomeGrid from './lib/components/HomeGrid.svelte'
 
   // Vite glob import — includes all calculator components in the bundle
   // Each calculator file must be lowercase and match its route hash
-  const calculators = import.meta.glob<{ default: any }>('./lib/calculators/*.svelte')
+  const calculators = import.meta.glob<{ default: Component }>('./lib/calculators/*.svelte')
 
-  let activeComponent: any = $state(null)
+  let activeComponent: Component | null = $state(null)
 
   $effect(() => {
     const route = $currentRoute
@@ -43,7 +44,8 @@
 
   <main id="main-content" class="main-content">
     {#if $currentRoute && activeComponent}
-      <svelte:component this={activeComponent} />
+      {@const Cmp = activeComponent}
+      <Cmp />
     {:else}
       <HomeGrid />
     {/if}
