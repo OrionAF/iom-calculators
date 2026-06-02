@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Info } from 'lucide-svelte'
   import { stats } from '$lib/stores/stats'
+  import { settings } from '$lib/stores/settings'
   import { fishingIncome } from './logic/fishing'
   import ResultCard from '$lib/components/ResultCard.svelte'
   import EmptyState from '$lib/components/EmptyState.svelte'
@@ -26,7 +27,7 @@
     <section class="results">
       <ResultCard
         label="Estimated Income"
-        value={result ? formatGold(result.incomePerHour) : '—'}
+        value={result ? formatGold(result.incomePerHour, $settings.notation) : '—'}
         unit="/ hour"
         active={!!result}
       />
