@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onDestroy } from 'svelte'
   import { ChevronDown } from 'lucide-svelte'
   import { loadStats, clearStats, stats } from '$lib/stores/stats'
   import type { ParseError } from '$lib/stores/stats'
@@ -7,6 +8,7 @@
   let error = $state<ParseError | null>(null)
   let collapsed = $state(true)
   let flash = $state(false)
+  let flashTimer: ReturnType<typeof setTimeout> | null = null
 
   function errorMessage(e: ParseError): string {
     switch (e.kind) {
@@ -20,9 +22,17 @@
   }
 
   function triggerFlash() {
+    if (flashTimer !== null) clearTimeout(flashTimer)
     flash = true
-    setTimeout(() => { flash = false }, 600)
+    flashTimer = setTimeout(() => {
+      flash = false
+      flashTimer = null
+    }, 600)
   }
+
+  onDestroy(() => {
+    if (flashTimer !== null) clearTimeout(flashTimer)
+  })
 
   function submit() {
     if (!textValue.trim()) return
