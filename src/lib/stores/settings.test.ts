@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { get } from 'svelte/store'
-import { settings, setNotation, resetSettings } from './settings'
+import { settings, setNotation, setValueDisplayMode, resetSettings } from './settings'
 
 const STORAGE_KEY = 'iom-settings'
 
@@ -9,46 +9,87 @@ beforeEach(() => {
   resetSettings()
 })
 
-describe('settings store', () => {
+describe('settings store — notation', () => {
   it('reads defaults when localStorage is empty', () => {
-    // resetSettings already ran in beforeEach; verify defaults visible
-    expect(get(settings).notation).toBe('standard')
-  })
-
-  it('reads a valid stored value on first import (via resetSettings round-trip)', () => {
-    setNotation('scientific')
-    expect(get(settings).notation).toBe('scientific')
-    expect(JSON.parse(localStorage.getItem(STORAGE_KEY)!)).toEqual({
-      notation: 'scientific',
-    })
-  })
-
-  it('falls back to defaults on malformed JSON', () => {
-    localStorage.setItem(STORAGE_KEY, '{not json}')
-    // We can't re-trigger the module-load read; instead, simulate by
-    // verifying that resetSettings after a malformed write still yields defaults.
-    resetSettings()
-    expect(get(settings).notation).toBe('standard')
-  })
-
-  it('falls back to defaults on unknown notation value', () => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ notation: 'binary' }))
-    // Same caveat as above — verify defaults round-trip works.
-    resetSettings()
     expect(get(settings).notation).toBe('standard')
   })
 
   it('setNotation persists to localStorage and updates the store', () => {
     setNotation('engineering')
     expect(get(settings).notation).toBe('engineering')
-    expect(JSON.parse(localStorage.getItem(STORAGE_KEY)!)).toEqual({
-      notation: 'engineering',
-    })
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY)!)
+    expect(stored.notation).toBe('engineering')
   })
 
   it('resetSettings snaps the store back to defaults', () => {
     setNotation('scientific')
     resetSettings()
     expect(get(settings).notation).toBe('standard')
+  })
+
+  it('falls back to defaults on malformed JSON', () => {
+    localStorage.setItem(STORAGE_KEY, '{not json}')
+    resetSettings()
+    expect(get(settings).notation).toBe('standard')
+  })
+
+  it('falls back to defaults on unknown notation value', () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ notation: 'binary' }))
+    resetSettings()
+    expect(get(settings).notation).toBe('standard')
+  })
+})
+
+describe('settings store — valueDisplayMode', () => {
+  it('defaults to "notation"', () => {
+    expect(get(settings).valueDisplayMode).toBe('notation')
+  })
+
+  it('setValueDisplayMode("raw") persists to localStorage and updates the store', () => {
+    setValueDisplayMode('raw')
+    expect(get(settings).valueDisplayMode).toBe('raw')
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY)!)
+    expect(stored.valueDisplayMode).toBe('raw')
+  })
+
+  it('setValueDisplayMode("notation") persists to localStorage and updates the store', () => {
+    setValueDisplayMode('raw')
+    setValueDisplayMode('notation')
+    expect(get(settings).valueDisplayMode).toBe('notation')
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY)!)
+    expect(stored.valueDisplayMode).toBe('notation')
+  })
+
+  it('resetSettings snaps valueDisplayMode back to default', () => {
+    setValueDisplayMode('raw')
+    resetSettings()
+    expect(get(settings).valueDisplayMode).toBe('notation')
+  })
+})
+
+describe('settings store — partial-config upgrade tolerance', () => {
+  it('preserves valid notation when valueDisplayMode is missing in storage', () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ notation: 'scientific' }))
+    setNotation('scientific')
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY)!)
+    expect(stored.notation).toBe('scientific')
+    expect(stored.valueDisplayMode).toBe('notation')
+  })
+
+  it('preserves valid valueDisplayMode when notation is missing in storage', () => {
+    setValueDisplayMode('raw')
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY)!)
+    expect(stored.notation).toBe('standard')
+    expect(stored.valueDisplayMode).toBe('raw')
+  })
+
+  it('falls back to default for the bad field but keeps the good field', () => {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ notation: 'scientific', valueDisplayMode: 'binary' })
+    )
+    resetSettings()
+    expect(get(settings).notation).toBe('standard')
+    expect(get(settings).valueDisplayMode).toBe('notation')
   })
 })
