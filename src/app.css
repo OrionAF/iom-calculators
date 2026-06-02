@@ -1,1 +1,156 @@
-/* placeholder - will be replaced in Task 2 */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Theme tokens ─────────────────────────────────────────── */
+:root {
+  /* Color */
+  --bg-base:        #0f0f1a;
+  --bg-surface:     #1e1e2e;
+  --bg-raised:      #1a1a2e;
+  --bg-sidebar:     #13131f;
+  --border:         #2a2a3e;
+  --border-accent:  #d4a017;
+  --accent:         #d4a017;
+  --accent-hover:   #e8b420;
+  --accent-dim:     #7a5c0a;
+  --accent-text:    #0f0f1a;
+  --text-primary:   #e0e0ff;
+  --text-muted:     #a0a0c0;
+  --text-dim:       #555555;
+  --success:        #4ade80;
+  --error:          #f87171;
+  --warning:        #fb923c;
+  --focus-ring:     #d4a017;
+  --overlay-bg:     rgba(0, 0, 0, 0.6);
+
+  /* Typography — families */
+  --font-display: 'Orbitron', monospace;
+  --font-mono:    'JetBrains Mono', 'Fira Mono', monospace;
+  --font-body:    'Inter', system-ui, sans-serif;
+
+  /* Typography — scale */
+  --text-xs:   11px;
+  --text-sm:   12px;
+  --text-base: 14px;
+  --text-lg:   16px;
+  --text-xl:   20px;
+  --text-2xl:  26px;
+  --text-3xl:  34px;
+
+  /* Typography — line-height */
+  --leading-tight:  1.2;
+  --leading-base:   1.5;
+  --leading-loose:  1.75;
+
+  /* Typography — weight */
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-bold:   700;
+
+  /* Shape */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  /* Layout */
+  --sidebar-width:     220px;
+  --content-max-width: 900px;
+
+  /* Spacing (4pt system) */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+
+  /* Motion */
+  --transition-fast: 120ms ease-out;
+  --transition-base: 200ms ease-out;
+  --transition-slow: 300ms ease-out;
+
+  /* Depth */
+  --shadow-glow:    0 0 12px rgba(212, 160, 23, 0.25);
+  --shadow-surface: 0 2px 8px rgba(0, 0, 0, 0.4);
+
+  /* Z-index */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-overlay: 20;
+  --z-drawer:  30;
+  --z-toast:   100;
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ── Reset & base ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #app {
+  min-height: 100dvh;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Grain texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: var(--z-toast);
+}
+
+/* ── Focus rings ──────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* ── Touch targets ────────────────────────────────────────── */
+button, a, [role="button"] {
+  touch-action: manipulation;
+}
+
+/* ── Skip link ────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  background: var(--accent);
+  color: var(--accent-text);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: var(--weight-bold);
+  text-decoration: none;
+  z-index: var(--z-toast);
+  transition: top var(--transition-fast);
+}
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* ── Scrollbar styling ────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
