@@ -1,5 +1,5 @@
 import type { Component } from 'svelte'
-import { Fish, Icon } from 'lucide-svelte'
+import { Fish, Icon, Settings } from 'lucide-svelte'
 
 export type DestinationKind = 'calculator' | 'utility'
 export type LucideIcon = typeof Icon
@@ -19,6 +19,13 @@ export const destinations: Destination[] = [
     icon: Fish,
     kind: 'calculator',
     loader: () => import('./fishing.svelte'),
+  },
+  {
+    hash: 'settings',
+    label: 'Settings',
+    icon: Settings,
+    kind: 'utility',
+    loader: () => import('../utilities/settings.svelte'),
   },
 ]
 
