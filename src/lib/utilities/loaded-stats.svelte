@@ -66,14 +66,15 @@
 
   const visibleCategories = $derived(
     STAT_CATALOG.map(cat => {
-      const visibleStats = cat.statKeys
-        .filter(key => matchesFilter(key, cat.id, normalizedFilter))
-        .map(key => ({
-          key,
-          prettyLabel: prettyKey(key),
-          rawValue: $stats?.stats[key],
-          displayValue: formatStatRow(key, $stats?.stats[key], cat.id),
-          enrichment: cat.id === 'statues' ? STATUE_ENRICHMENT[key] : undefined,
+      const visibleStats = cat.stats
+        .filter(stat => matchesFilter(stat.key, cat.id, normalizedFilter))
+        .map(stat => ({
+          key: stat.key,
+          icon: stat.icon,
+          prettyLabel: prettyKey(stat.key),
+          rawValue: $stats?.stats[stat.key],
+          displayValue: formatStatRow(stat.key, $stats?.stats[stat.key], cat.id),
+          enrichment: cat.id === 'statues' ? STATUE_ENRICHMENT[stat.key] : undefined,
         }))
       return { ...cat, visibleStats }
     }).filter(cat => cat.visibleStats.length > 0)

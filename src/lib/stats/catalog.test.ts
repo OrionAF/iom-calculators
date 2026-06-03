@@ -11,9 +11,9 @@ describe('STAT_CATALOG', () => {
     expect(new Set(ids).size).toBe(ids.length)
   })
 
-  it('every category has at least one stat key', () => {
+  it('every category has at least one stat', () => {
     for (const cat of STAT_CATALOG) {
-      expect(cat.statKeys.length).toBeGreaterThan(0)
+      expect(cat.stats.length).toBeGreaterThan(0)
     }
   })
 
@@ -22,15 +22,34 @@ describe('STAT_CATALOG', () => {
       expect(cat.label.length).toBeGreaterThan(0)
     }
   })
+
+  it('every stat has a non-empty key', () => {
+    for (const cat of STAT_CATALOG) {
+      for (const stat of cat.stats) {
+        expect(stat.key.length).toBeGreaterThan(0)
+      }
+    }
+  })
+
+  it('if a stat declares an icon, it is a non-empty string', () => {
+    for (const cat of STAT_CATALOG) {
+      for (const stat of cat.stats) {
+        if (stat.icon !== undefined) {
+          expect(typeof stat.icon).toBe('string')
+          expect(stat.icon.length).toBeGreaterThan(0)
+        }
+      }
+    }
+  })
 })
 
 describe('STATUE_ENRICHMENT', () => {
   it('covers every key in the statues category', () => {
     const statues = STAT_CATALOG.find(c => c.id === 'statues')!
-    for (const key of statues.statKeys) {
-      expect(STATUE_ENRICHMENT[key]).toBeDefined()
-      expect(STATUE_ENRICHMENT[key].name.length).toBeGreaterThan(0)
-      expect([1, 3, 4]).toContain(STATUE_ENRICHMENT[key].world)
+    for (const stat of statues.stats) {
+      expect(STATUE_ENRICHMENT[stat.key]).toBeDefined()
+      expect(STATUE_ENRICHMENT[stat.key].name.length).toBeGreaterThan(0)
+      expect([1, 3, 4]).toContain(STATUE_ENRICHMENT[stat.key].world)
     }
   })
 })
