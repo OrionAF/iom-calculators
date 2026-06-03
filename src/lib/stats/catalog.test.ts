@@ -30,7 +30,7 @@ describe('STATUE_ENRICHMENT', () => {
     for (const key of statues.statKeys) {
       expect(STATUE_ENRICHMENT[key]).toBeDefined()
       expect(STATUE_ENRICHMENT[key].name.length).toBeGreaterThan(0)
-      expect([1, 2, 3]).toContain(STATUE_ENRICHMENT[key].world)
+      expect([1, 3, 4]).toContain(STATUE_ENRICHMENT[key].world)
     }
   })
 })
