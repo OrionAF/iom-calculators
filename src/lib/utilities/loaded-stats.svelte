@@ -2,7 +2,7 @@
   import { Search } from 'lucide-svelte'
   import { stats } from '$lib/stores/stats'
   import { settings, setValueDisplayMode } from '$lib/stores/settings'
-  import { formatStat } from '$lib/format'
+  import { formatStatByKey } from '$lib/format'
   import EmptyState from '$lib/components/EmptyState.svelte'
   import {
     STAT_CATALOG,
@@ -29,7 +29,7 @@
     return false
   }
 
-  function formatStatRow(_key: string, value: number | undefined, categoryId: string): string {
+  function formatStatRow(key: string, value: number | undefined, categoryId: string): string {
     if (value === undefined) return '—'
     if (categoryId === 'meta') return String(value)
     if (categoryId === 'statues') {
@@ -39,7 +39,7 @@
       return String(value)
     }
     if ($settings.valueDisplayMode === 'raw') return String(value)
-    return formatStat(value, $settings.notation)
+    return formatStatByKey(key, value, $settings.notation)
   }
 
   function formatTime(seconds: number): string {

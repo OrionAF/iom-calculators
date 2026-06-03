@@ -95,6 +95,57 @@ export function formatMultiplier(n: number): string {
   return n.toFixed(2) + '×'
 }
 
+// ─── formatStatByKey ───────────────────────────────────────
+// Adds a prefix or suffix to a formatted stat based on the stat's key.
+// Only the affixes are added here; the numeric portion is delegated to formatStat.
+// Order of resolution:
+//   1. Exact-key overrides (highest priority)
+//   2. Suffix-pattern match against the key
+//   3. Fallback: bare formatStat output
+
+type Affix = { prefix?: string; suffix?: string }
+
+const EXACT_KEY_AFFIXES: Record<string, Affix> = {
+  obelisk_timer_add: { prefix: '×' },
+  lootbug_gem_cost_reduction: { prefix: '-' },
+}
+
+const KEY_SUFFIX_RULES: ReadonlyArray<{ suffix: string; affix: Affix }> = [
+  // Order matters: longer/more-specific suffixes first to avoid partial matches.
+  { suffix: '_crit_damage', affix: { prefix: '×' } },
+  { suffix: '_multiplier',  affix: { prefix: '×' } },
+  { suffix: '_reduction',   affix: { prefix: '×' } },
+  { suffix: '_increases',   affix: { prefix: '+' } },
+  { suffix: '_increase',    affix: { prefix: '+' } },
+  { suffix: '_capacity',    affix: { prefix: '+' } },
+  { suffix: '_percent',     affix: { prefix: '×' } },
+  { suffix: '_chance',      affix: { suffix: '%' } },
+  { suffix: '_bonus',       affix: { prefix: '+' } },
+  { suffix: '_multi',       affix: { prefix: '×' } },
+  { suffix: '_count',       affix: { prefix: '+' } },
+  { suffix: '_cap',         affix: { prefix: '+' } },
+]
+
+function resolveAffix(key: string): Affix {
+  const exact = EXACT_KEY_AFFIXES[key]
+  if (exact) return exact
+  for (const rule of KEY_SUFFIX_RULES) {
+    if (key.endsWith(rule.suffix)) return rule.affix
+  }
+  return {}
+}
+
+export function formatStatByKey(
+  key: string,
+  value: number | undefined,
+  notation: Notation = 'standard'
+): string {
+  if (value === undefined) return '—'
+  const body = formatStat(value, notation)
+  const { prefix = '', suffix = '' } = resolveAffix(key)
+  return prefix + body + suffix
+}
+
 /**
  * Lenient inverse of formatStat. Accepts:
  *   - bare numbers: "431", "1234"

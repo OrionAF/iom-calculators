@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   formatStat,
+  formatStatByKey,
   formatGold,
   formatPercent,
   formatMultiplier,
@@ -172,4 +173,87 @@ describe('parseStat ∘ formatStat round-trip', () => {
       expect(relErr).toBeLessThanOrEqual(0.01)
     }
   })
+})
+
+describe('formatStatByKey — affix rules in notation mode', () => {
+  it('suffixes _chance keys with %', () => {
+    expect(formatStatByKey('bomb_crit_chance', 97.2, 'standard')).toBe('97.2%')
+    expect(formatStatByKey('star_radiant_chance', 1234, 'standard')).toBe('1.23k%')
+  })
+
+  it('prefixes _multi keys with ×', () => {
+    expect(formatStatByKey('prestige_point_multi', 1.45, 'standard')).toBe('×1.45')
+    expect(formatStatByKey('fishing_income_multi', 200.88, 'standard')).toBe('×201')
+  })
+
+  it('prefixes _multiplier keys with ×', () => {
+    expect(formatStatByKey('bomb_cap_multiplier', 5, 'standard')).toBe('×5')
+    expect(formatStatByKey('fishing_drone_multiplier', 12.5, 'standard')).toBe('×12.5')
+  })
+
+  it('prefixes _reduction keys with ×', () => {
+    expect(formatStatByKey('bar_craft_cost_multi', 0.5, 'standard')).toBe('×0.50')
+    expect(formatStatByKey('contract_cost_reduction', 0.85, 'standard')).toBe('×0.85')
+  })
+
+  it('prefixes _crit_damage keys with ×', () => {
+    expect(formatStatByKey('bomb_crit_damage', 4.2, 'standard')).toBe('×4.20')
+    expect(formatStatByKey('pickaxe_super_crit_damage', 12, 'standard')).toBe('×12')
+  })
+
+  it('prefixes _percent keys with ×', () => {
+    expect(formatStatByKey('drone_damage_percent', 3.5, 'standard')).toBe('×3.50')
+  })
+
+  it('prefixes _count keys with +', () => {
+    expect(formatStatByKey('drone_count', 12, 'standard')).toBe('+12')
+  })
+
+  it('prefixes _cap keys with +', () => {
+    expect(formatStatByKey('drone_suit_cap', 5, 'standard')).toBe('+5')
+    expect(formatStatByKey('freebie_bank_cap', 100, 'standard')).toBe('+100')
+  })
+
+  it('prefixes _bonus keys with +', () => {
+    expect(formatStatByKey('chest_items_bonus', 7, 'standard')).toBe('+7')
+  })
+
+  it('prefixes _increase keys with +', () => {
+    expect(formatStatByKey('artifact_cap_increase', 7, 'standard')).toBe('+7')
+    expect(formatStatByKey('contract_cap_increase', 3, 'standard')).toBe('+3')
+  })
+
+  it('prefixes _increases keys with +', () => {
+    expect(formatStatByKey('bomb_battery_cap_increases', 4, 'standard')).toBe('+4')
+  })
+
+  it('prefixes _capacity keys with +', () => {
+    expect(formatStatByKey('bomb_capacity', 2000, 'standard')).toBe('+2.00k')
+    expect(formatStatByKey('fishing_drone_capacity', 50, 'standard')).toBe('+50')
+  })
+
+  it('applies exact-key override: obelisk_timer_add gets × prefix', () => {
+    expect(formatStatByKey('obelisk_timer_add', 1.5, 'standard')).toBe('×1.50')
+  })
+
+  it('applies exact-key override: lootbug_gem_cost_reduction gets - prefix (overrides _reduction ×)', () => {
+    expect(formatStatByKey('lootbug_gem_cost_reduction', 0.25, 'standard')).toBe('-0.25')
+  })
+
+  it('falls back to bare formatStat for unmatched keys', () => {
+    expect(formatStatByKey('fishing_rod_power', 431777.56, 'standard')).toBe('432k')
+    expect(formatStatByKey('pickaxe_damage', 1000, 'standard')).toBe('1.00k')
+  })
+
+  it('returns "—" for undefined values regardless of key', () => {
+    expect(formatStatByKey('drone_count', undefined, 'standard')).toBe('—')
+    expect(formatStatByKey('bomb_crit_chance', undefined, 'standard')).toBe('—')
+  })
+
+  it('respects notation parameter for the numeric portion', () => {
+    expect(formatStatByKey('drone_count', 1234, 'scientific')).toBe('+1.23e3')
+    expect(formatStatByKey('bomb_crit_chance', 1234, 'engineering')).toBe('1.23e3%')
+    expect(formatStatByKey('prestige_point_multi', 1.23e8, 'engineering')).toBe('×123e6')
+  })
+
 })
