@@ -4,6 +4,7 @@
   import { settings, setValueDisplayMode } from '$lib/stores/settings'
   import { formatStatByKey } from '$lib/format'
   import EmptyState from '$lib/components/EmptyState.svelte'
+  import WikiIcon from '$lib/components/WikiIcon.svelte'
   import {
     STAT_CATALOG,
     STATUE_ENRICHMENT,
@@ -151,7 +152,10 @@
                 {#each category.visibleStats as stat (stat.key)}
                   <tr>
                     <td class="stat-field">{stat.prettyLabel}</td>
-                    <td class="stat-name">{stat.enrichment?.name ?? '—'}</td>
+                    <td class="stat-name">
+                      <WikiIcon filename={stat.icon} size={14} />
+                      {stat.enrichment?.name ?? '—'}
+                    </td>
                     <td class="stat-world">{stat.enrichment?.world ?? '—'}</td>
                     <td class="stat-state" class:dim={stat.displayValue === 'Unbuilt'}>
                       {stat.displayValue}
@@ -163,7 +167,10 @@
           {:else}
             <dl class="stat-grid">
               {#each category.visibleStats as stat (stat.key)}
-                <dt class="stat-field">{stat.prettyLabel}</dt>
+                <dt class="stat-field">
+                  <WikiIcon filename={stat.icon} size={14} />
+                  {stat.prettyLabel}
+                </dt>
                 <dd class="stat-value" class:missing={stat.displayValue === '—'}>
                   {stat.displayValue}
                 </dd>
@@ -335,6 +342,9 @@
   }
 
   .stat-field {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
     font-size: var(--text-sm);
     color: var(--text-muted);
     font-family: var(--font-body);
@@ -391,6 +401,9 @@
   }
 
   .statue-table .stat-name {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
     color: var(--text-primary);
     font-weight: var(--weight-medium);
   }
