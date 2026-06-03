@@ -1,5 +1,6 @@
 import { clearStats } from '$lib/stores/stats'
 import { resetSettings } from '$lib/stores/settings'
+import { resetStoreProgress } from '$lib/stores/storeProgress'
 
 const PREFIX = 'iom-'
 
@@ -16,6 +17,7 @@ export function hardReset(): void {
   if (typeof window === 'undefined') return
   clearStats()
   resetSettings()
+  resetStoreProgress()
   scrubStorage(localStorage)
   scrubStorage(sessionStorage)
 }
