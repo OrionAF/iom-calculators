@@ -19,7 +19,7 @@ const SUFFIX_BY_NAME: Record<string, number> = Object.fromEntries(
 function format3SigFig(coefficient: number): string {
   const abs = Math.abs(coefficient)
   if (abs >= 100) return coefficient.toFixed(0)
-  if (abs >= 10) return coefficient.toFixed(1)
+  if (abs >= 10) return coefficient.toFixed(2)
   return coefficient.toFixed(2)
 }
 
@@ -106,24 +106,47 @@ export function formatMultiplier(n: number): string {
 type Affix = { prefix?: string; suffix?: string }
 
 const EXACT_KEY_AFFIXES: Record<string, Affix> = {
-  obelisk_timer_add: { prefix: '×' },
-  lootbug_gem_cost_reduction: { prefix: '-' },
+  obelisk_timer_add: { suffix: '×' },
+  lootbug_gem_cost_reduction: { prefix: '+' },
+  drone_suit_cap: { prefix: '' },
+  pickaxe_attack_speed_per_second: { suffix: ' p/s' },
+  pickaxe_radius_percent: { suffix: '%', prefix: '+' },
+  bomb_capacity: { prefix: '' },
+  bomb_additional_multiplier: { suffix: '×', prefix: '+' },
+  bomb_battery_cap_increases: { prefix: '' },
+  drone_radius_percent: { suffix: '%', prefix: '+' },
+  drone_movespeed_percent: { suffix: '%', prefix: '+' },
+  drone_attack_speed_percent: { suffix: '%', prefix: '+' },
+  coal_generation_seconds: { suffix: 's' },
+  xp_level_cap: { prefix: 'Level ' },
+  lootbug_bank_cap: { prefix: '' },
+  lootfrog_capacity: { prefix: '' },
+  freebie_gems_bonus: { prefix: '' },
+  freebie_bank_cap: { prefix: '' },
+  freebie_cooldown_seconds: { suffix: 's' },
+  contract_cost_reduction: { suffix: '%' },
+  contract_points_rewarded: { prefix: '+' },
+  fishing_drone_capacity: { prefix: '' },
+  fishing_tick_reduction_seconds: { prefix: '-', suffix: 's' },
+  fishing_notice_requirement: { suffix: 'x' },
 }
 
 const KEY_SUFFIX_RULES: ReadonlyArray<{ suffix: string; affix: Affix }> = [
   // Order matters: longer/more-specific suffixes first to avoid partial matches.
-  { suffix: '_crit_damage', affix: { prefix: '×' } },
-  { suffix: '_multiplier',  affix: { prefix: '×' } },
-  { suffix: '_reduction',   affix: { prefix: '×' } },
+  { suffix: '_crit_damage', affix: { suffix: '×' } },
+  { suffix: '_multiplier',  affix: { suffix: '×' } },
+  { suffix: '_multipliers',  affix: { suffix: '×' } },
+  { suffix: '_reduction',   affix: { suffix: '×' } },
   { suffix: '_increases',   affix: { prefix: '+' } },
   { suffix: '_increase',    affix: { prefix: '+' } },
   { suffix: '_capacity',    affix: { prefix: '+' } },
-  { suffix: '_percent',     affix: { prefix: '×' } },
+  { suffix: '_percent',     affix: { suffix: '%' } },
   { suffix: '_chance',      affix: { suffix: '%' } },
   { suffix: '_bonus',       affix: { prefix: '+' } },
-  { suffix: '_multi',       affix: { prefix: '×' } },
-  { suffix: '_count',       affix: { prefix: '+' } },
+  { suffix: '_multi',       affix: { suffix: '×' } },
   { suffix: '_cap',         affix: { prefix: '+' } },
+  { suffix: '_rate',        affix: { suffix: '×' } },
+  { suffix: 'recharge_speed', affix: { suffix: '×' } },
 ]
 
 function resolveAffix(key: string): Affix {

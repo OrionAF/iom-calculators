@@ -42,11 +42,26 @@
     return formatStatByKey(key, value, $settings.notation)
   }
 
-  function formatTime(seconds: number): string {
-    const h = Math.floor(seconds / 3600)
-    const m = Math.floor((seconds % 3600) / 60)
-    const s = Math.floor(seconds % 60)
-    return [h ? `${h}h` : '', m ? `${m}m` : '', `${s}s`].filter(Boolean).join(' ')
+  function formatTime(serialDate: number): string {
+    // 1. Convert Excel serial number to Unix milliseconds
+    const excelEpochDiff = 25569; 
+    const millisecondsInDay = 86400000;
+    const date = new Date((serialDate - excelEpochDiff) * millisecondsInDay);
+
+    // 2. Pad time segments with leading zeros
+    const hh = String(date.getUTCHours()).padStart(2, '0');
+    const mm = String(date.getUTCMinutes()).padStart(2, '0');
+    const ss = String(date.getUTCSeconds()).padStart(2, '0');
+    
+    // 3. Extract day and year
+    const dd = String(date.getUTCDate()).padStart(2, '0');
+    const yyyy = date.getUTCFullYear();
+
+    // 4. Extract short month name (e.g., "Jun")
+    const mmm = date.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
+
+    // 5. Output exact format: hh:mm:ss - dd.MMM yyyy
+    return `${hh}:${mm}:${ss} - ${dd}.${mmm} ${yyyy}`;
   }
 
   const visibleCategories = $derived(
