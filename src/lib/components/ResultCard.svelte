@@ -1,16 +1,22 @@
 <script lang="ts">
+  import WikiIcon from './WikiIcon.svelte'
+
   interface Props {
     label: string
     value: string
     unit?: string
     active?: boolean
+    icon?: string
   }
 
-  let { label, value, unit = '', active = false }: Props = $props()
+  let { label, value, unit = '', active = false, icon }: Props = $props()
 </script>
 
 <div class="result-card" class:active>
-  <span class="label">{label}</span>
+  <span class="label">
+    <WikiIcon filename={icon} size={14} />
+    {label}
+  </span>
   <span class="value">{value}</span>
   {#if unit}
     <span class="unit">{unit}</span>
@@ -35,6 +41,9 @@
   }
 
   .label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
     font-family: var(--font-body);
     font-size: var(--text-xs);
     font-weight: var(--weight-medium);

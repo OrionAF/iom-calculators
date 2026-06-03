@@ -27,6 +27,7 @@
     <section class="results">
       <ResultCard
         label="Estimated Income"
+        icon="Fishing_Income_Multiplier.png"
         value={result ? formatGold(result.incomePerHour, $settings.notation) : '—'}
         unit="/ hour"
         active={!!result}
