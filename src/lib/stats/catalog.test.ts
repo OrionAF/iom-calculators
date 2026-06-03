@@ -41,6 +41,17 @@ describe('STAT_CATALOG', () => {
       }
     }
   })
+
+  it('if a stat declares a label, it is a non-empty string', () => {
+    for (const cat of STAT_CATALOG) {
+      for (const stat of cat.stats) {
+        if (stat.label !== undefined) {
+          expect(typeof stat.label).toBe('string')
+          expect(stat.label.length).toBeGreaterThan(0)
+        }
+      }
+    }
+  })
 })
 
 describe('STATUE_ENRICHMENT', () => {

@@ -1,5 +1,6 @@
 export interface StatEntry {
   key: string
+  label?: string  // display override; falls back to auto-derived "Snake case" from the key
   icon?: string  // wiki filename, e.g. "Fishing_Rod_Power.png"
 }
 

@@ -20,11 +20,16 @@
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
 
-  function matchesFilter(key: string, categoryId: string, filter: string): boolean {
+  function matchesFilter(
+    stat: { key: string; label?: string },
+    categoryId: string,
+    filter: string,
+  ): boolean {
     if (filter === '') return true
-    if (prettyKey(key).toLowerCase().includes(filter)) return true
+    if (prettyKey(stat.key).toLowerCase().includes(filter)) return true
+    if (stat.label && stat.label.toLowerCase().includes(filter)) return true
     if (categoryId === 'statues') {
-      const e = STATUE_ENRICHMENT[key]
+      const e = STATUE_ENRICHMENT[stat.key]
       if (e && e.name.toLowerCase().includes(filter)) return true
     }
     return false
@@ -68,11 +73,11 @@
   const visibleCategories = $derived(
     STAT_CATALOG.map(cat => {
       const visibleStats = cat.stats
-        .filter(stat => matchesFilter(stat.key, cat.id, normalizedFilter))
+        .filter(stat => matchesFilter(stat, cat.id, normalizedFilter))
         .map(stat => ({
           key: stat.key,
           icon: stat.icon,
-          prettyLabel: prettyKey(stat.key),
+          prettyLabel: stat.label ?? prettyKey(stat.key),
           rawValue: $stats?.stats[stat.key],
           displayValue: formatStatRow(stat.key, $stats?.stats[stat.key], cat.id),
           enrichment: cat.id === 'statues' ? STATUE_ENRICHMENT[stat.key] : undefined,
