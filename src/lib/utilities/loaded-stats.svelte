@@ -29,7 +29,7 @@
     return false
   }
 
-  function formatStatRow(key: string, value: number | undefined, categoryId: string): string {
+  function formatStatRow(_key: string, value: number | undefined, categoryId: string): string {
     if (value === undefined) return '—'
     if (categoryId === 'meta') return String(value)
     if (categoryId === 'statues') {
