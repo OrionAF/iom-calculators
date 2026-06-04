@@ -1,6 +1,8 @@
 <script lang="ts">
   import RadioGroup from '$lib/components/RadioGroup.svelte'
   import Modal from '$lib/components/Modal.svelte'
+  import PageHeader from '$lib/components/PageHeader.svelte'
+  import Button from '$lib/components/Button.svelte'
   import { settings, setNotation } from '$lib/stores/settings'
   import { hardReset } from '$lib/storage/reset'
   import type { Notation } from '$lib/format'
@@ -29,10 +31,10 @@
 </script>
 
 <div class="page">
-  <header class="page-header">
-    <h1 class="page-title">Settings</h1>
-    <p class="page-description">Configure how IOM Calculators behave.</p>
-  </header>
+  <PageHeader
+    title="Settings"
+    description="Configure how IOM Calculators behave."
+  />
 
   <section class="settings-section">
     <RadioGroup
@@ -53,14 +55,13 @@
         <h3 class="danger-card-title">Hard Reset</h3>
         <p class="danger-card-desc">Delete all stats and settings stored by IOM Calculators.</p>
       </div>
-      <button
-        class="btn-danger"
-        type="button"
+      <Button
+        variant="danger-outline"
         onclick={openConfirm}
         aria-haspopup="dialog"
       >
-        Reset…
-      </button>
+        {#snippet children()}Reset…{/snippet}
+      </Button>
     </div>
   </section>
 </div>
@@ -80,8 +81,8 @@
     <p>Calculator pages and the app itself stay. This cannot be undone.</p>
   {/snippet}
   {#snippet footer()}
-    <button class="btn-ghost" type="button" onclick={cancel}>Cancel</button>
-    <button class="btn-danger-outline" type="button" onclick={advanceToStage2}>Continue</button>
+    <Button variant="ghost" onclick={cancel}>{#snippet children()}Cancel{/snippet}</Button>
+    <Button variant="danger-outline" onclick={advanceToStage2}>{#snippet children()}Continue{/snippet}</Button>
   {/snippet}
 </Modal>
 
@@ -110,42 +111,19 @@
     </form>
   {/snippet}
   {#snippet footer()}
-    <button class="btn-ghost" type="button" onclick={cancel}>Cancel</button>
-    <button
-      class="btn-danger-solid"
+    <Button variant="ghost" onclick={cancel}>{#snippet children()}Cancel{/snippet}</Button>
+    <Button
+      variant="danger"
       type="submit"
       form="confirm-reset-form"
       disabled={confirmInput !== 'RESET'}
     >
-      Reset everything
-    </button>
+      {#snippet children()}Reset everything{/snippet}
+    </Button>
   {/snippet}
 </Modal>
 
 <style>
-  .page {
-    max-width: var(--content-max-width);
-  }
-
-  .page-header {
-    margin-bottom: var(--space-8);
-  }
-
-  .page-title {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-bold);
-    color: var(--accent);
-    letter-spacing: 0.04em;
-    margin-bottom: var(--space-2);
-  }
-
-  .page-description {
-    font-size: var(--text-base);
-    color: var(--text-muted);
-    line-height: var(--leading-loose);
-  }
-
   .settings-section {
     margin-bottom: var(--space-12);
   }
@@ -196,89 +174,6 @@
     font-size: var(--text-sm);
     color: var(--text-muted);
     line-height: var(--leading-base);
-  }
-
-  /* ── Buttons ─────────────────────────────────────────── */
-  .btn-danger {
-    background: transparent;
-    color: var(--error);
-    border: 1px solid var(--error);
-    border-radius: var(--radius-md);
-    padding: var(--space-2) var(--space-4);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-bold);
-    font-family: var(--font-body);
-    cursor: pointer;
-    min-height: 44px;
-    flex-shrink: 0;
-    transition: background var(--transition-fast), color var(--transition-fast);
-  }
-
-  @media (hover: hover) {
-    .btn-danger:hover {
-      background: var(--error);
-      color: var(--text-primary);
-    }
-  }
-
-  .btn-ghost {
-    background: none;
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: var(--space-2) var(--space-4);
-    font-size: var(--text-sm);
-    cursor: pointer;
-    min-height: 44px;
-    font-family: var(--font-body);
-    transition: color var(--transition-fast), border-color var(--transition-fast);
-  }
-
-  @media (hover: hover) {
-    .btn-ghost:hover {
-      color: var(--text-primary);
-      border-color: var(--text-muted);
-    }
-  }
-
-  .btn-danger-outline {
-    background: transparent;
-    color: var(--error);
-    border: 1px solid var(--error);
-    border-radius: var(--radius-md);
-    padding: var(--space-2) var(--space-4);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-bold);
-    font-family: var(--font-body);
-    cursor: pointer;
-    min-height: 44px;
-    transition: background var(--transition-fast), color var(--transition-fast);
-  }
-
-  @media (hover: hover) {
-    .btn-danger-outline:hover {
-      background: var(--error);
-      color: var(--text-primary);
-    }
-  }
-
-  .btn-danger-solid {
-    background: var(--error);
-    color: var(--text-primary);
-    border: none;
-    border-radius: var(--radius-md);
-    padding: var(--space-2) var(--space-4);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-bold);
-    font-family: var(--font-body);
-    cursor: pointer;
-    min-height: 44px;
-    transition: opacity var(--transition-fast);
-  }
-
-  .btn-danger-solid:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
   }
 
   /* ── Modal body internals ─────────────────────────────── */

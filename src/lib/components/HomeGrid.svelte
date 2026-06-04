@@ -26,10 +26,10 @@
 </div>
 
 <style>
+  /* Page-level vertical breathing room only. Horizontal padding + max-width
+     are owned by .main-content in App.svelte (U2). */
   .home {
-    max-width: var(--content-max-width);
-    margin: 0 auto;
-    padding: var(--space-8) var(--space-6);
+    padding-block: var(--space-4);
   }
 
   .home-header {
@@ -95,13 +95,12 @@
     color: var(--accent);
   }
 
-  .card-arrow {
-    font-size: var(--text-xl);
+  .calc-card :global(.card-arrow) {
     color: var(--accent);
     transition: transform var(--transition-fast);
   }
 
-  .calc-card:hover .card-arrow {
+  .calc-card:hover :global(.card-arrow) {
     transform: translateX(4px);
   }
 </style>

@@ -11,6 +11,7 @@
   } from '$lib/stores/storeProgress'
   import TabStrip from '$lib/components/TabStrip.svelte'
   import WikiIcon from '$lib/components/WikiIcon.svelte'
+  import PageHeader from '$lib/components/PageHeader.svelte'
   import { Minus, Plus, Check } from 'lucide-svelte'
 
   let activeTab = $state('value-packs')
@@ -83,10 +84,10 @@
 </script>
 
 <div class="page">
-  <header class="page-header">
-    <h1 class="page-title">Store</h1>
-    <p class="page-description">Track what you've purchased from the in-game Store.</p>
-  </header>
+  <PageHeader
+    title="Store"
+    description="Track what you've purchased from the in-game Store."
+  />
 
   <TabStrip {tabs} value={activeTab} onchange={(id) => activeTab = id} ariaLabel="Store sections" />
 
@@ -307,22 +308,6 @@
 </div>
 
 <style>
-  .page { max-width: var(--content-max-width); }
-
-  .page-header { margin-bottom: var(--space-6); }
-  .page-title {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-bold);
-    color: var(--accent);
-    letter-spacing: 0.04em;
-    margin-bottom: var(--space-2);
-  }
-  .page-description {
-    font-size: var(--text-base);
-    color: var(--text-muted);
-    line-height: var(--leading-loose);
-  }
 
   /* ─── Tile common ─────────────────────────────────────────────────── */
   .pack-tile,

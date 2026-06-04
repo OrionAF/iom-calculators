@@ -5,6 +5,7 @@
   import { formatStatByKey } from '$lib/format'
   import EmptyState from '$lib/components/EmptyState.svelte'
   import WikiIcon from '$lib/components/WikiIcon.svelte'
+  import PageHeader from '$lib/components/PageHeader.svelte'
   import {
     STAT_CATALOG,
     STATUE_STATE_LABELS,
@@ -111,10 +112,10 @@
 </script>
 
 <div class="page">
-  <header class="page-header">
-    <h1 class="page-title">Loaded Stats</h1>
-    <p class="page-description">Categorized breakdown of your imported stat export.</p>
-  </header>
+  <PageHeader
+    title="Loaded Stats"
+    description="Categorized breakdown of your imported stat export."
+  />
 
   {#if !$stats}
     <EmptyState />
@@ -196,28 +197,6 @@
 </div>
 
 <style>
-  .page {
-    max-width: var(--content-max-width);
-  }
-
-  .page-header {
-    margin-bottom: var(--space-6);
-  }
-
-  .page-title {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-bold);
-    color: var(--accent);
-    letter-spacing: 0.04em;
-    margin-bottom: var(--space-2);
-  }
-
-  .page-description {
-    font-size: var(--text-base);
-    color: var(--text-muted);
-    line-height: var(--leading-loose);
-  }
 
   /* ── Metadata strip ────────────────────────────────── */
   .meta-strip {
