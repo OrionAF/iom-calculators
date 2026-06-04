@@ -3,6 +3,15 @@
   import type { Component } from 'svelte'
   import { currentRoute } from './lib/stores/router'
   import { drawerOpen } from './lib/stores/drawer'
+  import { settings } from './lib/stores/settings'
+
+  // Sync display preferences to <html> so CSS custom properties cascade
+  // globally without importing $settings in every page/component.
+  $effect(() => {
+    const root = document.documentElement
+    root.classList.toggle('font-large', $settings.fontScale === 'large')
+    root.dataset.density = $settings.density
+  })
   import Sidebar from './lib/components/Sidebar.svelte'
   import MobileTopBar from './lib/components/MobileTopBar.svelte'
   import HomeGrid from './lib/components/HomeGrid.svelte'

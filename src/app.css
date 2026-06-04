@@ -90,6 +90,40 @@
   }
 }
 
+/* ── Density — column-count custom properties ───────────────────── */
+/* compact  → more columns, tighter layout                           */
+/* normal   → default (2 cols for grids, 1 col for key-value)        */
+/* spacious → fewer columns, more breathing room                     */
+:root {
+  --page-cols:   2;   /* card grids (Store)                          */
+  --stat-cols:   1;   /* stat key-value pairs per row (Loaded Stats) */
+  --statue-cols: 3;   /* statue grid columns                         */
+  --grid-min:    180px; /* min tile width for auto-fill grids         */
+}
+:root[data-density="compact"] {
+  --page-cols:   3;
+  --stat-cols:   2;
+  --statue-cols: 4;
+  --grid-min:    150px;
+}
+:root[data-density="spacious"] {
+  --page-cols:   1;
+  --stat-cols:   1;
+  --statue-cols: 2;
+  --grid-min:    220px;
+}
+
+/* ── Font scale ──────────────────────────────────────────────────── */
+.font-large {
+  --text-xs:   13px;
+  --text-sm:   14px;
+  --text-base: 18px;
+  --text-lg:   20px;
+  --text-xl:   22px;
+  --text-2xl:  28px;
+  --text-3xl:  38px;
+}
+
 /* ── Reset & base ─────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;

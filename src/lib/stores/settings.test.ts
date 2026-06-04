@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { get } from 'svelte/store'
-import { settings, setNotation, setValueDisplayMode, resetSettings } from './settings'
+import { settings, setNotation, setValueDisplayMode, setFontScale, setDensity, resetSettings } from './settings'
 
 const STORAGE_KEY = 'iom-settings'
 
@@ -64,6 +64,38 @@ describe('settings store — valueDisplayMode', () => {
     setValueDisplayMode('raw')
     resetSettings()
     expect(get(settings).valueDisplayMode).toBe('notation')
+  })
+})
+
+describe('settings store — fontScale', () => {
+  it('defaults to "normal"', () => {
+    expect(get(settings).fontScale).toBe('normal')
+  })
+  it('setFontScale persists and updates the store', () => {
+    setFontScale('large')
+    expect(get(settings).fontScale).toBe('large')
+    expect(JSON.parse(localStorage.getItem(STORAGE_KEY)!).fontScale).toBe('large')
+  })
+  it('resetSettings restores fontScale to normal', () => {
+    setFontScale('large')
+    resetSettings()
+    expect(get(settings).fontScale).toBe('normal')
+  })
+})
+
+describe('settings store — density', () => {
+  it('defaults to "normal"', () => {
+    expect(get(settings).density).toBe('normal')
+  })
+  it('setDensity persists and updates the store', () => {
+    setDensity('compact')
+    expect(get(settings).density).toBe('compact')
+    expect(JSON.parse(localStorage.getItem(STORAGE_KEY)!).density).toBe('compact')
+  })
+  it('falls back to "normal" density on unknown value', () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ density: 'ultra-wide' }))
+    resetSettings()
+    expect(get(settings).density).toBe('normal')
   })
 })
 

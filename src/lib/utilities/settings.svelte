@@ -3,10 +3,22 @@
   import Modal from '$lib/components/Modal.svelte'
   import PageHeader from '$lib/components/PageHeader.svelte'
   import Button from '$lib/components/Button.svelte'
-  import { settings, setNotation } from '$lib/stores/settings'
+  import { settings, setNotation, setFontScale, setDensity } from '$lib/stores/settings'
   import { hardReset } from '$lib/storage/reset'
   import { focusOnMount } from '$lib/actions/focusOnMount'
-  import type { Notation } from '$lib/format'
+  import type { Notation, } from '$lib/format'
+  import type { FontScale, Density } from '$lib/stores/settings'
+
+  const fontScaleOptions: { value: FontScale; label: string; preview: Record<string, string> }[] = [
+    { value: 'normal', label: 'Normal', preview: { 'body': '16px', 'heading': '26px' } },
+    { value: 'large',  label: 'Large',  preview: { 'body': '18px', 'heading': '28px' } },
+  ]
+
+  const densityOptions: { value: Density; label: string; preview: Record<string, string> }[] = [
+    { value: 'compact',  label: 'Compact',  preview: { 'grids': '3 cols', 'stats': '2 per row' } },
+    { value: 'normal',   label: 'Normal',   preview: { 'grids': '2 cols', 'stats': '1 per row' } },
+    { value: 'spacious', label: 'Spacious', preview: { 'grids': '1 col',  'stats': '1 per row' } },
+  ]
 
   type Stage = 'idle' | 'confirm-1' | 'confirm-2'
   let stage = $state<Stage>('idle')
@@ -44,6 +56,26 @@
       options={notationOptions}
       value={$settings.notation}
       onchange={setNotation}
+    />
+  </section>
+
+  <section class="settings-section">
+    <RadioGroup
+      label="Font size"
+      description="Controls text size across all pages."
+      options={fontScaleOptions}
+      value={$settings.fontScale}
+      onchange={setFontScale}
+    />
+  </section>
+
+  <section class="settings-section">
+    <RadioGroup
+      label="Layout density"
+      description="Controls how many columns are shown in grids across the app."
+      options={densityOptions}
+      value={$settings.density}
+      onchange={setDensity}
     />
   </section>
 

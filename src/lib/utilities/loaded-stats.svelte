@@ -401,10 +401,10 @@
     padding: var(--space-4) var(--space-6);
   }
 
-  /* Default 2-column layout for most categories */
+  /* Default 2-column layout — compact density shows 2 stat pairs per row */
   .stat-grid {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: repeat(var(--stat-cols, 1), 1fr auto);
     column-gap: var(--space-4);
     row-gap: var(--space-2);
   }
@@ -437,7 +437,7 @@
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(var(--statue-cols, 3), 1fr);
     gap: var(--space-3);
   }
 
