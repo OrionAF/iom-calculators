@@ -217,13 +217,15 @@
           {:else}
             <dl class="stat-grid">
               {#each category.visibleStats as stat (stat.key)}
-                <dt class="stat-field">
-                  <WikiIcon filename={stat.icon} size={14} />
-                  {stat.prettyLabel}
-                </dt>
-                <dd class="stat-value" class:missing={stat.displayValue === '—'}>
-                  {stat.displayValue}
-                </dd>
+                <div class="stat-pair">
+                  <dt class="stat-field">
+                    <WikiIcon filename={stat.icon} size={14} />
+                    {stat.prettyLabel}
+                  </dt>
+                  <dd class="stat-value" class:missing={stat.displayValue === '—'}>
+                    {stat.displayValue}
+                  </dd>
+                </div>
               {/each}
             </dl>
             {/if}
@@ -401,12 +403,31 @@
     padding: var(--space-4) var(--space-6);
   }
 
-  /* Default 2-column layout — compact density shows 2 stat pairs per row */
+  /* Stat grid: N equal columns, each column is one stat pair */
   .stat-grid {
     display: grid;
-    grid-template-columns: repeat(var(--stat-cols, 1), 1fr auto);
-    column-gap: var(--space-4);
-    row-gap: var(--space-2);
+    grid-template-columns: repeat(var(--stat-cols, 2), 1fr);
+    gap: var(--space-1);
+  }
+
+  /* Each pair is its own hover target */
+  .stat-pair {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 0 var(--space-3);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    cursor: default;
+    transition: background var(--transition-fast);
+  }
+  @media (hover: hover) {
+    .stat-pair:hover {
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+    }
+    .stat-pair:hover .stat-field {
+      color: var(--text-primary);
+    }
   }
 
   .stat-field {
@@ -416,6 +437,10 @@
     font-size: var(--text-sm);
     color: var(--text-muted);
     font-family: var(--font-body);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .stat-value {
