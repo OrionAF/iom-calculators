@@ -13,9 +13,18 @@
   import WikiIcon from '$lib/components/WikiIcon.svelte'
   import PageHeader from '$lib/components/PageHeader.svelte'
   import OwnableTile from '$lib/components/OwnableTile.svelte'
-  import { Minus, Plus, Check } from 'lucide-svelte'
+  import { Minus, Plus, Check, Info, X } from 'lucide-svelte'
 
   let activeTab = $state('value-packs')
+
+  // X6: mirror-pack onboarding banner, dismissed per-session.
+  let mirrorBannerDismissed = $state(
+    typeof window !== 'undefined' && sessionStorage.getItem('iom-mirror-banner-dismissed') === '1'
+  )
+  function dismissMirrorBanner() {
+    mirrorBannerDismissed = true
+    try { sessionStorage.setItem('iom-mirror-banner-dismissed', '1') } catch { /* noop */ }
+  }
 
   // X5: remember per-tab scroll position so switching tabs and switching back
   // restores the previous offset instead of jumping to the top.
@@ -111,6 +120,22 @@
   <!-- ─── Value Packs ───────────────────────────────────────────────────── -->
   {#if activeTab === 'value-packs'}
     <div role="tabpanel" id="value-packs-panel" aria-labelledby="value-packs-tab" tabindex="0">
+      {#if !mirrorBannerDismissed}
+        <div class="info-banner" role="note">
+          <Info size={16} aria-hidden="true" />
+          <span>
+            The four <strong>unlock packs</strong> (Permanent Drone, MEGABOMB,
+            Transmuter, Battery) share state with the
+            <strong>Gem Unlocks</strong> tab — buy once, it tracks in both.
+          </span>
+          <button
+            type="button"
+            class="banner-close"
+            onclick={dismissMirrorBanner}
+            aria-label="Dismiss notice"
+          ><X size={14} aria-hidden="true" /></button>
+        </div>
+      {/if}
       <div class="grid-value-packs">
         {#each VALUE_PACKS as pack (pack.slug)}
           {@const owned = valuePackOwned(pack)}
@@ -311,6 +336,58 @@
 </div>
 
 <style>
+
+  /* ─── Value Packs ──────────────────────────────────────────── */
+  .grid-value-packs {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 768px) {
+    .grid-value-packs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .info-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-4);
+    background: color-mix(in srgb, var(--accent) 6%, var(--bg-surface));
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    line-height: var(--leading-base);
+  }
+  .info-banner :global(svg) {
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .info-banner strong { color: var(--accent); font-weight: var(--weight-medium); }
+  .info-banner span { flex: 1; }
+  .banner-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color var(--transition-fast), background var(--transition-fast);
+  }
+  @media (hover: hover) {
+    .banner-close:hover { color: var(--text-primary); background: color-mix(in srgb, var(--text-primary) 8%, transparent); }
+  }
+  .banner-close:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
 
   /* ─── Founder ─────────────────────────────────────────────────────── */
   .founder-card {

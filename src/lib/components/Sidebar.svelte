@@ -50,7 +50,7 @@
 
   {#if dataDestinations.length}
     <nav class="data-nav" aria-label="Data">
-      <p class="nav-section-label">Data</p>
+      <h2 class="nav-section-label">Data</h2>
       <ul class="nav-list" role="list">
         {#each dataDestinations as dest}
           {@const isActive = $currentRoute?.hash === dest.hash}
@@ -73,7 +73,7 @@
   {/if}
 
   <nav aria-label="Calculators">
-    <p class="nav-section-label">Calculators</p>
+    <h2 class="nav-section-label">Calculators</h2>
     <ul class="nav-list" role="list">
       {#each destinations.filter(d => d.kind === 'calculator') as dest}
         {@const isActive = $currentRoute?.hash === dest.hash}
@@ -96,7 +96,7 @@
 
   {#if utilityDestinations.length}
     <nav class="utility-nav" aria-label="App">
-      <p class="nav-section-label">App</p>
+      <h2 class="nav-section-label">App</h2>
       <ul class="nav-list" role="list">
         {#each utilityDestinations as dest}
           {@const isActive = $currentRoute?.hash === dest.hash}

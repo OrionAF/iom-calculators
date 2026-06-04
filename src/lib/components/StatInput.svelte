@@ -3,6 +3,7 @@
   import { ChevronDown } from 'lucide-svelte'
   import { loadStats, clearStats, stats } from '$lib/stores/stats'
   import type { ParseError } from '$lib/stores/stats'
+  import Button from './Button.svelte'
 
   let textValue = $state('')
   let error = $state<ParseError | null>(null)
@@ -70,16 +71,18 @@
 </script>
 
 <div class="stat-input">
-  <!-- Status indicator -->
+  <!-- Status indicator. aria-live announces parse errors persistently (L2). -->
   <button
     class="status-row"
     onclick={() => (collapsed = !collapsed)}
     aria-expanded={!collapsed}
     aria-controls="stat-paste-panel"
   >
-    <span class="dot" class:loaded={!!$stats} class:flash aria-hidden="true"></span>
-    <span class="status-text">
-      {#if $stats}
+    <span class="dot" class:loaded={!!$stats} class:flash class:error={!!error} aria-hidden="true"></span>
+    <span class="status-text" aria-live="polite">
+      {#if error}
+        Error loading stats
+      {:else if $stats}
         Stats loaded ({$stats.version})
       {:else}
         No stats — paste export
@@ -91,6 +94,12 @@
   <!-- Collapsible paste panel -->
   {#if !collapsed}
     <div class="paste-panel" id="stat-paste-panel">
+      {#if !$stats && !textValue.trim()}
+        <!-- X7: surface the in-game export instruction inline -->
+        <p class="export-hint">
+          In-game: <strong>Options → Enter Code → type 'EXPORTSTATS'</strong>, then paste it here.
+        </p>
+      {/if}
       <textarea
         class="paste-area"
         bind:value={textValue}
@@ -107,13 +116,13 @@
       {/if}
 
       <div class="actions">
-        <button class="btn-primary" onclick={submit} disabled={!textValue.trim()}>
-          Load Stats
-        </button>
+        <Button variant="primary" onclick={submit} disabled={!textValue.trim()} fullWidth>
+          {#snippet children()}Load Stats{/snippet}
+        </Button>
         {#if $stats}
-          <button class="btn-ghost" onclick={() => { clearStats(); collapsed = true }}>
-            Clear
-          </button>
+          <Button variant="ghost" onclick={() => { clearStats(); collapsed = true }}>
+            {#snippet children()}Clear{/snippet}
+          </Button>
         {/if}
       </div>
       <p class="hint">Tip: stats auto-load on paste. Ctrl+Enter to submit.</p>
@@ -155,6 +164,7 @@
     transition: background var(--transition-fast);
   }
   .dot.loaded { background: var(--success); }
+  .dot.error  { background: var(--error); }
 
   .dot.flash {
     animation: dot-pulse 600ms ease-out;
@@ -215,34 +225,19 @@
     gap: var(--space-2);
   }
 
-  .btn-primary {
-    background: var(--accent);
-    color: var(--accent-text);
-    border: none;
-    border-radius: var(--radius-md);
-    padding: var(--space-2) var(--space-4);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-bold);
-    cursor: pointer;
-    min-height: 44px;
-    flex: 1;
-    transition: background var(--transition-fast);
-  }
-  .btn-primary:hover:not([disabled]) { background: var(--accent-hover); }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .btn-ghost {
-    background: none;
+  .export-hint {
+    font-size: var(--text-xs);
     color: var(--text-muted);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: var(--space-2) var(--space-4);
-    font-size: var(--text-sm);
-    cursor: pointer;
-    min-height: 44px;
-    transition: color var(--transition-fast), border-color var(--transition-fast);
+    line-height: var(--leading-base);
+    padding: var(--space-2) var(--space-3);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-sm);
   }
-  .btn-ghost:hover { color: var(--text-primary); border-color: var(--text-muted); }
+  .export-hint strong {
+    color: var(--accent);
+    font-weight: var(--weight-medium);
+  }
 
   .hint {
     font-size: var(--text-xs);

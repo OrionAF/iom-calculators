@@ -5,6 +5,7 @@
   import Button from '$lib/components/Button.svelte'
   import { settings, setNotation } from '$lib/stores/settings'
   import { hardReset } from '$lib/storage/reset'
+  import { focusOnMount } from '$lib/actions/focusOnMount'
   import type { Notation } from '$lib/format'
 
   type Stage = 'idle' | 'confirm-1' | 'confirm-2'
@@ -103,10 +104,15 @@
         spellcheck="false"
         autocapitalize="characters"
         inputmode="text"
-        aria-describedby="stage-2-helper"
+        aria-describedby="stage-2-helper reset-validation"
         aria-invalid={confirmInput.length > 0 && confirmInput !== 'RESET'}
-        autofocus
+        use:focusOnMount
       />
+      <p id="reset-validation" class="validation-msg" aria-live="polite">
+        {#if confirmInput.length > 0 && confirmInput !== 'RESET'}
+          Type RESET (uppercase) exactly.
+        {/if}
+      </p>
       <p class="final-warning">Once you confirm, this happens immediately and cannot be undone.</p>
     </form>
   {/snippet}
@@ -215,6 +221,12 @@
   #stage-2-helper { color: var(--text-primary); }
   #stage-2-helper strong { color: var(--accent); font-weight: var(--weight-bold); }
 
+  .validation-msg {
+    font-size: var(--text-sm);
+    color: var(--error);
+    min-height: 1.5em;
+    margin-bottom: var(--space-2);
+  }
   .final-warning {
     font-size: var(--text-sm);
     color: var(--text-muted);
