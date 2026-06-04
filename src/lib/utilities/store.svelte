@@ -12,6 +12,7 @@
   import TabStrip from '$lib/components/TabStrip.svelte'
   import WikiIcon from '$lib/components/WikiIcon.svelte'
   import PageHeader from '$lib/components/PageHeader.svelte'
+  import OwnableTile from '$lib/components/OwnableTile.svelte'
   import { Minus, Plus, Check } from 'lucide-svelte'
 
   let activeTab = $state('value-packs')
@@ -97,30 +98,27 @@
       <div class="grid-value-packs">
         {#each VALUE_PACKS as pack (pack.slug)}
           {@const owned = valuePackOwned(pack)}
-          <button
-            type="button"
-            class="pack-tile"
-            class:owned
+          <OwnableTile
+            icon={pack.icon}
+            label={pack.name}
+            state={owned ? 'owned' : 'unowned'}
             onclick={() => toggleValuePackTile(pack)}
-            aria-pressed={owned}
+            layout="wide"
           >
-            <WikiIcon filename={pack.icon} size={32} class="pack-icon" />
-            <div class="pack-body">
-              <div class="pack-name">{pack.name}</div>
+            {#snippet body()}
               {#if pack.unlockRequirement}
-                <div class="pack-unlock">{pack.unlockRequirement}</div>
+                <div class="tile-meta">{pack.unlockRequirement}</div>
               {/if}
               {#if pack.mirrorUnlockKey}
-                <div class="pack-mirror-badge">Also in Gem Unlocks</div>
+                <div class="mirror-badge">Also in Gem Unlocks</div>
               {/if}
               {#if pack.effects.length}
-                <ul class="pack-effects">
-                  {#each pack.effects as e}<li>{e.label}</li>{/each}
-                </ul>
+                <div class="effect-list">
+                  {#each pack.effects as e}<div class="effect-item">{e.label}</div>{/each}
+                </div>
               {/if}
-            </div>
-            {#if owned}<Check class="pack-check" size={18} aria-hidden="true" />{/if}
-          </button>
+            {/snippet}
+          </OwnableTile>
         {/each}
       </div>
     </div>
@@ -191,27 +189,21 @@
       <div class="grid-perk-bundles">
         {#each PERK_BUNDLES as bundle (bundle.slug)}
           {@const state = getPerkBundleState(bundle.slug)}
-          <button
-            type="button"
-            class="bundle-tile bundle-{state}"
+          {@const bundleIcons = bundle.perkSlugs
+            .map(ps => PERKS.find(p => p.slug === ps)?.icon)
+            .filter((f): f is string => !!f)}
+          <OwnableTile
+            icons={bundleIcons}
+            iconSize={24}
+            label={bundle.name}
+            state={state}
             onclick={() => togglePerkBundle(bundle.slug)}
-            aria-pressed={state === 'owned'}
+            layout="wide"
           >
-            <div class="bundle-icons">
-              {#each bundle.perkSlugs as ps}
-                {@const perk = PERKS.find(p => p.slug === ps)}
-                {#if perk}<WikiIcon filename={perk.icon} size={24} />{/if}
-              {/each}
-            </div>
-            <div class="bundle-body">
-              <div class="bundle-name">{bundle.name}</div>
-              <div class="bundle-gems">+{bundle.bonusGems} bonus gems</div>
-              {#if state === 'partial'}
-                <span class="badge badge-partial">Partially owned (1/2)</span>
-              {/if}
-            </div>
-            {#if state === 'owned'}<Check size={18} aria-hidden="true" />{/if}
-          </button>
+            {#snippet body()}
+              <div class="tile-meta">+{bundle.bonusGems} bonus gems</div>
+            {/snippet}
+          </OwnableTile>
         {/each}
       </div>
     </div>
@@ -222,17 +214,13 @@
       <div class="grid-perks">
         {#each PERKS as perk (perk.slug)}
           {@const owned = $storeProgress.perks[perk.slug] === true}
-          <button
-            type="button"
-            class="perk-tile"
-            class:owned
+          <OwnableTile
+            icon={perk.icon}
+            label={perk.name}
+            state={owned ? 'owned' : 'unowned'}
             onclick={() => setPerk(perk.slug, !owned)}
-            aria-pressed={owned}
-          >
-            <WikiIcon filename={perk.icon} size={32} />
-            <div class="perk-name">{perk.name}</div>
-            {#if owned}<Check class="perk-check" size={18} aria-hidden="true" />{/if}
-          </button>
+            layout="compact"
+          />
         {/each}
       </div>
     </div>
@@ -243,21 +231,20 @@
       <div class="grid-gem-unlocks">
         {#each GEM_UNLOCKS as unlock (unlock.slug)}
           {@const owned = $storeProgress.unlocks[unlock.mirrorUnlockKey] === true}
-          <button
-            type="button"
-            class="unlock-tile"
-            class:owned
+          <OwnableTile
+            icon={unlock.icon}
+            label={unlock.name}
+            state={owned ? 'owned' : 'unowned'}
             onclick={() => setUnlock(unlock.mirrorUnlockKey, !owned)}
-            aria-pressed={owned}
+            layout="compact"
           >
-            <WikiIcon filename={unlock.icon} size={32} />
-            <div class="unlock-name">{unlock.name}</div>
-            <div class="unlock-cost">
-              <WikiIcon filename="Gem.png" size={14} /> {unlock.gemCost}
-            </div>
-            <div class="unlock-mirror-badge">Also in Value Packs</div>
-            {#if owned}<Check class="unlock-check" size={18} aria-hidden="true" />{/if}
-          </button>
+            {#snippet body()}
+              <div class="unlock-cost">
+                <WikiIcon filename="Gem.png" size={14} /> {unlock.gemCost}
+              </div>
+              <div class="mirror-badge">Also in Value Packs</div>
+            {/snippet}
+          </OwnableTile>
         {/each}
       </div>
     </div>
@@ -309,101 +296,6 @@
 
 <style>
 
-  /* ─── Tile common ─────────────────────────────────────────────────── */
-  .pack-tile,
-  .perk-tile,
-  .unlock-tile,
-  .bundle-tile {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-3);
-    padding: var(--space-4);
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    cursor: pointer;
-    text-align: left;
-    font-family: var(--font-body);
-    transition: border-color var(--transition-fast), background var(--transition-fast),
-                box-shadow var(--transition-fast);
-  }
-
-  .pack-tile.owned,
-  .perk-tile.owned,
-  .unlock-tile.owned,
-  .bundle-tile.bundle-owned {
-    border-color: var(--border-accent);
-    background: color-mix(in srgb, var(--accent) 6%, var(--bg-surface));
-    box-shadow: var(--shadow-glow);
-  }
-  .bundle-tile.bundle-partial {
-    border-color: var(--warning);
-    background: color-mix(in srgb, var(--warning) 6%, var(--bg-surface));
-  }
-
-  @media (hover: hover) {
-    .pack-tile:not(.owned):hover,
-    .perk-tile:not(.owned):hover,
-    .unlock-tile:not(.owned):hover,
-    .bundle-tile.bundle-unowned:hover {
-      border-color: var(--text-muted);
-    }
-  }
-
-  .pack-tile:focus-visible,
-  .perk-tile:focus-visible,
-  .unlock-tile:focus-visible,
-  .bundle-tile:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 2px;
-  }
-
-  /* ─── Value packs grid + tile ─────────────────────────────────────── */
-  .grid-value-packs {
-    display: grid;
-    gap: var(--space-3);
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 768px) {
-    .grid-value-packs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-
-  .pack-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-1); }
-  .pack-name {
-    font-size: var(--text-base);
-    font-weight: var(--weight-medium);
-    color: var(--text-primary);
-  }
-  .pack-unlock {
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-  }
-  .pack-mirror-badge {
-    font-size: 10px;
-    color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 12%, transparent);
-    padding: 1px 6px;
-    border-radius: var(--radius-sm);
-    align-self: flex-start;
-    margin-top: var(--space-1);
-  }
-  .pack-effects {
-    list-style: disc;
-    padding-left: var(--space-4);
-    margin-top: var(--space-2);
-    color: var(--text-muted);
-    font-size: var(--text-sm);
-  }
-  .pack-effects li { margin-bottom: 2px; }
-
-  :global(.pack-check), :global(.perk-check), :global(.unlock-check) {
-    position: absolute;
-    top: var(--space-2);
-    right: var(--space-2);
-    color: var(--accent);
-  }
-
   /* ─── Founder ─────────────────────────────────────────────────────── */
   .founder-card {
     background: var(--bg-surface);
@@ -454,11 +346,6 @@
   .badge-eligible {
     color: var(--accent);
     background: color-mix(in srgb, var(--accent) 12%, transparent);
-  }
-  .badge-partial {
-    color: var(--warning);
-    background: color-mix(in srgb, var(--warning) 12%, transparent);
-    margin-top: var(--space-1);
   }
   .badge-maxed {
     color: var(--accent);
@@ -560,56 +447,17 @@
   @media (min-width: 640px) {
     .grid-perk-bundles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
-  .bundle-icons {
-    display: flex;
-    gap: var(--space-1);
-    flex-shrink: 0;
-  }
-  .bundle-body { flex: 1; display: flex; flex-direction: column; gap: var(--space-1); }
-  .bundle-name {
-    font-size: var(--text-base);
-    font-weight: var(--weight-medium);
-    color: var(--text-primary);
-  }
-  .bundle-gems {
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-  }
-
   /* ─── Perks ───────────────────────────────────────────────────────── */
   .grid-perks {
     display: grid;
     gap: var(--space-3);
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
-  .perk-tile {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--space-2);
-  }
-  .perk-name {
-    font-size: var(--text-base);
-    font-weight: var(--weight-medium);
-    color: var(--text-primary);
-  }
-
   /* ─── Gem Unlocks ─────────────────────────────────────────────────── */
   .grid-gem-unlocks {
     display: grid;
     gap: var(--space-3);
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  }
-  .unlock-tile {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--space-2);
-  }
-  .unlock-name {
-    font-size: var(--text-base);
-    font-weight: var(--weight-medium);
-    color: var(--text-primary);
   }
   .unlock-cost {
     font-size: var(--text-sm);
@@ -620,12 +468,31 @@
     align-items: center;
     gap: var(--space-1);
   }
-  .unlock-mirror-badge {
+  /* ─── OwnableTile body content ─────────────────────────────────── */
+  .tile-meta {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+  .mirror-badge {
     font-size: 10px;
     color: var(--accent);
     background: color-mix(in srgb, var(--accent) 12%, transparent);
     padding: 1px 6px;
     border-radius: var(--radius-sm);
+    align-self: flex-start;
+    margin-top: var(--space-1);
+  }
+  .effect-list {
+    margin-top: var(--space-2);
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .effect-item::before {
+    content: '• ';
+    color: var(--text-dim);
   }
 
   /* ─── Gem Upgrades ────────────────────────────────────────────────── */
