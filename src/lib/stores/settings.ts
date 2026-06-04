@@ -3,7 +3,7 @@ import type { Notation } from '$lib/format'
 
 export type ValueDisplayMode = 'notation' | 'raw'
 export type FontScale = 'normal' | 'large'
-export type Density   = 'compact' | 'normal' | 'spacious'
+export type Density   = 'compact' | 'normal' | 'spacious' | 'super-spacious'
 
 export interface Settings {
   notation: Notation
@@ -31,7 +31,7 @@ function isValidFontScale(v: unknown): v is FontScale {
   return v === 'normal' || v === 'large'
 }
 function isValidDensity(v: unknown): v is Density {
-  return v === 'compact' || v === 'normal' || v === 'spacious'
+  return v === 'compact' || v === 'normal' || v === 'spacious' || v === 'super-spacious'
 }
 
 const _settings = persistedStore<Settings>(

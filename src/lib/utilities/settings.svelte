@@ -15,9 +15,10 @@
   ]
 
   const densityOptions: { value: Density; label: string; preview: Record<string, string> }[] = [
-    { value: 'compact',  label: 'Compact',  preview: { 'store grids': '3 cols', 'stat pairs': '2 per row' } },
-    { value: 'normal',   label: 'Normal',   preview: { 'store grids': '2 cols', 'stat pairs': '1 per row' } },
-    { value: 'spacious', label: 'Spacious', preview: { 'store grids': '1 col',  'stat pairs': '1 per row' } },
+    { value: 'compact',       label: 'Compact',       preview: { 'store grids': '4 cols', 'stat pairs': '3 per row' } },
+    { value: 'normal',        label: 'Normal',        preview: { 'store grids': '3 cols', 'stat pairs': '2 per row' } },
+    { value: 'spacious',      label: 'Spacious',      preview: { 'store grids': '2 cols', 'stat pairs': '1 per row' } },
+    { value: 'super-spacious', label: 'Super Spacious', preview: { 'store grids': '1 col',  'stat pairs': '1 per row' } },
   ]
 
   type Stage = 'idle' | 'confirm-1' | 'confirm-2'

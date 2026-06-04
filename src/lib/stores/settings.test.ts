@@ -97,6 +97,10 @@ describe('settings store — density', () => {
     resetSettings()
     expect(get(settings).density).toBe('normal')
   })
+  it('accepts super-spacious', () => {
+    setDensity('super-spacious')
+    expect(get(settings).density).toBe('super-spacious')
+  })
 })
 
 describe('settings store — partial-config upgrade tolerance', () => {
