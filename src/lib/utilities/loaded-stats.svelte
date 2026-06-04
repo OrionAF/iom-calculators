@@ -6,6 +6,31 @@
   import EmptyState from '$lib/components/EmptyState.svelte'
   import WikiIcon from '$lib/components/WikiIcon.svelte'
   import PageHeader from '$lib/components/PageHeader.svelte'
+  import { ChevronDown } from 'lucide-svelte'
+
+  // Collapsed categories — persisted in sessionStorage so a page reload
+  // within the same session remembers which you closed.
+  const COLLAPSE_KEY = 'iom-collapsed-cats'
+
+  function loadCollapsed(): Set<string> {
+    try {
+      const raw = sessionStorage.getItem(COLLAPSE_KEY)
+      return raw ? new Set(JSON.parse(raw)) : new Set()
+    } catch { return new Set() }
+  }
+
+  function saveCollapsed(s: Set<string>): void {
+    try { sessionStorage.setItem(COLLAPSE_KEY, JSON.stringify([...s])) } catch { /* noop */ }
+  }
+
+  let collapsedCats = $state(loadCollapsed())
+
+  function toggleCategory(id: string): void {
+    if (collapsedCats.has(id)) collapsedCats.delete(id)
+    else collapsedCats.add(id)
+    collapsedCats = new Set(collapsedCats)   // trigger reactivity
+    saveCollapsed(collapsedCats)
+  }
   import {
     STAT_CATALOG,
     STATUE_STATE_LABELS,
@@ -161,13 +186,25 @@
       <p class="no-results">No stats match your filter.</p>
     {:else}
       {#each visibleCategories as category (category.id)}
-        <article class="stat-card">
-          <header class="card-header">
+        {@const collapsed = collapsedCats.has(category.id)}
+        <article class="stat-card" class:collapsed>
+          <button
+            type="button"
+            class="card-header"
+            aria-expanded={!collapsed}
+            aria-controls="cat-{category.id}"
+            onclick={() => toggleCategory(category.id)}
+          >
             <h2 class="card-title">{category.label}</h2>
-            <span class="card-count">{category.visibleStats.length}</span>
-          </header>
+            <div class="card-header-meta">
+              <span class="card-count">{category.visibleStats.length}</span>
+              <ChevronDown class="collapse-chevron" size={16} aria-hidden="true" />
+            </div>
+          </button>
 
-          {#if isStatuesCategory(category.id)}
+          {#if !collapsed}
+            <div id="cat-{category.id}" class="card-body">
+            {#if isStatuesCategory(category.id)}
             <ul class="statue-grid">
               {#each category.visibleStats as stat (stat.key)}
                 <li class="statue-cell" class:unbuilt={stat.tier === 0}>
@@ -189,6 +226,8 @@
                 </dd>
               {/each}
             </dl>
+            {/if}
+            </div>
           {/if}
         </article>
       {/each}
@@ -297,17 +336,34 @@
     background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: var(--space-4) var(--space-6);
     margin-bottom: var(--space-4);
+    overflow: hidden;
   }
 
+  /* card-header is now a <button> for collapse toggle */
   .card-header {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: var(--space-4);
-    padding-bottom: var(--space-2);
+    align-items: center;
+    width: 100%;
+    padding: var(--space-4) var(--space-6);
+    background: none;
+    border: none;
     border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    text-align: left;
+    gap: var(--space-3);
+    transition: background var(--transition-fast);
+  }
+  .stat-card.collapsed .card-header {
+    border-bottom: none;
+  }
+  .card-header:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: -2px;
+  }
+  @media (hover: hover) {
+    .card-header:hover { background: color-mix(in srgb, var(--text-primary) 4%, transparent); }
   }
 
   .card-title {
@@ -315,6 +371,15 @@
     font-size: var(--text-lg);
     color: var(--accent);
     letter-spacing: 0.04em;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-header-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-shrink: 0;
   }
 
   .card-count {
@@ -322,6 +387,18 @@
     font-size: var(--text-xs);
     color: var(--text-dim);
     letter-spacing: 0.08em;
+  }
+
+  :global(.collapse-chevron) {
+    color: var(--text-muted);
+    transition: transform var(--transition-fast);
+  }
+  .stat-card.collapsed :global(.collapse-chevron) {
+    transform: rotate(-90deg);
+  }
+
+  .card-body {
+    padding: var(--space-4) var(--space-6);
   }
 
   /* Default 2-column layout for most categories */
