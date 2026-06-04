@@ -31,7 +31,7 @@
   --text-xs:   11px;
   --text-sm:   12px;
   --text-base: 16px;
-  --text-lg:   16px;
+  --text-lg:   18px;
   --text-xl:   20px;
   --text-2xl:  26px;
   --text-3xl:  34px;
@@ -60,14 +60,15 @@
   --space-2:  8px;
   --space-3:  12px;
   --space-4:  16px;
+  --space-5:  20px;
   --space-6:  24px;
   --space-8:  32px;
   --space-12: 48px;
 
   /* Motion */
-  --transition-fast: 120ms ease-out;
-  --transition-base: 200ms ease-out;
-  --transition-slow: 300ms ease-out;
+  --ease-out:        cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 120ms var(--ease-out);
+  --transition-base: 200ms var(--ease-out);
 
   /* Depth */
   --shadow-glow:    0 0 12px rgba(245, 166, 35, 0.25);
@@ -147,6 +148,16 @@ button, a, [role="button"] {
 }
 .skip-link:focus {
   top: calc(var(--space-4) + env(safe-area-inset-top));
+}
+
+/* ── Native form-control autofill (Chrome) ─────────────────── */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: var(--text-primary);
+  -webkit-box-shadow: 0 0 0 1000px var(--bg-surface) inset;
+  caret-color: var(--text-primary);
+  transition: background-color 9999s ease-out 0s;
 }
 
 /* ── Scrollbar styling ────────────────────────────────────── */
