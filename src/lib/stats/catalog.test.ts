@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { STAT_CATALOG, STATUE_STATE_LABELS } from './catalog'
+import { STAT_CATALOG, STATUE_STATE_LABELS, getStatAffix } from './catalog'
 
 describe('STAT_CATALOG', () => {
   it('has 18 categories', () => {
@@ -51,6 +51,18 @@ describe('STAT_CATALOG', () => {
         }
       }
     }
+  })
+})
+
+describe('getStatAffix', () => {
+  it('returns undefined for unknown keys', () => {
+    expect(getStatAffix('not_a_real_key')).toBeUndefined()
+  })
+  it('returns the affix declared on the catalog entry', () => {
+    expect(getStatAffix('pickaxe_attack_speed_per_second')).toEqual({ suffix: ' p/s' })
+    expect(getStatAffix('pickaxe_radius_percent')).toEqual({ prefix: '+', suffix: '%' })
+    expect(getStatAffix('xp_level_cap')).toEqual({ prefix: 'Level ' })
+    expect(getStatAffix('fishing_tick_reduction_seconds')).toEqual({ prefix: '-', suffix: 's' })
   })
 })
 

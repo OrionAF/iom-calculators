@@ -1,7 +1,32 @@
+export interface StatAffix {
+  prefix?: string
+  suffix?: string
+}
+
 export interface StatEntry {
   key: string
   label?: string  // display override; falls back to auto-derived "Snake case" from the key
   icon?: string  // wiki filename, e.g. "Fishing_Rod_Power.png"
+  affix?: StatAffix  // per-stat formatting override; takes precedence over suffix-rule fallback
+}
+
+/**
+ * Flat key → affix lookup, built from STAT_CATALOG at module load time.
+ * Used by format.ts to resolve per-stat prefixes/suffixes before falling
+ * back to the key-suffix rules.
+ */
+let _affixByKey: Map<string, StatAffix> | null = null
+
+export function getStatAffix(key: string): StatAffix | undefined {
+  if (_affixByKey === null) {
+    _affixByKey = new Map()
+    for (const cat of STAT_CATALOG) {
+      for (const stat of cat.stats) {
+        if (stat.affix) _affixByKey.set(stat.key, stat.affix)
+      }
+    }
+  }
+  return _affixByKey.get(key)
 }
 
 export interface StatCategory {
@@ -14,8 +39,8 @@ export const STAT_CATALOG: readonly StatCategory[] = [
 
   { id: 'pickaxe', label: 'Pickaxe', stats: [
     { key: 'pickaxe_damage', label: 'Pickaxe Damage', icon: 'Pickaxe_Damage.png' },
-    { key: 'pickaxe_attack_speed_per_second', label: 'Pickaxe Attack Speed', icon: 'Pickaxe_Attack_Speed.png' },
-    { key: 'pickaxe_radius_percent', label: 'Pickaxe Radius', icon: 'Pickaxe_Radius.png' },
+    { key: 'pickaxe_attack_speed_per_second', label: 'Pickaxe Attack Speed', icon: 'Pickaxe_Attack_Speed.png', affix: { suffix: ' p/s' } },
+    { key: 'pickaxe_radius_percent', label: 'Pickaxe Radius', icon: 'Pickaxe_Radius.png', affix: { prefix: '+', suffix: '%' } },
     { key: 'pickaxe_crit_chance', label: 'Pickaxe Crit Chance', icon: 'Pickaxe_Crit_Chance.png' },
     { key: 'pickaxe_crit_damage', label: 'Pickaxe Crit Damage', icon: 'Pickaxe_Crit_Damage.png' },
     { key: 'pickaxe_super_crit_chance', label: 'Pickaxe Super Crit Chance', icon: 'Pickaxe_Super_Crit_Chance.png' },
@@ -32,8 +57,8 @@ export const STAT_CATALOG: readonly StatCategory[] = [
     { key: 'bomb_crit_damage', label: 'Bomb Crit Damage', icon: 'Bomb_Crit_Damage.png' },
     { key: 'bomb_recharge_speed', label: 'Bomb Recharge Speed', icon: 'Bomb_Recharge_Speed.png' },
     { key: 'bomb_free_chance', label: 'Free Bomb Chance', icon: 'Free_Bomb_Chance.png' },
-    { key: 'bomb_capacity', label: 'Bomb Capacity', icon: 'Bomb_Capacity.png' },
-    { key: 'bomb_additional_multiplier', label: 'Additional Bomb Multiplier', icon: 'Additional_Bomb_Multiplier.png' },
+    { key: 'bomb_capacity', label: 'Bomb Capacity', icon: 'Bomb_Capacity.png', affix: { prefix: '' } },
+    { key: 'bomb_additional_multiplier', label: 'Additional Bomb Multiplier', icon: 'Additional_Bomb_Multiplier.png', affix: { prefix: '+', suffix: '×' } },
     { key: 'bomb_super_crit_chance', label: 'Bomb Super Crit Chance', icon: 'Bomb_Super_Crit_Chance.png' },
     { key: 'bomb_super_crit_damage', label: 'Bomb Super Crit Damage', icon: 'Bomb_Super_Crit_Damage.png' },
     { key: 'bomb_ultra_crit_chance', label: 'Bomb Ultra Crit Chance', icon: 'Bomb_Ultra_Crit_Chance.png' },
@@ -41,7 +66,7 @@ export const STAT_CATALOG: readonly StatCategory[] = [
     { key: 'bomb_omega_crit_chance', label: 'Bomb Omega Crit Chance', icon: 'Bomb_Omega_Crit_Chance.png' },
     { key: 'bomb_omega_crit_damage', label: 'Bomb Omega Crit Damage', icon: 'Bomb_Omega_Crit_Damage.png' },
     { key: 'bomb_cherry3x_chance', label: 'Cherry Charge 3x Chance', icon: 'Cherry_Charge_3x_Chance.png' },
-    { key: 'bomb_battery_cap_increases', label: 'Bomb Capacity Gained From Battery', icon: 'Bomb_Capacity_Gained_From_Battery.png' },
+    { key: 'bomb_battery_cap_increases', label: 'Bomb Capacity Gained From Battery', icon: 'Bomb_Capacity_Gained_From_Battery.png', affix: { prefix: '' } },
     { key: 'bomb_cap_multiplier', label: 'Bomb Cap Multiplier', icon: 'Bomb_Cap_Multiplier.png' },
     { key: 'bomb_workshop_cap_increase', label: 'Workshop Upgrade Cap Increase', icon: 'Workshop_Upgrade_Cap_Increase.png' },
     { key: 'bomb_of_plenty_make_gold_chance', label: 'Bomb of Plenty Golden Ore Chance', icon: 'Bomb_of_Plenty_Golden.png' },
@@ -53,13 +78,13 @@ export const STAT_CATALOG: readonly StatCategory[] = [
   { id: 'drones', label: 'Drones', stats: [
     { key: 'drone_count', label: 'Number Of Drones', icon: 'Number_Of_Drones.png' },
     { key: 'drone_damage_percent', label: 'Drone Damage', icon: 'Drone_Damage.png' },
-    { key: 'drone_radius_percent', label: 'Drone Radius', icon: 'Drone_Radius.png' },
-    { key: 'drone_movespeed_percent', label: 'Drone Movespeed', icon: 'Drone_Movespeed.png' },
-    { key: 'drone_attack_speed_percent', label: 'Drone Attack Speed', icon: 'Drone_Attack_Speed.png' },
+    { key: 'drone_radius_percent', label: 'Drone Radius', icon: 'Drone_Radius.png', affix: { prefix: '+', suffix: '%' } },
+    { key: 'drone_movespeed_percent', label: 'Drone Movespeed', icon: 'Drone_Movespeed.png', affix: { prefix: '+', suffix: '%' } },
+    { key: 'drone_attack_speed_percent', label: 'Drone Attack Speed', icon: 'Drone_Attack_Speed.png', affix: { prefix: '+', suffix: '%' } },
     { key: 'drone_triple_damage_chance', label: 'Drone Triple Damage', icon: 'Drone_Triple_Damage.png' },
     { key: 'drone_rapid_fire_chance', label: 'Drone Rapid Fire Chance', icon: 'Drone_Rapid_Fire_Chance.png' },
-    { key: 'drone_suit_cap', label: 'Drone Suit Upgrade Cap', icon: 'Drone_Suit_Upgrade_Cap.png' },
-    { key: 'coal_generation_seconds', label: 'Coal Generation Time', icon: 'Coal_Generation_Time.png' },
+    { key: 'drone_suit_cap', label: 'Drone Suit Upgrade Cap', icon: 'Drone_Suit_Upgrade_Cap.png', affix: { prefix: '' } },
+    { key: 'coal_generation_seconds', label: 'Coal Generation Time', icon: 'Coal_Generation_Time.png', affix: { suffix: 's' } },
     { key: 'coal_fuel_duration_multi', label: 'Drone Fuel Duration Multiplier', icon: 'Drone_Fuel_Duration_Multiplier.png' },
     { key: 'coal_capacity_multi', label: 'Coal Capacity Multiplier', icon: 'Coal_Capacity_Multiplier.png' },
     { key: 'coal_fuel_save_chance', label: 'Fuel Save Chance', icon: 'Fuel_Save_Chance.png' },
@@ -107,13 +132,13 @@ export const STAT_CATALOG: readonly StatCategory[] = [
   ] },
 
   { id: 'obelisk', label: 'Obelisk', stats: [
-    { key: 'obelisk_timer_add', label: 'Bonus Obelisk Fight Length', icon: 'Bonus_Obelisk_Fight_Length.png' },
+    { key: 'obelisk_timer_add', label: 'Bonus Obelisk Fight Length', icon: 'Bonus_Obelisk_Fight_Length.png', affix: { suffix: '×' } },
     { key: 'obelisk_cooldown_multi', label: 'Obelisk Cooldown', icon: 'Obelisk_Cooldown.png' },
     { key: 'obelisk_armor_reduction', label: 'Obelisk Armor Reduction', icon: 'Obelisk_Armor_Reduction.png' },
   ] },
 
   { id: 'prestige', label: 'Prestige', stats: [
-    { key: 'xp_level_cap', label: 'Xp Level Cap', icon: 'Xp_Level_Cap.png' },
+    { key: 'xp_level_cap', label: 'Xp Level Cap', icon: 'Xp_Level_Cap.png', affix: { prefix: 'Level ' } },
     { key: 'prestige_point_multi', label: 'Prestige Point Gain Multiplier', icon: 'Prestige_Point_Gain_Multiplier.png' },
     { key: 'experience_multi', label: 'Experience Gain Multiplier', icon: 'Experience_Gain_Multiplier.png' },
     { key: 'floor_clear_requirement_multi', label: 'Floor Clear Requirement', icon: 'Floor_Clear_Requirement.png' },
@@ -125,8 +150,8 @@ export const STAT_CATALOG: readonly StatCategory[] = [
     { key: 'lootbug_spawn_rate', label: 'Lootbug Spawn Rate Multiplier', icon: 'Lootbug_Spawn_Rate_Multiplier.png' },
     { key: 'lootbug_triple_chance', label: 'Triple Lootbug Chance', icon: 'Triple_Lootbug_Chance.png' },
     { key: 'lootbug_golden_chance', label: 'Golden Lootbug Chance', icon: 'Golden_Lootbug_Chance.png' },
-    { key: 'lootbug_bank_cap', label: 'Banked Lootbug Cap', icon: 'Banked_Lootbug_Cap.png' },
-    { key: 'lootbug_gem_cost_reduction', label: 'Lootbug Gem Cost Reduction', icon: 'Lootbug_Gem_Cost_Reduction.png' },
+    { key: 'lootbug_bank_cap', label: 'Banked Lootbug Cap', icon: 'Banked_Lootbug_Cap.png', affix: { prefix: '' } },
+    { key: 'lootbug_gem_cost_reduction', label: 'Lootbug Gem Cost Reduction', icon: 'Lootbug_Gem_Cost_Reduction.png', affix: { prefix: '+' } },
     { key: 'lootbug_loot_multi', label: 'Lootbug Loot Multiplier', icon: 'Lootbug_Loot_Multiplier.png' },
     { key: 'lootfrog_lanterns_used', label: 'Lanterns Used', icon: 'Lanterns_Used.png' },
   ] },
@@ -134,7 +159,7 @@ export const STAT_CATALOG: readonly StatCategory[] = [
   { id: 'lootfrogs', label: 'Lootfrogs', stats: [
     { key: 'lootfrogs_caught', label: 'Lootfrogs Caught', icon: 'Lootfrogs_Caught.png' },
     { key: 'golden_lootfrogs_caught', label: 'Golden Lootfrogs Caught', icon: 'Golden_Lootfrogs_Caught.png' },
-    { key: 'lootfrog_capacity', label: 'Lootfrog Capacity', icon: 'Lootfrog_Capacity.png' },
+    { key: 'lootfrog_capacity', label: 'Lootfrog Capacity', icon: 'Lootfrog_Capacity.png', affix: { prefix: '' } },
     { key: 'lootfrog_loot_multi', label: 'Lootfrog Loot Multiplier', icon: 'Lootfrog_Loot_Multiplier.png' },
     { key: 'lootfrog_golden_chance', label: 'Golden Lootfrog Chance', icon: 'Golden_Lootfrog_Chance.png' },
     { key: 'lootfrog_golden_multi', label: 'Golden Lootfrog Multiplier', icon: 'Golden_Lootfrog_Multiplier.png' },
@@ -148,11 +173,11 @@ export const STAT_CATALOG: readonly StatCategory[] = [
     { key: 'chest_double_chance', label: 'Chance For 2x Chests', icon: 'Chance_For_2x_Chests.png' },
     { key: 'chest_meter_multi', label: 'Chest Meter Gain Multiplier', icon: 'Chest_Meter_Gain_Multiplier.png' },
     { key: 'chest_items_bonus', label: 'Items Contained In Chests', icon: 'Items_Contained_In_Chests.png' },
-    { key: 'freebie_gems_bonus', label: 'Bonus Gems From Freebie Pack', icon: 'Bonus_Gems_From_Freebie_Pack.png' },
+    { key: 'freebie_gems_bonus', label: 'Bonus Gems From Freebie Pack', icon: 'Bonus_Gems_From_Freebie_Pack.png', affix: { prefix: '' } },
     { key: 'freebie_5x_chance', label: 'Chance For Freebie Jackpot', icon: 'Chance_For_Freebie_Jackpot.png' },
     { key: 'freebie_refresh_chance', label: 'Instant Refresh Chance', icon: 'Instant_Refresh_Chance.png' },
-    { key: 'freebie_bank_cap', label: 'Banked Freebie Cap', icon: 'Banked_Freebie_Cap.png' },
-    { key: 'freebie_cooldown_seconds', label: 'Freebie Cooldown', icon: 'Freebie_Cooldown.png' },
+    { key: 'freebie_bank_cap', label: 'Banked Freebie Cap', icon: 'Banked_Freebie_Cap.png', affix: { prefix: '' } },
+    { key: 'freebie_cooldown_seconds', label: 'Freebie Cooldown', icon: 'Freebie_Cooldown.png', affix: { suffix: 's' } },
     { key: 'stonks_chance', label: 'Stonks Chance', icon: 'Stonks_Chance.png' },
     { key: 'stonks_multi', label: 'Stonks Freebie Multiplier', icon: 'Stonks_Freebie_Multiplier.png' },
     { key: 'super_stonks_chance', label: 'Super Stonks Chance', icon: 'Super_Stonks_Chance.png' },
@@ -162,12 +187,12 @@ export const STAT_CATALOG: readonly StatCategory[] = [
   ] },
 
   { id: 'contracts', label: 'Contracts', stats: [
-    { key: 'contract_cost_reduction', label: 'Contract Cost Reduction', icon: 'Contract_Cost_Reduction.png' },
+    { key: 'contract_cost_reduction', label: 'Contract Cost Reduction', icon: 'Contract_Cost_Reduction.png', affix: { suffix: '%' } },
     { key: 'contract_double_points_chance', label: 'Double Contract Point Chance', icon: 'Double_Contract_Point_Chance.png' },
     { key: 'contract_triple_points_chance', label: 'Triple Contract Point Chance', icon: 'Triple_Contract_Point_Chance.png' },
     { key: 'contract_5x_points_chance', label: '5x Contract Point Chance', icon: '5x_Contract_Point_Chance.png' },
     { key: 'contract_10x_points_chance', label: '10x Contract Point Chance', icon: '10x_Contract_Point_Chance.png' },
-    { key: 'contract_points_rewarded', label: 'Contract Points Rewarded', icon: 'Contract_Points_Rewarded.png' },
+    { key: 'contract_points_rewarded', label: 'Contract Points Rewarded', icon: 'Contract_Points_Rewarded.png', affix: { prefix: '+' } },
     { key: 'contract_cap_increase', label: 'Contract Upgrade Cap Increase', icon: 'Contract_Upgrade_Cap_Increase.png' },
     { key: 'contract_upgrade_cost_reduction', label: 'Contract Upgrade Cost Reduction', icon: 'Contract_Upgrade_Cost_Reduction.png' },
   ] },
@@ -210,17 +235,17 @@ export const STAT_CATALOG: readonly StatCategory[] = [
 
   { id: 'fishing', label: 'Fishing', stats: [
     { key: 'fishing_rod_power', label: 'Fishing Rod Power', icon: 'Fishing_Rod_Power.png' },
-    { key: 'fishing_drone_capacity', label: 'Fishing Drone Capacity', icon: 'Fishing_Drone_Capacity.png' },
+    { key: 'fishing_drone_capacity', label: 'Fishing Drone Capacity', icon: 'Fishing_Drone_Capacity.png', affix: { prefix: '' } },
     { key: 'fishing_drone_power', label: 'Fishing Drone Base Power', icon: 'Fishing_Drone_Base_Power.png' },
     { key: 'fishing_drone_multiplier', label: 'Drone Power Multiplier', icon: 'Drone_Power_Multiplier.png' },
     { key: 'fishing_tier2_dock_multi', label: 'Tier 2 Dock Power', icon: 'Tier_2_Dock_Power.png' },
     { key: 'fishing_income_multi', label: 'Fish Income Multiplier', icon: 'Fish_Income_Multiplier.png' },
-    { key: 'fishing_tick_reduction_seconds', label: 'Fishing Tick Reduction', icon: 'Fishing_Tick_Reduction.png' },
+    { key: 'fishing_tick_reduction_seconds', label: 'Fishing Tick Reduction', icon: 'Fishing_Tick_Reduction.png', affix: { prefix: '-', suffix: 's' } },
     { key: 'fishing_double_tick_chance', label: 'Double Fish Tick Chance', icon: 'Double_Fish_Tick_Chance.png' },
     { key: 'fishing_triple_tick_chance', label: 'Triple Fish Tick Chance', icon: 'Triple_Fish_Tick_Chance.png' },
     { key: 'fishing_5x_tick_chance', label: '5x Fish Tick Chance', icon: '5x_Fish_Tick_Chance.png' },
     { key: 'fishing_token_multi', label: 'Fish Token Gain Multiplier', icon: 'Fish_Token_Gain_Multiplier.png' },
-    { key: 'fishing_notice_requirement', label: 'Notice Fish Requirement', icon: 'Notice_Fish_Requirement.png' },
+    { key: 'fishing_notice_requirement', label: 'Notice Fish Requirement', icon: 'Notice_Fish_Requirement.png', affix: { suffix: 'x' } },
     { key: 'fishing_tiny_notice_chance', label: 'Tiny Notice Chance', icon: 'Tiny_Notice_Chance.png' },
     { key: 'fishing_shiny_chance', label: 'Shiny Fish Chance', icon: 'Shiny_Fish_Chance.png' },
     { key: 'fishing_shiny_multi', label: 'Shiny Multiplier', icon: 'Shiny_Multiplier.png' },

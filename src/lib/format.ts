@@ -99,38 +99,16 @@ export function formatMultiplier(n: number): string {
 // Adds a prefix or suffix to a formatted stat based on the stat's key.
 // Only the affixes are added here; the numeric portion is delegated to formatStat.
 // Order of resolution:
-//   1. Exact-key overrides (highest priority)
-//   2. Suffix-pattern match against the key
+//   1. StatEntry.affix in stats/catalog.ts (per-stat override)
+//   2. Suffix-pattern match against the key (fallback for uncatalogued keys)
 //   3. Fallback: bare formatStat output
 
-type Affix = { prefix?: string; suffix?: string }
+import { getStatAffix, type StatAffix } from './stats/catalog'
 
-const EXACT_KEY_AFFIXES: Record<string, Affix> = {
-  obelisk_timer_add: { suffix: '×' },
-  lootbug_gem_cost_reduction: { prefix: '+' },
-  drone_suit_cap: { prefix: '' },
-  pickaxe_attack_speed_per_second: { suffix: ' p/s' },
-  pickaxe_radius_percent: { suffix: '%', prefix: '+' },
-  bomb_capacity: { prefix: '' },
-  bomb_additional_multiplier: { suffix: '×', prefix: '+' },
-  bomb_battery_cap_increases: { prefix: '' },
-  drone_radius_percent: { suffix: '%', prefix: '+' },
-  drone_movespeed_percent: { suffix: '%', prefix: '+' },
-  drone_attack_speed_percent: { suffix: '%', prefix: '+' },
-  coal_generation_seconds: { suffix: 's' },
-  xp_level_cap: { prefix: 'Level ' },
-  lootbug_bank_cap: { prefix: '' },
-  lootfrog_capacity: { prefix: '' },
-  freebie_gems_bonus: { prefix: '' },
-  freebie_bank_cap: { prefix: '' },
-  freebie_cooldown_seconds: { suffix: 's' },
-  contract_cost_reduction: { suffix: '%' },
-  contract_points_rewarded: { prefix: '+' },
-  fishing_drone_capacity: { prefix: '' },
-  fishing_tick_reduction_seconds: { prefix: '-', suffix: 's' },
-  fishing_notice_requirement: { suffix: 'x' },
-}
+type Affix = StatAffix
 
+// Kept for keys not catalogued yet. Order matters:
+// longer/more-specific suffixes first to avoid partial matches.
 const KEY_SUFFIX_RULES: ReadonlyArray<{ suffix: string; affix: Affix }> = [
   // Order matters: longer/more-specific suffixes first to avoid partial matches.
   { suffix: '_crit_damage', affix: { suffix: '×' } },
@@ -150,7 +128,7 @@ const KEY_SUFFIX_RULES: ReadonlyArray<{ suffix: string; affix: Affix }> = [
 ]
 
 function resolveAffix(key: string): Affix {
-  const exact = EXACT_KEY_AFFIXES[key]
+  const exact = getStatAffix(key)
   if (exact) return exact
   for (const rule of KEY_SUFFIX_RULES) {
     if (key.endsWith(rule.suffix)) return rule.affix
