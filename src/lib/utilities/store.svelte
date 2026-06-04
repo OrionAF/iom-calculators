@@ -12,7 +12,9 @@
   import WikiIcon from '$lib/components/WikiIcon.svelte'
   import PageHeader from '$lib/components/PageHeader.svelte'
   import OwnableTile from '$lib/components/OwnableTile.svelte'
+  import Tooltip from '$lib/components/Tooltip.svelte'
   import { Minus, Plus, Check, Info, X } from 'lucide-svelte'
+  import { STAT_REGISTRY } from '$lib/stats/registry'
 
   let activeTab = $state('value-packs')
 
@@ -156,7 +158,18 @@
               {/if}
               {#if pack.effects.length}
                 <div class="effect-list">
-                  {#each pack.effects as e}<div class="effect-item">{e.label}</div>{/each}
+                  {#each pack.effects as e}
+                    {@const meta = e.derivedStatKey ? STAT_REGISTRY[e.derivedStatKey] : null}
+                    <div class="effect-item">
+                      {#if meta}
+                        <Tooltip text={meta.description} addition={e.tooltipAddition}>
+                          {#snippet children()}{e.label}{/snippet}
+                        </Tooltip>
+                      {:else}
+                        {e.label}
+                      {/if}
+                    </div>
+                  {/each}
                 </div>
               {/if}
             {/snippet}
@@ -251,9 +264,23 @@
               {#if bundle.bonusGems}
                 <div class="tile-meta">+{bundle.bonusGems} bonus gems</div>
               {/if}
-              {#if bundle.effects.length}
+              {@const bundlePerks = bundle.perkSlugs.map(s => PERKS.find(p => p.slug === s)).filter(Boolean)}
+              {#if bundlePerks.length}
                 <div class="effect-list">
-                  {#each bundle.effects as e}<div class="effect-item">{e.label}</div>{/each}
+                  {#each bundlePerks as perk}
+                    {#each perk!.effects as e}
+                      {@const meta = e.derivedStatKey ? STAT_REGISTRY[e.derivedStatKey] : null}
+                      <div class="effect-item">
+                        {#if meta}
+                          <Tooltip text={meta.description} addition={e.tooltipAddition}>
+                            {#snippet children()}{e.label}{/snippet}
+                          </Tooltip>
+                        {:else}
+                          {e.label}
+                        {/if}
+                      </div>
+                    {/each}
+                  {/each}
                 </div>
               {/if}
             {/snippet}
@@ -278,7 +305,18 @@
             {#snippet body()}
               {#if perk.effects.length}
                 <div class="effect-list">
-                  {#each perk.effects as e}<div class="effect-item">{e.label}</div>{/each}
+                  {#each perk.effects as e}
+                    {@const meta = e.derivedStatKey ? STAT_REGISTRY[e.derivedStatKey] : null}
+                    <div class="effect-item">
+                      {#if meta}
+                        <Tooltip text={meta.description} addition={e.tooltipAddition}>
+                          {#snippet children()}{e.label}{/snippet}
+                        </Tooltip>
+                      {:else}
+                        {e.label}
+                      {/if}
+                    </div>
+                  {/each}
                 </div>
               {/if}
             {/snippet}
@@ -308,7 +346,18 @@
               {/if}
               {#if unlock.effects.length}
                 <div class="effect-list">
-                  {#each unlock.effects as e}<div class="effect-item">{e.label}</div>{/each}
+                  {#each unlock.effects as e}
+                    {@const meta = e.derivedStatKey ? STAT_REGISTRY[e.derivedStatKey] : null}
+                    <div class="effect-item">
+                      {#if meta}
+                        <Tooltip text={meta.description} addition={e.tooltipAddition}>
+                          {#snippet children()}{e.label}{/snippet}
+                        </Tooltip>
+                      {:else}
+                        {e.label}
+                      {/if}
+                    </div>
+                  {/each}
                 </div>
               {/if}
               <div class="mirror-badge">Also in Value Packs</div>

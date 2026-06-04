@@ -4,7 +4,8 @@ export interface StoreEffect {
   label: string
   derivedStatKey?: string
   value?: number
-  hoverDescription?: string
+  /** Context-specific tooltip addition. Base description comes from STAT_REGISTRY via derivedStatKey. */
+  tooltipAddition?: string
 }
 
 export interface ValuePack {
@@ -31,8 +32,7 @@ export interface PerkBundle {
   slug: string
   name: string
   perkSlugs: [string, string]
-  bonusGems: number,
-  effects: StoreEffect[]
+  bonusGems: number
 }
 
 export interface GemUnlock {
@@ -109,7 +109,6 @@ export const PERKS: readonly Perk[] = [
         label: '2x Ore Income',
         derivedStatKey: 'ore_income_multi',
         value: 2,
-        hoverDescription: 'Multiplies ore gained.'
       }
     ],
   },
@@ -122,7 +121,6 @@ export const PERKS: readonly Perk[] = [
         label: '2x Prestige Point Income',
         derivedStatKey: 'prestige_point_multi',
         value: 2,
-        hoverDescription: 'The multiplier on the number of Prestige Points gained.'
       }
     ],
   },
@@ -135,7 +133,6 @@ export const PERKS: readonly Perk[] = [
         label: '2x Bar Income',
         derivedStatKey: 'bar_output_multi',
         value: 2,
-        hoverDescription: 'The multiplier applied to the number of bars you receive from sources of bar creation like crafting or Transmuter Bomb.'
       }
     ],
   },
@@ -148,7 +145,6 @@ export const PERKS: readonly Perk[] = [
         label: '3x Bomb Damage',
         derivedStatKey: 'bomb_damage',
         value: 3,
-        hoverDescription: 'Bomb damage before factoring in Additional Bomb Multiplier'
       }
     ],
   },
@@ -162,32 +158,12 @@ export const PERK_BUNDLES: readonly PerkBundle[] = [
     name: '2x Ore Income + 2x Prestige Point Income',
     perkSlugs: ['2x_ore_income', '2x_prestige_point_income'],
     bonusGems: 525,
-    effects: [
-      {
-        label: '2x Ore Income',
-        hoverDescription: 'Multiplies ore gained.',
-      },
-      {
-        label: '2x Prestige Point Income',
-        hoverDescription: 'The multiplier on the number of Prestige Points gained.',
-      }
-    ]
   },
   {
     slug: 'bombs_bars_bundle',
     name: '2x Bar Income + 3x Bomb Damage',
     perkSlugs: ['2x_bar_income', '3x_bomb_damage'],
     bonusGems: 375,
-    effects: [
-      {
-        label: '2x Bar Income',
-        hoverDescription: 'The multiplier applied to the number of bars you receive from sources of bar creation like crafting or Transmuter Bomb.',
-      },
-      {
-        label: '3x Bomb Damage',
-        hoverDescription: 'Bomb damage before factoring in Additional Bomb Multiplier',
-      }
-    ]
   },
 ]
 
@@ -205,7 +181,6 @@ export const GEM_UNLOCKS: readonly GemUnlock[] = [
         label: 'Give an additional Drone that will automatic mine your ore even when you are offline.',
         derivedStatKey: 'drone_count',
         value: 1,
-        hoverDescription: 'Give an additional Drone that will automatic mine your ore even when you are offline.'
       }
     ],
   },
@@ -218,7 +193,6 @@ export const GEM_UNLOCKS: readonly GemUnlock[] = [
     effects: [
       {
         label: 'Deals 25x damage to all ores on short cooldown',
-        hoverDescription: 'Deals 25x damage to all ores on short cooldown'
       }
     ],
   },
@@ -231,7 +205,6 @@ export const GEM_UNLOCKS: readonly GemUnlock[] = [
     effects: [
       {
         label: 'Marks ores to drop bars, scales with rock size',
-        hoverDescription: 'Marks ores to drop bars, scales with rock size'
       }
     ],
   },
@@ -244,7 +217,6 @@ export const GEM_UNLOCKS: readonly GemUnlock[] = [
     effects: [
       {
         label: 'Charges 2 random bombs, 0.1% to increase all bomb caps by 1',
-        hoverDescription: 'Charges 2 random bombs, 0.1% to increase all bomb caps by 1'
       }
     ],
   },
