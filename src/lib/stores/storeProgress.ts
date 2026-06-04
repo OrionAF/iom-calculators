@@ -1,66 +1,18 @@
-import { writable } from 'svelte/store'
-import { PERK_BUNDLES, GEM_UPGRADES } from '$lib/store/catalog'
+import { get } from 'svelte/store'
+import { persistedStore } from '$lib/storage/persistedStore'
+import {
+  VALUE_PACKS,
+  PERKS,
+  PERK_BUNDLES,
+  GEM_UPGRADES,
+} from '$lib/store/catalog'
 
-// Storage is a single flat blob. Boolean and numeric values keyed by stable strings.
-// Key prefixes: value_pack_*, gem_upgrade_*, plus the fixed defaults below.
-export type StoreProgress = Record<string, boolean | number>
+// ─── Slug & key types (derived from catalog) ─────────────────────────────
 
-const FIXED_DEFAULTS: StoreProgress = {
-  unlocked_permanent_drone: false,
-  unlocked_megabomb: false,
-  unlocked_transmuter_bomb: false,
-  unlocked_battery_bomb: false,
-  perk_2x_ore_income: false,
-  perk_2x_prestige_point_income: false,
-  perk_2x_bar_income: false,
-  perk_3x_bomb_damage: false,
-  founders_bundle_purchased: false,
-  founder_tier: 0,
-}
-
-const STORAGE_KEY = 'iom-store-progress'
-
-function readStorage(): StoreProgress {
-  if (typeof window === 'undefined') return { ...FIXED_DEFAULTS }
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return { ...FIXED_DEFAULTS }
-    const parsed = JSON.parse(raw)
-    if (parsed && typeof parsed === 'object') {
-      return { ...FIXED_DEFAULTS, ...parsed }
-    }
-    return { ...FIXED_DEFAULTS }
-  } catch {
-    return { ...FIXED_DEFAULTS }
-  }
-}
-
-function writeStorage(value: StoreProgress): void {
-  if (typeof window === 'undefined') return
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(value))
-  } catch {
-    // Storage unavailable — keep in-memory only
-  }
-}
-
-const _store = writable<StoreProgress>(readStorage())
-
-_store.subscribe(value => writeStorage(value))
-
-export const storeProgress = { subscribe: _store.subscribe }
-
-// ─── Value packs ───────────────────────────────────────────────────────────
-
-export function setValuePack(slug: string, owned: boolean): void {
-  _store.update(s => ({ ...s, [`value_pack_${slug}`]: owned }))
-}
-
-export function toggleValuePack(slug: string): void {
-  _store.update(s => ({ ...s, [`value_pack_${slug}`]: !s[`value_pack_${slug}`] }))
-}
-
-// ─── Shared unlocks (Value Pack ↔ Gem Unlock mirror) ──────────────────────
+export type ValuePackSlug   = typeof VALUE_PACKS[number]['slug']
+export type PerkSlug        = typeof PERKS[number]['slug']
+export type PerkBundleSlug  = typeof PERK_BUNDLES[number]['slug']
+export type GemUpgradeSlug  = typeof GEM_UPGRADES[number]['slug']
 
 export type SharedUnlockKey =
   | 'unlocked_permanent_drone'
@@ -68,55 +20,186 @@ export type SharedUnlockKey =
   | 'unlocked_transmuter_bomb'
   | 'unlocked_battery_bomb'
 
+// ─── State shape ─────────────────────────────────────────────────────────
+
+export interface StoreProgress {
+  valuePacks:  Partial<Record<ValuePackSlug,  boolean>>
+  perks:       Partial<Record<PerkSlug,       boolean>>
+  gemUpgrades: Partial<Record<GemUpgradeSlug, number>>
+  unlocks:     Record<SharedUnlockKey, boolean>
+  founder: {
+    tier: number
+    bundlePurchased: boolean
+  }
+}
+
+const DEFAULTS: StoreProgress = {
+  valuePacks:  {},
+  perks:       {},
+  gemUpgrades: {},
+  unlocks: {
+    unlocked_permanent_drone: false,
+    unlocked_megabomb:        false,
+    unlocked_transmuter_bomb: false,
+    unlocked_battery_bomb:    false,
+  },
+  founder: { tier: 0, bundlePurchased: false },
+}
+
+const STORAGE_KEY = 'iom-store-progress'
+
+// ─── Migration & validation ──────────────────────────────────────────────
+
+function defaultUnlocks(): Record<SharedUnlockKey, boolean> {
+  return {
+    unlocked_permanent_drone: false,
+    unlocked_megabomb:        false,
+    unlocked_transmuter_bomb: false,
+    unlocked_battery_bomb:    false,
+  }
+}
+
+const VALID_UNLOCK_KEYS: ReadonlySet<SharedUnlockKey> = new Set([
+  'unlocked_permanent_drone',
+  'unlocked_megabomb',
+  'unlocked_transmuter_bomb',
+  'unlocked_battery_bomb',
+])
+
+/**
+ * Accept either the new nested shape OR the legacy flat blob:
+ *   { value_pack_*: bool, perk_*: bool, gem_upgrade_*: number,
+ *     unlocked_*: bool, founder_tier: number, founders_bundle_purchased: bool }
+ * Coerces unknown shapes into a fresh defaults clone. Exported for testing.
+ */
+export function migrateStoreProgress(parsed: unknown): StoreProgress {
+  if (parsed === null || typeof parsed !== 'object') {
+    return structuredClone(DEFAULTS)
+  }
+  const p = parsed as Record<string, unknown>
+
+  // New shape: has at least one of the nested slice keys.
+  if ('valuePacks' in p || 'perks' in p || 'gemUpgrades' in p || 'founder' in p) {
+    return {
+      valuePacks:  isPlainObject(p.valuePacks)  ? (p.valuePacks  as Partial<Record<ValuePackSlug,  boolean>>) : {},
+      perks:       isPlainObject(p.perks)       ? (p.perks       as Partial<Record<PerkSlug,       boolean>>) : {},
+      gemUpgrades: isPlainObject(p.gemUpgrades) ? (p.gemUpgrades as Partial<Record<GemUpgradeSlug, number>>)  : {},
+      unlocks:     mergeUnlocks(p.unlocks),
+      founder:     mergeFounder(p.founder),
+    }
+  }
+
+  // Legacy flat blob.
+  const valuePacks:  Partial<Record<ValuePackSlug,  boolean>> = {}
+  const perks:       Partial<Record<PerkSlug,       boolean>> = {}
+  const gemUpgrades: Partial<Record<GemUpgradeSlug, number>>  = {}
+  const unlocks = defaultUnlocks()
+  let tier = 0
+  let bundlePurchased = false
+
+  for (const [k, v] of Object.entries(p)) {
+    if (k.startsWith('value_pack_') && typeof v === 'boolean') {
+      valuePacks[k.slice('value_pack_'.length) as ValuePackSlug] = v
+    } else if (k.startsWith('perk_') && typeof v === 'boolean') {
+      perks[k.slice('perk_'.length) as PerkSlug] = v
+    } else if (k.startsWith('gem_upgrade_') && typeof v === 'number') {
+      gemUpgrades[k.slice('gem_upgrade_'.length) as GemUpgradeSlug] = v
+    } else if (VALID_UNLOCK_KEYS.has(k as SharedUnlockKey) && typeof v === 'boolean') {
+      unlocks[k as SharedUnlockKey] = v
+    } else if (k === 'founder_tier' && typeof v === 'number') {
+      tier = v
+    } else if (k === 'founders_bundle_purchased' && typeof v === 'boolean') {
+      bundlePurchased = v
+    }
+  }
+
+  return { valuePacks, perks, gemUpgrades, unlocks, founder: { tier, bundlePurchased } }
+}
+
+function isPlainObject(v: unknown): v is Record<string, unknown> {
+  return v !== null && typeof v === 'object' && !Array.isArray(v)
+}
+
+function mergeUnlocks(raw: unknown): Record<SharedUnlockKey, boolean> {
+  const out = defaultUnlocks()
+  if (!isPlainObject(raw)) return out
+  for (const k of VALID_UNLOCK_KEYS) {
+    if (typeof raw[k] === 'boolean') out[k] = raw[k] as boolean
+  }
+  return out
+}
+
+function mergeFounder(raw: unknown): { tier: number; bundlePurchased: boolean } {
+  if (!isPlainObject(raw)) return { tier: 0, bundlePurchased: false }
+  const tier = typeof raw.tier === 'number' ? raw.tier : 0
+  const bundlePurchased = typeof raw.bundlePurchased === 'boolean' ? raw.bundlePurchased : false
+  return { tier, bundlePurchased }
+}
+
+// ─── Store ───────────────────────────────────────────────────────────────
+
+const _store = persistedStore<StoreProgress>(STORAGE_KEY, DEFAULTS, migrateStoreProgress)
+
+export const storeProgress = { subscribe: _store.subscribe }
+
+// ─── Value packs ─────────────────────────────────────────────────────────
+
+export function setValuePack(slug: ValuePackSlug, owned: boolean): void {
+  _store.update(s => ({ ...s, valuePacks: { ...s.valuePacks, [slug]: owned } }))
+}
+
+export function toggleValuePack(slug: ValuePackSlug): void {
+  _store.update(s => ({
+    ...s,
+    valuePacks: { ...s.valuePacks, [slug]: !s.valuePacks[slug] },
+  }))
+}
+
+// ─── Shared unlocks (Value Pack ↔ Gem Unlock mirror) ─────────────────────
+
 export function setUnlock(key: SharedUnlockKey, owned: boolean): void {
-  _store.update(s => ({ ...s, [key]: owned }))
+  _store.update(s => ({ ...s, unlocks: { ...s.unlocks, [key]: owned } }))
 }
 
 export function toggleUnlock(key: SharedUnlockKey): void {
-  _store.update(s => ({ ...s, [key]: !s[key] }))
+  _store.update(s => ({ ...s, unlocks: { ...s.unlocks, [key]: !s.unlocks[key] } }))
 }
 
-// ─── Perks ─────────────────────────────────────────────────────────────────
+// ─── Perks ───────────────────────────────────────────────────────────────
 
-export function setPerk(slug: string, owned: boolean): void {
-  _store.update(s => ({ ...s, [`perk_${slug}`]: owned }))
+export function setPerk(slug: PerkSlug, owned: boolean): void {
+  _store.update(s => ({ ...s, perks: { ...s.perks, [slug]: owned } }))
 }
 
-// ─── Perk bundles (derived from perks; toggling rewrites both perks) ──────
+// ─── Perk bundles (derived from perks; toggling rewrites both perks) ────
 
 export type PerkBundleState = 'unowned' | 'partial' | 'owned'
 
-export function getPerkBundleState(bundleSlug: string): PerkBundleState {
+export function getPerkBundleState(bundleSlug: PerkBundleSlug): PerkBundleState {
   const bundle = PERK_BUNDLES.find(b => b.slug === bundleSlug)
   if (!bundle) return 'unowned'
-  let s: StoreProgress
-  // Synchronously read current value — Svelte's subscribe contract is to call back
-  // synchronously with the current value, then return an unsubscribe function.
-  _store.subscribe(v => { s = v })()
-  const owned = bundle.perkSlugs.filter(slug => s![`perk_${slug}`] === true).length
-  if (owned === 2) return 'owned'
-  if (owned === 1) return 'partial'
+  const s = get(_store)
+  const owned = bundle.perkSlugs.filter(slug => s.perks[slug as PerkSlug] === true).length
+  if (owned === bundle.perkSlugs.length) return 'owned'
+  if (owned > 0) return 'partial'
   return 'unowned'
 }
 
-export function togglePerkBundle(bundleSlug: string): void {
+export function togglePerkBundle(bundleSlug: PerkBundleSlug): void {
   const bundle = PERK_BUNDLES.find(b => b.slug === bundleSlug)
   if (!bundle) return
-  const currentState = getPerkBundleState(bundleSlug)
-  const newOwned = currentState !== 'owned'
+  const newOwned = getPerkBundleState(bundleSlug) !== 'owned'
   _store.update(s => {
-    const next = { ...s }
-    for (const slug of bundle.perkSlugs) {
-      next[`perk_${slug}`] = newOwned
-    }
-    return next
+    const perks = { ...s.perks }
+    for (const slug of bundle.perkSlugs) perks[slug as PerkSlug] = newOwned
+    return { ...s, perks }
   })
 }
 
-// ─── Founder ───────────────────────────────────────────────────────────────
+// ─── Founder ─────────────────────────────────────────────────────────────
 
 export function setFoundersBundlePurchased(purchased: boolean): void {
-  _store.update(s => ({ ...s, founders_bundle_purchased: purchased }))
+  _store.update(s => ({ ...s, founder: { ...s.founder, bundlePurchased: purchased } }))
 }
 
 export function setFounderTier(tier: number): void {
@@ -124,33 +207,35 @@ export function setFounderTier(tier: number): void {
   if (tier > 12) tier = 12
 
   _store.update(s => {
-    const currentTier = (s.founder_tier as number) ?? 0
-    const next: StoreProgress = { ...s, founder_tier: tier }
-    // Cascade: if going UP and away from 0, auto-fill the prereqs.
+    const next: StoreProgress = { ...s, founder: { ...s.founder, tier } }
+    // Cascade: going UP and away from 0 auto-fills the prereqs.
     // Going down does NOT clear anything (sticky ownership).
-    if (tier > 0 && tier > currentTier) {
-      next.perk_2x_ore_income = true
-      next.perk_2x_prestige_point_income = true
-      next.perk_2x_bar_income = true
-      next.perk_3x_bomb_damage = true
-      next.founders_bundle_purchased = true
+    if (tier > 0 && tier > s.founder.tier) {
+      next.perks = {
+        ...s.perks,
+        '2x_ore_income':            true,
+        '2x_prestige_point_income': true,
+        '2x_bar_income':            true,
+        '3x_bomb_damage':           true,
+      }
+      next.founder.bundlePurchased = true
     }
     return next
   })
 }
 
-// ─── Gem upgrades (numeric ranks, clamped to [0, maxLevel]) ───────────────
+// ─── Gem upgrades (numeric ranks, clamped to [0, maxLevel]) ─────────────
 
-export function setGemUpgradeRank(slug: string, rank: number): void {
+export function setGemUpgradeRank(slug: GemUpgradeSlug, rank: number): void {
   const upgrade = GEM_UPGRADES.find(u => u.slug === slug)
   const maxLevel = upgrade?.maxLevel ?? 0
   if (rank < 0) rank = 0
   if (rank > maxLevel) rank = maxLevel
-  _store.update(s => ({ ...s, [`gem_upgrade_${slug}`]: rank }))
+  _store.update(s => ({ ...s, gemUpgrades: { ...s.gemUpgrades, [slug]: rank } }))
 }
 
-// ─── Reset ─────────────────────────────────────────────────────────────────
+// ─── Reset ───────────────────────────────────────────────────────────────
 
 export function resetStoreProgress(): void {
-  _store.set({ ...FIXED_DEFAULTS })
+  _store.reset()
 }

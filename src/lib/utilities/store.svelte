@@ -18,14 +18,15 @@
   // ─── Derived counts for tab badges ──────────────────────────────────────
 
   const valuePackOwnedCount = $derived(
-    VALUE_PACKS.filter(p => {
-      const key = p.mirrorUnlockKey ?? `value_pack_${p.slug}`
-      return $storeProgress[key] === true
-    }).length
+    VALUE_PACKS.filter(p =>
+      p.mirrorUnlockKey
+        ? $storeProgress.unlocks[p.mirrorUnlockKey] === true
+        : $storeProgress.valuePacks[p.slug] === true
+    ).length
   )
 
   const perksOwnedCount = $derived(
-    PERKS.filter(p => $storeProgress[`perk_${p.slug}`] === true).length
+    PERKS.filter(p => $storeProgress.perks[p.slug] === true).length
   )
 
   const perkBundlesOwnedCount = $derived(
@@ -33,16 +34,16 @@
   )
 
   const gemUnlocksOwnedCount = $derived(
-    GEM_UNLOCKS.filter(u => $storeProgress[u.mirrorUnlockKey] === true).length
+    GEM_UNLOCKS.filter(u => $storeProgress.unlocks[u.mirrorUnlockKey] === true).length
   )
 
   const gemUpgradesActiveCount = $derived(
-    GEM_UPGRADES.filter(u => ((($storeProgress[`gem_upgrade_${u.slug}`] as number) ?? 0)) > 0).length
+    GEM_UPGRADES.filter(u => ($storeProgress.gemUpgrades[u.slug] ?? 0) > 0).length
   )
 
   const tabs = $derived([
     { id: 'value-packs',  label: 'Value Packs',  badgeCount: valuePackOwnedCount },
-    { id: 'founder',      label: 'Founder',      badgeCount: $storeProgress.founders_bundle_purchased ? 1 : 0 },
+    { id: 'founder',      label: 'Founder',      badgeCount: $storeProgress.founder.bundlePurchased ? 1 : 0 },
     { id: 'perk-bundles', label: 'Perk Bundles', badgeCount: perkBundlesOwnedCount },
     { id: 'perks',        label: 'Perks',        badgeCount: perksOwnedCount },
     { id: 'gem-unlocks',  label: 'Gem Unlocks',  badgeCount: gemUnlocksOwnedCount },
@@ -52,31 +53,32 @@
   // ─── Founder section derived state ──────────────────────────────────────
 
   const allPerksOwned = $derived(
-    $storeProgress.perk_2x_ore_income === true &&
-    $storeProgress.perk_2x_prestige_point_income === true &&
-    $storeProgress.perk_2x_bar_income === true &&
-    $storeProgress.perk_3x_bomb_damage === true
+    $storeProgress.perks['2x_ore_income'] === true &&
+    $storeProgress.perks['2x_prestige_point_income'] === true &&
+    $storeProgress.perks['2x_bar_income'] === true &&
+    $storeProgress.perks['3x_bomb_damage'] === true
   )
 
-  const currentTier = $derived(($storeProgress.founder_tier as number) ?? 0)
+  const currentTier = $derived($storeProgress.founder.tier)
 
   // ─── Helpers ────────────────────────────────────────────────────────────
 
   function valuePackOwned(pack: typeof VALUE_PACKS[number]): boolean {
-    const key = pack.mirrorUnlockKey ?? `value_pack_${pack.slug}`
-    return $storeProgress[key] === true
+    return pack.mirrorUnlockKey
+      ? $storeProgress.unlocks[pack.mirrorUnlockKey] === true
+      : $storeProgress.valuePacks[pack.slug] === true
   }
 
   function toggleValuePackTile(pack: typeof VALUE_PACKS[number]) {
     if (pack.mirrorUnlockKey) {
-      setUnlock(pack.mirrorUnlockKey, !$storeProgress[pack.mirrorUnlockKey])
+      setUnlock(pack.mirrorUnlockKey, !$storeProgress.unlocks[pack.mirrorUnlockKey])
     } else {
-      setValuePack(pack.slug, !$storeProgress[`value_pack_${pack.slug}`])
+      setValuePack(pack.slug, !$storeProgress.valuePacks[pack.slug])
     }
   }
 
-  function gemUpgradeRank(slug: string): number {
-    return ($storeProgress[`gem_upgrade_${slug}`] as number) ?? 0
+  function gemUpgradeRank(slug: typeof GEM_UPGRADES[number]['slug']): number {
+    return $storeProgress.gemUpgrades[slug] ?? 0
   }
 </script>
 
@@ -131,7 +133,7 @@
           <div class="founder-bundle-text">
             <h2 class="founder-bundle-name">Founder's Bundle</h2>
             <p class="founder-bundle-desc">Permanent effects + VIP Lounge access.</p>
-            {#if $storeProgress.founders_bundle_purchased}
+            {#if $storeProgress.founder.bundlePurchased}
               <span class="badge badge-owned"><Check size={14} aria-hidden="true" /> Owned</span>
             {:else if !allPerksOwned}
               <span class="badge badge-locked">Requires all 4 perks</span>
@@ -218,7 +220,7 @@
     <div role="tabpanel" id="perks-panel" aria-labelledby="perks-tab" tabindex="0">
       <div class="grid-perks">
         {#each PERKS as perk (perk.slug)}
-          {@const owned = $storeProgress[`perk_${perk.slug}`] === true}
+          {@const owned = $storeProgress.perks[perk.slug] === true}
           <button
             type="button"
             class="perk-tile"
@@ -239,7 +241,7 @@
     <div role="tabpanel" id="gem-unlocks-panel" aria-labelledby="gem-unlocks-tab" tabindex="0">
       <div class="grid-gem-unlocks">
         {#each GEM_UNLOCKS as unlock (unlock.slug)}
-          {@const owned = $storeProgress[unlock.mirrorUnlockKey] === true}
+          {@const owned = $storeProgress.unlocks[unlock.mirrorUnlockKey] === true}
           <button
             type="button"
             class="unlock-tile"

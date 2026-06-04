@@ -1,4 +1,4 @@
-import { writable, readonly } from 'svelte/store'
+import { persistedStore } from '$lib/storage/persistedStore'
 
 export type ParseError =
   | { kind: 'invalid-json'; message: string }
@@ -27,22 +27,13 @@ function isValidExport(v: unknown): v is StatsExport {
   )
 }
 
-function readStorage(): StatsExport | null {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return null
-    const parsed = JSON.parse(raw)
-    return isValidExport(parsed) ? parsed : null
-  } catch {
-    return null
-  }
-}
-
-const _stats = writable<StatsExport | null>(
-  typeof window !== 'undefined' ? readStorage() : null
+const _stats = persistedStore<StatsExport | null>(
+  STORAGE_KEY,
+  null,
+  (parsed) => (isValidExport(parsed) ? parsed : null),
 )
 
-export const stats = readonly(_stats)
+export const stats = { subscribe: _stats.subscribe }
 
 export function loadStats(json: string): Result<void, ParseError> {
   let parsed: unknown
@@ -57,17 +48,9 @@ export function loadStats(json: string): Result<void, ParseError> {
   }
 
   _stats.set(parsed)
-  try {
-    localStorage.setItem(STORAGE_KEY, json)
-  } catch {
-    // Storage unavailable — state updated in memory only
-  }
   return { ok: true, value: undefined }
 }
 
 export function clearStats(): void {
-  _stats.set(null)
-  try {
-    localStorage.removeItem(STORAGE_KEY)
-  } catch {}
+  _stats.reset()
 }

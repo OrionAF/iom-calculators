@@ -69,10 +69,10 @@ describe('hardReset — store progress', () => {
     const { setValuePack, storeProgress } = await import('$lib/stores/storeProgress')
     const { get } = await import('svelte/store')
     setValuePack('capitalist_bundle', true)
-    expect(get(storeProgress).value_pack_capitalist_bundle).toBe(true)
+    expect(get(storeProgress).valuePacks.capitalist_bundle).toBe(true)
 
     hardReset()
 
-    expect(get(storeProgress).value_pack_capitalist_bundle).toBeFalsy()
+    expect(get(storeProgress).valuePacks.capitalist_bundle).toBeUndefined()
   })
 })

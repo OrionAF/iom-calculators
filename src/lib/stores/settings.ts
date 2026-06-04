@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store'
+import { persistedStore } from '$lib/storage/persistedStore'
 import type { Notation } from '$lib/format'
 
 export type ValueDisplayMode = 'notation' | 'raw'
@@ -23,39 +23,20 @@ function isValidValueDisplayMode(v: unknown): v is ValueDisplayMode {
   return v === 'notation' || v === 'raw'
 }
 
-function readStorage(): Settings {
-  if (typeof window === 'undefined') return { ...DEFAULTS }
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return { ...DEFAULTS }
-    const parsed = JSON.parse(raw)
-    if (parsed && typeof parsed === 'object') {
-      const notation = isValidNotation(parsed.notation)
-        ? parsed.notation
-        : DEFAULTS.notation
-      const valueDisplayMode = isValidValueDisplayMode(parsed.valueDisplayMode)
-        ? parsed.valueDisplayMode
-        : DEFAULTS.valueDisplayMode
-      return { notation, valueDisplayMode }
+const _settings = persistedStore<Settings>(
+  STORAGE_KEY,
+  DEFAULTS,
+  (parsed) => {
+    if (parsed === null || typeof parsed !== 'object') return { ...DEFAULTS }
+    const p = parsed as Record<string, unknown>
+    return {
+      notation: isValidNotation(p.notation) ? p.notation : DEFAULTS.notation,
+      valueDisplayMode: isValidValueDisplayMode(p.valueDisplayMode)
+        ? p.valueDisplayMode
+        : DEFAULTS.valueDisplayMode,
     }
-    return { ...DEFAULTS }
-  } catch {
-    return { ...DEFAULTS }
-  }
-}
-
-function writeStorage(value: Settings): void {
-  if (typeof window === 'undefined') return
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(value))
-  } catch {
-    // Storage unavailable — keep in-memory state only
-  }
-}
-
-const _settings = writable<Settings>(readStorage())
-
-_settings.subscribe(value => writeStorage(value))
+  },
+)
 
 export const settings = { subscribe: _settings.subscribe }
 
@@ -68,5 +49,5 @@ export function setValueDisplayMode(m: ValueDisplayMode): void {
 }
 
 export function resetSettings(): void {
-  _settings.set({ ...DEFAULTS })
+  _settings.reset()
 }
