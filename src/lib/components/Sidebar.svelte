@@ -2,11 +2,9 @@
   import { X, Pickaxe } from 'lucide-svelte'
   import { destinations } from '$lib/calculators/registry'
   import { currentRoute } from '$lib/stores/router'
+  import { drawerOpen, closeDrawer } from '$lib/stores/drawer'
   import StatInput from './StatInput.svelte'
   import { focusTrap } from '$lib/actions/focusTrap'
-
-  let drawerOpen = $state(false)
-  let hamburgerEl: HTMLButtonElement
 
   const dataDestinations = $derived(
     destinations.filter(d => d.kind === 'data')
@@ -16,47 +14,29 @@
     destinations.filter(d => d.kind === 'utility')
   )
 
-  function openDrawer() { drawerOpen = true }
-  function closeDrawer() {
-    drawerOpen = false
-    hamburgerEl?.focus()
-  }
-
   function handleKeydown(e: KeyboardEvent) {
-    if (e.key === 'Escape' && drawerOpen) closeDrawer()
+    if (e.key === 'Escape' && $drawerOpen) closeDrawer()
   }
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
 
-<!-- Mobile hamburger (only visible <1024px) -->
-<button
-  bind:this={hamburgerEl}
-  class="hamburger"
-  onclick={openDrawer}
-  aria-label="Open navigation"
-  aria-expanded={drawerOpen}
-  aria-controls="sidebar"
->
-  <span></span><span></span><span></span>
-</button>
-
-<!-- Mobile backdrop -->
-{#if drawerOpen}
-  <button
+<!-- Mobile backdrop. role=presentation div instead of a button (L1):
+     keyboard users use Escape + the close button inside the drawer. -->
+{#if $drawerOpen}
+  <div
     class="backdrop"
+    role="presentation"
     onclick={closeDrawer}
-    aria-label="Close navigation"
-    tabindex="-1"
-  ></button>
+  ></div>
 {/if}
 
 <!-- Sidebar / Drawer -->
 <aside
   id="sidebar"
   class="sidebar"
-  class:open={drawerOpen}
-  use:focusTrap={drawerOpen}
+  class:open={$drawerOpen}
+  use:focusTrap={$drawerOpen}
 >
   <div class="sidebar-header">
     <Pickaxe class="sidebar-logo" size={20} aria-hidden="true" />
@@ -140,41 +120,12 @@
 </aside>
 
 <style>
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: var(--space-2);
-    min-width: 44px;
-    min-height: 44px;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: calc(var(--space-3) + env(safe-area-inset-top));
-    left: calc(var(--space-3) + env(safe-area-inset-left));
-    z-index: var(--z-drawer);
-  }
-  .hamburger span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--text-primary);
-    border-radius: 1px;
-    transition: background var(--transition-fast);
-  }
-  .hamburger:hover span { background: var(--accent); }
-
   .backdrop {
     display: none;
     position: fixed;
     inset: 0;
     background: var(--overlay-bg);
     z-index: var(--z-overlay);
-    border: none;
-    padding: 0;
     cursor: pointer;
   }
 
@@ -298,9 +249,7 @@
 
   /* ── Mobile (<1024px) ────────────────────────────────── */
   @media (max-width: 1023px) {
-    .hamburger { display: flex; }
     .close-btn { display: flex; }
-
     .backdrop { display: block; }
 
     .sidebar {

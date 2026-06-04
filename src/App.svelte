@@ -2,7 +2,9 @@
   import './app.css'
   import type { Component } from 'svelte'
   import { currentRoute } from './lib/stores/router'
+  import { drawerOpen } from './lib/stores/drawer'
   import Sidebar from './lib/components/Sidebar.svelte'
+  import MobileTopBar from './lib/components/MobileTopBar.svelte'
   import HomeGrid from './lib/components/HomeGrid.svelte'
 
   let activeComponent: Component | null = $state(null)
@@ -31,8 +33,13 @@
 
 <div class="app-layout">
   <Sidebar />
+  <MobileTopBar />
 
-  <main id="main-content" class="main-content">
+  <main
+    id="main-content"
+    class="main-content"
+    inert={$drawerOpen || undefined}
+  >
     {#if $currentRoute && activeComponent}
       {@const Cmp = activeComponent}
       <Cmp />
