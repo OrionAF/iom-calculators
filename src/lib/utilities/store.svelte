@@ -17,6 +17,22 @@
 
   let activeTab = $state('value-packs')
 
+  // X5: remember per-tab scroll position so switching tabs and switching back
+  // restores the previous offset instead of jumping to the top.
+  const scrollByTab = new Map<string, number>()
+
+  function switchTab(nextId: string) {
+    if (nextId === activeTab) return
+    scrollByTab.set(activeTab, window.scrollY)
+    activeTab = nextId
+    // Restore on next paint. requestAnimationFrame is fine — the new panel
+    // will have mounted by then.
+    requestAnimationFrame(() => {
+      const y = scrollByTab.get(nextId) ?? 0
+      window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior })
+    })
+  }
+
   // ─── Derived counts for tab badges ──────────────────────────────────────
 
   const valuePackOwnedCount = $derived(
@@ -90,7 +106,7 @@
     description="Track what you've purchased from the in-game Store."
   />
 
-  <TabStrip {tabs} value={activeTab} onchange={(id) => activeTab = id} ariaLabel="Store sections" />
+  <TabStrip {tabs} value={activeTab} onchange={switchTab} ariaLabel="Store sections" />
 
   <!-- ─── Value Packs ───────────────────────────────────────────────────── -->
   {#if activeTab === 'value-packs'}

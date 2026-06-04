@@ -18,6 +18,23 @@
   let { tabs, value, onchange, ariaLabel = 'Tabs' }: Props = $props()
 
   let stripEl: HTMLDivElement | undefined = $state()
+  let fadeLeft  = $state(false)
+  let fadeRight = $state(true)
+
+  function updateFades() {
+    if (!stripEl) return
+    const { scrollLeft, scrollWidth, clientWidth } = stripEl
+    fadeLeft = scrollLeft > 1
+    fadeRight = scrollLeft + clientWidth < scrollWidth - 1
+  }
+
+  $effect(() => {
+    if (!stripEl) return
+    updateFades()
+    const onResize = () => updateFades()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  })
 
   function handleKeydown(e: KeyboardEvent, currentIndex: number) {
     let target: number | null = null
@@ -36,8 +53,18 @@
   }
 </script>
 
-<div class="tabstrip-wrap">
-  <div role="tablist" aria-label={ariaLabel} class="tabstrip" bind:this={stripEl}>
+<div
+  class="tabstrip-wrap"
+  class:fade-left={fadeLeft}
+  class:fade-right={fadeRight}
+>
+  <div
+    role="tablist"
+    aria-label={ariaLabel}
+    class="tabstrip"
+    bind:this={stripEl}
+    onscroll={updateFades}
+  >
     {#each tabs as tab, i}
       <button
         type="button"
@@ -68,7 +95,11 @@
   .tabstrip-wrap {
     position: relative;
     margin-bottom: var(--space-6);
+    --fade-left:  0px;
+    --fade-right: 0px;
   }
+  .tabstrip-wrap.fade-left  { --fade-left:  24px; }
+  .tabstrip-wrap.fade-right { --fade-right: 24px; }
 
   .tabstrip {
     display: flex;
@@ -78,7 +109,14 @@
     border-bottom: 1px solid var(--border);
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      black var(--fade-left),
+      black calc(100% - var(--fade-right)),
+      transparent 100%
+    );
+    transition: mask-image var(--transition-fast);
   }
   .tabstrip::-webkit-scrollbar { display: none; }
 
