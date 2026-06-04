@@ -7,7 +7,6 @@
     storeProgress,
     setValuePack, setUnlock, setPerk, togglePerkBundle,
     setFounderTier, setGemUpgradeRank,
-    getPerkBundleState,
   } from '$lib/stores/storeProgress'
   import TabStrip from '$lib/components/TabStrip.svelte'
   import WikiIcon from '$lib/components/WikiIcon.svelte'
@@ -57,7 +56,9 @@
   )
 
   const perkBundlesOwnedCount = $derived(
-    PERK_BUNDLES.filter(b => getPerkBundleState(b.slug) === 'owned').length
+    PERK_BUNDLES.filter(b =>
+      b.perkSlugs.every(ps => $storeProgress.perks[ps] === true)
+    ).length
   )
 
   const gemUnlocksOwnedCount = $derived(
@@ -229,7 +230,8 @@
     <div role="tabpanel" id="perk-bundles-panel" aria-labelledby="perk-bundles-tab" tabindex="0">
       <div class="grid-perk-bundles">
         {#each PERK_BUNDLES as bundle (bundle.slug)}
-          {@const state = getPerkBundleState(bundle.slug)}
+          {@const _ownedCount = bundle.perkSlugs.filter(ps => $storeProgress.perks[ps] === true).length}
+          {@const state = _ownedCount === bundle.perkSlugs.length ? 'owned' : _ownedCount > 0 ? 'partial' : 'unowned'}
           {@const bundleIcons = bundle.perkSlugs
             .map(ps => PERKS.find(p => p.slug === ps)?.icon)
             .filter((f): f is string => !!f)}
