@@ -53,7 +53,7 @@
 
   /* Layout */
   --sidebar-width:     220px;
-  --content-max-width: 900px;
+  --content-max-width: clamp(900px, calc(100vw - var(--sidebar-width) - 4rem), 1800px);
 
   /* Spacing (4pt system) */
   --space-1:  4px;
@@ -97,19 +97,16 @@
 :root {
   --page-cols:   2;   /* card grids (Store)                          */
   --stat-cols:   1;   /* stat key-value pairs per row (Loaded Stats) */
-  --statue-cols: 3;   /* statue grid columns                         */
   --grid-min:    180px; /* min tile width for auto-fill grids         */
 }
 :root[data-density="compact"] {
   --page-cols:   3;
   --stat-cols:   2;
-  --statue-cols: 4;
   --grid-min:    150px;
 }
 :root[data-density="spacious"] {
   --page-cols:   1;
   --stat-cols:   1;
-  --statue-cols: 2;
   --grid-min:    220px;
 }
 

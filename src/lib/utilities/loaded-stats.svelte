@@ -437,7 +437,7 @@
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(var(--statue-cols, 3), 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-3);
   }
 
