@@ -3,7 +3,7 @@ export type Notation = 'standard' | 'scientific' | 'engineering'
 // Index 0 → 'k' (10³); index 19 → 'nvdc' (10⁶⁰).
 const SUFFIXES = [
   'k', 'm', 'b', 't', 'q', 'qi', 'sx', 'sp', 'oc', 'no',
-  'dc', 'udc', 'ddc', 'tdc', 'qdc', 'qidc', 'sxdc', 'spdc', 'ocdc', 'nvdc',
+  'dc', 'udc', 'ddc', 'tdc', 'qadc', 'qidc', 'sxdc', 'spdc', 'ocdc', 'nvdc',
 ] as const
 
 const SUFFIX_BY_NAME: Record<string, number> = Object.fromEntries(

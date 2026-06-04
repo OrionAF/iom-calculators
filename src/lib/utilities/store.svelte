@@ -170,7 +170,11 @@
     <div role="tabpanel" id="founder-panel" aria-labelledby="founder-tab" tabindex="0">
       <article class="founder-card">
         <header class="founder-bundle-header">
+          {#if currentTier >= 10}
+            <WikiIcon filename="FounderIconT10.png" size={48} class="founder-icon-shiny" />
+          {:else}
           <WikiIcon filename="FounderIcon.png" size={48} />
+          {/if}
           <div class="founder-bundle-text">
             <h2 class="founder-bundle-name">Founder's Bundle</h2>
             <p class="founder-bundle-desc">Permanent effects + VIP Lounge access.</p>
@@ -244,7 +248,14 @@
             layout="wide"
           >
             {#snippet body()}
-              <div class="tile-meta">+{bundle.bonusGems} bonus gems</div>
+              {#if bundle.bonusGems}
+                <div class="tile-meta">+{bundle.bonusGems} bonus gems</div>
+              {/if}
+              {#if bundle.effects.length}
+                <div class="effect-list">
+                  {#each bundle.effects as e}<div class="effect-item">{e.label}</div>{/each}
+                </div>
+              {/if}
             {/snippet}
           </OwnableTile>
         {/each}
@@ -262,8 +273,16 @@
             label={perk.name}
             state={owned ? 'owned' : 'unowned'}
             onclick={() => setPerk(perk.slug, !owned)}
-            layout="compact"
-          />
+            layout="wide"
+          >
+            {#snippet body()}
+              {#if perk.effects.length}
+                <div class="effect-list">
+                  {#each perk.effects as e}<div class="effect-item">{e.label}</div>{/each}
+                </div>
+              {/if}
+            {/snippet}
+          </OwnableTile>
         {/each}
       </div>
     </div>
@@ -279,12 +298,19 @@
             label={unlock.name}
             state={owned ? 'owned' : 'unowned'}
             onclick={() => setUnlock(unlock.mirrorUnlockKey, !owned)}
-            layout="compact"
+            layout="wide"
           >
             {#snippet body()}
+              {#if unlock.gemCost}
               <div class="unlock-cost">
                 <WikiIcon filename="Gem.png" size={14} /> {unlock.gemCost}
               </div>
+              {/if}
+              {#if unlock.effects.length}
+                <div class="effect-list">
+                  {#each unlock.effects as e}<div class="effect-item">{e.label}</div>{/each}
+                </div>
+              {/if}
               <div class="mirror-badge">Also in Value Packs</div>
             {/snippet}
           </OwnableTile>
@@ -546,13 +572,19 @@
   .grid-perks {
     display: grid;
     gap: var(--space-3);
-    grid-template-columns: repeat(auto-fill, minmax(var(--grid-min, 180px), 1fr));
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 768px) {
+    .grid-perks { grid-template-columns: repeat(var(--page-cols, 2), minmax(0, 1fr)); }
   }
   /* ─── Gem Unlocks ─────────────────────────────────────────────────── */
   .grid-gem-unlocks {
     display: grid;
     gap: var(--space-3);
-    grid-template-columns: repeat(auto-fill, minmax(var(--grid-min, 180px), 1fr));
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 768px) {
+    .grid-gem-unlocks { grid-template-columns: repeat(var(--page-cols, 2), minmax(0, 1fr)); }
   }
   .unlock-cost {
     font-size: var(--text-sm);
