@@ -7,9 +7,20 @@
   import WikiIcon from '$lib/components/WikiIcon.svelte'
   import {
     STAT_CATALOG,
-    STATUE_ENRICHMENT,
     STATUE_STATE_LABELS,
   } from '$lib/stats/catalog'
+
+  function isStatuesCategory(categoryId: string): boolean {
+    return categoryId.endsWith('statues')
+  }
+
+  function statueIconForTier(baseIcon: string | undefined, tier: number | undefined): string | undefined {
+    if (!baseIcon) return baseIcon
+    // tiers: 0 Unbuilt (show Normal, dimmed), 1 Normal, 2 Gilded, 3 Platinized
+    if (tier === 2) return baseIcon.replace('_Normal', '_Gilded')
+    if (tier === 3) return baseIcon.replace('_Normal', '_Platinized')
+    return baseIcon
+  }
 
   let filterText = $state('')
 
@@ -22,23 +33,18 @@
 
   function matchesFilter(
     stat: { key: string; label?: string },
-    categoryId: string,
     filter: string,
   ): boolean {
     if (filter === '') return true
     if (prettyKey(stat.key).toLowerCase().includes(filter)) return true
     if (stat.label && stat.label.toLowerCase().includes(filter)) return true
-    if (categoryId === 'statues') {
-      const e = STATUE_ENRICHMENT[stat.key]
-      if (e && e.name.toLowerCase().includes(filter)) return true
-    }
     return false
   }
 
   function formatStatRow(key: string, value: number | undefined, categoryId: string): string {
     if (value === undefined) return '—'
     if (categoryId === 'meta') return String(value)
-    if (categoryId === 'statues') {
+    if (isStatuesCategory(categoryId)) {
       if (Number.isInteger(value) && value >= 0 && value < STATUE_STATE_LABELS.length) {
         return STATUE_STATE_LABELS[value]
       }
@@ -73,15 +79,20 @@
   const visibleCategories = $derived(
     STAT_CATALOG.map(cat => {
       const visibleStats = cat.stats
-        .filter(stat => matchesFilter(stat, cat.id, normalizedFilter))
-        .map(stat => ({
-          key: stat.key,
-          icon: stat.icon,
-          prettyLabel: stat.label ?? prettyKey(stat.key),
-          rawValue: $stats?.stats[stat.key],
-          displayValue: formatStatRow(stat.key, $stats?.stats[stat.key], cat.id),
-          enrichment: cat.id === 'statues' ? STATUE_ENRICHMENT[stat.key] : undefined,
-        }))
+        .filter(stat => matchesFilter(stat, normalizedFilter))
+        .map(stat => {
+          const rawValue = $stats?.stats[stat.key]
+          const tier = typeof rawValue === 'number' ? rawValue : 0
+          return {
+            key: stat.key,
+            icon: stat.icon,
+            statueIcon: isStatuesCategory(cat.id) ? statueIconForTier(stat.icon, tier) : stat.icon,
+            prettyLabel: stat.label ?? prettyKey(stat.key),
+            rawValue,
+            displayValue: formatStatRow(stat.key, rawValue, cat.id),
+            tier,
+          }
+        })
       return { ...cat, visibleStats }
     }).filter(cat => cat.visibleStats.length > 0)
   )
@@ -143,32 +154,16 @@
             <span class="card-count">{category.visibleStats.length}</span>
           </header>
 
-          {#if category.id === 'statues'}
-            <table class="statue-table">
-              <thead>
-                <tr>
-                  <th scope="col">Key</th>
-                  <th scope="col">Name</th>
-                  <th scope="col" class="col-world">World</th>
-                  <th scope="col" class="col-state">State</th>
-                </tr>
-              </thead>
-              <tbody>
-                {#each category.visibleStats as stat (stat.key)}
-                  <tr>
-                    <td class="stat-field">{stat.prettyLabel}</td>
-                    <td class="stat-name">
-                      <WikiIcon filename={stat.icon} size={14} />
-                      {stat.enrichment?.name ?? '—'}
-                    </td>
-                    <td class="stat-world">{stat.enrichment?.world ?? '—'}</td>
-                    <td class="stat-state" class:dim={stat.displayValue === 'Unbuilt'}>
-                      {stat.displayValue}
-                    </td>
-                  </tr>
-                {/each}
-              </tbody>
-            </table>
+          {#if isStatuesCategory(category.id)}
+            <ul class="statue-grid">
+              {#each category.visibleStats as stat (stat.key)}
+                <li class="statue-cell" class:unbuilt={stat.tier === 0}>
+                  <WikiIcon filename={stat.statueIcon} width={64} height={96} alt={stat.prettyLabel} />
+                  <span class="statue-label">{stat.prettyLabel}</span>
+                  <span class="statue-state">{stat.displayValue}</span>
+                </li>
+              {/each}
+            </ul>
           {:else}
             <dl class="stat-grid">
               {#each category.visibleStats as stat (stat.key)}
@@ -368,67 +363,46 @@
     color: var(--text-dim);
   }
 
-  /* ── Statues: 4-column table variant ────────────────── */
-  .statue-table {
-    width: 100%;
-    border-collapse: collapse;
+  /* ── Statues: 3×3 grid variant ──────────────────────── */
+  .statue-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+
+  .statue-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-2);
+    background: color-mix(in srgb, var(--bg-surface) 60%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: opacity var(--transition-fast), filter var(--transition-fast);
+  }
+
+  .statue-cell.unbuilt {
+    opacity: 0.45;
+    filter: grayscale(1);
+  }
+
+  .statue-label {
     font-family: var(--font-body);
     font-size: var(--text-sm);
-  }
-
-  .statue-table th {
-    text-align: left;
-    font-weight: var(--weight-medium);
-    color: var(--text-muted);
-    text-transform: uppercase;
-    font-size: var(--text-xs);
-    letter-spacing: 0.08em;
-    padding: 0 var(--space-2) var(--space-2);
-    border-bottom: 1px solid var(--border);
-  }
-  .statue-table th.col-world,
-  .statue-table th.col-state {
-    text-align: right;
-  }
-
-  .statue-table td {
-    padding: var(--space-2);
-    border-bottom: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
-  }
-  .statue-table tr:last-child td {
-    border-bottom: none;
-  }
-
-  .statue-table .stat-field {
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-    font-size: var(--text-xs);
-  }
-
-  .statue-table .stat-name {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
     color: var(--text-primary);
     font-weight: var(--weight-medium);
+    line-height: var(--leading-tight);
   }
 
-  .statue-table .stat-world {
+  .statue-state {
     font-family: var(--font-mono);
-    font-variant-numeric: tabular-nums;
+    font-size: var(--text-xs);
     color: var(--text-muted);
-    text-align: right;
-    width: 1%;
-    white-space: nowrap;
-  }
-
-  .statue-table .stat-state {
-    text-align: right;
-    color: var(--text-primary);
-    white-space: nowrap;
-    width: 1%;
-  }
-  .statue-table .stat-state.dim {
-    color: var(--text-dim);
+    letter-spacing: 0.04em;
   }
 </style>

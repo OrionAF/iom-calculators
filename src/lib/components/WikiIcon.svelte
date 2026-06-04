@@ -4,11 +4,16 @@
   interface Props {
     filename: string | undefined
     size?: number
+    width?: number
+    height?: number
     alt?: string
     class?: string
   }
 
-  let { filename, size = 16, alt = '', class: extraClass = '' }: Props = $props()
+  let { filename, size = 16, width, height, alt = '', class: extraClass = '' }: Props = $props()
+
+  const w = $derived(width ?? size)
+  const h = $derived(height ?? size)
 
   let errored = $state(false)
 
@@ -23,7 +28,7 @@
   {#if errored}
     <HelpCircle
       class={'wiki-icon wiki-icon-fallback ' + extraClass}
-      size={size}
+      size={Math.max(w, h)}
       aria-hidden={alt === ''}
       aria-label={alt || undefined}
     />
@@ -31,8 +36,8 @@
     <img
       class={'wiki-icon ' + extraClass}
       src={'https://shminer.miraheze.org/wiki/Special:Redirect/file/' + filename}
-      width={size}
-      height={size}
+      width={w}
+      height={h}
       alt={alt}
       loading="lazy"
       onerror={() => { errored = true }}

@@ -7,6 +7,7 @@ import {
   GEM_UPGRADES,
   FOUNDER_TIERS,
   vipEffectAt,
+  formatVipEffectValue,
 } from './catalog'
 
 describe('VALUE_PACKS', () => {
@@ -112,6 +113,17 @@ describe('FOUNDER_TIERS', () => {
       )
     }
   })
+  it('every tier has at least one effect with baseValue/increment/unit set', () => {
+    const validUnits = ['minutes', 'percent', 'multiplier', 'count']
+    for (const t of FOUNDER_TIERS) {
+      expect(t.effects.length).toBeGreaterThan(0)
+      for (const e of t.effects) {
+        expect(typeof e.baseValue).toBe('number')
+        expect(typeof e.increment).toBe('number')
+        expect(validUnits).toContain(e.unit)
+      }
+    }
+  })
 })
 
 describe('vipEffectAt', () => {
@@ -126,5 +138,30 @@ describe('vipEffectAt', () => {
   })
   it('handles negative increments (e.g. cooldown reduction)', () => {
     expect(vipEffectAt(12, 1, 60, -2)).toBe(38)
+  })
+  it('works with decimal magnitudes (Golden Lootbug Chance at tier 7)', () => {
+    // Tier 5 effect, baseValue 0.06, +0.03 per tier above.
+    // At unlockedTier 7: 0.06 + 2*0.03 = 0.12
+    expect(vipEffectAt(7, 5, 0.06, 0.03)).toBeCloseTo(0.12, 10)
+  })
+})
+
+describe('formatVipEffectValue', () => {
+  it('formats percent values from decimals', () => {
+    expect(formatVipEffectValue(0.12, 'percent')).toBe('12%')
+    expect(formatVipEffectValue(0.005, 'percent')).toBe('0.5%')
+    expect(formatVipEffectValue(0.025, 'percent')).toBe('2.5%')
+  })
+  it('formats minutes', () => {
+    expect(formatVipEffectValue(60, 'minutes')).toBe('60 minutes')
+    expect(formatVipEffectValue(38, 'minutes')).toBe('38 minutes')
+  })
+  it('formats multipliers', () => {
+    expect(formatVipEffectValue(2, 'multiplier')).toBe('2x')
+    expect(formatVipEffectValue(13, 'multiplier')).toBe('13x')
+  })
+  it('formats counts as plain numbers', () => {
+    expect(formatVipEffectValue(4, 'count')).toBe('4')
+    expect(formatVipEffectValue(26, 'count')).toBe('26')
   })
 })

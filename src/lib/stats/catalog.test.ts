@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { STAT_CATALOG, STATUE_ENRICHMENT, STATUE_STATE_LABELS } from './catalog'
+import { STAT_CATALOG, STATUE_STATE_LABELS } from './catalog'
 
 describe('STAT_CATALOG', () => {
-  it('has 16 categories', () => {
-    expect(STAT_CATALOG.length).toBe(16)
+  it('has 18 categories', () => {
+    expect(STAT_CATALOG.length).toBe(18)
   })
 
   it('has unique category ids', () => {
@@ -50,17 +50,6 @@ describe('STAT_CATALOG', () => {
           expect(stat.label.length).toBeGreaterThan(0)
         }
       }
-    }
-  })
-})
-
-describe('STATUE_ENRICHMENT', () => {
-  it('covers every key in the statues category', () => {
-    const statues = STAT_CATALOG.find(c => c.id === 'statues')!
-    for (const stat of statues.stats) {
-      expect(STATUE_ENRICHMENT[stat.key]).toBeDefined()
-      expect(STATUE_ENRICHMENT[stat.key].name.length).toBeGreaterThan(0)
-      expect([1, 3, 4]).toContain(STATUE_ENRICHMENT[stat.key].world)
     }
   })
 })

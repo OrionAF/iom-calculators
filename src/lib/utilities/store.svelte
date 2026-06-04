@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     VALUE_PACKS, PERKS, PERK_BUNDLES, GEM_UNLOCKS, GEM_UPGRADES, FOUNDER_TIERS,
-    vipEffectAt,
+    vipEffectAt, formatVipEffectValue,
   } from '$lib/store/catalog'
   import {
     storeProgress,
@@ -90,7 +90,7 @@
 
   <!-- ─── Value Packs ───────────────────────────────────────────────────── -->
   {#if activeTab === 'value-packs'}
-    <section role="tabpanel" id="value-packs-panel" aria-labelledby="value-packs-tab">
+    <div role="tabpanel" id="value-packs-panel" aria-labelledby="value-packs-tab" tabindex="0">
       <div class="grid-value-packs">
         {#each VALUE_PACKS as pack (pack.slug)}
           {@const owned = valuePackOwned(pack)}
@@ -120,14 +120,14 @@
           </button>
         {/each}
       </div>
-    </section>
+    </div>
 
   <!-- ─── Founder ──────────────────────────────────────────────────────── -->
   {:else if activeTab === 'founder'}
-    <section role="tabpanel" id="founder-panel" aria-labelledby="founder-tab">
+    <div role="tabpanel" id="founder-panel" aria-labelledby="founder-tab" tabindex="0">
       <article class="founder-card">
         <header class="founder-bundle-header">
-          <WikiIcon filename="Founder Bundle.png" size={48} />
+          <WikiIcon filename="FounderIcon.png" size={48} />
           <div class="founder-bundle-text">
             <h2 class="founder-bundle-name">Founder's Bundle</h2>
             <p class="founder-bundle-desc">Permanent effects + VIP Lounge access.</p>
@@ -166,11 +166,13 @@
             <h4 class="effects-heading">Active effects at tier {currentTier}:</h4>
             <ul class="founder-effects">
               {#each FOUNDER_TIERS.filter(t => t.tier <= currentTier) as t}
-                {@const value = vipEffectAt(currentTier, t.tier, t.baseValue, t.increment)}
-                <li>
-                  <span class="effect-name">{t.effectName}</span>
-                  <span class="effect-value">{value}{t.unit}</span>
-                </li>
+                {#each t.effects as e}
+                  {@const value = vipEffectAt(currentTier, t.tier, e.baseValue, e.increment)}
+                  <li>
+                    <span class="effect-name">{e.label}</span>
+                    <span class="effect-value">{formatVipEffectValue(value, e.unit)}</span>
+                  </li>
+                {/each}
               {/each}
             </ul>
           {:else}
@@ -178,11 +180,11 @@
           {/if}
         </div>
       </article>
-    </section>
+    </div>
 
   <!-- ─── Perk Bundles ─────────────────────────────────────────────────── -->
   {:else if activeTab === 'perk-bundles'}
-    <section role="tabpanel" id="perk-bundles-panel" aria-labelledby="perk-bundles-tab">
+    <div role="tabpanel" id="perk-bundles-panel" aria-labelledby="perk-bundles-tab" tabindex="0">
       <div class="grid-perk-bundles">
         {#each PERK_BUNDLES as bundle (bundle.slug)}
           {@const state = getPerkBundleState(bundle.slug)}
@@ -209,11 +211,11 @@
           </button>
         {/each}
       </div>
-    </section>
+    </div>
 
   <!-- ─── Perks ────────────────────────────────────────────────────────── -->
   {:else if activeTab === 'perks'}
-    <section role="tabpanel" id="perks-panel" aria-labelledby="perks-tab">
+    <div role="tabpanel" id="perks-panel" aria-labelledby="perks-tab" tabindex="0">
       <div class="grid-perks">
         {#each PERKS as perk (perk.slug)}
           {@const owned = $storeProgress[`perk_${perk.slug}`] === true}
@@ -230,11 +232,11 @@
           </button>
         {/each}
       </div>
-    </section>
+    </div>
 
   <!-- ─── Gem Unlocks ──────────────────────────────────────────────────── -->
   {:else if activeTab === 'gem-unlocks'}
-    <section role="tabpanel" id="gem-unlocks-panel" aria-labelledby="gem-unlocks-tab">
+    <div role="tabpanel" id="gem-unlocks-panel" aria-labelledby="gem-unlocks-tab" tabindex="0">
       <div class="grid-gem-unlocks">
         {#each GEM_UNLOCKS as unlock (unlock.slug)}
           {@const owned = $storeProgress[unlock.mirrorUnlockKey] === true}
@@ -255,11 +257,11 @@
           </button>
         {/each}
       </div>
-    </section>
+    </div>
 
   <!-- ─── Gem Upgrades ─────────────────────────────────────────────────── -->
   {:else if activeTab === 'gem-upgrades'}
-    <section role="tabpanel" id="gem-upgrades-panel" aria-labelledby="gem-upgrades-tab">
+    <div role="tabpanel" id="gem-upgrades-panel" aria-labelledby="gem-upgrades-tab" tabindex="0">
       <div class="grid-gem-upgrades">
         {#each GEM_UPGRADES as upgrade (upgrade.slug)}
           {@const rank = gemUpgradeRank(upgrade.slug)}
@@ -298,7 +300,7 @@
           </article>
         {/each}
       </div>
-    </section>
+    </div>
   {/if}
 </div>
 
