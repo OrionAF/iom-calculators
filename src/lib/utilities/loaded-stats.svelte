@@ -76,25 +76,37 @@
     return `${hh}:${mm}:${ss} - ${dd}.${mmm} ${yyyy}`;
   }
 
+  // Layer 1: filter only. Depends on STAT_CATALOG + normalizedFilter.
+  // Stable across $stats and $settings changes — a notation toggle won't re-filter.
+  const filteredCategories = $derived(
+    STAT_CATALOG
+      .map(cat => ({
+        ...cat,
+        matchedStats: cat.stats.filter(stat => matchesFilter(stat, normalizedFilter)),
+      }))
+      .filter(cat => cat.matchedStats.length > 0)
+  )
+
+  // Layer 2: format + decorate. Depends on filteredCategories + $stats + $settings.
+  // A keystroke in the filter doesn't reach this layer's existing rows; only the
+  // shape of filteredCategories changes.
   const visibleCategories = $derived(
-    STAT_CATALOG.map(cat => {
-      const visibleStats = cat.stats
-        .filter(stat => matchesFilter(stat, normalizedFilter))
-        .map(stat => {
-          const rawValue = $stats?.stats[stat.key]
-          const tier = typeof rawValue === 'number' ? rawValue : 0
-          return {
-            key: stat.key,
-            icon: stat.icon,
-            statueIcon: isStatuesCategory(cat.id) ? statueIconForTier(stat.icon, tier) : stat.icon,
-            prettyLabel: stat.label ?? prettyKey(stat.key),
-            rawValue,
-            displayValue: formatStatRow(stat.key, rawValue, cat.id),
-            tier,
-          }
-        })
-      return { ...cat, visibleStats }
-    }).filter(cat => cat.visibleStats.length > 0)
+    filteredCategories.map(cat => ({
+      ...cat,
+      visibleStats: cat.matchedStats.map(stat => {
+        const rawValue = $stats?.stats[stat.key]
+        const tier = typeof rawValue === 'number' ? rawValue : 0
+        return {
+          key: stat.key,
+          icon: stat.icon,
+          statueIcon: isStatuesCategory(cat.id) ? statueIconForTier(stat.icon, tier) : stat.icon,
+          prettyLabel: stat.label ?? prettyKey(stat.key),
+          rawValue,
+          displayValue: formatStatRow(stat.key, rawValue, cat.id),
+          tier,
+        }
+      }),
+    }))
   )
 </script>
 
