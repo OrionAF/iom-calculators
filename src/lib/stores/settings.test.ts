@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { get } from 'svelte/store'
-import { settings, setNotation, setValueDisplayMode, setFontScale, setDensity, resetSettings } from './settings'
+import { settings, setNotation, setValueDisplayMode, setFontScale, setDensity, setStatTooltips, resetSettings } from './settings'
 
 const STORAGE_KEY = 'iom-settings'
 
@@ -100,6 +100,45 @@ describe('settings store — density', () => {
   it('accepts super-spacious', () => {
     setDensity('super-spacious')
     expect(get(settings).density).toBe('super-spacious')
+  })
+})
+
+describe('settings store — statTooltips', () => {
+  it('defaults to true', () => {
+    expect(get(settings).statTooltips).toBe(true)
+  })
+
+  it('setStatTooltips(false) persists to localStorage and updates the store', () => {
+    setStatTooltips(false)
+    expect(get(settings).statTooltips).toBe(false)
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY)!)
+    expect(stored.statTooltips).toBe(false)
+  })
+
+  it('setStatTooltips(true) toggles back on', () => {
+    setStatTooltips(false)
+    setStatTooltips(true)
+    expect(get(settings).statTooltips).toBe(true)
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY)!)
+    expect(stored.statTooltips).toBe(true)
+  })
+
+  it('resetSettings restores statTooltips to true', () => {
+    setStatTooltips(false)
+    resetSettings()
+    expect(get(settings).statTooltips).toBe(true)
+  })
+
+  it('falls back to default true on invalid value in storage', () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ statTooltips: 'yes' }))
+    resetSettings()
+    expect(get(settings).statTooltips).toBe(true)
+  })
+
+  it('missing statTooltips in storage defaults to true', () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ notation: 'scientific' }))
+    resetSettings()
+    expect(get(settings).statTooltips).toBe(true)
   })
 })
 

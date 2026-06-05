@@ -10,6 +10,7 @@ export interface Settings {
   valueDisplayMode: ValueDisplayMode
   fontScale: FontScale
   density: Density
+  statTooltips: boolean
 }
 
 const DEFAULTS: Settings = {
@@ -17,6 +18,7 @@ const DEFAULTS: Settings = {
   valueDisplayMode: 'notation',
   fontScale: 'normal',
   density: 'normal',
+  statTooltips: true,
 }
 
 const STORAGE_KEY = 'iom-settings'
@@ -33,6 +35,9 @@ function isValidFontScale(v: unknown): v is FontScale {
 function isValidDensity(v: unknown): v is Density {
   return v === 'compact' || v === 'normal' || v === 'spacious' || v === 'super-spacious'
 }
+function isValidStatTooltips(v: unknown): v is boolean {
+  return v === true || v === false
+}
 
 const _settings = persistedStore<Settings>(
   STORAGE_KEY,
@@ -45,6 +50,7 @@ const _settings = persistedStore<Settings>(
       valueDisplayMode: isValidValueDisplayMode(p.valueDisplayMode) ? p.valueDisplayMode  : DEFAULTS.valueDisplayMode,
       fontScale:        isValidFontScale(p.fontScale)               ? p.fontScale          : DEFAULTS.fontScale,
       density:          isValidDensity(p.density)                   ? p.density            : DEFAULTS.density,
+      statTooltips:     isValidStatTooltips(p.statTooltips)         ? p.statTooltips       : DEFAULTS.statTooltips,
     }
   },
 )
@@ -65,6 +71,10 @@ export function setFontScale(f: FontScale): void {
 
 export function setDensity(d: Density): void {
   _settings.update(s => ({ ...s, density: d }))
+}
+
+export function setStatTooltips(v: boolean): void {
+  _settings.update(s => ({ ...s, statTooltips: v }))
 }
 
 export function resetSettings(): void {
