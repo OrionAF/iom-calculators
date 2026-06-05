@@ -8,6 +8,7 @@
  * `name`        — human-readable display name (matches stats/catalog.ts label)
  * `description` — one-sentence explanation of what this stat does in-game
  * `icon`        — wiki filename (matches stats/catalog.ts icon where available)
+ * `affix`       — optional prefix/suffix for formatted values (e.g. "+", "%", " p/s")
  *
  * Context-specific tooltip additions (e.g. "this is a permanent effect") go
  * on the individual StoreEffect.tooltipAddition or page-level prop — NOT here.
@@ -38,11 +39,13 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Pickaxe Attack Speed',
     description: 'How many times per second your pickaxe swings.',
     icon: 'Pickaxe_Attack_Speed.png',
+    affix: { suffix: ' p/s' },
   },
   pickaxe_radius_percent: {
     name: 'Pickaxe Radius',
     description: 'Increases the area of effect of each pickaxe swing.',
     icon: 'Pickaxe_Radius.png',
+    affix: { prefix: '+', suffix: '%' },
   },
   pickaxe_crit_chance: {
     name: 'Pickaxe Crit Chance',
@@ -96,6 +99,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Bomb Capacity',
     description: 'The total number of bombs you can carry at once.',
     icon: 'Bomb_Capacity.png',
+    affix: { prefix: '' },
   },
   bomb_recharge_speed: {
     name: 'Bomb Recharge Speed',
@@ -121,11 +125,13 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Additional Bomb Multiplier',
     description: 'An extra multiplier applied on top of all bomb-damage calculations.',
     icon: 'Additional_Bomb_Multiplier.png',
+    affix: { prefix: '+', suffix: '×' },
   },
   bomb_battery_cap_increases: {
     name: 'Battery Bomb Cap Increases',
     description: 'Number of times the Battery Bomb has permanently increased your bomb cap.',
     icon: 'Bomb_Capacity.png',
+    affix: { prefix: '' },
   },
   bomb_cherry3x_chance: {
     name: 'Cherry Charge 3× Chance',
@@ -235,11 +241,13 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Banked Freebie Cap',
     description: 'Maximum number of Freebie Packs you can store in the bank.',
     icon: 'Banked_Freebie_Cap.png',
+    affix: { prefix: '' },
   },
   freebie_gems_bonus: {
     name: 'Bonus Gems From Freebie Pack',
     description: 'Additional gems added to each Freebie Pack payout.',
     icon: 'Bonus_Gems_From_Freebie_Pack.png',
+    affix: { prefix: '' },
   },
   freebie_5x_chance: {
     name: 'Freebie Pack Jackpot Chance',
@@ -278,6 +286,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Banked Lootbug Cap',
     description: 'Maximum number of Lootbugs you can store in the bank.',
     icon: 'Banked_Lootbug_Cap.png',
+    affix: { prefix: '' },
   },
   lootbug_golden_chance: {
     name: 'Golden Lootbug Chance',
@@ -293,6 +302,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Lootfrog Capacity',
     description: 'Maximum number of Lootfrogs that can be active on your floors at once.',
     icon: 'Lootfrog_Capacity.png',
+    affix: { prefix: '' },
   },
   lootfrog_loot_multi: {
     name: 'Lootfrog Loot Multiplier',
@@ -394,18 +404,22 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Drone Suit Cap',
     description: 'The maximum number of drone suit upgrades that can be equipped.',
     icon: 'Number_Of_Drones.png',
+    affix: { prefix: '' },
   },
   drone_radius_percent: {
     name: 'Drone Radius',
     description: 'Increases the mining radius of your drones.',
+    affix: { prefix: '+', suffix: '%' },
   },
   drone_movespeed_percent: {
     name: 'Drone Move Speed',
     description: 'Increases the movement speed of your drones.',
+    affix: { prefix: '+', suffix: '%' },
   },
   drone_attack_speed_percent: {
     name: 'Drone Attack Speed',
     description: 'Increases how quickly your drones swing at ores.',
+    affix: { prefix: '+', suffix: '%' },
   },
   drone_triple_damage_chance: {
     name: 'Drone Triple Damage',
@@ -467,16 +481,19 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Fishing Drone Capacity',
     description: 'Maximum number of fishing drones you can deploy.',
     icon: 'Fishing_Rod_Power.png',
+    affix: { prefix: '' },
   },
   fishing_tick_reduction_seconds: {
     name: 'Fishing Tick Reduction',
     description: 'Reduces the time between fishing ticks.',
     icon: 'Fishing_Rod_Power.png',
+    affix: { prefix: '-', suffix: 's' },
   },
   fishing_notice_requirement: {
     name: 'Fishing Notice Requirement',
     description: 'Multiplier on the fish count threshold needed to trigger a notice event.',
     icon: 'Fishing_Rod_Power.png',
+    affix: { suffix: 'x' },
   },
 
   // ─── Chests ───────────────────────────────────────────────────────────────
@@ -513,31 +530,38 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'XP Level Cap',
     description: 'The maximum level your XP bar can reach before the prestige resets it.',
     icon: 'Xp_Level_Cap.png',
+    affix: { prefix: 'Level ' },
   },
   obelisk_timer_add: {
     name: 'Obelisk Timer Add',
     description: 'Multiplier added to the Obelisk timer, extending its active duration.',
+    affix: { suffix: '×' },
   },
   lootbug_gem_cost_reduction: {
     name: 'Lootbug Gem Cost Reduction',
     description: 'Reduces the gem cost to collect a Lootbug\'s loot.',
+    affix: { prefix: '+' },
   },
   coal_generation_seconds: {
     name: 'Coal Generation Time',
     description: 'Seconds between coal generation ticks for drone fuel.',
     icon: 'Drone_Fuel_Duration_Multiplier.png',
+    affix: { suffix: 's' },
   },
   contract_cost_reduction: {
     name: 'Contract Cost Reduction',
     description: 'Reduces the gold cost of taking on contracts.',
+    affix: { suffix: '%' },
   },
   contract_points_rewarded: {
     name: 'Contract Points Rewarded',
     description: 'Additional contract points awarded on contract completion.',
+    affix: { prefix: '+' },
   },
   freebie_cooldown_seconds: {
     name: 'Freebie Cooldown',
     description: 'Seconds between Freebie Pack recharge ticks.',
+    affix: { suffix: 's' },
   },
   item_duration_multi: {
     name: 'Item Duration Multiplier',
