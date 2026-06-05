@@ -470,6 +470,12 @@
     gap: var(--space-3);
   }
 
+  @media (max-width: 479px) {
+    .statue-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   .statue-cell {
     display: flex;
     flex-direction: column;
