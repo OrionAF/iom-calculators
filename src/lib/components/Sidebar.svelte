@@ -17,6 +17,22 @@
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape' && $drawerOpen) closeDrawer()
   }
+
+  let touchStartX = 0
+  let touchStartY = 0
+
+  function onTouchStart(e: TouchEvent) {
+    touchStartX = e.touches[0].clientX
+    touchStartY = e.touches[0].clientY
+  }
+
+  function onTouchEnd(e: TouchEvent) {
+    if (!$drawerOpen) return
+    const dx = touchStartX - e.changedTouches[0].clientX
+    const dy = Math.abs(touchStartY - e.changedTouches[0].clientY)
+    // Threshold: 50px leftward, horizontal-dominant (not a vertical scroll).
+    if (dx > 50 && dx > dy) closeDrawer()
+  }
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
@@ -37,6 +53,8 @@
   class="sidebar"
   class:open={$drawerOpen}
   use:focusTrap={$drawerOpen}
+  ontouchstart={onTouchStart}
+  ontouchend={onTouchEnd}
 >
   <div class="sidebar-header">
     <Pickaxe class="sidebar-logo" size={20} aria-hidden="true" />
