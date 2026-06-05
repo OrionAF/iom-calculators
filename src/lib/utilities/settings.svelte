@@ -1,9 +1,10 @@
 <script lang="ts">
   import RadioGroup from '$lib/components/RadioGroup.svelte'
+  import Toggle from '$lib/components/Toggle.svelte'
   import Modal from '$lib/components/Modal.svelte'
   import PageHeader from '$lib/components/PageHeader.svelte'
   import Button from '$lib/components/Button.svelte'
-  import { settings, setNotation, setFontScale, setDensity, resetSettings } from '$lib/stores/settings'
+  import { settings, setNotation, setFontScale, setDensity, setStatTooltips, resetSettings } from '$lib/stores/settings'
   import { clearStats } from '$lib/stores/stats'
   import { resetStoreProgress } from '$lib/stores/storeProgress'
   import { focusOnMount } from '$lib/actions/focusOnMount'
@@ -108,6 +109,15 @@
       options={densityOptions}
       value={$settings.density}
       onchange={setDensity}
+    />
+  </section>
+
+  <section class="settings-section">
+    <Toggle
+      label="Stat tooltips"
+      description="Show a tooltip when hovering or tapping a stat effect in the Store. Displays the stat's name, description, and the value this pack adds."
+      checked={$settings.statTooltips}
+      onchange={setStatTooltips}
     />
   </section>
 
