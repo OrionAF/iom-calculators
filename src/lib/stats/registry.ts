@@ -32,555 +32,1254 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
 
   pickaxe_damage: {
     name: 'Pickaxe Damage',
-    description: 'Multiplies the base damage your pickaxe deals per swing.',
+    description: "How much damage you do when holding the screen. It's the only way to deal damage to Obelisks. Obelisk Armor is subtracted from your Pickaxe Damage before crits are calculated. If you have less Pickaxe Damage than the Obelisk has Armor, you will always do 0 damage regardless of crits. Drone Damage is based on Pickaxe Damage.",
     icon: 'Pickaxe_Damage.png',
   },
   pickaxe_attack_speed_per_second: {
     name: 'Pickaxe Attack Speed',
-    description: 'How many times per second your pickaxe swings.',
+    description: 'How many times per second you deal pickaxe damage while holding.',
     icon: 'Pickaxe_Attack_Speed.png',
     affix: { suffix: ' p/s' },
   },
   pickaxe_radius_percent: {
     name: 'Pickaxe Radius',
-    description: 'Increases the area of effect of each pickaxe swing.',
+    description: "Multiplies the area you can deal damage in. It appears to be a circle, but it's actually a square.",
     icon: 'Pickaxe_Radius.png',
     affix: { prefix: '+', suffix: '%' },
   },
   pickaxe_crit_chance: {
     name: 'Pickaxe Crit Chance',
-    description: 'Chance for a pickaxe swing to deal critical damage.',
+    description: 'The chance to multiply your damage by Pickaxe Crit Damage.',
     icon: 'Pickaxe_Crit_Chance.png',
+    affix: { suffix: '%' },
   },
   pickaxe_crit_damage: {
     name: 'Pickaxe Crit Damage',
-    description: 'Multiplies damage dealt on a critical pickaxe hit.',
+    description: 'The amount to multiply your damage by when Pickaxe Crit Chance triggers.',
     icon: 'Pickaxe_Crit_Damage.png',
+    affix: { suffix: '×' },
   },
   pickaxe_super_crit_chance: {
     name: 'Pickaxe Super Crit Chance',
-    description: 'Chance for a critical hit to be upgraded to a Super Critical.',
+    description: 'The chance to multiply your damage by Pickaxe Super Crit Damage. Only rolls when Pickaxe Crit Chance activates.',
     icon: 'Pickaxe_Super_Crit_Chance.png',
+    affix: { suffix: '%' },
   },
   pickaxe_super_crit_damage: {
     name: 'Pickaxe Super Crit Damage',
-    description: 'Multiplies damage on a Super Critical pickaxe hit.',
+    description: 'The amount to multiply your damage by when Super Crit Chance triggers.',
     icon: 'Pickaxe_Super_Crit_Damage.png',
+    affix: { suffix: '×' },
   },
   pickaxe_ultra_crit_chance: {
     name: 'Pickaxe Ultra Crit Chance',
-    description: 'Chance for a Super Critical hit to escalate to Ultra Critical.',
+    description: 'The chance to multiply your damage by Pickaxe Ultra Crit Damage. Only rolls when Pickaxe Super Crit Chance activates.',
     icon: 'Pickaxe_Ultra_Crit_Chance.png',
+    affix: { suffix: '%' },
   },
   pickaxe_ultra_crit_damage: {
     name: 'Pickaxe Ultra Crit Damage',
-    description: 'Multiplies damage on an Ultra Critical pickaxe hit.',
+    description: 'The amount to multiply your damage by when Pickaxe Ultra Crit Chance triggers.',
     icon: 'Pickaxe_Ultra_Crit_Damage.png',
+    affix: { suffix: '×' },
   },
   pickaxe_omega_crit_chance: {
     name: 'Pickaxe Omega Crit Chance',
-    description: 'Chance for an Ultra Critical hit to escalate to Omega Critical.',
+    description: 'The chance to multiply your damage by Pickaxe Omega Crit Damage. Only rolls when Pickaxe Ultra Crit Chance activates.',
     icon: 'Pickaxe_Omega_Crit_Chance.png',
+    affix: { suffix: '%' },
   },
   pickaxe_omega_crit_damage: {
     name: 'Pickaxe Omega Crit Damage',
-    description: 'Multiplies damage on an Omega Critical pickaxe hit.',
+    description: 'The amount to multiply your damage by when Pickaxe Omega Crit Chance triggers.',
     icon: 'Pickaxe_Omega_Crit_Damage.png',
+    affix: { suffix: '×' },
   },
 
   // ─── Bombs ────────────────────────────────────────────────────────────────
 
   bomb_damage: {
     name: 'Bomb Damage',
-    description: 'Multiplies the base damage of all bomb types before other multipliers apply.',
+    description: 'Bomb damage before factoring in Additional Bomb Multiplier',
     icon: 'Bomb_Damage.png',
   },
-  bomb_capacity: {
-    name: 'Bomb Capacity',
-    description: 'The total number of bombs you can carry at once.',
-    icon: 'Bomb_Capacity.png',
-    affix: { prefix: '' },
+  bomb_crit_chance: {
+    name: 'Bomb Crit Chance',
+    description: 'The chance to multiply your bomb damage by Bomb Crit Damage.',
+    icon: 'Bomb_Crit_Chance.png',
+    affix: { suffix: '%' },
+  },
+  bomb_crit_damage: {
+    name: 'Bomb Crit Damage',
+    description: 'The amount to multiply your bomb damage by when Bomb Crit Chance triggers.',
+    icon: 'Bomb_Crit_Damage.png',
+    affix: { suffix: '×' },
   },
   bomb_recharge_speed: {
     name: 'Bomb Recharge Speed',
     description: 'Multiplies how quickly your bombs recharge after being used.',
     icon: 'Bomb_Recharge_Speed.png',
+    affix: { suffix: '×' },
   },
-  bomb_of_plenty_multi: {
-    name: 'Bomb of Plenty Multiplier',
-    description: 'Multiplies the ore-income bonus granted by the Bomb of Plenty.',
-    icon: 'Bomb_of_Plenty.png',
+  bomb_free_chance: {
+    name: 'Free Bomb Chance',
+    description: 'The chance for your bombs to not use charges.',
+    icon: 'Free_Bomb_Chance.png',
+    affix: { suffix: '%' },
   },
-  bomb_transmuter_multi: {
-    name: 'Transmuter Bomb Multiplier',
-    description: 'Multiplies the number of bars the Transmuter Bomb produces per rock.',
-    icon: 'Transmuter_Bomb.png',
-  },
-  bomb_crit_chance: {
-    name: 'Bomb Crit Chance',
-    description: 'Chance for a bomb explosion to deal critical damage.',
-    icon: 'Bomb_Crit_Chance.png',
-  },
-  bomb_additional_multiplier: {
-    name: 'Additional Bomb Multiplier',
-    description: 'An extra multiplier applied on top of all bomb-damage calculations.',
-    icon: 'Additional_Bomb_Multiplier.png',
-    affix: { prefix: '+', suffix: '×' },
-  },
-  bomb_battery_cap_increases: {
-    name: 'Battery Bomb Cap Increases',
-    description: 'Number of times the Battery Bomb has permanently increased your bomb cap.',
+  bomb_capacity: {
+    name: 'Bomb Capacity',
+    description: "Total bomb capacity. Doesn't apply to Founders Bomb.",
     icon: 'Bomb_Capacity.png',
     affix: { prefix: '' },
   },
+  bomb_additional_multiplier: {
+    name: 'Additional Bomb Multiplier',
+    description: 'The effect from the All Bomb Multipliers Mythic Relic. Other sources of bomb damage multipliers include base bomb multiplier. Gem Bomb receives an additional multiplier based on gems held. Infinity Bomb receives an additional multiplier based on Infinity bombs fired.',
+    icon: 'Additional_Bomb_Multiplier.png',
+    affix: { prefix: '+', suffix: '×' },
+  },
+  bomb_super_crit_chance: {
+    name: 'Bomb Super Crit Chance',
+    description: 'The chance to multiply your bomb damage by Bomb Super Crit Damage. Only rolls when Bomb Crit Chance activates.',
+    icon: 'Bomb_Super_Crit_Chance.png',
+    affix: { suffix: '%' },
+  },
+  bomb_super_crit_damage: {
+    name: 'Bomb Super Crit Damage',
+    description: 'The amount to multiply your bomb damage by when Bomb Super Crit Chance triggers.',
+    icon: 'Bomb_Super_Crit_Damage.png',
+    affix: { suffix: '×' },
+  },
+  bomb_ultra_crit_chance: {
+    name: 'Bomb Ultra Crit Chance',
+    description: 'The chance to multiply your bomb damage by Bomb Ultra Crit Damage. Only rolls when Bomb Super Crit Chance activates.',
+    icon: 'Bomb_Ultra_Crit_Chance.png',
+    affix: { suffix: '%' },
+  },
+  bomb_ultra_crit_damage: {
+    name: 'Bomb Ultra Crit Damage',
+    description: 'The amount to multiply your bomb damage by when Bomb Ultra Crit Chance triggers.',
+    icon: 'Bomb_Ultra_Crit_Damage.png',
+    affix: { suffix: '×' },
+  },
+  bomb_omega_crit_chance: {
+    name: 'Bomb Omega Crit Chance',
+    description: 'The chance to multiply your bomb damage by Bomb Omega Crit Damage. Only rolls when Bomb Ultra Crit Chance activates.',
+    icon: 'Bomb_Omega_Crit_Chance.png',
+    affix: { suffix: '%' },
+  },
+  bomb_omega_crit_damage: {
+    name: 'Bomb Omega Crit Damage',
+    description: 'The amount to multiply your bomb damage by when Bomb Omega Crit Chance triggers.',
+    icon: 'Bomb_Omega_Crit_Damage.png',
+    affix: { suffix: '×' },
+  },
   bomb_cherry3x_chance: {
-    name: 'Cherry Charge 3× Chance',
-    description: 'Chance for the Cherry Charge bomb to deal triple damage.',
+    name: 'Cherry Charge 3x Chance',
+    description: 'The chance to get 3 Cherry charges from one Cherry Bomb.',
     icon: 'Cherry_Charge_3x_Chance.png',
+    affix: { suffix: '%' },
   },
-
-  // ─── Ore & Veins ──────────────────────────────────────────────────────────
-
-  ore_income_multi: {
-    name: 'Ore Income Multiplier',
-    description: 'Multiplies all ore gained from every source in the game.',
-    icon: 'Ore_Income_Multiplier.png',
-  },
-  ore_sell_price_multi: {
-    name: 'Ore Sell Price Multiplier',
-    description: 'Multiplies the gold you receive when selling ore.',
-    icon: 'Ore_Sell_Price_Multiplier.png',
-  },
-  golden_ore_chance: {
-    name: 'Golden Ore Chance',
-    description: 'Chance for an individual ore to spawn as a Golden Ore, which is worth significantly more.',
-    icon: 'Golden_Ore_Chance.png',
-  },
-  golden_ore_multi: {
-    name: 'Golden Ore Multiplier',
-    description: 'Multiplies the value of all Golden Ores mined.',
-    icon: 'Golden_Ore_Multiplier.png',
-  },
-  golden_floor_multi: {
-    name: 'Golden Floor Multiplier',
-    description: 'Multiplies the income bonus granted when mining on a Golden Floor.',
-    icon: 'Golden_Floor_Multiplier.png',
-  },
-  rainbow_floor_chance: {
-    name: 'Rainbow Floor Chance',
-    description: 'Chance for a floor to spawn as a Rainbow Floor, boosting income from all ores on it.',
-    icon: 'Rainbow_Floor_Chance.png',
-  },
-  rainbow_floor_multi: {
-    name: 'Rainbow Floor Multiplier',
-    description: 'Multiplies the income bonus from Rainbow Floors.',
-    icon: 'Rainbow_Floor_Multiplier.png',
-  },
-  vein_income_multi: {
-    name: 'Vein Income Multiplier',
-    description: 'Multiplies ore income from all ore veins.',
-    icon: 'Vein_Income_Multiplier.png',
-  },
-  vein_spawn_rate_multi: {
-    name: 'Vein Spawn Rate Multiplier',
-    description: 'Multiplies how frequently ore veins appear on your floors.',
-    icon: 'Vein_Spawn_Rate_Multiplier.png',
-  },
-  golden_vein_chance: {
-    name: 'Golden Vein Chance',
-    description: 'Chance for a vein to spawn as a Golden Vein, granting a large income bonus.',
-    icon: 'Golden_Vein_Chance.png',
-  },
-  golden_vein_multi: {
-    name: 'Golden Vein Multiplier',
-    description: 'Multiplies the income from Golden Veins.',
-    icon: 'Golden_Vein_Multiplier.png',
-  },
-  rainbow_vein_chance: {
-    name: 'Rainbow Vein Chance',
-    description: 'Chance for a vein to spawn as a Rainbow Vein.',
-    icon: 'Rainbow_Vein_Chance.png',
-  },
-
-  // ─── Bars & Crafting ──────────────────────────────────────────────────────
-
-  bar_output_multi: {
-    name: 'Bar Output Multiplier',
-    description: 'Multiplies the number of bars produced from crafting, the Transmuter Bomb, and other bar sources.',
-    icon: 'Bar_Output_Multiplier.png',
-  },
-  bar_craft_cost_multi: {
-    name: 'Bar Craft Cost',
-    description: 'Reduces the gold cost of crafting bars. Lower is better.',
-    icon: 'Bar_Craft_Cost.png',
-  },
-  craft_100x_chance: {
-    name: '100× Craft Chance',
-    description: 'Chance to receive 100× the normal output when crafting.',
-    icon: '100x_Craft_Chance.png',
-  },
-  craft_10x_chance: {
-    name: '10× Craft Chance',
-    description: 'Chance to receive 10× the normal output when crafting.',
-    icon: '10x_Craft_Chance.png',
-  },
-  free_craft_chance: {
-    name: 'Free Craft Chance',
-    description: 'Chance to craft without spending any resources.',
-    icon: 'Free_Craft_Chance.png',
-  },
-  triple_craft_chance: {
-    name: 'Triple Craft Chance',
-    description: 'Chance to receive 3× the normal output when crafting.',
-    icon: 'Triple_Craft_Chance.png',
-  },
-
-  // ─── Freebies & Economy ───────────────────────────────────────────────────
-
-  freebie_bank_cap: {
-    name: 'Banked Freebie Cap',
-    description: 'Maximum number of Freebie Packs you can store in the bank.',
-    icon: 'Banked_Freebie_Cap.png',
+  bomb_battery_cap_increases: {
+    name: 'Bomb Capacity Gained From Battery',
+    description: 'The number of times Battery Bomb has triggered a cap increase.',
+    icon: 'Bomb_Capacity_Gained_From_Battery.png',
     affix: { prefix: '' },
   },
-  freebie_gems_bonus: {
-    name: 'Bonus Gems From Freebie Pack',
-    description: 'Additional gems added to each Freebie Pack payout.',
-    icon: 'Bonus_Gems_From_Freebie_Pack.png',
-    affix: { prefix: '' },
+  bomb_cap_multiplier: {
+    name: 'Bomb Cap Multiplier',
+    description: 'Multiplies your bomb capacity.',
+    icon: 'Bomb_Cap_Multiplier.png',
+    affix: { suffix: '×' },
   },
-  freebie_5x_chance: {
-    name: 'Freebie Pack Jackpot Chance',
-    description: 'Chance for a Freebie Pack to pay out 5× its normal value.',
-    icon: 'Chance_For_Freebie_Jackpot.png',
+  bomb_workshop_cap_increase: {
+    name: 'Workshop Upgrade Cap Increase',
+    description: 'Increase the cap of most workshop upgrades.',
+    icon: 'Workshop_Upgrade_Cap_Increase.png',
+    affix: { prefix: '+' },
   },
-  freebie_refresh_chance: {
-    name: 'Instant Freebie Refresh Chance',
-    description: 'Chance for the Freebie Pack to instantly refresh after being claimed.',
-    icon: 'Instant_Refresh_Chance.png',
+  bomb_of_plenty_make_gold_chance: {
+    name: 'Bomb of Plenty Golden Ore Chance',
+    description: 'Chance to turn Ores golden (From World 3 Workshop)',
+    icon: 'Bomb_of_Plenty_Golden.png',
+    affix: { suffix: '%' },
   },
-  stonks_multi: {
-    name: 'Stonks Freebie Multiplier',
-    description: 'Multiplies the income bonus when a Stonks proc fires during a Freebie.',
-    icon: 'Stonks_Freebie_Multiplier.png',
+  bomb_of_plenty_multi: {
+    name: 'Bomb of Plenty Multiplier',
+    description: 'Marks Rocks to give Ores.  Gives you bonus ore. Best used to farm gold and on easy to craft bars.',
+    icon: 'Bomb_of_Plenty.png',
+    affix: { suffix: '×' },
   },
-  super_stonks_chance: {
-    name: 'Super Stonks Chance',
-    description: 'Chance for a Stonks proc to become a Super Stonks, granting a much larger bonus.',
-    icon: 'Super_Stonks_Chance.png',
+  bomb_trans_apply_bop_chance: {
+    name: 'Transmuter Bomb Apply BoP Stack Chance',
+    description: 'Chance to apply BoP stack (from World 2 Workshop)',
+    icon: 'Transmuter_Bomb_Golden.png',
+    affix: { suffix: '%' },
   },
-  super_stonks_multi: {
-    name: 'Super Stonks Multiplier',
-    description: 'Multiplies income when a Super Stonks proc fires.',
-    icon: 'Super_Stonks_Multiplier.png',
-  },
-  prestige_point_multi: {
-    name: 'Prestige Point Multiplier',
-    description: 'Multiplies the number of Prestige Points gained when prestiging.',
-    icon: 'Prestige_Point_Gain_Multiplier.png',
-  },
-
-  // ─── Lootbugs & Lootfrogs ─────────────────────────────────────────────────
-
-  lootbug_bank_cap: {
-    name: 'Banked Lootbug Cap',
-    description: 'Maximum number of Lootbugs you can store in the bank.',
-    icon: 'Banked_Lootbug_Cap.png',
-    affix: { prefix: '' },
-  },
-  lootbug_golden_chance: {
-    name: 'Golden Lootbug Chance',
-    description: 'Chance for a Lootbug to be a Golden Lootbug, which reduces the gem cost of its loot to 0.',
-    icon: 'Golden_Lootbug_Chance.png',
-  },
-  lootbug_loot_multi: {
-    name: 'Lootbug Loot Multiplier',
-    description: 'Multiplies the amount of loot dropped when a Lootbug is collected.',
-    icon: 'Lootbug_Loot_Multiplier.png',
-  },
-  lootfrog_capacity: {
-    name: 'Lootfrog Capacity',
-    description: 'Maximum number of Lootfrogs that can be active on your floors at once.',
-    icon: 'Lootfrog_Capacity.png',
-    affix: { prefix: '' },
-  },
-  lootfrog_loot_multi: {
-    name: 'Lootfrog Loot Multiplier',
-    description: 'Multiplies the loot dropped when a Lootfrog is collected.',
-    icon: 'Lootfrog_Loot_Multiplier.png',
-  },
-  lootfrog_triple_spawn_chance: {
-    name: 'Lootfrog Triple Spawn Chance',
-    description: 'Chance for Lootfrogs to spawn in groups of three instead of one.',
-    icon: 'Frog_Frenzy.png',
-  },
-
-  // ─── Stars & Stargazing ────────────────────────────────────────────────────
-
-  all_star_multi: {
-    name: 'All Star Multiplier',
-    description: 'Multiplies income from all star types — Normal, Super, and beyond.',
-    icon: 'All_Star_Multiplier.png',
-  },
-  star_triple_spawn_chance: {
-    name: 'Star Triple Spawn Chance',
-    description: 'Chance for stars to spawn in groups of three.',
-    icon: 'Star_Triple_Spawn_Chance.png',
-  },
-  super_star_triple_chance: {
-    name: 'Super Star Triple Chance',
-    description: 'Chance for Super Stars to spawn in groups of three.',
-    icon: 'Super_Star_Triple_Chance.png',
-  },
-  super_star_10x_chance: {
-    name: 'Super Star 10× Spawn Chance',
-    description: 'Chance for a Super Star to award 10× its normal income.',
-    icon: 'Super_Star_10x_Spawn_Chance.png',
-  },
-  star_supernova_chance: {
-    name: 'Star Supernova Chance',
-    description: 'Chance for a star to trigger a Supernova explosion, granting a large income spike.',
-    icon: 'Star_Supernova_Chance.png',
-  },
-  star_supernova_multi: {
-    name: 'Star Supernova Multiplier',
-    description: 'Multiplies the income granted by a Star Supernova.',
-    icon: 'Star_Supernova_Multiplier.png',
-  },
-  super_star_supernova_chance: {
-    name: 'Super Star Supernova Chance',
-    description: 'Chance for a Super Star to trigger a Supernova.',
-    icon: 'Super_Star_Supernova_Chance.png',
-  },
-  super_star_supernova_multi: {
-    name: 'Super Star Supernova Multiplier',
-    description: 'Multiplies the income from a Super Star Supernova.',
-    icon: 'Super_Star_Supernova_Multiplier.png',
-  },
-  star_supergiant_chance: {
-    name: 'Star Supergiant Chance',
-    description: 'Chance for a star to become a Supergiant, dramatically increasing its value.',
-    icon: 'Star_Supergiant_Chance.png',
-  },
-  star_supergiant_multi: {
-    name: 'Star Supergiant Multiplier',
-    description: 'Multiplies the income from Supergiant stars.',
-    icon: 'Star_Supergiant_Multiplier.png',
-  },
-  super_star_supergiant_chance: {
-    name: 'Super Star Supergiant Chance',
-    description: 'Chance for a Super Star to become a Supergiant.',
-    icon: 'Super_Star_Supergiant_Chance.png',
-  },
-  super_star_supergiant_multi: {
-    name: 'Super Star Supergiant Multiplier',
-    description: 'Multiplies the income from Super Star Supergiants.',
-    icon: 'Super_Star_Supergiant_Multiplier.png',
-  },
-  novagiant_combo_multi: {
-    name: 'Novagiant Combo Multiplier',
-    description: 'Multiplies the bonus from the Novagiant combo chain.',
-    icon: 'Novagiant_Combo_Multiplier.png',
+  bomb_transmuter_multi: {
+    name: 'Transmuter Bomb Multiplier',
+    description: 'Marks Rocks to drop Bars.  Often better for bar income than the Bomb of Plenty. Especially early in the game and on hard to craft bars.',
+    icon: 'Transmuter_Bomb.png',
+    affix: { suffix: '×' },
   },
 
   // ─── Drones ────────────────────────────────────────────────────────────────
 
   drone_count: {
     name: 'Number of Drones',
-    description: 'Number of automated mining drones that mine alongside you, even while offline.',
+    description: 'Gives extra drones.',
     icon: 'Number_Of_Drones.png',
   },
-  coal_drone_exp_multi: {
-    name: 'Drone EXP Gain Multiplier',
-    description: 'Multiplies the experience your drones earn, helping them level up faster.',
-    icon: 'Drone_Exp_Gain_Multiplier.png',
-  },
-  coal_fuel_duration_multi: {
-    name: 'Drone Fuel Duration Multiplier',
-    description: 'Multiplies how long drone fuel lasts before it needs to be replenished.',
-    icon: 'Drone_Fuel_Duration_Multiplier.png',
-  },
-  drone_suit_cap: {
-    name: 'Drone Suit Cap',
-    description: 'The maximum number of drone suit upgrades that can be equipped.',
-    icon: 'Number_Of_Drones.png',
-    affix: { prefix: '' },
+  drone_damage_percent: {
+    name: 'Drone Damage',
+    description: 'Multiplies Pickaxe Damage to determine the damage drones do.',
+    icon: 'Drone_Damage.png',
+    affix: { suffix: '%' },
   },
   drone_radius_percent: {
     name: 'Drone Radius',
-    description: 'Increases the mining radius of your drones.',
+    description: 'Increases the area your drones can deal damage in.',
+    icon: 'Drone_Radius.png',
     affix: { prefix: '+', suffix: '%' },
   },
   drone_movespeed_percent: {
-    name: 'Drone Move Speed',
-    description: 'Increases the movement speed of your drones.',
+    name: 'Drone Movespeed',
+    description: 'Increases the move speed of your drones.',
+    icon: 'Drone_Movespeed.png',
     affix: { prefix: '+', suffix: '%' },
   },
   drone_attack_speed_percent: {
     name: 'Drone Attack Speed',
-    description: 'Increases how quickly your drones swing at ores.',
+    description: 'Increases the attack speed of your drones. The Base attack speed is 1.25 times per second.',
+    icon: 'Drone_Attack_Speed.png',
     affix: { prefix: '+', suffix: '%' },
   },
   drone_triple_damage_chance: {
     name: 'Drone Triple Damage',
-    description: 'Chance for a drone swing to deal triple damage.',
+    description: 'The chance for your drones to deal triple damage.',
     icon: 'Drone_Triple_Damage.png',
   },
-
-  // ─── Void Portal ──────────────────────────────────────────────────────────
-
-  void_portal_base_multi: {
+  drone_rapid_fire_chance: {
+    name: 'Drone Rapid Fire Chance',
+    description: 'The chance for your drones to attack 5 times instantly.',
+    icon: 'Drone_Rapid_Fire_Chance.png',
+    affix: { suffix: '%' },
+  },
+  drone_suit_cap: {
+    name: 'Drone Suit Upgrade Cap',
+    description: 'The cap of your drone suit upgrades. The base cap is 5.',
+    icon: 'Drone_Suit_Upgrade_Cap.png',
+    affix: { prefix: '' },
+  },
+  coal_generation_seconds: {
+    name: 'Coal Generation Time',
+    description: 'The time it takes your generator to produce coal. (Base is 90 seconds, reduced by upgrades and affected by game speed).',
+    icon: 'Coal_Generation_Time.png',
+    affix: { suffix: 's' },
+  },
+  coal_fuel_duration_multi: {
+    name: 'Drone Fuel Duration Multiplier',
+    description: 'Multiplies your drone fuel duration.',
+    icon: 'Drone_Fuel_Duration_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  coal_capacity_multi: {
+    name: 'Coal Capacity Multiplier',
+    description: 'Multiplies your coal capacity.',
+    icon: 'Coal_Capacity_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  coal_fuel_save_chance: {
+    name: 'Fuel Save Chance',
+    description: 'The chance to save fuel when fueling drones.',
+    icon: 'Fuel_Save_Chance.png',
+    affix: { suffix: '%' },
+  },
+  coal_drone_exp_multi: {
+    name: 'Drone Exp Gain Multiplier',
+    description: 'Multiplies your drone experience.',
+    icon: 'Drone_Exp_Gain_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+    void_portal_chance: {
+    name: 'Void Portal Chance',
+    description: 'The chance for an ore node to be replaced by a void portal.',
+    icon: 'Void_Portal_Chance.png',
+    affix: { suffix: '%' },
+  },
+    void_portal_base_multi: {
     name: 'Void Portal Base Multiplier',
-    description: 'Multiplies the base income from all Void Portals.',
+    description: 'Multiplies the Void Drone portal multiplier.',
     icon: 'Void_Portal_Base_Multiplier.png',
+    affix: { suffix: '×' },
   },
   golden_void_portal_chance: {
     name: 'Golden Void Portal Chance',
-    description: 'Chance for a Void Portal to spawn as a Golden Void Portal, granting much higher income.',
+    description: 'The chance for a void portal to be golden.',
     icon: 'Golden_Void_Portal_Chance.png',
+    affix: { suffix: '%' },
   },
   golden_void_portal_multi: {
-    name: 'Golden Void Portal Multiplier',
-    description: 'Multiplies the income from Golden Void Portals.',
+    name: 'Golden Void Portal Multi',
+    description: 'The additional multiplier to resources in a Void Portal when a Golden Void Portal triggers. (Base: 5x)',
     icon: 'Golden_Void_Portal_Multi.png',
+    affix: { suffix: '×' },
+  },
+  rainbow_void_portal_chance: {
+    name: 'Rainbow Void Portal Chance',
+    description: 'The chance for a Golden Void Portal to spawn as a Rainbow Void Portal.',
+    icon: 'Rainbow_Void_Portal_Chance.png',
+    affix: { suffix: '%' },
+  },
+  rainbow_void_portal_multi: {
+    name: 'Rainbow Void Portal Multiplier',
+    description: 'The additional multiplier to resources in a Golden Void Portal when it rolls as a Rainbow Void Portal. (Base: 5x)',
+    icon: 'Rainbow_Void_Portal_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  elixir_crit_chance: {
+    name: 'Elixir Crit Chance',
+    description: 'The chance for the elixir drone to crit.',
+    icon: 'Elixir_Crit_Chance.png',
+    affix: { suffix: '%' },
+  },
+  elixir_crit_multi: {
+    name: 'Elixir Crit Multi',
+    description: 'The duration multiplier applied to buffs when the elixir drone crits. (Base 3x)',
+    icon: 'Elixir_Crit_Multi.png',
+    affix: { suffix: '×' },
+  },
+
+  // ─── Ore ──────────────────────────────────────────────────────────
+
+  multi_rock_chance: {
+    name: 'Triple Rock Chance',
+    description: 'The chance to spawn a bigger rock that gives 3x ore.',
+    icon: 'Triple_Rock_Chance.png',
+    affix: { suffix: '%' },
+  },
+  ore_sell_price_multi: {
+    name: 'Ore Sell Price Multiplier',
+    description: 'Multiplies ore sell price.',
+    icon: 'Ore_Sell_Price_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  ore_income_multi: {
+    name: 'Ore Income Multiplier',
+    description: 'Multiplies ore gained.',
+    icon: 'Ore_Income_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  golden_ore_chance: {
+    name: 'Golden Ore Chance',
+    description: 'The chance for ore to be golden.',
+    icon: 'Golden_Ore_Chance.png',
+    affix: { suffix: '%' },
+  },
+  golden_ore_multi: {
+    name: 'Golden Ore Multiplier',
+    description: 'The multiplier to ore gained when Golden Ore Chance triggers. (Base: 3x)',
+    icon: 'Golden_Ore_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  golden_floor_chance: {
+    name: 'Golden Floor Chance',
+    description: 'The chance for a floor to be golden.',
+    icon: 'Golden_Floor_Chance.png',
+    affix: { suffix: '%' },
+  },
+  golden_floor_multi: {
+    name: 'Golden Floor Multiplier',
+    description: 'The multiplier to ore gained when Golden Floor Chance triggers. The All Floor Multi is factored into the displayed amount. (Base: 5x)',
+    icon: 'Golden_Floor_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  rainbow_floor_chance: {
+    name: 'Rainbow Floor Chance',
+    description: 'The chance for a floor to be rainbow. Golden and Rainbow Floor Chance roll separately, a floor can be rainbow but not golden.',
+    icon: 'Rainbow_Floor_Chance.png',
+    affix: { suffix: '%' },
+  },
+  rainbow_floor_multi: {
+    name: 'Rainbow Floor Multiplier',
+    description: 'The multiplier to ore gained when Rainbow Floor Chance triggers. The All Floor Multi is factored into the displayed amount. (Base: 50x)',
+    icon: 'Rainbow_Floor_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  galactic_floor_chance: {
+    name: 'Galactic Rainbow Floor Chance',
+    description: 'The chance for a floor to be a Galactic Rainbow floor. Only rolls on Rainbow floors.',
+    icon: 'Galactic_Rainbow_Floor_Chance.png',
+    affix: { suffix: '%' },
+  },
+  galactic_floor_multi: {
+    name: 'Galactic Rainbow Floor Multiplier',
+    description: 'The multiplier to ore gained from a Galactic Rainbow floor. The All Floor Multi is factored into the displayed amount. (Base: 10x)',
+    icon: 'Galactic_Rainbow_Floor_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  prismatic_floor_chance: {
+    name: 'Prismatic Galactic Floor Chance',
+    description: 'The chance for a floor to be a Prismatic Galactic Rainbow floor. Only rolls on Galactic Rainbow Floors.',
+    icon: 'Prismatic_Galactic_Floor_Chance.png',
+    affix: { suffix: '%' },
+  },
+  prismatic_floor_multi: {
+    name: 'Prismatic Galactic Floor Multi',
+    description: 'The multiplier to ore gained from a Prismatic Galactic Rainbow Floor. The All Floor Multi is factored into the displayed amount. (Base: 1x)',
+    icon: 'Prismatic_Galactic_Floor_Multi.png',
+    affix: { suffix: '×' },
+  },
+  pizzas_eaten: {
+    name: 'Pizzas Eaten',
+    description: 'The number of pizzas eaten. The effect caps at 200, but the Pizzas Eaten stat will keep increasing beyond that point.',
+    icon: 'Pizzas_Eaten.png',
+  },
+  steak_eaten: {
+    name: 'Steaks Eaten',
+    description: 'The number of steaks eaten. The effect caps at 500, but the Steaks Eaten stat will keep increasing beyond that point.',
+    icon: 'Steaks_Eaten.png',
+  },
+  all_floor_multipliers: {
+    name: 'All Floor Multis (Gold, Rainbow, Galactic, Prismatic)',
+    description: 'Multiplies Gold, Rainbow, Galactic, and Prismatic floor multipliers.',
+    icon: 'All_Floor_Multis_(Gold,Rainbow,Galactic).png',
+  },
+
+  // ─── Bars & Crafting ──────────────────────────────────────────────────────
+
+  free_craft_chance: {
+    name: 'Free Craft Chance',
+    description: 'The chance for a craft to not consume ore.',
+    icon: 'Free_Craft_Chance.png',
+    affix: { suffix: '%' },
+  },
+  double_craft_chance: {
+    name: 'Double Craft Chance',
+    description: 'The chance for a craft to give 2x bars.',
+    icon: 'Double_Craft_Chance.png',
+    affix: { suffix: '%' },
+  },
+  triple_craft_chance: {
+    name: 'Triple Craft Chance',
+    description: 'The chance for a craft to give 3x bars.',
+    icon: 'Triple_Craft_Chance.png',
+    affix: { suffix: '%' },
+  },
+  craft_5x_chance: {
+    name: '5× Craft Chance',
+    description: 'The chance for a craft to give 5x bars.',
+    icon: '5x_Craft_Chance.png',
+    affix: { suffix: '%' },
+  },
+  craft_10x_chance: {
+    name: '10× Craft Chance',
+    description: 'The chance for a craft to give 10x bars.',
+    icon: '10x_Craft_Chance.png',
+    affix: { suffix: '%' },
+  },
+  craft_20x_chance: {
+    name: '20× Craft Chance',
+    description: 'The chance for a craft to give 20x bars.',
+    icon: '20x_Craft_Chance.png',
+    affix: { suffix: '%' },
+  },
+  craft_100x_chance: {
+    name: '100× Craft Chance',
+    description: 'The chance for a craft to give 100x bars.',
+    icon: '100x_Craft_Chance.png',
+    affix: { suffix: '%' },
+  },
+  bar_output_multi: {
+    name: 'Bar Output Multiplier',
+    description: 'The multiplier applied to the number of bars you receive from sources of bar creation like crafting or Transmuter Bomb.',
+    icon: 'Bar_Output_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  bar_upgrade_cost_reduction: {
+    name: 'Bar Cost Reduction',
+    description: 'The multiplier applied to the number of bars that Upgrades cost.',
+    icon: 'Bar_Cost_Reduction.png',
+    affix: { suffix: '×' },
+  },
+  bar_craft_cost_multi: {
+    name: 'Bar Craft Cost',
+    description: 'The multiplier applied to the amount of ore required to craft a bar.',
+    icon: 'Bar_Craft_Cost.png',
+    affix: { suffix: '×' },
+  },
+
+
+  // ─── Obelisk ──────────────────────────────────────────────────────
+  
+  obelisk_timer_add: {
+    name: 'Bonus Obelisk Fight Length',
+    description: 'How much time you have to deal damage to the Obelisk per attempt.',
+    icon: 'Bonus_Obelisk_Fight_Length.png',
+    affix: { suffix: '×' },
+  },
+  obelisk_cooldown_multi: {
+    name: 'Obelisk Cooldown',
+    description: 'How much time you need to wait in between Obelisk fight attempts.',
+    icon: 'Obelisk_Cooldown.png',
+    affix: { suffix: '×' },
+  },
+  obelisk_armor_reduction: {
+    name: 'Obelisk Armor Reduction',
+    description: "The multiplier applied to an Obelisk's Base Armor",
+    icon: 'Obelisk_Armor_Reduction.png',
+    affix: { suffix: '×' },
+  },
+
+  // ─── Prestige ─────────────────────────────────────────────────
+
+  xp_level_cap: {
+    name: 'Xp Level Cap',
+    description: 'The maximum level you can reach with EXP.',
+    icon: 'Xp_Level_Cap.png',
+    affix: { prefix: 'Level ' },
+  },
+  prestige_point_multi: {
+    name: 'Prestige Point Gain Multiplier',
+    description: 'The multiplier on the number of Prestige Points gained.',
+    icon: 'Prestige_Point_Gain_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  experience_multi: {
+    name: 'Experience Gain Multiplier',
+    description: 'The multiplier on Experience gained.',
+    icon: 'Experience_Gain_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  floor_clear_requirement_multi: {
+    name: 'Floor Clear Requirement',
+    description: 'The multiplier on the number of times a floor must be cleared to move on to the next floor.',
+    icon: 'Floor_Clear_Requirement.png',
+    affix: { suffix: '×' },
+  },
+  artifact_cap_increase: {
+    name: 'Artifact Upgrade Cap Increase',
+    description: 'The increase to the max upgrade level of Artifacts.',
+    icon: 'Artifact_Upgrade_Cap_Increase.png',
+    affix: { prefix: '+' },
+  },
+  artifact_tier4_cap_increase: {
+    name: 'Artifact Tier 4 Cap Increase',
+    description: 'The increase to the max upgrade level of Tier 4 Artifacts.',
+    icon: 'Artifact_Tier_4_Cap_Increase.png',
+    affix: { prefix: '+' },
+  },
+
+  // ─── Lootbugs ─────────────────────────────────────────────────
+
+  lootbug_spawn_rate: {
+    name: 'Lootbug Spawn Rate Multiplier',
+    description: 'Increases the rate at which Lootbugs appear.',
+    icon: 'Lootbug_Spawn_Rate_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  lootbug_triple_chance: {
+    name: 'Triple Lootbug Chance',
+    description: 'The chance for 3 Lootbugs to appear when a spawn occurs.',
+    icon: 'Triple_Lootbug_Chance.png',
+    affix: { suffix: '%' },
+  },
+  lootbug_golden_chance: {
+    name: 'Golden Lootbug Chance',
+    description: 'The chance for the Lootbug purchasable loot to be free.',
+    icon: 'Golden_Lootbug_Chance.png',
+    affix: { suffix: '%' },
+  },
+  lootbug_bank_cap: {
+    name: 'Banked Lootbug Cap',
+    description: 'How many Lootbugs you can keep in storage in addition to the one on screen.',
+    icon: 'Banked_Lootbug_Cap.png',
+    affix: { prefix: '' },
+  },
+  lootbug_gem_cost_reduction: {
+    name: 'Lootbug Gem Cost Reduction',
+    description: 'The amount by which the gem cost of purchasable loot is reduced.',
+    icon: 'Lootbug_Gem_Cost_Reduction.png',
+    affix: { prefix: '+' },
+  },
+  lootbug_loot_multi: {
+    name: 'Lootbug Loot Multiplier',
+    description: 'The multiplier on Lootbug rewards. Rewards which multiply to non-integers but must be integers randomly give the integers on either side of the value.',
+    icon: 'Lootbug_Loot_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  lootfrog_lanterns_used: {
+    name: 'Lanterns Used',
+    description: 'The number of lootbug lanterns used. The effect caps at 25, but the Lanterns Used stat will keep increasing beyond that point.',
+    icon: 'Lanterns_Used.png',
+  },
+
+  // ─── Lootfrogs ─────────────────────────────────────────────────
+
+  lootfrogs_caught: {
+    name: 'Lootfrogs Caught',
+    description: 'The number of Lootfrogs that you have caught by tapping them when they spawn. Lootfrogs are spawned by the Fueled Frogger Drone after purchasing a Black Hole buff.',
+    icon: 'Lootfrogs_Caught.png',
+  },
+  golden_lootfrogs_caught: {
+    name: 'Golden Lootfrogs Caught',
+    description: 'The number of Golden Lootfrogs that you have caught by tapping them when they spawn. Golden Lootfrogs have a chance to spawn instead of normal Lootfrogs after you get Golden Lootfrog Chance.',
+    icon: 'Golden_Lootfrogs_Caught.png',
+  },
+  lootfrog_capacity: {
+    name: 'Lootfrog Capacity',
+    description: 'The maximum number of Lootfrogs that may be on the screen at one time. (Base: 5)',
+    icon: 'Lootfrog_Capacity.png',
+    affix: { prefix: '' },
+  },
+  lootfrog_loot_multi: {
+    name: 'Lootfrog Loot Multiplier',
+    description: 'The multiplier to loot from Lootfrogs.',
+    icon: 'Lootfrog_Loot_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  lootfrog_golden_chance: {
+    name: 'Golden Lootfrog Chance',
+    description: 'The chance for a Lootfrog to appear as a Golden Lootfrog.',
+    icon: 'Golden_Lootfrog_Chance.png',
+    affix: { suffix: '%' },
+  },
+  lootfrog_golden_multi: {
+    name: 'Golden Lootfrog Multiplier',
+    description: 'The multiplier on Lootfrog rewards when a Lootfrog spawns as a Golden Lootfrog. (Base: 2x)',
+    icon: 'Golden_Lootfrog_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  lootfrog_triple_spawn_chance: {
+    name: 'Lootfrog Triple Spawn Chance',
+    description: 'The chance for 3 Lootfrogs to spawn in place of 1.',
+    icon: 'Frog_Frenzy.png',
+    affix: { suffix: '%' },
+  },
+  lootfrog_10x_spawn_chance: {
+    name: 'Lootfrog 10x Spawn Chance',
+    description: 'The chance for 10 Lootfrogs to spawn in place of 1.',
+    icon: 'Lootfrog_10x_Spawn_Chance.png',
+    affix: { suffix: '%' },
+  },
+  lootfrog_big_chance: {
+    name: 'Big Lootfrog Chance',
+    description: 'The chance for a Lootfrog to spawn as a big Lootfrog.',
+    icon: 'Big_Lootfrog_Chance.png',
+    affix: { suffix: '%' },
+  },
+  lootfrog_big_multi: {
+    name: 'Big Lootfrog Multi',
+    description: 'The multiplier on Lootfrog rewards when a Lootfrog spawns as a Big Lootfrog. (Base: 5x)',
+    icon: 'Big_Lootfrog_Multi.png',
+    affix: { suffix: '×' },
+  },
+
+  // ─── Freebies & Economy ───────────────────────────────────────────────────
+
+  chest_double_chance: {
+    name: 'Chance For 2x Chests',
+    description: 'The chance to receive 2 Item and Relic Chests when the respective bar fills up.',
+    icon: 'Chance_For_2x_Chests.png',
+    affix: { suffix: '%' },
+  },
+  chest_meter_multi: {
+    name: 'Chest Meter Gain Multiplier',
+    description: 'How quickly the Item and Relic Chest meters fill up. Actually functions by reducing the damage requirement.',
+    icon: 'Chest_Meter_Gain_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  chest_items_bonus: {
+    name: 'Items Contained In Chests',
+    description: 'How many Items you receive when you open an Item Chest.',
+    icon: 'Items_Contained_In_Chests.png',
+    affix: { prefix: '+' },
+  },
+  freebie_gems_bonus: {
+    name: 'Bonus Gems From Freebie Pack',
+    description: 'How many gems you receive from a Freebie Pack in addition to the base 5.',
+    icon: 'Bonus_Gems_From_Freebie_Pack.png',
+    affix: { prefix: '' },
+  },
+  freebie_5x_chance: {
+    name: 'Chance For Freebie Jackpot',
+    description: "Rolls 4 extra times for normal Freebie loot and the bonus Relic Chest from the Capitalist Value Pack. Extra rolls can't trigger Instant Refresh, Freebie Jackpot, Stonks or Gift chance from the Soprano Statue.",
+    icon: 'Chance_For_Freebie_Jackpot.png',
+    affix: { suffix: '%' },
+  },
+  freebie_refresh_chance: {
+    name: 'Instant Refresh Chance',
+    description: 'The chance for a Freebie to become claimable again immediately after being claimed.',
+    icon: 'Instant_Refresh_Chance.png',
+    affix: { suffix: '%' },
+  },
+  freebie_bank_cap: {
+    name: 'Banked Freebie Cap',
+    description: 'How many Freebies you can accumulate before claiming them. (Base: 2.)',
+    icon: 'Banked_Freebie_Cap.png',
+    affix: { prefix: '' },
+  },
+  freebie_cooldown_seconds: {
+    name: 'Freebie Cooldown',
+    description: 'The cooldown in between Freebie claims. (Base: 10 minutes.)',
+    icon: 'Freebie_Cooldown.png',
+    affix: { suffix: 's' },
+  },
+  stonks_chance: {
+    name: 'Stonks Chance',
+    description: 'The chance for a Freebie to roll a Stonks reward when claimed. The chance is rolled once for item chests, relic chests and gems. You can get multiple different rewards from a single freebie.',
+    icon: 'Stonks_Chance.png',
+    affix: { suffix: '%' }, 
+  },
+  stonks_multi: {
+    name: 'Stonks Freebie Multiplier',
+    description: 'The multiplier to base Stonks rewards. The All Stonks Multi is factored into the displayed amount. (Base: 1x)',
+    icon: 'Stonks_Freebie_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  super_stonks_chance: {
+    name: 'Super Stonks Chance',
+    description: 'The chance for a "Stonks!" roll to become a Super Stonks roll.',
+    icon: 'Super_Stonks_Chance.png',
+    affix: { suffix: '%' },
+  },
+  super_stonks_multi: {
+    name: 'Super Stonks Multiplier',
+    description: 'The multiplier to rewards when Super Stonks procs. The All Stonks Multi is factored into the displayed amount. (Base: 2x)',
+    icon: 'Super_Stonks_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  ultra_stonks_chance: {
+    name: 'Ultra Stonks Chance',
+    description: 'The chance for a Super Stonks roll to become an Ultra Stonks roll.',
+    icon: 'Ultra_Stonks_Chance.png',
+    affix: { suffix: '%' },
+  },
+  ultra_stonks_multi: {
+    name: 'Ultra Stonks Multiplier',
+    description: 'The multiplier to rewards when Ultra Stonks procs. The All Stonks Multi is factored into the displayed amount. (Base: 25x)',
+    icon: 'Ultra_Stonks_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+
+  // ─── Contracts ─────────────────────────────────────────────────
+  
+  contract_cost_reduction: {
+    name: 'Contract Cost Reduction',
+    description: 'Reduces the amount of bars required to complete Contracts. Functions by increasing the denominator of the multiplier.',
+    icon: 'Contract_Cost_Reduction.png',
+    affix: { suffix: '%' },
+  },
+  contract_double_points_chance: {
+    name: 'Double Contract Point Chance',
+    description: 'The chance to be awarded 2x Contract Points upon completing a Contract.',
+    icon: 'Double_Contract_Point_Chance.png',
+    affix: { suffix: '%' },
+  },
+  contract_triple_points_chance: {
+    name: 'Triple Contract Point Chance',
+    description: 'The chance to be awarded 3x Contract Points upon completing a Contract.',
+    icon: 'Triple_Contract_Point_Chance.png',
+    affix: { suffix: '%' },
+  },
+  contract_5x_points_chance: {
+    name: '5x Contract Point Chance',
+    description: 'The chance to be awarded 5x Contract Points upon completing a Contract.',
+    icon: '5x_Contract_Point_Chance.png',
+    affix: { suffix: '%' },
+  },
+  contract_10x_points_chance: {
+    name: '10x Contract Point Chance',
+    description: 'The chance to be awarded 10x Contract Points upon completing a Contract.',
+    icon: '10x_Contract_Point_Chance.png',
+    affix: { suffix: '%' },
+  },
+  contract_points_rewarded: {
+    name: 'Contract Points Rewarded',
+    description: 'The base amount of Contract Points awarded upon completing a Contract. Starts at 10.',
+    icon: 'Contract_Points_Rewarded.png',
+    affix: { prefix: '+' },
+  },
+  contract_cap_increase: {
+    name: 'Contract Upgrade Cap Increase',
+    description: 'The increase to the maximum level of Contract Upgrades.',
+    icon: 'Contract_Upgrade_Cap_Increase.png',
+    affix: { prefix: '+' },
+  },
+  contract_upgrade_cost_reduction: {
+    name: 'Contract Upgrade Cost Reduction',
+    description: 'The amount by which Contract Upgrade costs are multiplied.',
+    icon: 'Contract_Upgrade_Cost_Reduction.png',
+    affix: { suffix: '×' },
+  },
+
+  // ─── Veins ──────────────────────────────────────────────────────────
+
+  vein_spawn_rate_multi: {
+    name: 'Vein Spawn Rate Multiplier',
+    description: "The multiplier that is determined by a Vein's rarity to determine the chance that an Ore becomes a Vein.",
+    icon: 'Vein_Spawn_Rate_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  vein_income_multi: {
+    name: 'Vein Income Multiplier',
+    description: 'A multiplier that is applied to all Vein gains.',
+    icon: 'Vein_Income_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  golden_vein_chance: {
+    name: 'Golden Vein Chance',
+    description: 'The chance for a Vein to roll as a Golden Vein.',
+    icon: 'Golden_Vein_Chance.png',
+    affix: { suffix: '%' },
+  },
+  golden_vein_multi: {
+    name: 'Golden Vein Multiplier',
+    description: 'The multiplier to Veins gained when a Vein rolls as a Golden Vein. (Base: 5x)',
+    icon: 'Golden_Vein_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  rainbow_vein_chance: {
+    name: 'Rainbow Vein Chance',
+    description: 'The chance for a Golden Vein to roll as a Rainbow Vein.',
+    icon: 'Rainbow_Vein_Chance.png',
+    affix: { suffix: '%' },
+  },
+  rainbow_vein_multi: {
+    name: 'Rainbow Vein Multiplier',
+    description: 'The multiplier applied to Golden Veins when they roll as Rainbow Veins. (Base: 20x)',
+    icon: 'Rainbow_Vein_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  gleaming_vein_chance: {
+    name: 'Gleaming Vein Chance',
+    description: 'The chance for a Vein to roll as a Gleaming Vein.',
+    icon: 'Gleaming_Vein_Chance.png',
+    affix: { suffix: '%' },
+  },
+  gleaming_vein_multi: {
+    name: 'Gleaming Vein Multiplier',
+    description: 'The multiplier to Veins gained applied to Gleaming Veins. (Base: 5x)',
+    icon: 'Gleaming_Vein_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+
+  // ─── Stars ────────────────────────────────────────────────────
+
+  star_spawn_rate: {
+    name: 'Star Spawn Rate Multiplier',
+    description: 'The multiplier on the chance that a Star spawns when a floor is cleared. (Base: 1/50)',
+    icon: 'Star_Spawn_Rate_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  star_auto_catch_chance: {
+    name: 'Auto-Catch Chance',
+    description: 'The chance for a Star to be collected without needing to be tapped.',
+    icon: 'Auto-Catch_Chance.png',
+    affix: { suffix: '%' },
+  },
+  star_double_spawn_chance: {
+    name: 'Star Double Spawn Chance',
+    description: 'The chance for two Stars to appear when one spawns.',
+    icon: 'Star_Double_Spawn_Chance.png',
+    affix: { suffix: '%' },
+  },
+  star_triple_spawn_chance: {
+    name: 'Star Triple Spawn Chance',
+    description: 'The chance for three Stars to appear when one spawns.',
+    icon: 'Star_Triple_Spawn_Chance.png',
+    affix: { suffix: '%' },
+  },
+  super_star_spawn_multi: {
+    name: 'Super Star Spawn Rate Multiplier',
+    description: 'The multiplier on the chance that a Super Star spawns when a Star spawns. (Base: 1/100)',
+    icon: 'Super_Star_Spawn_Rate_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  super_star_triple_chance: {
+    name: 'Super Star Triple Chance',
+    description: 'The chance for three Super Stars to appear when one spawns.',
+    icon: 'Super_Star_Triple_Chance.png',
+    affix: { suffix: '%' },
+  },
+  super_star_10x_chance: {
+    name: 'Super Star 10× Spawn Chance',
+    description: 'The chance for ten Super Stars to appear when one spawns.',
+    icon: 'Super_Star_10x_Spawn_Chance.png',
+    affix: { suffix: '%' },
+  },
+  star_supernova_chance: {
+    name: 'Star Supernova Chance',
+    description: 'The chance for a Star to spawn as a Supernova.',
+    icon: 'Star_Supernova_Chance.png',
+    affix: { suffix: '%' },
+  },
+  star_supernova_multi: {
+    name: 'Star Supernova Multiplier',
+    description: 'The multiplier on the value of a Star when it is a Supernova. (Base: 10x)',
+    icon: 'Star_Supernova_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  super_star_supernova_chance: {
+    name: 'Super Star Supernova Chance',
+    description: 'The chance for a Super Star to spawn as a Supernova.',
+    icon: 'Super_Star_Supernova_Chance.png',
+    affix: { suffix: '%' },
+  },
+  super_star_supernova_multi: {
+    name: 'Super Star Supernova Multiplier',
+    description: 'The multiplier on the value of a Super Star when it is a Supernova. (Base: 10x)',
+    icon: 'Super_Star_Supernova_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  star_supergiant_chance: {
+    name: 'Star Supergiant Chance',
+    description: 'The chance for a Star to spawn as a Supergiant.',
+    icon: 'Star_Supergiant_Chance.png',
+    affix: { suffix: '%' },
+  },
+  star_supergiant_multi: {
+    name: 'Star Supergiant Multiplier',
+    description: 'The multiplier on the value of a Star when it is a Supergiant. (Base: 3x)',
+    icon: 'Star_Supergiant_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  super_star_supergiant_chance: {
+    name: 'Super Star Supergiant Chance',
+    description: 'The chance for a Super Star to spawn as a Supergiant.',
+    icon: 'Super_Star_Supergiant_Chance.png',
+    affix: { suffix: '%' },
+  },
+  super_star_supergiant_multi: {
+    name: 'Super Star Supergiant Multiplier',
+    description: 'The multiplier on the value of a Super Star when it is a Supergiant. (Base: ??x)',
+    icon: 'Super_Star_Supergiant_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  star_radiant_chance: {
+    name: 'Star Radiant Chance',
+    description: 'The chance for a star to spawn as a Radiant Star.',
+    icon: 'Star_Radiant_Chance.png',
+    affix: { suffix: '%' },
+  },
+  star_radiant_multi: {
+    name: 'Star Radiant Multi',
+    description: 'The multiplier on the value of a star when it is a Radiant Star. (Base: 10x)',
+    icon: 'Star_Radiant_Multi.png',
+    affix: { suffix: '×' },
+  },
+  super_star_radiant_chance: {
+    name: 'Super Star Radiant Chance',
+    description: 'The chance for a Super Star to spawn as a Radiant Super Star.',
+    icon: 'Super_Star_Radiant_Chance.png',
+    affix: { suffix: '%' },
+  },
+  super_star_radiant_multi: {
+    name: 'Super Star Radiant Multi',
+    description: 'The multiplier on the value of a Super Star when it is a Radiant Super Star. (Base: 10x)',
+    icon: 'Super_Star_Radiant_Multi.png',
+    affix: { suffix: '×' },
+  },
+  all_star_multi: {
+    name: 'All Star Multiplier',
+    description: 'The multiplier on the value of all Stars and Superstars',
+    icon: 'All_Star_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  novagiant_combo_multi: {
+    name: 'Novagiant Combo Multiplier',
+    description: 'The multiplier on the value of Supergiant Supernova Stars and Super Stars.',
+    icon: 'Novagiant_Combo_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  candy_eaten: {
+    name: 'Candy Eaten',
+    description: 'The number of candy eaten. The effect caps at 250, but the Candy Eaten stat will keep increasing beyond that point.',
+    icon: 'Candy_Eaten.png',
+    affix: { suffix: '' },
   },
 
   // ─── Fishing ──────────────────────────────────────────────────────────────
 
-  fishing_income_multi: {
-    name: 'Fish Income Multiplier',
-    description: 'Multiplies all income earned from fishing.',
-    icon: 'Fish_Income_Multiplier.png',
-  },
   fishing_rod_power: {
     name: 'Fishing Rod Power',
-    description: 'Multiplies the overall effectiveness of your fishing rod.',
+    description: 'The fishing power of your fishing rod',
     icon: 'Fishing_Rod_Power.png',
-  },
-  fishing_5x_tick_chance: {
-    name: '5× Fish Tick Chance',
-    description: 'Chance for each fishing tick to award 5× its normal income.',
-    icon: '5x_Fish_Tick_Chance.png',
-  },
-  fishing_triple_tick_chance: {
-    name: 'Triple Fish Tick Chance',
-    description: 'Chance for each fishing tick to count three times.',
-    icon: 'Triple_Fish_Tick_Chance.png',
-  },
-  fishing_tiny_notice_chance: {
-    name: 'Tiny Notice Chance',
-    description: 'Chance for a Tiny fishing notice event to trigger, granting bonus fish income.',
-    icon: 'Tiny_Notice_Chance.png',
-  },
-  fishing_tier2_dock_multi: {
-    name: 'Tier 2 Dock Power',
-    description: 'Multiplies income produced by Tier 2 fishing docks.',
-    icon: 'Tier_2_Dock_Power.png',
   },
   fishing_drone_capacity: {
     name: 'Fishing Drone Capacity',
-    description: 'Maximum number of fishing drones you can deploy.',
-    icon: 'Fishing_Rod_Power.png',
+    description: 'The number of Fishing Drones you have available to assign to docks.',
+    icon: 'Fishing_Drone_Capacity.png',
     affix: { prefix: '' },
+  },
+  fishing_drone_power: {
+    name: 'Fishing Drone Base Power',
+    description: 'The base fishing power from a single Fishing Drone. (Base: 3)',
+    icon: 'Fishing_Drone_Base_Power.png',
+  },
+  fishing_drone_multiplier: {
+    name: 'Drone Power Multiplier',
+    description: 'The multiplier on Fishing Drone Base Power that gives the total fishing power per Fishing Drone.',
+    icon: 'Drone_Power_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  fishing_tier2_dock_multi: {
+    name: 'Tier 2 Dock Power',
+    description: 'The multiplier to fishing power on Tier 2 Docks.',
+    icon: 'Tier_2_Dock_Power.png',
+    affix: { suffix: '×' },
+  },
+  fishing_income_multi: {
+    name: 'Fish Income Multiplier',
+    description: 'The multiplier on the number of fish caught.',
+    icon: 'Fish_Income_Multiplier.png',
+    affix: { suffix: '×' },
   },
   fishing_tick_reduction_seconds: {
     name: 'Fishing Tick Reduction',
-    description: 'Reduces the time between fishing ticks.',
-    icon: 'Fishing_Rod_Power.png',
+    description: 'The reduction to the amount of time that the fishing tick bar takes to fill up.',
+    icon: 'Fishing_Tick_Reduction.png',
     affix: { prefix: '-', suffix: 's' },
   },
+  fishing_double_tick_chance: {
+    name: 'Double Fish Tick Chance',
+    description: 'The chance to get 2 Fishing ticks when the tick bar fills up.',
+    icon: 'Double_Fish_Tick_Chance.png',
+    affix: { suffix: '%' },
+  },
+  fishing_triple_tick_chance: {
+    name: 'Triple Fish Tick Chance',
+    description: 'The chance to get 3 Fishing ticks when the tick bar fills up.',
+    icon: 'Triple_Fish_Tick_Chance.png',
+    affix: { suffix: '%' },
+  },
+  fishing_5x_tick_chance: {
+    name: '5× Fish Tick Chance',
+    description: 'The chance to get 5 Fishing ticks when the tick bar fills up.',
+    icon: '5x_Fish_Tick_Chance.png',
+    affix: { suffix: '%' },
+  },
+  fishing_token_multi: {
+    name: 'Fish Token Gain Multiplier',
+    description: 'The multiplier on Fish Tokens gained from Notices.',
+    icon: 'Fish_Token_Gain_Multiplier.png',
+    affix: { suffix: '×' },
+  },
   fishing_notice_requirement: {
-    name: 'Fishing Notice Requirement',
-    description: 'Multiplier on the fish count threshold needed to trigger a notice event.',
-    icon: 'Fishing_Rod_Power.png',
+    name: 'Notice Fish Requirement',
+    description: 'The reduction in the number of fish requested by Notices.',
+    icon: 'Notice_Fish_Requirement.png',
     affix: { suffix: 'x' },
   },
-
-  // ─── Chests ───────────────────────────────────────────────────────────────
-
-  chest_meter_multi: {
-    name: 'Chest Meter Gain Multiplier',
-    description: 'Multiplies the rate at which the chest meter fills up.',
-    icon: 'Chest_Meter_Gain_Multiplier.png',
+  fishing_tiny_notice_chance: {
+    name: 'Tiny Notice Chance',
+    description: 'The chance for a Notice to ask for 90% less fish.',
+    icon: 'Tiny_Notice_Chance.png',
+    affix: { suffix: '%' },
   },
-  chest_items_bonus: {
-    name: 'Items Contained In Chests',
-    description: 'Additional items you receive from each chest opened.',
-    icon: 'Items_Contained_In_Chests.png',
+  fishing_shiny_chance: {
+    name: 'Shiny Fish Chance',
+    description: 'The chance for a shiny catch of fish.',
+    icon: 'Shiny_Fish_Chance.png',
+    affix: { suffix: '%' },
+  },
+  fishing_shiny_multi: {
+    name: 'Shiny Multiplier',
+    description: 'The multiplier on fish caught when a catch is shiny. (Base: 3x)',
+    icon: 'Shiny_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  fishing_super_shiny_chance: {
+    name: 'Super Shiny Fish Chance',
+    description: 'The chance for a shiny catch of fish to be super shiny.',
+    icon: 'Super_Shiny_Fish_Chance.png',
+    affix: { suffix: '%' },
+  },
+  fishing_super_shiny_multi: {
+    name: 'Super Shiny Multiplier',
+    description: 'The multiplier on fish caught when a shiny catch is super shiny. (Base: 2x)',
+    icon: 'Super_Shiny_Multiplier.png',
+    affix: { suffix: '×' },
+  },
+  fishing_tick_speed: {
+    name: 'Frames Per Fish Tick',
+    description: 'When Sushi is active, this is the amount of fishing ticks used in the time it takes to fill the time bar.',
+    icon: 'Obelisk_Fight_Duration_Icon.png',
+    affix: { suffix: '×' },
   },
 
   // ─── Misc ─────────────────────────────────────────────────────────────────
 
   game_speed_multi: {
     name: 'Game Speed Multiplier',
-    description: 'Multiplies the overall speed of the game — everything happens faster.',
+    description: 'Modifies the speed at which the game runs.',
     icon: 'Game_Speed_Multiplier.png',
-  },
-  experience_multi: {
-    name: 'Experience Gain Multiplier',
-    description: 'Multiplies all experience gained from any source.',
-    icon: 'Experience_Gain_Multiplier.png',
-  },
-  pet_levelup_chance_multi: {
-    name: 'Pet Level Up Chance',
-    description: 'Multiplies the probability of your pet levelling up after each interaction.',
-    icon: 'Pet_Level_Up_Chance.png',
-  },
-  xp_level_cap: {
-    name: 'XP Level Cap',
-    description: 'The maximum level your XP bar can reach before the prestige resets it.',
-    icon: 'Xp_Level_Cap.png',
-    affix: { prefix: 'Level ' },
-  },
-  obelisk_timer_add: {
-    name: 'Obelisk Timer Add',
-    description: 'Multiplier added to the Obelisk timer, extending its active duration.',
     affix: { suffix: '×' },
-  },
-  lootbug_gem_cost_reduction: {
-    name: 'Lootbug Gem Cost Reduction',
-    description: 'Reduces the gem cost to collect a Lootbug\'s loot.',
-    affix: { prefix: '+' },
-  },
-  coal_generation_seconds: {
-    name: 'Coal Generation Time',
-    description: 'Seconds between coal generation ticks for drone fuel.',
-    icon: 'Drone_Fuel_Duration_Multiplier.png',
-    affix: { suffix: 's' },
-  },
-  contract_cost_reduction: {
-    name: 'Contract Cost Reduction',
-    description: 'Reduces the gold cost of taking on contracts.',
-    affix: { suffix: '%' },
-  },
-  contract_points_rewarded: {
-    name: 'Contract Points Rewarded',
-    description: 'Additional contract points awarded on contract completion.',
-    affix: { prefix: '+' },
-  },
-  freebie_cooldown_seconds: {
-    name: 'Freebie Cooldown',
-    description: 'Seconds between Freebie Pack recharge ticks.',
-    affix: { suffix: 's' },
   },
   item_duration_multi: {
     name: 'Item Duration Multiplier',
-    description: 'Multiplies how long temporary items and effects last.',
+    description: 'Increases Item duration.',
     icon: 'Item_Duration_Multiplier.png',
+    affix: { suffix: '×' },
   },
   gem_upgrade_cap_increase: {
     name: 'Gem Upgrade Cap Increase',
-    description: 'Additional levels added to the maximum cap of all gem upgrades.',
+    description: 'Increases the cap of Gem Upgrades in the Store.',
     icon: 'Gem_Upgrade_Cap_Increase.png',
+    affix: { suffix: '×' },
+  },
+  pet_levelup_chance_multi: {
+    name: 'Pet Level Up Chance',
+    description: 'Increases the chance for a Pet to level up when completing the leveling action.',
+    icon: 'Pet_Level_Up_Chance.png',
+    affix: { suffix: '×' },
   },
 
-  // ─── Archaeology ──────────────────────────────────────────────────────────
+  // ─── World 1 Statues ──────────────────────────────────────────────────────────
 
-  fragment_gain_multi: {
-    name: 'Fragment Gain Multiplier',
-    description: 'Multiplies the number of archaeology fragments gained from excavations.',
-    icon: 'Fragment_Gain.png',
+  statue_0_set1: {
+    name: 'Statue of Rhythm (Xanz)', 
+    description: 'Statue #1 | World #1',
+    icon: '1_Statue_Rhythm_Normal.png' 
   },
+  statue_1_set1: {
+    name: 'Statue of Awareness (Tor)', 
+    description: 'Statue #2 | World #1',
+    icon: '2_Statue_Awareness_Normal.png' 
+  }, 
+  statue_2_set1: {
+    name: 'Statue of Slaying (Dark)', 
+    description: 'Statue #3 | World #1',
+    icon: '3_Statue_Slaying_Normal.png'
+  },
+  statue_3_set1: {
+    name: 'Statue of Appetite (Frozen)', 
+    description: 'Statue #4 | World #1',
+    icon: '4_Statue_Appetite_Normal.png' 
+  },
+  statue_4_set1: {
+    name: 'Statue of Friendship (Caulwik)', 
+    description: 'Statue #5 | World #1',
+    icon: '5_Statue_Friendship_Normal.png' 
+  },
+  statue_5_set1: {
+    name: 'Statue of Hygiene (Totefm)', 
+    description: 'Statue #6 | World #1',
+    icon: '6_Statue_Hygiene_Normal.png' 
+  },
+  statue_6_set1: {
+    name: 'Statue of Artistry (Celio)', 
+    description: 'Statue #7 | World #1',
+    icon: '7_Statue_Artistry_Normal.png' 
+  }, 
+  statue_7_set1: {
+    name: 'Statue of Randomness (Jolly)', 
+    description: 'Statue #8 | World #1',
+    icon: '8_Statue_Randomness_Normal.png' 
+  }, 
+  statue_8_set1: {
+    name: 'Statue of Childhood (Salutem)', 
+    description: 'Statue #9 | World #1',
+    icon: '9_Statue_Childhood_Normal.png' 
+  },
+
+  // ─── World 3 Statues ──────────────────────────────────────────────────────────
+
+  statue_0_set2: {
+    name: 'Statue of Craftmanship (Vydn)', 
+    description: 'Statue #1 | World #3',
+    icon: '10_Statue_Craftmanship_Normal.png' 
+  },
+  statue_1_set2: {
+    name: 'Statue of Propulsion (Guard)', 
+    description: 'Statue #2 | World #3',
+    icon: '11_Statue_Propulsion_Normal.png' 
+  }, 
+  statue_2_set2: {
+    name: 'Statue of Safety (Zuiqiang)', 
+    description: 'Statue #3 | World #3',
+    icon: '12_Statue_Safety_Normal.png'
+  },
+  statue_3_set2: {
+    name: 'Statue of Ignition (Julk)', 
+    description: 'Statue #4 | World #3',
+    icon: '13_Statue_Ignition_Normal.png' 
+  },
+  statue_4_set2: {
+    name: 'Statue of Warmth (Satio)', 
+    description: 'Statue #5 | World #3',
+    icon: '14_Statue_Warmth_Normal.png' 
+  },
+  statue_5_set2: {
+    name: 'Statue of Feline (Iseburge)', 
+    description: 'Statue #6 | World #3',
+    icon: '15_Statue_Feline_Normal.png' 
+  },
+  statue_6_set2: {
+    name: 'Statue of Affluence (Kohanu)', 
+    description: 'Statue #7 | World #3',
+    icon: '16_Statue_Affluence_Normal.png' 
+  }, 
+  statue_7_set2: {
+    name: 'Statue of Eastwood (MLNW)', 
+    description: 'Statue #8 | World #3',
+    icon: '17_Statue_Eastwood_Normal.png' 
+  }, 
+  statue_8_set2: {
+    name: 'Statue of Soprano (Praed)', 
+    description: 'Statue #9 | World #3',
+    icon: '18_Statue_Soprano_Normal.png' 
+  },
+
+  // ─── World 4 Statues ──────────────────────────────────────────────────────────
+
+  statue_0_set3: {
+    name: 'Statue of Comfort (Lute)', 
+    description: 'Statue #1 | World #4',
+    icon: '19_Statue_Comfort_Normal.png' 
+  },
+  statue_1_set3: {
+    name: 'Statue of Timekeeping (Karma)', 
+    description: 'Statue #2 | World #4',
+    icon: '20_Statue_Timekeeping_Normal.png' 
+  }, 
+  statue_2_set3: {
+    name: 'Statue of Combat (Sans)', 
+    description: 'Statue #3 | World #4',
+    icon: '21_Statue_Combat_Normal.png'
+  },
+  statue_3_set3: {
+    name: 'Statue of Nature (Fanq)', 
+    description: 'Statue #4 | World #4',
+    icon: '22_Statue_Nature_Normal.png' 
+  },
+  statue_4_set3: {
+    name: 'Statue of Semblance (Vak)', 
+    description: 'Statue #5 | World #4',
+    icon: '23_Statue_Semblance_Normal.png' 
+  },
+  statue_5_set3: {
+    name: 'Statue of Crochet (Kripp)', 
+    description: 'Statue #6 | World #4',
+    icon: '24_Statue_Crochet_Normal.png' 
+  },
+  statue_6_set3: {
+    name: 'Statue of Antagonism (Loop)', 
+    description: 'Statue #7 | World #4',
+    icon: '25_Statue_Antagonism_Normal.png' 
+  }, 
+  statue_7_set3: {
+    name: 'Statue of Fallacy (Berty)', 
+    description: 'Statue #8 | World #4',
+    icon: '26_Statue_Fallacy_Normal.png' 
+  }, 
+  statue_8_set3: {
+    name: 'Statue of Rodentia (Kromak)', 
+    description: 'Statue #9 | World #4',
+    icon: '27_Statue_Rodentia_Normal.png.png' 
+  },
+
 }
 
 // ─── Lookup helpers ────────────────────────────────────────────────────────
