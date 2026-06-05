@@ -3,8 +3,9 @@
   import Modal from '$lib/components/Modal.svelte'
   import PageHeader from '$lib/components/PageHeader.svelte'
   import Button from '$lib/components/Button.svelte'
-  import { settings, setNotation, setFontScale, setDensity } from '$lib/stores/settings'
-  import { hardReset } from '$lib/storage/reset'
+  import { settings, setNotation, setFontScale, setDensity, resetSettings } from '$lib/stores/settings'
+  import { clearStats } from '$lib/stores/stats'
+  import { resetStoreProgress } from '$lib/stores/storeProgress'
   import { focusOnMount } from '$lib/actions/focusOnMount'
   import type { Notation, } from '$lib/format'
   import type { FontScale, Density } from '$lib/stores/settings'
@@ -35,10 +36,30 @@
   function advanceToStage2() { stage = 'confirm-2'; confirmInput = '' }
   function cancel()          { stage = 'idle';      confirmInput = '' }
 
+  const STORAGE_PREFIX = 'iom-'
+
+  function scrubStorage(storage: Storage): void {
+    const keysToRemove: string[] = []
+    for (let i = 0; i < storage.length; i++) {
+      const key = storage.key(i)
+      if (key && key.startsWith(STORAGE_PREFIX)) keysToRemove.push(key)
+    }
+    for (const key of keysToRemove) storage.removeItem(key)
+  }
+
+  function resetAll(): void {
+    if (typeof window === 'undefined') return
+    clearStats()
+    resetSettings()
+    resetStoreProgress()
+    scrubStorage(localStorage)
+    scrubStorage(sessionStorage)
+  }
+
   function executeReset(e: SubmitEvent) {
     e.preventDefault()
     if (confirmInput !== 'RESET') return
-    hardReset()
+    resetAll()
     stage = 'idle'
     confirmInput = ''
   }
