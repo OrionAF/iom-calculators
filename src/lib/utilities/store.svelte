@@ -12,10 +12,11 @@
   import WikiIcon from '$lib/components/WikiIcon.svelte'
   import PageHeader from '$lib/components/PageHeader.svelte'
   import OwnableTile from '$lib/components/OwnableTile.svelte'
-  import Tooltip from '$lib/components/Tooltip.svelte'
+  import StatTooltip from '$lib/components/StatTooltip.svelte'
   import { Minus, Plus, Check, Info, X } from 'lucide-svelte'
   import { getStatMeta } from '$lib/stats/registry'
   import { formatStatByKey } from '$lib/format'
+  import { settings } from '$lib/stores/settings'
 
   let activeTab = $state('value-packs')
 
@@ -171,12 +172,13 @@
               {#if pack.effects.length}
                 <div class="effect-list">
                   {#each pack.effects as e}
-                    {@const meta = e.derivedStatKey ? getStatMeta(e.derivedStatKey) : undefined}
                     <div class="effect-item">
-                      {#if meta}
-                        <Tooltip text={meta.description} addition={e.tooltipAddition}>
-                          {#snippet children()}{resolveEffectLabel(e)}{/snippet}
-                        </Tooltip>
+                      {#if $settings.statTooltips && e.derivedStatKey}
+                        <StatTooltip
+                          derivedStatKey={e.derivedStatKey}
+                          value={e.value}
+                          label={resolveEffectLabel(e)}
+                        />
                       {:else}
                         {resolveEffectLabel(e)}
                       {/if}
@@ -281,12 +283,13 @@
                 <div class="effect-list">
                   {#each bundlePerks as perk}
                     {#each perk!.effects as e}
-                      {@const meta = e.derivedStatKey ? getStatMeta(e.derivedStatKey) : undefined}
                       <div class="effect-item">
-                        {#if meta}
-                          <Tooltip text={meta.description} addition={e.tooltipAddition}>
-                            {#snippet children()}{resolveEffectLabel(e)}{/snippet}
-                          </Tooltip>
+                        {#if $settings.statTooltips && e.derivedStatKey}
+                          <StatTooltip
+                            derivedStatKey={e.derivedStatKey}
+                            value={e.value}
+                            label={resolveEffectLabel(e)}
+                          />
                         {:else}
                           {resolveEffectLabel(e)}
                         {/if}
@@ -318,12 +321,13 @@
               {#if perk.effects.length}
                 <div class="effect-list">
                   {#each perk.effects as e}
-                    {@const meta = e.derivedStatKey ? getStatMeta(e.derivedStatKey) : undefined}
                     <div class="effect-item">
-                      {#if meta}
-                        <Tooltip text={meta.description} addition={e.tooltipAddition}>
-                          {#snippet children()}{resolveEffectLabel(e)}{/snippet}
-                        </Tooltip>
+                      {#if $settings.statTooltips && e.derivedStatKey}
+                        <StatTooltip
+                          derivedStatKey={e.derivedStatKey}
+                          value={e.value}
+                          label={resolveEffectLabel(e)}
+                        />
                       {:else}
                         {resolveEffectLabel(e)}
                       {/if}
@@ -359,12 +363,13 @@
               {#if unlock.effects.length}
                 <div class="effect-list">
                   {#each unlock.effects as e}
-                    {@const meta = e.derivedStatKey ? getStatMeta(e.derivedStatKey) : undefined}
                     <div class="effect-item">
-                      {#if meta}
-                        <Tooltip text={meta.description} addition={e.tooltipAddition}>
-                          {#snippet children()}{resolveEffectLabel(e)}{/snippet}
-                        </Tooltip>
+                      {#if $settings.statTooltips && e.derivedStatKey}
+                        <StatTooltip
+                          derivedStatKey={e.derivedStatKey}
+                          value={e.value}
+                          label={resolveEffectLabel(e)}
+                        />
                       {:else}
                         {resolveEffectLabel(e)}
                       {/if}
@@ -394,7 +399,17 @@
                 {#if maxed}<span class="badge badge-maxed">MAXED</span>{/if}
               </div>
               {#each upgrade.effects as e}
-                <div class="upgrade-effect">{e.label}</div>
+                <div class="upgrade-effect">
+                  {#if $settings.statTooltips && e.derivedStatKey}
+                    <StatTooltip
+                      derivedStatKey={e.derivedStatKey}
+                      value={e.value}
+                      label={resolveEffectLabel(e)}
+                    />
+                  {:else}
+                    {resolveEffectLabel(e)}
+                  {/if}
+                </div>
               {/each}
               <div class="upgrade-cost">
                 <WikiIcon filename="Gem.png" size={12} /> {upgrade.gemCost} per level
