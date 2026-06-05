@@ -103,7 +103,7 @@ export function formatMultiplier(n: number): string {
 //   2. Suffix-pattern match against the key (fallback for uncatalogued keys)
 //   3. Fallback: bare formatStat output
 
-import { getStatAffix, type StatAffix } from './stats/catalog'
+import { getStatAffix, type StatAffix } from './stats/registry'
 
 type Affix = StatAffix
 
