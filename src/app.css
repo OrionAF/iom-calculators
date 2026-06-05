@@ -90,32 +90,56 @@
   }
 }
 
-/* ── Density — column-count custom properties ───────────────────── */
-/* compact       → 4 cols store, 3 stat pairs per row                  */
-/* normal        → 3 cols store, 2 stat pairs per row  (default)        */
-/* spacious      → 2 cols store, 1 stat pair  per row                  */
-/* super-spacious→ 1 col  store, 1 stat pair  per row                  */
+/* ─── Layout density ────────────────────────────────────────────── */
+
+/* Intended (desktop) values per density tier. */
 :root {
-  --page-cols:   3;   /* card grids (Store)          — normal default */
-  --stat-cols:   2;   /* stat key-value pairs per row — normal default */
-  --grid-min:    180px; /* min tile width for auto-fill grids          */
+  /* normal default */
+  --page-cols: 3;
+  --stat-cols: 2;
 }
-:root[data-density="compact"] {
-  --page-cols:   4;
-  --stat-cols:   3;
-  --grid-min:    150px;
+:root[data-density="compact"]        { --page-cols: 4; --stat-cols: 3; }
+:root[data-density="spacious"]       { --page-cols: 2; --stat-cols: 1; }
+:root[data-density="super-spacious"] { --page-cols: 1; --stat-cols: 1; }
+
+/* Viewport clamps — narrower screens cap the column counts so density
+   choices don't produce unreadably tight grids on phones. The clamp
+   uses the same :root[data-density="..."] selector specificity as the
+   base rules so it wins by source-order. */
+@media (max-width: 479px) {
+  :root,
+  :root[data-density="compact"],
+  :root[data-density="normal"],
+  :root[data-density="spacious"],
+  :root[data-density="super-spacious"] {
+    --page-cols: 1;
+    --stat-cols: 1;
+  }
 }
-/* normal uses :root defaults */
-:root[data-density="spacious"] {
-  --page-cols:   2;
-  --stat-cols:   1;
-  --grid-min:    220px;
+@media (min-width: 480px) and (max-width: 639px) {
+  :root,
+  :root[data-density="normal"] {
+    --page-cols: 2;
+    --stat-cols: 1;
+  }
+  :root[data-density="compact"] {
+    --page-cols: 2;
+    --stat-cols: 2;
+  }
+  :root[data-density="spacious"],
+  :root[data-density="super-spacious"] {
+    --page-cols: 1;
+    --stat-cols: 1;
+  }
 }
-:root[data-density="super-spacious"] {
-  --page-cols:   1;
-  --stat-cols:   1;
-  --grid-min:    260px;
+@media (min-width: 640px) and (max-width: 767px) {
+  :root[data-density="compact"] {
+    --page-cols: 3;
+    --stat-cols: 2;
+  }
+  /* normal, spacious, super-spacious unaffected at this width */
 }
+/* >= 768px: full settings choice applies */
 
 /* ── Font scale ──────────────────────────────────────────────────── */
 .font-large {

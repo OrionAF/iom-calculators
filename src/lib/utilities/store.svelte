@@ -430,10 +430,7 @@
   .grid-value-packs {
     display: grid;
     gap: var(--space-3);
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 768px) {
-    .grid-value-packs { grid-template-columns: repeat(var(--page-cols, 2), minmax(0, 1fr)); }
+    grid-template-columns: repeat(var(--page-cols), minmax(0, 1fr));
   }
 
   .info-banner {
@@ -624,28 +621,19 @@
   .grid-perk-bundles {
     display: grid;
     gap: var(--space-3);
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 640px) {
-    .grid-perk-bundles { grid-template-columns: repeat(var(--page-cols, 2), minmax(0, 1fr)); }
+    grid-template-columns: repeat(var(--page-cols), minmax(0, 1fr));
   }
   /* ─── Perks ───────────────────────────────────────────────────────── */
   .grid-perks {
     display: grid;
     gap: var(--space-3);
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 768px) {
-    .grid-perks { grid-template-columns: repeat(var(--page-cols, 2), minmax(0, 1fr)); }
+    grid-template-columns: repeat(var(--page-cols), minmax(0, 1fr));
   }
   /* ─── Gem Unlocks ─────────────────────────────────────────────────── */
   .grid-gem-unlocks {
     display: grid;
     gap: var(--space-3);
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 768px) {
-    .grid-gem-unlocks { grid-template-columns: repeat(var(--page-cols, 2), minmax(0, 1fr)); }
+    grid-template-columns: repeat(var(--page-cols), minmax(0, 1fr));
   }
   .unlock-cost {
     font-size: var(--text-sm);
@@ -687,10 +675,7 @@
   .grid-gem-upgrades {
     display: grid;
     gap: var(--space-3);
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 640px) {
-    .grid-gem-upgrades { grid-template-columns: repeat(var(--page-cols, 2), minmax(0, 1fr)); }
+    grid-template-columns: repeat(var(--page-cols), minmax(0, 1fr));
   }
   .upgrade-tile {
     display: flex;
