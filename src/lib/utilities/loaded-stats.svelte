@@ -3,6 +3,7 @@
   import { stats } from '$lib/stores/stats'
   import { settings, setValueDisplayMode } from '$lib/stores/settings'
   import { formatStatByKey } from '$lib/format'
+  import StatTooltip from '$lib/components/StatTooltip.svelte'
   import EmptyState from '$lib/components/EmptyState.svelte'
   import WikiIcon from '$lib/components/WikiIcon.svelte'
   import PageHeader from '$lib/components/PageHeader.svelte'
@@ -213,7 +214,13 @@
               {#each category.visibleStats as stat (stat.key)}
                 <li class="statue-cell" class:unbuilt={stat.tier === 0}>
                   <WikiIcon filename={stat.statueIcon} width={64} height={96} alt={stat.prettyLabel} />
-                  <span class="statue-label">{stat.prettyLabel}</span>
+                  <span class="statue-label">
+                    {#if $settings.statTooltips}
+                      <StatTooltip derivedStatKey={stat.key} value={undefined} label={stat.prettyLabel} />
+                    {:else}
+                      {stat.prettyLabel}
+                    {/if}
+                  </span>
                   <span class="statue-state">{stat.displayValue}</span>
                 </li>
               {/each}
@@ -224,7 +231,11 @@
                 <div class="stat-pair">
                   <dt class="stat-field">
                     <WikiIcon filename={stat.icon} size={14} />
-                    {stat.prettyLabel}
+                    {#if $settings.statTooltips}
+                      <StatTooltip derivedStatKey={stat.key} value={undefined} label={stat.prettyLabel} />
+                    {:else}
+                      {stat.prettyLabel}
+                    {/if}
                   </dt>
                   <dd class="stat-value" class:missing={stat.displayValue === '—'}>
                     {stat.displayValue}
