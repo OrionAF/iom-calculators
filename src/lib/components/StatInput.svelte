@@ -193,7 +193,7 @@
 
   .paste-area {
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     color: var(--text-primary);
     background: var(--bg-base);
     border: 1px dashed var(--border-accent);
