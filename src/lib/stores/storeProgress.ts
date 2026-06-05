@@ -175,7 +175,7 @@ export function setPerk(slug: PerkSlug, owned: boolean): void {
 
 export type PerkBundleState = 'unowned' | 'partial' | 'owned'
 
-export function getPerkBundleState(bundleSlug: PerkBundleSlug): PerkBundleState {
+function computePerkBundleState(bundleSlug: PerkBundleSlug): PerkBundleState {
   const bundle = PERK_BUNDLES.find(b => b.slug === bundleSlug)
   if (!bundle) return 'unowned'
   const s = get(_store)
@@ -188,7 +188,7 @@ export function getPerkBundleState(bundleSlug: PerkBundleSlug): PerkBundleState 
 export function togglePerkBundle(bundleSlug: PerkBundleSlug): void {
   const bundle = PERK_BUNDLES.find(b => b.slug === bundleSlug)
   if (!bundle) return
-  const newOwned = getPerkBundleState(bundleSlug) !== 'owned'
+  const newOwned = computePerkBundleState(bundleSlug) !== 'owned'
   _store.update(s => {
     const perks = { ...s.perks }
     for (const slug of bundle.perkSlugs) perks[slug as PerkSlug] = newOwned

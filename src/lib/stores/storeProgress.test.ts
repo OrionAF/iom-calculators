@@ -7,13 +7,13 @@ import {
   setUnlock,
   setPerk,
   togglePerkBundle,
-  getPerkBundleState,
   setFoundersBundlePurchased,
   setFounderTier,
   setGemUpgradeRank,
   resetStoreProgress,
   migrateStoreProgress,
 } from './storeProgress'
+import { PERK_BUNDLES } from '../store/catalog'
 
 const STORAGE_KEY = 'iom-store-progress'
 
@@ -82,19 +82,35 @@ describe('storeProgress — perks', () => {
 })
 
 describe('storeProgress — perk bundles (derived state + cascade)', () => {
-  it('getPerkBundleState returns "unowned" when no perks owned', () => {
-    expect(getPerkBundleState('ore_prestige_bundle')).toBe('unowned')
+  it('toggling an unowned bundle sets both perks', () => {
+    const bundle = PERK_BUNDLES[0]
+    togglePerkBundle(bundle.slug)
+    const s = get(storeProgress)
+    for (const slug of bundle.perkSlugs) {
+      expect(s.perks[slug]).toBe(true)
+    }
   })
 
-  it('getPerkBundleState returns "partial" with 1 of 2 perks owned', () => {
-    setPerk('2x_ore_income', true)
-    expect(getPerkBundleState('ore_prestige_bundle')).toBe('partial')
+  it('toggling a fully owned bundle clears both perks', () => {
+    const bundle = PERK_BUNDLES[0]
+    // Set up: both perks owned
+    for (const slug of bundle.perkSlugs) setPerk(slug, true)
+    togglePerkBundle(bundle.slug)
+    const s = get(storeProgress)
+    for (const slug of bundle.perkSlugs) {
+      expect(s.perks[slug]).toBe(false)
+    }
   })
 
-  it('getPerkBundleState returns "owned" with both perks owned', () => {
-    setPerk('2x_ore_income', true)
-    setPerk('2x_prestige_point_income', true)
-    expect(getPerkBundleState('ore_prestige_bundle')).toBe('owned')
+  it('toggling a partially owned bundle promotes to fully owned', () => {
+    const bundle = PERK_BUNDLES[0]
+    // Set up: only the first perk owned
+    setPerk(bundle.perkSlugs[0], true)
+    togglePerkBundle(bundle.slug)
+    const s = get(storeProgress)
+    for (const slug of bundle.perkSlugs) {
+      expect(s.perks[slug]).toBe(true)
+    }
   })
 
   it('togglePerkBundle (unowned → owned) sets both underlying perks', () => {
