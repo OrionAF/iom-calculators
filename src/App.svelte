@@ -12,6 +12,15 @@
     root.classList.toggle('font-large', $settings.fontScale === 'large')
     root.dataset.density = $settings.density
   })
+
+  // Body scroll lock while the drawer is open. <main> gets inert via a
+  // separate path; this completes modal isolation on touch devices.
+  $effect(() => {
+    if (typeof document === 'undefined') return
+    const original = document.body.style.overflow
+    document.body.style.overflow = $drawerOpen ? 'hidden' : original || ''
+    return () => { document.body.style.overflow = original }
+  })
   import Sidebar from './lib/components/Sidebar.svelte'
   import MobileTopBar from './lib/components/MobileTopBar.svelte'
   import HomeGrid from './lib/components/HomeGrid.svelte'
