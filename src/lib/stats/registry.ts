@@ -302,13 +302,13 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     icon: 'Drone_Exp_Gain_Multiplier.png',
     affix: { suffix: '×' },
   },
-    void_portal_chance: {
+  void_portal_chance: {
     name: 'Void Portal Chance',
     description: 'The chance for an ore node to be replaced by a void portal.',
     icon: 'Void_Portal_Chance.png',
     affix: { suffix: '%' },
   },
-    void_portal_base_multi: {
+  void_portal_base_multi: {
     name: 'Void Portal Base Multiplier',
     description: 'Multiplies the Void Drone portal multiplier.',
     icon: 'Void_Portal_Base_Multiplier.png',
