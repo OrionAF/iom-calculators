@@ -131,7 +131,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Bomb Capacity',
     description: "Total bomb capacity. Doesn't apply to Founders Bomb.",
     icon: 'Bomb_Capacity.png',
-    affix: { prefix: '' },
+    affix: { prefix: '#'}
   },
   bomb_additional_multiplier: {
     name: 'Additional Bomb Multiplier',
@@ -185,7 +185,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Bomb Capacity Gained From Battery',
     description: 'The number of times Battery Bomb has triggered a cap increase.',
     icon: 'Bomb_Capacity_Gained_From_Battery.png',
-    affix: { prefix: '' },
+    affix: { prefix: '#'}
   },
   bomb_cap_multiplier: {
     name: 'Bomb Cap Multiplier',
@@ -230,6 +230,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Number of Drones',
     description: 'Gives extra drones.',
     icon: 'Number_Of_Drones.png',
+    affix: { prefix: '#'}
   },
   drone_damage_percent: {
     name: 'Drone Damage',
@@ -270,7 +271,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Drone Suit Upgrade Cap',
     description: 'The cap of your drone suit upgrades. The base cap is 5.',
     icon: 'Drone_Suit_Upgrade_Cap.png',
-    affix: { prefix: '' },
+    affix: { prefix: '#'}
   },
   coal_generation_seconds: {
     name: 'Coal Generation Time',
@@ -435,16 +436,19 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Pizzas Eaten',
     description: 'The number of pizzas eaten. The effect caps at 200, but the Pizzas Eaten stat will keep increasing beyond that point.',
     icon: 'Pizzas_Eaten.png',
+    affix: { prefix: '#'}
   },
   steak_eaten: {
     name: 'Steaks Eaten',
     description: 'The number of steaks eaten. The effect caps at 500, but the Steaks Eaten stat will keep increasing beyond that point.',
     icon: 'Steaks_Eaten.png',
+    affix: { prefix: '#'}
   },
   all_floor_multipliers: {
     name: 'All Floor Multis (Gold, Rainbow, Galactic, Prismatic)',
     description: 'Multiplies Gold, Rainbow, Galactic, and Prismatic floor multipliers.',
     icon: 'All_Floor_Multis_(Gold,Rainbow,Galactic).png',
+    affix: { suffix: '×' },
   },
 
   // ─── Bars & Crafting ──────────────────────────────────────────────────────
@@ -613,6 +617,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Lanterns Used',
     description: 'The number of lootbug lanterns used. The effect caps at 25, but the Lanterns Used stat will keep increasing beyond that point.',
     icon: 'Lanterns_Used.png',
+    affix: { prefix: '#'}
   },
 
   // ─── Lootfrogs ─────────────────────────────────────────────────
@@ -621,11 +626,13 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Lootfrogs Caught',
     description: 'The number of Lootfrogs that you have caught by tapping them when they spawn. Lootfrogs are spawned by the Fueled Frogger Drone after purchasing a Black Hole buff.',
     icon: 'Lootfrogs_Caught.png',
+    affix: { prefix: '#'}
   },
   golden_lootfrogs_caught: {
     name: 'Golden Lootfrogs Caught',
     description: 'The number of Golden Lootfrogs that you have caught by tapping them when they spawn. Golden Lootfrogs have a chance to spawn instead of normal Lootfrogs after you get Golden Lootfrog Chance.',
     icon: 'Golden_Lootfrogs_Caught.png',
+    affix: { prefix: '#'}
   },
   lootfrog_capacity: {
     name: 'Lootfrog Capacity',
@@ -676,7 +683,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     affix: { suffix: '×' },
   },
 
-  // ─── Freebies & Economy ───────────────────────────────────────────────────
+  // ─── Chest ───────────────────────────────────────────────────
 
   chest_double_chance: {
     name: 'Chance For 2x Chests',
@@ -997,7 +1004,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Candy Eaten',
     description: 'The number of candy eaten. The effect caps at 250, but the Candy Eaten stat will keep increasing beyond that point.',
     icon: 'Candy_Eaten.png',
-    affix: { suffix: '' },
+    affix: { prefix: '#'}
   },
 
   // ─── Fishing ──────────────────────────────────────────────────────────────
@@ -1011,7 +1018,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Fishing Drone Capacity',
     description: 'The number of Fishing Drones you have available to assign to docks.',
     icon: 'Fishing_Drone_Capacity.png',
-    affix: { prefix: '' },
+    affix: { prefix: '#'}
   },
   fishing_drone_power: {
     name: 'Fishing Drone Base Power',
