@@ -13,10 +13,16 @@
  * on the individual StoreEffect.tooltipAddition or page-level prop — NOT here.
  */
 
+export interface StatAffix {
+  prefix?: string
+  suffix?: string
+}
+
 export interface StatMeta {
   name: string
   description: string
   icon?: string
+  affix?: StatAffix
 }
 
 export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
@@ -551,4 +557,14 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     description: 'Multiplies the number of archaeology fragments gained from excavations.',
     icon: 'Fragment_Gain.png',
   },
+}
+
+// ─── Lookup helpers ────────────────────────────────────────────────────────
+
+export function getStatMeta(key: string): StatMeta | undefined {
+  return STAT_REGISTRY[key]
+}
+
+export function getStatAffix(key: string): StatAffix | undefined {
+  return STAT_REGISTRY[key]?.affix
 }
