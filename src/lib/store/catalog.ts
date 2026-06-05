@@ -1,7 +1,7 @@
 // ─── Type definitions ───────────────────────────────────────────────────────
 
 export interface StoreEffect {
-  label: string
+  label?: string  // when absent, derive from registry: `${getStatMeta(derivedStatKey)?.name}: ${formatStatByKey(value)}`
   derivedStatKey?: string
   value?: number
   /** Context-specific tooltip addition. Base description comes from STAT_REGISTRY via derivedStatKey. */

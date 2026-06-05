@@ -14,7 +14,8 @@
   import OwnableTile from '$lib/components/OwnableTile.svelte'
   import Tooltip from '$lib/components/Tooltip.svelte'
   import { Minus, Plus, Check, Info, X } from 'lucide-svelte'
-  import { STAT_REGISTRY } from '$lib/stats/registry'
+  import { getStatMeta } from '$lib/stats/registry'
+  import { formatStatByKey } from '$lib/format'
 
   let activeTab = $state('value-packs')
 
@@ -25,6 +26,17 @@
   function dismissMirrorBanner() {
     mirrorBannerDismissed = true
     try { sessionStorage.setItem('iom-mirror-banner-dismissed', '1') } catch { /* noop */ }
+  }
+
+  function resolveEffectLabel(e: { label?: string; derivedStatKey?: string; value?: number }): string {
+    if (e.label) return e.label
+    if (e.derivedStatKey) {
+      const meta = getStatMeta(e.derivedStatKey)
+      const name = meta?.name ?? e.derivedStatKey
+      const valueStr = e.value !== undefined ? formatStatByKey(e.derivedStatKey, e.value) : ''
+      return valueStr ? `${name}: ${valueStr}` : name
+    }
+    return ''
   }
 
   // X5: remember per-tab scroll position so switching tabs and switching back
@@ -159,14 +171,14 @@
               {#if pack.effects.length}
                 <div class="effect-list">
                   {#each pack.effects as e}
-                    {@const meta = e.derivedStatKey ? STAT_REGISTRY[e.derivedStatKey] : null}
+                    {@const meta = e.derivedStatKey ? getStatMeta(e.derivedStatKey) : undefined}
                     <div class="effect-item">
                       {#if meta}
                         <Tooltip text={meta.description} addition={e.tooltipAddition}>
-                          {#snippet children()}{e.label}{/snippet}
+                          {#snippet children()}{resolveEffectLabel(e)}{/snippet}
                         </Tooltip>
                       {:else}
-                        {e.label}
+                        {resolveEffectLabel(e)}
                       {/if}
                     </div>
                   {/each}
@@ -269,14 +281,14 @@
                 <div class="effect-list">
                   {#each bundlePerks as perk}
                     {#each perk!.effects as e}
-                      {@const meta = e.derivedStatKey ? STAT_REGISTRY[e.derivedStatKey] : null}
+                      {@const meta = e.derivedStatKey ? getStatMeta(e.derivedStatKey) : undefined}
                       <div class="effect-item">
                         {#if meta}
                           <Tooltip text={meta.description} addition={e.tooltipAddition}>
-                            {#snippet children()}{e.label}{/snippet}
+                            {#snippet children()}{resolveEffectLabel(e)}{/snippet}
                           </Tooltip>
                         {:else}
-                          {e.label}
+                          {resolveEffectLabel(e)}
                         {/if}
                       </div>
                     {/each}
@@ -306,14 +318,14 @@
               {#if perk.effects.length}
                 <div class="effect-list">
                   {#each perk.effects as e}
-                    {@const meta = e.derivedStatKey ? STAT_REGISTRY[e.derivedStatKey] : null}
+                    {@const meta = e.derivedStatKey ? getStatMeta(e.derivedStatKey) : undefined}
                     <div class="effect-item">
                       {#if meta}
                         <Tooltip text={meta.description} addition={e.tooltipAddition}>
-                          {#snippet children()}{e.label}{/snippet}
+                          {#snippet children()}{resolveEffectLabel(e)}{/snippet}
                         </Tooltip>
                       {:else}
-                        {e.label}
+                        {resolveEffectLabel(e)}
                       {/if}
                     </div>
                   {/each}
@@ -347,14 +359,14 @@
               {#if unlock.effects.length}
                 <div class="effect-list">
                   {#each unlock.effects as e}
-                    {@const meta = e.derivedStatKey ? STAT_REGISTRY[e.derivedStatKey] : null}
+                    {@const meta = e.derivedStatKey ? getStatMeta(e.derivedStatKey) : undefined}
                     <div class="effect-item">
                       {#if meta}
                         <Tooltip text={meta.description} addition={e.tooltipAddition}>
-                          {#snippet children()}{e.label}{/snippet}
+                          {#snippet children()}{resolveEffectLabel(e)}{/snippet}
                         </Tooltip>
                       {:else}
-                        {e.label}
+                        {resolveEffectLabel(e)}
                       {/if}
                     </div>
                   {/each}

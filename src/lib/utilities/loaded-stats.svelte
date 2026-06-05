@@ -35,6 +35,7 @@
     STAT_CATALOG,
     STATUE_STATE_LABELS,
   } from '$lib/stats/catalog'
+  import { getStatMeta } from '$lib/stats/registry'
 
   function isStatuesCategory(categoryId: string): boolean {
     return categoryId.endsWith('statues')
@@ -58,12 +59,13 @@
   }
 
   function matchesFilter(
-    stat: { key: string; label?: string },
+    stat: { key: string },
     filter: string,
   ): boolean {
     if (filter === '') return true
     if (prettyKey(stat.key).toLowerCase().includes(filter)) return true
-    if (stat.label && stat.label.toLowerCase().includes(filter)) return true
+    const meta = getStatMeta(stat.key)
+    if (meta?.name && meta.name.toLowerCase().includes(filter)) return true
     return false
   }
 
@@ -122,11 +124,13 @@
       visibleStats: cat.matchedStats.map(stat => {
         const rawValue = $stats?.stats[stat.key]
         const tier = typeof rawValue === 'number' ? rawValue : 0
+        const meta = getStatMeta(stat.key)
+        const icon = meta?.icon
         return {
           key: stat.key,
-          icon: stat.icon,
-          statueIcon: isStatuesCategory(cat.id) ? statueIconForTier(stat.icon, tier) : stat.icon,
-          prettyLabel: stat.label ?? prettyKey(stat.key),
+          icon,
+          statueIcon: isStatuesCategory(cat.id) ? statueIconForTier(icon, tier) : icon,
+          prettyLabel: meta?.name ?? prettyKey(stat.key),
           rawValue,
           displayValue: formatStatRow(stat.key, rawValue, cat.id),
           tier,
