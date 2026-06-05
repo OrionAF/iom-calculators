@@ -220,6 +220,13 @@
           <div class="tier-stepper">
             <button
               type="button"
+              class="stepper-btn stepper-btn-minmax"
+              aria-label="Set to tier 0"
+              onclick={() => setFounderTier(0)}
+              disabled={currentTier <= 0}
+            >Min</button>
+            <button
+              type="button"
               class="stepper-btn"
               aria-label="Decrease tier"
               onclick={() => setFounderTier(currentTier - 1)}
@@ -233,6 +240,13 @@
               onclick={() => setFounderTier(currentTier + 1)}
               disabled={currentTier >= 12}
             ><Plus size={18} aria-hidden="true" /></button>
+            <button
+              type="button"
+              class="stepper-btn stepper-btn-minmax"
+              aria-label="Set to tier 12"
+              onclick={() => setFounderTier(12)}
+              disabled={currentTier >= 12}
+            >Max</button>
             <span class="tier-range">Tier {currentTier} / 12</span>
           </div>
 
@@ -243,7 +257,17 @@
                 {#each t.effects as e}
                   {@const value = vipEffectAt(currentTier, t.tier, e.baseValue, e.increment)}
                   <li>
-                    <span class="effect-name">{e.label}</span>
+                    <span class="effect-name">
+                      {#if $settings.statTooltips && e.derivedStatKey}
+                        <StatTooltip
+                          derivedStatKey={e.derivedStatKey}
+                          value={undefined}
+                          label={e.label ?? e.derivedStatKey}
+                        />
+                      {:else}
+                        {e.label}
+                      {/if}
+                    </span>
                     <span class="effect-value">{formatVipEffectValue(value, e.unit)}</span>
                   </li>
                 {/each}
@@ -410,11 +434,24 @@
                     {resolveEffectLabel(e)}
                   {/if}
                 </div>
+                {#if rank > 0 && e.derivedStatKey && e.value !== undefined}
+                  <div class="upgrade-stat-total">
+                    {formatStatByKey(e.derivedStatKey, rank * e.value)}
+                    <span class="upgrade-stat-total-label">at rank {rank}</span>
+                  </div>
+                {/if}
               {/each}
               <div class="upgrade-cost">
                 <WikiIcon filename="Gem.png" size={12} /> {upgrade.gemCost} per level
               </div>
               <div class="upgrade-stepper">
+                <button
+                  type="button"
+                  class="stepper-btn-small stepper-btn-minmax"
+                  aria-label="Set to rank 0"
+                  onclick={() => setGemUpgradeRank(upgrade.slug, 0)}
+                  disabled={rank <= 0}
+                >Min</button>
                 <button
                   type="button"
                   class="stepper-btn-small"
@@ -430,6 +467,13 @@
                   onclick={() => setGemUpgradeRank(upgrade.slug, rank + 1)}
                   disabled={maxed}
                 ><Plus size={16} aria-hidden="true" /></button>
+                <button
+                  type="button"
+                  class="stepper-btn-small stepper-btn-minmax"
+                  aria-label="Set to max rank"
+                  onclick={() => setGemUpgradeRank(upgrade.slug, upgrade.maxLevel)}
+                  disabled={maxed}
+                >Max</button>
               </div>
             </div>
           </article>
@@ -582,6 +626,15 @@
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
+  .stepper-btn.stepper-btn-minmax {
+    width: auto;
+    padding: 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    color: var(--text-muted);
+  }
+  .stepper-btn.stepper-btn-minmax:not(:disabled) { color: var(--text-primary); }
 
   .tier-value {
     font-family: var(--font-mono);
@@ -751,6 +804,31 @@
   .stepper-btn-small:focus-visible {
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
+  }
+  .stepper-btn-small.stepper-btn-minmax {
+    width: auto;
+    padding: 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: var(--weight-medium);
+    color: var(--text-muted);
+  }
+  .stepper-btn-small.stepper-btn-minmax:not(:disabled) { color: var(--text-primary); }
+  .upgrade-stat-total {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-1);
+  }
+  .upgrade-stat-total-label {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    color: var(--text-dim);
   }
   .upgrade-rank {
     font-family: var(--font-mono);
