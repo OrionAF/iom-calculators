@@ -40,6 +40,7 @@
       height={h}
       alt={alt}
       loading="lazy"
+      decoding="async"
       onerror={() => { errored = true }}
     />
   {/if}
