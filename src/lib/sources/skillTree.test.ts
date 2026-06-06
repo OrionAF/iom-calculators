@@ -103,3 +103,50 @@ describe('skillTreeSources — With This Fish I Summon Two More Fish (max 3 leve
     expect(keys).toContain('fishCardCount')
   })
 })
+
+describe("skillTreeSources — Ctrl+F 'Stars' (max 1 level)", () => {
+  it('supernovaMul: +0.20 (flat, single level)', () => {
+    expect(skillTreeSources.ctrlFStarsSupernovaMul.fn(0, {})).toBe(0)
+    expect(skillTreeSources.ctrlFStarsSupernovaMul.fn(1, {})).toBeCloseTo(0.20)
+    expect(skillTreeSources.ctrlFStarsSupernovaMul.maxLevel).toBe(1)
+  })
+
+  it('superStarSupernovaMul: +0.20 (flat, single level)', () => {
+    expect(skillTreeSources.ctrlFStarsSuperStarSupernovaMul.fn(1, {})).toBeCloseTo(0.20)
+  })
+
+  it('both share the same key', () => {
+    expect(skillTreeSources.ctrlFStarsSupernovaMul.key).toBe('skillTree.ctrlFStars')
+    expect(skillTreeSources.ctrlFStarsSuperStarSupernovaMul.key).toBe('skillTree.ctrlFStars')
+  })
+})
+
+describe('skillTreeSources — Ctrl+C Ctrl+V Stars (max 3 levels)', () => {
+  it('supernovaMul: +0.06 per level', () => {
+    expect(skillTreeSources.ctrlCCtrlVStarsSupernovaMul.fn(3, {})).toBeCloseTo(0.18)
+  })
+
+  it('super10xChance: +0.01 per level', () => {
+    expect(skillTreeSources.ctrlCCtrlVStarsSuper10x.fn(3, {})).toBeCloseTo(0.03)
+  })
+
+  it('both share the same key', () => {
+    expect(skillTreeSources.ctrlCCtrlVStarsSupernovaMul.key).toBe('skillTree.ctrlCCtrlVStars')
+    expect(skillTreeSources.ctrlCCtrlVStarsSuper10x.key).toBe('skillTree.ctrlCCtrlVStars')
+  })
+})
+
+describe('skillTreeSources — Why Are There Stars In My Mining Game (max 3 levels)', () => {
+  it('novagiants: +0.05 per level', () => {
+    expect(skillTreeSources.whyAreThereStarsNovagiant.fn(3, {})).toBeCloseTo(0.15)
+  })
+
+  it('supergiant: +0.01 per level', () => {
+    expect(skillTreeSources.whyAreThereStarsSupergiant.fn(3, {})).toBeCloseTo(0.03)
+  })
+
+  it('both share the same key', () => {
+    expect(skillTreeSources.whyAreThereStarsNovagiant.key).toBe('skillTree.whyAreThereStarsInMyMiningGame')
+    expect(skillTreeSources.whyAreThereStarsSupergiant.key).toBe('skillTree.whyAreThereStarsInMyMiningGame')
+  })
+})

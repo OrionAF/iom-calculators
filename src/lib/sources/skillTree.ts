@@ -175,6 +175,76 @@ const withThisFishShinyChance: Source = {
   inputs: [FISH_CARD_INPUT],
 }
 
+// ─── Ctrl+F 'Stars' ───────────────────────────────────────────────────────────
+// Obelisk Level 23, max 1 level (single purchase). Cost: 36 skill points.
+// Unlocks star-following AND provides permanent flat bonuses to supernova multipliers.
+
+/** Ctrl+F Stars → Star Supernova Multi: +0.20 (flat single-level bonus) */
+const ctrlFStarsSupernovaMul: Source = {
+  key: 'skillTree.ctrlFStars',
+  name: "Ctrl+F 'Stars'",
+  system: 'skillTree',
+  maxLevel: 1,
+  fn: (l) => l * 0.20,
+  inputs: [],
+}
+
+/** Ctrl+F Stars → Super Star Supernova Multi: +0.20 (flat single-level bonus) */
+const ctrlFStarsSuperStarSupernovaMul: Source = {
+  key: 'skillTree.ctrlFStars',
+  name: "Ctrl+F 'Stars'",
+  system: 'skillTree',
+  maxLevel: 1,
+  fn: (l) => l * 0.20,
+  inputs: [],
+}
+
+// ─── Ctrl+C Ctrl+V Stars ──────────────────────────────────────────────────────
+// Obelisk Level 45, max 3 levels. Cost: 75, 94, 117 skill points.
+
+/** Ctrl+C Ctrl+V Stars → Star Supernova Multi: +0.06 per level */
+const ctrlCCtrlVStarsSupernovaMul: Source = {
+  key: 'skillTree.ctrlCCtrlVStars',
+  name: 'Ctrl+C Ctrl+V Stars',
+  system: 'skillTree',
+  maxLevel: 3,
+  fn: (l) => l * 0.06,
+  inputs: [],
+}
+
+/** Ctrl+C Ctrl+V Stars → Super Star 10x Chance: +0.01 per level */
+const ctrlCCtrlVStarsSuper10x: Source = {
+  key: 'skillTree.ctrlCCtrlVStars',
+  name: 'Ctrl+C Ctrl+V Stars',
+  system: 'skillTree',
+  maxLevel: 3,
+  fn: (l) => l * 0.01,
+  inputs: [],
+}
+
+// ─── Why Are There Stars In My Mining Game ────────────────────────────────────
+// Obelisk Level 64, max 3 levels. Cost: 950, 1188, 1484 skill points.
+
+/** Why Are There Stars → Novagiant Combo Multi: +0.05 per level */
+const whyAreThereStarsNovagiant: Source = {
+  key: 'skillTree.whyAreThereStarsInMyMiningGame',
+  name: 'Why Are There Stars In My Mining Game',
+  system: 'skillTree',
+  maxLevel: 3,
+  fn: (l) => l * 0.05,
+  inputs: [],
+}
+
+/** Why Are There Stars → Star Supergiant Chance: +0.01 per level */
+const whyAreThereStarsSupergiant: Source = {
+  key: 'skillTree.whyAreThereStarsInMyMiningGame',
+  name: 'Why Are There Stars In My Mining Game',
+  system: 'skillTree',
+  maxLevel: 3,
+  fn: (l) => l * 0.01,
+  inputs: [],
+}
+
 // ─── Export ───────────────────────────────────────────────────────────────────
 
 export const skillTreeSources = {
@@ -192,4 +262,11 @@ export const skillTreeSources = {
   motleySchoolDrones,
   withThisFishFishMulti,
   withThisFishShinyChance,
+  // Stars-relevant nodes
+  ctrlFStarsSupernovaMul,
+  ctrlFStarsSuperStarSupernovaMul,
+  ctrlCCtrlVStarsSupernovaMul,
+  ctrlCCtrlVStarsSuper10x,
+  whyAreThereStarsNovagiant,
+  whyAreThereStarsSupergiant,
 } satisfies Record<string, Source>
