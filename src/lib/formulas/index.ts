@@ -1,4 +1,5 @@
 import { fishingFormulas } from './fishing'
+import { starsFormulas }   from './stars'
 import type { FormulaMap } from '$lib/engine/types'
 
 /**
@@ -7,5 +8,6 @@ import type { FormulaMap } from '$lib/engine/types'
  */
 export const ALL_FORMULAS: FormulaMap = {
   ...fishingFormulas,
-  // stars, pickaxe, ore, bombs, etc. added in subsequent plans
+  ...starsFormulas,
+  // pickaxe, ore, bombs, etc. added in subsequent plans
 }
