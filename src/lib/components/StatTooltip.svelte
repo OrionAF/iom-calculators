@@ -22,27 +22,58 @@
 
   let active = $state(false)
   let uid = $state(0)
+  let triggerEl = $state<HTMLSpanElement | null>(null)
+
+  // Fixed position for the bubble — computed from trigger's bounding rect.
+  // position: fixed escapes overflow:hidden ancestors (e.g. loaded-stats .stat-field).
+  let bubbleTop = $state(0)
+  let bubbleLeft = $state(0)
+
   $effect(() => { uid = ++_counter })
+
+  const BUBBLE_WIDTH = 272
+  const GAP = 8  // px between trigger top and bubble bottom
+
+  function computePosition(): void {
+    if (!triggerEl) return
+    const rect = triggerEl.getBoundingClientRect()
+    // Top: bubble will translateY(-100%) so `top` is where the bubble bottom lands.
+    // We want it GAP px above the trigger's top edge.
+    bubbleTop = rect.top - GAP
+    // Left: left-align with trigger, clamped so bubble never bleeds off-screen.
+    bubbleLeft = Math.min(
+      Math.max(8, rect.left),
+      window.innerWidth - BUBBLE_WIDTH - 8,
+    )
+  }
 </script>
 
 {#if meta}
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <span
+    bind:this={triggerEl}
     class="stat-tip"
     tabindex="0"
     role="button"
     aria-label="{label} — tap for stat info"
     aria-describedby="stat-tip-{uid}"
     class:active
-    onclick={() => (active = !active)}
+    onmouseenter={computePosition}
+    onfocus={computePosition}
+    onclick={() => { computePosition(); active = !active }}
     onblur={() => (active = false)}
     onkeydown={(e) => {
-      if (e.key === 'Enter' || e.key === ' ') { active = !active; e.preventDefault() }
+      if (e.key === 'Enter' || e.key === ' ') { computePosition(); active = !active; e.preventDefault() }
       if (e.key === 'Escape') active = false
     }}
   >
     {label}
-    <span class="tip-bubble" id="stat-tip-{uid}" role="tooltip">
+    <span
+      class="tip-bubble"
+      id="stat-tip-{uid}"
+      role="tooltip"
+      style="top: {bubbleTop}px; left: {bubbleLeft}px"
+    >
       <div class="tip-head">
         <div class="tip-icon">
           <WikiIcon filename={meta.icon} size={20} />
@@ -67,7 +98,6 @@
 <style>
   /* ── Trigger ── */
   .stat-tip {
-    position: relative;
     display: inline;
     cursor: help;
     text-decoration: underline;
@@ -82,14 +112,18 @@
     border-radius: 2px;
   }
 
-  /* ── Bubble ── */
+  /* ── Bubble (position: fixed — escapes all overflow:hidden ancestors) ── */
   .tip-bubble {
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 0;
+
+    position: fixed;
+    /* top + left set via inline style from computePosition() */
+    /* translateY(-100%) lifts the bubble above the `top` coordinate */
+    transform: translateY(-100%) scale(0.98);
+    transform-origin: bottom left;
+
     z-index: var(--z-toast);
     width: 272px;
 
@@ -99,8 +133,6 @@
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.3);
     overflow: hidden;
 
-    transform: translateY(4px) scale(0.98);
-    transform-origin: bottom left;
     transition:
       opacity 150ms var(--ease-out),
       transform 150ms var(--ease-out),
@@ -113,13 +145,18 @@
   .stat-tip.active .tip-bubble {
     visibility: visible;
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(-100%) scale(1);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .tip-bubble {
       transition: opacity 150ms ease-out, visibility 150ms ease-out;
-      transform: none;
+      transform: translateY(-100%);
+    }
+    .stat-tip:hover .tip-bubble,
+    .stat-tip:focus-within .tip-bubble,
+    .stat-tip.active .tip-bubble {
+      transform: translateY(-100%);
     }
   }
 
