@@ -1,0 +1,311 @@
+import type { FormulaMap, Source } from '$lib/engine/types'
+import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { skillTreeSources as sk } from '$lib/sources/skillTree'
+
+const UNKNOWN: Source = {
+  key: '_unknown',
+  name: 'Unknown source',
+  system: 'stargazing',
+  fn: () => 0,
+  inputs: [],
+}
+
+export const starsFormulas = {
+
+  /**
+   * Star Spawn Rate Multiplier
+   * base = 0 (additive bonus to the base 1/50 spawn rate)
+   */
+  star_spawn_rate: {
+    base: 0,
+    contributions: [
+      { source: sg.spawnRate,  op: '+' },
+      { source: sg.starGemini, op: '+' },
+      { source: UNKNOWN,       op: '×', unknown: true },  // Drones: Fueled Starburst Suit (×)
+      { source: UNKNOWN,       op: '×', unknown: true },  // Drones: Elixir Drone (×)
+      { source: UNKNOWN,       op: '+', unknown: true },  // Relics: Legendary Relic
+      { source: UNKNOWN,       op: '+', unknown: true },  // Pets: Starfish Pet Skin
+    ],
+  },
+
+  /**
+   * Auto-Catch Chance
+   * base = 0
+   * Note: Drone sources use op '=' (setter) — they override other additive sources.
+   */
+  star_auto_catch_chance: {
+    base: 0,
+    contributions: [
+      { source: sg.autoCatch,    op: '+' },
+      { source: sg.starTaurus,   op: '+' },
+      { source: UNKNOWN,         op: '=', unknown: true },  // Drones: Fueled Starburst Suit (=)
+      { source: UNKNOWN,         op: '=', unknown: true },  // Drones: Elixir Drone (=)
+    ],
+  },
+
+  /**
+   * Star Double Spawn Chance
+   * base = 0 — only stargazing upgrade known
+   */
+  star_double_spawn_chance: {
+    base: 0,
+    contributions: [
+      { source: sg.doubleChance, op: '+' },
+    ],
+  },
+
+  /**
+   * Star Triple Spawn Chance
+   * base = 0
+   */
+  star_triple_spawn_chance: {
+    base: 0,
+    contributions: [
+      { source: sg.starSagittarius, op: '+' },
+      { source: UNKNOWN,            op: '+', unknown: true },  // Drones: Starburst Suit
+      { source: UNKNOWN,            op: '+', unknown: true },  // Store: 3 value packs
+      { source: UNKNOWN,            op: '+', unknown: true },  // Fishing: Megalodon Tier 1 Tribute
+    ],
+  },
+
+  /**
+   * Super Star Spawn Rate Multiplier
+   * base = 0
+   */
+  super_star_spawn_multi: {
+    base: 0,
+    contributions: [
+      { source: sg.superStarSpawn, op: '+' },
+      { source: sg.starVirgo,      op: '+' },
+      { source: UNKNOWN,           op: '+', unknown: true },  // Drones: Elixir Drone
+      { source: UNKNOWN,           op: '×', unknown: true },  // Items: Primal Meat (×)
+      { source: UNKNOWN,           op: '+', unknown: true },  // Items: Ice Cream
+      { source: UNKNOWN,           op: '+', unknown: true },  // Challenges: Extreme Upgrade
+      { source: UNKNOWN,           op: '+', unknown: true },  // Cards: Starfish Pet Card
+      { source: UNKNOWN,           op: '+', unknown: true },  // Fishing: Tier 1 Notice Upgrade
+      { source: UNKNOWN,           op: '+', unknown: true },  // Contracts: World 2 Upgrade
+    ],
+  },
+
+  /**
+   * Super Star Triple Chance
+   * base = 0
+   */
+  super_star_triple_chance: {
+    base: 0,
+    contributions: [
+      { source: sg.starLeo, op: '+' },
+      { source: UNKNOWN,    op: '+', unknown: true },  // Store: Stargazing Supernova Bundle
+    ],
+  },
+
+  /**
+   * Super Star 10x Spawn Chance
+   * base = 0
+   */
+  super_star_10x_chance: {
+    base: 0,
+    contributions: [
+      { source: sg.super10xChance,             op: '+' },
+      { source: sk.ctrlCCtrlVStarsSuper10x,   op: '+' },
+      { source: UNKNOWN,                       op: '+', unknown: true },  // Store: 2 value packs
+      { source: UNKNOWN,                       op: '+', unknown: true },  // Pets: Starfish Pet
+      { source: UNKNOWN,                       op: '+', unknown: true },  // Fishing: Megalodon Tier 2
+      { source: UNKNOWN,                       op: '+', unknown: true },  // Upgrades: Carnivorian Bar
+    ],
+  },
+
+  /**
+   * Star Supernova Chance
+   * base = 0
+   */
+  star_supernova_chance: {
+    base: 0,
+    contributions: [
+      { source: sg.novaChance,   op: '+' },
+      { source: sg.starHercules, op: '+' },
+      { source: UNKNOWN,         op: '+', unknown: true },  // Items: Starfruit
+      { source: UNKNOWN,         op: '+', unknown: true },  // Relics: Mythic Relic
+      { source: UNKNOWN,         op: '+', unknown: true },  // Store: Stargazing Supernova Bundle
+    ],
+  },
+
+  /**
+   * Star Supernova Multiplier
+   * base = 10 (wiki: "Base: 10×")
+   */
+  star_supernova_multi: {
+    base: 10,
+    contributions: [
+      { source: sk.ctrlFStarsSupernovaMul,      op: '+' },
+      { source: sk.ctrlCCtrlVStarsSupernovaMul, op: '+' },
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Relics: Divine Relic (adds)
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Store: Stargazing Supernova Bundle
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Cards: Megalodon Fish Card
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Pets: Axolotl Pet Quest
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Construct: Statue of Warmth (adds)
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Archaeology: Astraeus Idol
+      { source: UNKNOWN,                        op: '×', unknown: true },  // Fishing: Megalodon Tier 2 (×)
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Fishing: Tier 1 Notice (adds)
+    ],
+  },
+
+  /**
+   * Super Star Supernova Chance
+   * base = 0
+   */
+  super_star_supernova_chance: {
+    base: 0,
+    contributions: [
+      { source: UNKNOWN, op: '+', unknown: true },  // Store: Stargazing Supernova Bundle
+      { source: UNKNOWN, op: '+', unknown: true },  // Pets: Starfish Pet
+      { source: UNKNOWN, op: '+', unknown: true },  // Contracts: World 2 Upgrade
+    ],
+  },
+
+  /**
+   * Super Star Supernova Multiplier
+   * base = 10 (wiki: "Base: 10×")
+   */
+  super_star_supernova_multi: {
+    base: 10,
+    contributions: [
+      { source: sk.ctrlFStarsSuperStarSupernovaMul, op: '+' },
+      { source: UNKNOWN,                            op: '+', unknown: true },  // Relics: Divine Relic
+      { source: UNKNOWN,                            op: '+', unknown: true },  // Store: Stargazing Supernova Bundle
+      { source: UNKNOWN,                            op: '+', unknown: true },  // Construct: Statue of Warmth
+      { source: UNKNOWN,                            op: '×', unknown: true },  // Fishing: Megalodon Tier 2 (×)
+      { source: UNKNOWN,                            op: '×', unknown: true },  // Fishing: Tier 1 Notice (×)
+    ],
+  },
+
+  /**
+   * Star Supergiant Chance
+   * base = 0
+   */
+  star_supergiant_chance: {
+    base: 0,
+    contributions: [
+      { source: sg.supergiants,                 op: '+' },
+      { source: sk.whyAreThereStarsSupergiant,  op: '+' },
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Store: Stargazing Supergiant Bundle
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Challenges: Divine Challenge
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Fishing: Tier 2 Notice Upgrade
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Upgrades: Steamstone Bar
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Contracts: World 3 Upgrade
+    ],
+  },
+
+  /**
+   * Star Supergiant Multiplier
+   * base = 3 (wiki: "Base: 3×")
+   */
+  star_supergiant_multi: {
+    base: 3,
+    contributions: [
+      { source: sg.supergigantsMulti, op: '+' },
+      { source: UNKNOWN,              op: '+', unknown: true },  // Store: Stargazing Supergiant Bundle
+      { source: UNKNOWN,              op: '+', unknown: true },  // Cards: Infernal Starburst Drone Card
+      { source: UNKNOWN,              op: '+', unknown: true },  // Construct: Statue of Warmth
+      { source: UNKNOWN,              op: '+', unknown: true },  // Archaeology: Hyperion Idol
+      { source: UNKNOWN,              op: '+', unknown: true },  // Upgrades: Rumium Bar
+    ],
+  },
+
+  /**
+   * Super Star Supergiant Chance
+   * base = 0
+   */
+  super_star_supergiant_chance: {
+    base: 0,
+    contributions: [
+      { source: sg.superSupergiants, op: '+' },
+      { source: UNKNOWN,             op: '+', unknown: true },  // Store: 2 value packs
+    ],
+  },
+
+  /**
+   * Super Star Supergiant Multiplier
+   * base = 3 (same pattern as star_supergiant_multi)
+   */
+  super_star_supergiant_multi: {
+    base: 3,
+    contributions: [
+      { source: UNKNOWN, op: '+', unknown: true },
+    ],
+  },
+
+  /**
+   * Star Radiant Chance
+   * base = 0
+   */
+  star_radiant_chance: {
+    base: 0,
+    contributions: [
+      { source: sg.radiantChance, op: '+' },
+      { source: UNKNOWN,          op: '+', unknown: true },  // Drones: Prism Drone
+      { source: UNKNOWN,          op: '+', unknown: true },  // Challenges: Extreme Challenge
+    ],
+  },
+
+  /**
+   * Star Radiant Multiplier
+   * base = 10 (radiant gives 10× — same pattern as supernova)
+   */
+  star_radiant_multi: {
+    base: 10,
+    contributions: [
+      { source: UNKNOWN, op: '+', unknown: true },
+    ],
+  },
+
+  /**
+   * Super Star Radiant Chance
+   * base = 0
+   */
+  super_star_radiant_chance: {
+    base: 0,
+    contributions: [
+      { source: sg.superRadiant, op: '+' },
+      { source: UNKNOWN,         op: '+', unknown: true },
+    ],
+  },
+
+  /**
+   * Super Star Radiant Multiplier
+   * base = 10 (estimated)
+   */
+  super_star_radiant_multi: {
+    base: 10,
+    contributions: [
+      { source: UNKNOWN, op: '+', unknown: true },
+    ],
+  },
+
+  /**
+   * All Star Multiplier
+   * base = 1 (starts at 1×)
+   */
+  all_star_multi: {
+    base: 1,
+    contributions: [
+      { source: sg.allStarMulti, op: '+' },
+      { source: sg.starScorpio,  op: '+' },
+      { source: UNKNOWN,         op: '+', unknown: true },  // Fishing: Tier 1 Notice Upgrade
+    ],
+  },
+
+  /**
+   * Novagiant Combo Multiplier
+   * base = 1 (starts at 1×)
+   * All known sources defined — no unknowns.
+   */
+  novagiant_combo_multi: {
+    base: 1,
+    contributions: [
+      { source: sg.novagiant,                  op: '+' },
+      { source: sk.whyAreThereStarsNovagiant,  op: '+' },
+    ],
+  },
+
+} satisfies FormulaMap
