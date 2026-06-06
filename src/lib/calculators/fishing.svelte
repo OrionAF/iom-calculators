@@ -2,13 +2,13 @@
   import { Info } from 'lucide-svelte'
   import { stats } from '$lib/stores/stats'
   import { settings } from '$lib/stores/settings'
-  import { fishingIncome } from './logic/fishing'
+  import { computeFishingStats } from './logic/fishing'
   import ResultCard from '$lib/components/ResultCard.svelte'
   import EmptyState from '$lib/components/EmptyState.svelte'
   import { formatGold } from '$lib/format'
 
   const result = $derived(
-    $stats ? fishingIncome($stats.stats, {}) : null
+    $stats ? computeFishingStats({ levels: {}, rt: {} }) : null
   )
 </script>
 
@@ -28,7 +28,7 @@
       <ResultCard
         label="Estimated Income"
         icon="Fishing_Income_Multiplier.png"
-        value={result ? formatGold(result.incomePerHour, $settings.notation) : '—'}
+        value={result ? formatGold(result.incomeMulti, $settings.notation) : '—'}
         unit="/ hour"
         active={!!result}
       />
