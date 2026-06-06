@@ -131,7 +131,8 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
+    /* Reset inherited white-space (e.g. from overflow:hidden+nowrap ancestors) */
+    white-space: normal;
 
     transition:
       opacity 150ms var(--ease-out),
@@ -187,6 +188,8 @@
     padding: var(--space-2) var(--space-3);
     background: color-mix(in srgb, var(--accent) 7%, var(--bg-raised));
     border-bottom: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border));
+    /* Clip amber background to top corners of bubble */
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
 
   .tip-icon {
