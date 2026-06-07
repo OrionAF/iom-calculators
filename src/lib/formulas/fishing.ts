@@ -1,6 +1,7 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
 import { fishingSources as f } from '$lib/sources/fishing'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
+import { storeSources as st } from '$lib/sources/store'
 
 // Placeholder for contributions whose per-level values are not yet known.
 // Marked unknown: true so the engine skips them and the UI flags them.
@@ -152,7 +153,7 @@ export const fishingFormulas = {
       { source: f.tripleTickT1,                  op: '+' },
       { source: f.tripleTickE2,                  op: '+' },
       { source: sk.letsPickUpThePaceTriple,      op: '+' },
-      { source: UNKNOWN,                         op: '+', unknown: true },  // Fisher's Bundle (Store)
+      { source: st.vpFishersTripleTick,          op: '+' },
       { source: UNKNOWN,                         op: '+', unknown: true },  // Mr Nibbles Pet
       { source: UNKNOWN,                         op: '+', unknown: true },  // Megalodon Tier 1 Tribute
     ],

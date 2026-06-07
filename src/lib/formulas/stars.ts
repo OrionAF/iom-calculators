@@ -1,6 +1,9 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
+import { relicSources as rel } from '$lib/sources/relics'
+import { itemSources as it } from '$lib/sources/items'
+import { storeSources as st } from '$lib/sources/store'
 
 const UNKNOWN: Source = {
   key: '_unknown',
@@ -122,11 +125,11 @@ export const starsFormulas = {
   star_supernova_chance: {
     base: 0,
     contributions: [
-      { source: sg.novaChance,   op: '+' },
-      { source: sg.starHercules, op: '+' },
-      { source: UNKNOWN,         op: '+', unknown: true },  // Items: Starfruit
-      { source: UNKNOWN,         op: '+', unknown: true },  // Relics: Mythic Relic
-      { source: UNKNOWN,         op: '+', unknown: true },  // Store: Stargazing Supernova Bundle
+      { source: sg.novaChance,                    op: '+' },
+      { source: sg.starHercules,                  op: '+' },
+      { source: it.starfruitSupernovaChance,       op: '+' },
+      { source: rel.mythicRelicNovaChance,         op: '+' },
+      { source: st.vpSupernovaStarNova,            op: '+' },
     ],
   },
 
@@ -289,9 +292,14 @@ export const starsFormulas = {
   all_star_multi: {
     base: 1,
     contributions: [
-      { source: sg.allStarMulti, op: '+' },
-      { source: sg.starScorpio,  op: '+' },
-      { source: UNKNOWN,         op: '+', unknown: true },  // Fishing: Tier 1 Notice Upgrade
+      { source: sg.allStarMulti,                  op: '+' },
+      { source: sg.starScorpio,                   op: '+' },
+      { source: sk.leprechaunsLegacyAllStar,      op: '×' },
+      { source: it.starfruitAllStarMulti,         op: '+' },
+      { source: it.cosmicCandyBuff,               op: '×' },
+      { source: it.cosmicCandyPerm,               op: '+' },
+      { source: st.vpSingularityAllStar,          op: '×' },
+      { source: UNKNOWN,                          op: '+', unknown: true },  // Fishing: Tier 1 Notice Upgrade
     ],
   },
 
