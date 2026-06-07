@@ -1,5 +1,5 @@
 import type { Component } from 'svelte'
-import { ChartBar, Fish, Icon, Settings, ShoppingBag } from 'lucide-svelte'
+import { ChartBar, Fish, Icon, Settings, ShoppingBag, Zap } from 'lucide-svelte'
 
 export type DestinationKind = 'data' | 'calculator' | 'utility'
 export type LucideIcon = typeof Icon
@@ -26,6 +26,13 @@ export const destinations: Destination[] = [
     icon: ShoppingBag,
     kind: 'data',
     loader: () => import('../utilities/store.svelte'),
+  },
+  {
+    hash: 'skills',
+    label: 'Skills',
+    icon: Zap,
+    kind: 'data',
+    loader: () => import('../utilities/skills.svelte'),
   },
   {
     hash: 'fishing',
