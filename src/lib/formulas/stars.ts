@@ -4,6 +4,10 @@ import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { relicSources as rel } from '$lib/sources/relics'
 import { itemSources as it } from '$lib/sources/items'
 import { storeSources as st } from '$lib/sources/store'
+import { contractSources as ct } from '$lib/sources/contracts'
+import { petSources as pet } from '$lib/sources/pets'
+import { cardSources as card } from '$lib/sources/cards'
+import { challengeSources as ch } from '$lib/sources/challenges'
 
 const UNKNOWN: Source = {
   key: '_unknown',
@@ -84,10 +88,9 @@ export const starsFormulas = {
       { source: UNKNOWN,           op: '+', unknown: true },  // Drones: Elixir Drone
       { source: UNKNOWN,           op: '×', unknown: true },  // Items: Primal Meat (×)
       { source: UNKNOWN,           op: '+', unknown: true },  // Items: Ice Cream
-      { source: UNKNOWN,           op: '+', unknown: true },  // Challenges: Extreme Upgrade
-      { source: UNKNOWN,           op: '+', unknown: true },  // Cards: Starfish Pet Card
+      { source: ct.ctSuperStarSpawn,           op: '+' },
+      { source: ch.chSuperStarSpawn,            op: '+' },
       { source: UNKNOWN,           op: '+', unknown: true },  // Fishing: Tier 1 Notice Upgrade
-      { source: UNKNOWN,           op: '+', unknown: true },  // Contracts: World 2 Upgrade
     ],
   },
 
@@ -162,9 +165,9 @@ export const starsFormulas = {
   super_star_supernova_chance: {
     base: 0,
     contributions: [
+      { source: pet.petStarfishSupernovaChance,  op: '+' },
+      { source: ct.ctSupernovaChanceW2,          op: '+' },
       { source: UNKNOWN, op: '+', unknown: true },  // Store: Stargazing Supernova Bundle
-      { source: UNKNOWN, op: '+', unknown: true },  // Pets: Starfish Pet
-      { source: UNKNOWN, op: '+', unknown: true },  // Contracts: World 2 Upgrade
     ],
   },
 
@@ -303,6 +306,8 @@ export const starsFormulas = {
       { source: it.cosmicCandyPerm,                 op: '+' },
       { source: it.goldenCosmicCandyBuff,           op: '×' },
       { source: it.goldenCosmicCandyPerm,           op: '+' },
+      { source: ct.ctAllStarMul,                  op: '+' },
+      { source: card.cardSuperStar,               op: '×' },
       { source: st.vpSingularityAllStar,          op: '×' },
       { source: UNKNOWN,                          op: '+', unknown: true },  // Fishing: Tier 1 Notice Upgrade
     ],

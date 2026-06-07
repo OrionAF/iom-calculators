@@ -3,6 +3,12 @@ import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { relicSources as rel } from '$lib/sources/relics'
 import { itemSources as it } from '$lib/sources/items'
 import { storeSources as st } from '$lib/sources/store'
+import { contractSources as ct } from '$lib/sources/contracts'
+import { artifactSources as art } from '$lib/sources/artifacts'
+import { constructSources as con } from '$lib/sources/construct'
+import { petSources as pet } from '$lib/sources/pets'
+import { cardSources as card } from '$lib/sources/cards'
+import { challengeSources as ch } from '$lib/sources/challenges'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'prestige', fn: () => 0, inputs: [] }
 
@@ -13,9 +19,14 @@ export const prestigeFormulas = {
     contributions: [
       { source: sk.easyProgressorPrestigePts,     op: '+' },
       { source: sk.ppGoUpPrestigePts,             op: '+' },
+      { source: art.artPrestigePtsT2,             op: '+' },
       { source: rel.legendaryRelicPrestigePts,    op: '+' },
+      { source: con.staSlayingPrestigePts,        op: '×' },
+      { source: pet.petDwarfQuestPrestigePts,     op: '+' },
+      { source: ch.chExpPrestigePts,              op: '+' },
+      { source: card.cardCeliosHat,              op: '×' },
       { source: st.perkPrestigePts,               op: '×' },
-      { source: U, op: '+', unknown: true },      // Prestige + Store + Challenges + Cards + Pets + Construct + Stargazing + Contracts + Skins
+      { source: U, op: '+', unknown: true },      // Prestige + Store + Cards + Pets + Construct + Stargazing + Contracts + Skins
     ],
   },
   experience_multi: {
@@ -24,25 +35,35 @@ export const prestigeFormulas = {
       { source: sk.ppGoUpExp,                     op: '+' },
       { source: sk.tonsOfDamageExp,               op: '+' },
       { source: sk.polychromePowerExp,            op: '×' },
-      { source: it.strawberriesExp,                 op: '×' },
-      { source: it.goldenStrawberriesExp,           op: '×' },
+      { source: it.strawberriesExp,               op: '×' },
+      { source: it.goldenStrawberriesExp,         op: '×' },
+      { source: art.artExpGainT1,                 op: '+' },
       { source: rel.commonRelicExp,               op: '+' },
       { source: rel.rareRelicExp,                 op: '+' },
+      { source: con.staEastwoodExpGain,           op: '×' },
+      { source: pet.petDuckExp,                   op: '+' },
+      { source: ct.ctExpGainW1,                   op: '+' },
+      { source: ch.chExpPrestigePts,              op: '+' },
+      { source: card.cardMinerName,               op: '×' },
       { source: st.vpPetTrainerExp,               op: '×' },
-      { source: U, op: '+', unknown: true },      // Prestige + Drones + Items + Store + Challenges + Cards + Pets + Construct + Stargazing + Fishing + Upgrades + Contracts + Skins
+      { source: U, op: '+', unknown: true },      // Prestige + Drones + Items + Store + Cards + Pets + Construct + Stargazing + Fishing + Upgrades + Contracts + Skins
     ],
   },
   floor_clear_requirement_multi: {
     base: 1,
     contributions: [
       { source: sk.easyProgressorFloorClear,      op: '+' },
-      { source: U, op: '+', unknown: true },      // Prestige + Cards + Pets + Construct + Skins
+      { source: art.artFloorClearT2,              op: '+' },
+      { source: pet.petDwarfQuestFloorClear,      op: '+' },
+      { source: card.cardPrestige,                op: '×' },
+      { source: U, op: '+', unknown: true },      // Pets + Construct + Skins
     ],
   },
   artifact_cap_increase: {
     base: 0,
     contributions: [
       { source: sk.doTheseUpgradesArtifactCap,    op: '+' },
+      { source: con.staSlayingArtifactCap,        op: '+' },
       { source: U, op: '+', unknown: true },      // Cards + Construct
     ],
   },

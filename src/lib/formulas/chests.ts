@@ -1,6 +1,9 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { storeSources as st } from '$lib/sources/store'
+import { constructSources as con } from '$lib/sources/construct'
+import { cardSources as card } from '$lib/sources/cards'
+import { challengeSources as ch } from '$lib/sources/challenges'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'store', fn: () => 0, inputs: [] }
 
@@ -24,6 +27,9 @@ export const chestsFormulas = {
     base: 0,
     contributions: [
       { source: sk.gemsAndChestsFreebie,         op: '+' },
+      { source: con.staFriendshipFreebieGems,    op: '+' },
+      { source: card.cardFreebie,                op: '+' },
+      { source: ch.chFreebieGemsBonus,           op: '+' },
       { source: st.founderFreebieGems,           op: '+' },
       { source: st.vpBankersFreebieGems,         op: '+' },
       { source: st.vpBiggerBankersFreebieGems,   op: '+' },
@@ -31,15 +37,16 @@ export const chestsFormulas = {
       { source: st.vpArchFreebieGems,            op: '+' },
       { source: st.vpChiefExecFreebieGems,       op: '+' },
       { source: st.vpHalfWayFreebieGems,         op: '+' },
-      { source: U, op: '+', unknown: true },     // Challenges + Cards + Construct
+      { source: U, op: '+', unknown: true },     // Cards + Construct
     ],
   },
   freebie_5x_chance: {
     base: 0,
     contributions: [
+      { source: con.staArtistryFreebie5x,        op: '+' },
       { source: st.vpFreebie5xChance,            op: '+' },
       { source: st.vpBankersFreebie5x,           op: '+' },
-      { source: U, op: '+', unknown: true },     // Construct + Fishing
+      { source: U, op: '+', unknown: true },     // Fishing
     ],
   },
   freebie_refresh_chance: {
@@ -47,7 +54,7 @@ export const chestsFormulas = {
     contributions: [
       { source: sk.freeThatsGreatRefresh,        op: '+' },
       { source: st.vpBiggerBankersRefresh,       op: '+' },
-      { source: U, op: '+', unknown: true },     // Construct: Platinized Statue of Artistry
+      { source: U, op: '+', unknown: true },     // Construct (platinized Artistry)
     ],
   },
   freebie_bank_cap: {
@@ -55,13 +62,15 @@ export const chestsFormulas = {
     contributions: [
       { source: sk.chronokeeperFrebieCap,            op: '+' },
       { source: sk.savingForARainyDayFrebieCap,      op: '+' },
+      { source: con.staEastwoodFreebieBank,          op: '+' },
+      { source: ch.chFreebieBank,                    op: '+' },
       { source: st.gemFreebieBank,                   op: '+' },
       { source: st.founderFreebieBank,               op: '+' },
       { source: st.vpBankersFreebieBank,             op: '+' },
       { source: st.vpBiggerBankersFreebieBank,       op: '+' },
       { source: st.vpInsiderFreebieBank,             op: '+' },
       { source: st.vpChiefExecFreebieBank,           op: '×' },
-      { source: U, op: '+', unknown: true },         // Challenges + Cards + Pets + Construct + Stargazing + Skins
+      { source: U, op: '+', unknown: true },         // Cards + Pets + Stargazing + Skins
     ],
   },
   freebie_cooldown_seconds: {
@@ -76,6 +85,7 @@ export const chestsFormulas = {
   stonks_multi: {
     base: 1,
     contributions: [
+      { source: card.cardStonks,             op: '×' },
       { source: st.vpInsiderStonksMul,       op: '+' },
       { source: U, op: '+', unknown: true }, // Cards + Skins + Stargazing
     ],
@@ -83,6 +93,8 @@ export const chestsFormulas = {
   super_stonks_chance: {
     base: 0,
     contributions: [
+      { source: card.cardSuperStonks,            op: '+' },
+      { source: ch.chSuperStonksChance,          op: '+' },
       { source: st.vpChiefExecSuperStonksChance, op: '+' },
       { source: U, op: '+', unknown: true },
     ],

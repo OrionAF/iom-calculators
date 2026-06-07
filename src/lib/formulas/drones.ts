@@ -2,6 +2,9 @@ import type { FormulaMap, Source } from '$lib/engine/types'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { relicSources as rel } from '$lib/sources/relics'
 import { storeSources as st } from '$lib/sources/store'
+import { contractSources as ct } from '$lib/sources/contracts'
+import { cardSources as card } from '$lib/sources/cards'
+import { petSources as pet } from '$lib/sources/pets'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'drones', fn: () => 0, inputs: [] }
 
@@ -32,6 +35,7 @@ export const dronesFormulas = {
     contributions: [
       { source: sk.gasolineGuzzlerFuelDuration,      op: '+' },
       { source: rel.rareRelicFuelDuration,           op: '+' },
+      { source: card.cardFuel,                       op: '×' },
       { source: st.vpDroneCatalystFuel,              op: '×' },
       { source: st.vpVoidOverdriveFuel,              op: '×' },
       { source: U, op: '+', unknown: true },         // Coal Upgrade + Cards + Pets + Upgrades + Construct
@@ -41,7 +45,7 @@ export const dronesFormulas = {
     base: 1,
     contributions: [
       { source: sk.gasolineGuzzlerCoalCap,           op: '+' },
-      { source: U, op: '+', unknown: true },         // Coal Upgrade + Cards
+      { source: U, op: '+', unknown: true },         // Coal Upgrade + Cards (Vydn)
     ],
   },
   coal_fuel_save_chance:      { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
@@ -57,6 +61,7 @@ export const dronesFormulas = {
     base: 1,
     contributions: [
       { source: sk.callOfTheVoidPortalMulti,         op: '+' },
+      { source: card.cardVoidPortal,                 op: '×' },
       { source: st.vpVoidOverdriveVoidMul,           op: '×' },
       { source: U, op: '+', unknown: true },         // Coal Upgrade + Cards
     ],
@@ -65,6 +70,8 @@ export const dronesFormulas = {
     base: 0,
     contributions: [
       { source: sk.iBuriedItHereGoldenVoidChance,    op: '+' },
+      { source: pet.petNaginiQuestGoldenVoidChance,  op: '+' },
+      { source: ct.ctGoldenVoidChance,               op: '+' },
       { source: st.vpVoidOverdriveGoldenPortalChance, op: '+' },
       { source: U, op: '+', unknown: true },         // Pets + Fishing + Upgrades + Contracts
     ],
@@ -72,6 +79,8 @@ export const dronesFormulas = {
   golden_void_portal_multi: {
     base: 5,
     contributions: [
+      { source: card.cardGoldenVoidPortal,           op: '×' },
+      { source: pet.petNaginiQuestGoldenVoidMul,     op: '+' },
       { source: st.vpVoidOverdriveGoldenPortalMul,   op: '×' },
       { source: U, op: '+', unknown: true },         // Cards + Pets + Archaeology + Fishing
     ],

@@ -2,6 +2,8 @@ import type { FormulaMap, Source } from '$lib/engine/types'
 import { fishingSources as f } from '$lib/sources/fishing'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { storeSources as st } from '$lib/sources/store'
+import { cardSources as card } from '$lib/sources/cards'
+import { petSources as pet } from '$lib/sources/pets'
 
 // Placeholder for contributions whose per-level values are not yet known.
 // Marked unknown: true so the engine skips them and the UI flags them.
@@ -28,7 +30,7 @@ export const fishingFormulas = {
       { source: f.rodMultiE1,       op: '×' },
       { source: sk.motleySchoolRod, op: '×' },
       { source: UNKNOWN,            op: '+', unknown: true },  // Half Way Bundle (Store)
-      { source: UNKNOWN,            op: '+', unknown: true },  // Fishing Rod Misc Card
+      { source: card.cardFishingRod,  op: '×' },
     ],
   },
 
@@ -154,7 +156,7 @@ export const fishingFormulas = {
       { source: f.tripleTickE2,                  op: '+' },
       { source: sk.letsPickUpThePaceTriple,      op: '+' },
       { source: st.vpFishersTripleTick,          op: '+' },
-      { source: UNKNOWN,                         op: '+', unknown: true },  // Mr Nibbles Pet
+      { source: pet.petNibblesTripleTick,        op: '+' },
       { source: UNKNOWN,                         op: '+', unknown: true },  // Megalodon Tier 1 Tribute
     ],
   },
