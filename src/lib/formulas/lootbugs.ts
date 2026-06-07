@@ -9,7 +9,8 @@ export const lootbugsFormulas = {
   lootbug_spawn_rate: {
     base: 0,
     contributions: [
-      { source: it.lootbugLanternSpawn, op: '×' },
+      { source: it.lootbugLanternSpawn,         op: '×' },
+      { source: it.goldenLootbugLanternSpawn,   op: '×' },
       { source: U, op: '+', unknown: true }, // Drones + Items (Bread+Eros) + Challenges + Cards + Pets + Stargazing + Upgrades
     ],
   },
@@ -28,6 +29,7 @@ export const lootbugsFormulas = {
       { source: sk.savingForARainyDayLootbugCap,  op: '+' },
       { source: sk.anyoneUpLootinBankCap,         op: '+' },
       { source: it.lootbugLanternPermCap,         op: '+' },
+      { source: it.goldenLootbugLanternPermCap,  op: '+' },
       { source: st.vpBankersLootbugBank,          op: '+' },
       { source: st.vpBiggerBankersLootbugBank,    op: '+' },
       { source: st.vpLootbugBonanzaBankCap,       op: '+' },

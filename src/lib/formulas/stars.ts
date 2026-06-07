@@ -78,8 +78,9 @@ export const starsFormulas = {
   super_star_spawn_multi: {
     base: 0,
     contributions: [
-      { source: sg.superStarSpawn, op: '+' },
-      { source: sg.starVirgo,      op: '+' },
+      { source: sg.superStarSpawn,                   op: '+' },
+      { source: sg.starVirgo,                        op: '+' },
+      { source: it.goldenPrimalMeatSuperStar,        op: '×' },
       { source: UNKNOWN,           op: '+', unknown: true },  // Drones: Elixir Drone
       { source: UNKNOWN,           op: '×', unknown: true },  // Items: Primal Meat (×)
       { source: UNKNOWN,           op: '+', unknown: true },  // Items: Ice Cream
@@ -127,8 +128,9 @@ export const starsFormulas = {
     contributions: [
       { source: sg.novaChance,                    op: '+' },
       { source: sg.starHercules,                  op: '+' },
-      { source: it.starfruitSupernovaChance,       op: '+' },
-      { source: rel.mythicRelicNovaChance,         op: '+' },
+      { source: it.starfruitSupernovaChance,         op: '+' },
+      { source: it.goldenStarfruitSupernovaChance,  op: '+' },
+      { source: rel.mythicRelicNovaChance,           op: '+' },
       { source: st.vpSupernovaStarNova,            op: '+' },
     ],
   },
@@ -295,9 +297,12 @@ export const starsFormulas = {
       { source: sg.allStarMulti,                  op: '+' },
       { source: sg.starScorpio,                   op: '+' },
       { source: sk.leprechaunsLegacyAllStar,      op: '×' },
-      { source: it.starfruitAllStarMulti,         op: '+' },
-      { source: it.cosmicCandyBuff,               op: '×' },
-      { source: it.cosmicCandyPerm,               op: '+' },
+      { source: it.starfruitAllStarMulti,           op: '+' },
+      { source: it.goldenStarfruitAllStarMulti,     op: '+' },
+      { source: it.cosmicCandyBuff,                 op: '×' },
+      { source: it.cosmicCandyPerm,                 op: '+' },
+      { source: it.goldenCosmicCandyBuff,           op: '×' },
+      { source: it.goldenCosmicCandyPerm,           op: '+' },
       { source: st.vpSingularityAllStar,          op: '×' },
       { source: UNKNOWN,                          op: '+', unknown: true },  // Fishing: Tier 1 Notice Upgrade
     ],

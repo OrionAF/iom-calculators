@@ -21,7 +21,9 @@ export const pickaxeFormulas = {
       // Items
       { source: it.rockCake,                         op: '+' },
       { source: it.primalMeatPickaxe,                op: '+' },
+      { source: it.goldenPrimalMeatPickaxe,          op: '+' },
       { source: it.hamburgerPickaxe,                 op: '×' },
+      { source: it.goldenHamburgerPickaxe,           op: '×' },
       // Relics
       { source: rel.commonRelicPickaxeDamage,        op: '+' },
       { source: rel.epicRelicPickaxeDamage,          op: '+' },

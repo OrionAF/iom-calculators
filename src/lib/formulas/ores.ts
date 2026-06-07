@@ -10,7 +10,8 @@ export const oresFormulas = {
   multi_rock_chance: {
     base: 0,
     contributions: [
-      { source: it.eyeOfNewtTripleRock,        op: '+' },
+      { source: it.eyeOfNewtTripleRock,          op: '+' },
+      { source: it.goldenEyeOfNewtTripleRock,    op: '+' },
       { source: rel.rareRelicTripleRock,        op: '+' },
       { source: U, op: '+', unknown: true },    // Upgrades: Mithril Bar
     ],
@@ -46,9 +47,10 @@ export const oresFormulas = {
   golden_ore_multi: {
     base: 3,
     contributions: [
-      { source: it.lasagnaGoldenOreMul,        op: '×' },
-      { source: it.goldFlakeSteakBuff,         op: '×' },
-      { source: it.goldFlakeSteakPerm,         op: '+' },
+      { source: it.lasagnaGoldenOreMul,          op: '×' },
+      { source: it.goldFlakeSteakBuff,           op: '×' },
+      { source: it.goldFlakeSteakPerm,           op: '+' },
+      { source: it.goldenStrawberriesGoldenVein, op: '+' },
       { source: st.vpGoldenOreMul,             op: '×' },
       { source: U, op: '+', unknown: true },   // Store + Cards + Pets + Construct + Stargazing + Upgrades
     ],
@@ -66,7 +68,9 @@ export const oresFormulas = {
       { source: sk.perfectGoldGoldenFloor,          op: '+' },
       { source: sk.iHaveWaresGoldenFloor,           op: '+' },
       { source: sk.leprechaunsLegacyGoldenFloor,    op: '×' },
-      { source: it.yummyPizzaGoldenFloor,           op: '×' },
+      { source: it.yummyPizzaGoldenFloor,             op: '×' },
+      { source: it.goldenYummyPizzaGoldenFloor,       op: '×' },
+      { source: it.goldenEyeOfNewtGoldenFloor,        op: '×' },
       { source: rel.epicRelicGoldenFloor,           op: '+' },
       { source: st.vpProgressionGoldenFloor,        op: '×' },
       { source: U, op: '+', unknown: true },        // Drones + Items (Eye of Newt+Iris) + Challenges + Cards + Pets + Stargazing + Fishing + Upgrades + Contracts
@@ -77,7 +81,8 @@ export const oresFormulas = {
     contributions: [
       { source: sk.opticalPhenomenonRainbowFloor,   op: '+' },
       { source: sk.imRunningOutRainbowFloor,        op: '+' },
-      { source: it.rainbowLollipopChance,           op: '+' },
+      { source: it.rainbowLollipopChance,             op: '+' },
+      { source: it.goldenRainbowLollipopChance,       op: '+' },
       { source: rel.divineRelicRainbowFloor,        op: '+' },
       { source: st.founderRainbowFloor,             op: '+' },
       { source: st.vpPetTrainerRainbowFloor,        op: '+' },
@@ -87,7 +92,8 @@ export const oresFormulas = {
   rainbow_floor_multi: {
     base: 50,
     contributions: [
-      { source: it.rainbowLollipopMul,              op: '×' },
+      { source: it.rainbowLollipopMul,                op: '×' },
+      { source: it.goldenRainbowLollipopMul,          op: '×' },
       { source: rel.divineRelicRainbowFloorMul,     op: '+' },
       { source: st.vpHalfWayRainbowFloorMul,        op: '×' },
       { source: U, op: '+', unknown: true },        // Items + Relics + Store + Challenges + Cards + Pets + Stargazing + Fishing + Upgrades + Contracts

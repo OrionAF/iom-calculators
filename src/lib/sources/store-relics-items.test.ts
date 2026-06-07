@@ -64,6 +64,76 @@ describe('itemSources', () => {
   })
 })
 
+describe('itemSources — golden variants', () => {
+  it('golden eye of newt: triple rock +50% active', () => {
+    expect(itemSources.goldenEyeOfNewtTripleRock.fn(0, {})).toBe(0)
+    expect(itemSources.goldenEyeOfNewtTripleRock.fn(1, {})).toBeCloseTo(0.50)
+  })
+  it('golden eye of newt: golden floor ×1.50 active', () => {
+    expect(itemSources.goldenEyeOfNewtGoldenFloor.fn(0, {})).toBeCloseTo(1)
+    expect(itemSources.goldenEyeOfNewtGoldenFloor.fn(1, {})).toBeCloseTo(1.50)
+  })
+  it('golden chaos totem: bomb damage ×9.00', () => {
+    expect(itemSources.goldenChaosTotemBombDamage.fn(1, {})).toBeCloseTo(9.00)
+  })
+  it('golden chaos totem: bomb recharge ×2.30', () => {
+    expect(itemSources.goldenChaosTotemBombRecharge.fn(1, {})).toBeCloseTo(2.30)
+  })
+  it('golden primal meat: pickaxe +200% (additive 2.0)', () => {
+    expect(itemSources.goldenPrimalMeatPickaxe.fn(1, {})).toBeCloseTo(2.0)
+    expect(itemSources.goldenPrimalMeatPickaxe.fn(0, {})).toBe(0)
+  })
+  it('golden primal meat: super star spawn ×1.50', () => {
+    expect(itemSources.goldenPrimalMeatSuperStar.fn(1, {})).toBeCloseTo(1.50)
+  })
+  it('golden strawberries: exp gain ×6.00', () => {
+    expect(itemSources.goldenStrawberriesExp.fn(1, {})).toBeCloseTo(6.00)
+    expect(itemSources.goldenStrawberriesExp.fn(0, {})).toBeCloseTo(1)
+  })
+  it('golden strawberries: golden vein +400% (additive 4.0)', () => {
+    expect(itemSources.goldenStrawberriesGoldenVein.fn(1, {})).toBeCloseTo(4.0)
+  })
+  it('golden hamburger: pickaxe ×6.00', () => {
+    expect(itemSources.goldenHamburgerPickaxe.fn(1, {})).toBeCloseTo(6.00)
+  })
+  it('golden hamburger: bomb ×6.00', () => {
+    expect(itemSources.goldenHamburgerBomb.fn(1, {})).toBeCloseTo(6.00)
+  })
+  it('golden starfruit: all star multi +60%', () => {
+    expect(itemSources.goldenStarfruitAllStarMulti.fn(1, {})).toBeCloseTo(0.60)
+  })
+  it('golden starfruit: supernova chance +20%', () => {
+    expect(itemSources.goldenStarfruitSupernovaChance.fn(1, {})).toBeCloseTo(0.20)
+  })
+  it('golden rainbow lollipop: floor chance +6%', () => {
+    expect(itemSources.goldenRainbowLollipopChance.fn(1, {})).toBeCloseTo(0.06)
+  })
+  it('golden rainbow lollipop: floor multi ×6.00', () => {
+    expect(itemSources.goldenRainbowLollipopMul.fn(1, {})).toBeCloseTo(6.00)
+  })
+  it('golden yummy pizza: golden floor ×1.30', () => {
+    expect(itemSources.goldenYummyPizzaGoldenFloor.fn(1, {})).toBeCloseTo(1.30)
+    expect(itemSources.goldenYummyPizzaGoldenFloor.fn(0, {})).toBeCloseTo(1)
+  })
+  it('golden lootbug lantern: spawn rate ×6.00', () => {
+    expect(itemSources.goldenLootbugLanternSpawn.fn(1, {})).toBeCloseTo(6.00)
+  })
+  it('golden lootbug lantern perm: 30 lanterns → +30 cap', () => {
+    expect(itemSources.goldenLootbugLanternPermCap.fn(30, {})).toBe(30)
+  })
+  it('golden cosmic candy: all star ×5.00', () => {
+    expect(itemSources.goldenCosmicCandyBuff.fn(1, {})).toBeCloseTo(5.00)
+  })
+  it('golden cosmic candy perm: 100 candies → +0.10', () => {
+    expect(itemSources.goldenCosmicCandyPerm.fn(100, {})).toBeCloseTo(0.10)
+  })
+  it('all golden variants share distinct keys from base items', () => {
+    expect(itemSources.goldenHamburgerPickaxe.key).not.toBe(itemSources.hamburgerPickaxe.key)
+    expect(itemSources.goldenStarfruitAllStarMulti.key).not.toBe(itemSources.starfruitAllStarMulti.key)
+    expect(itemSources.goldenChaosTotemBombDamage.key).not.toBe(itemSources.chaosTotemBombDamage.key)
+  })
+})
+
 // ── storeSources ─────────────────────────────────────────────────────────────
 
 describe('storeSources — perks', () => {

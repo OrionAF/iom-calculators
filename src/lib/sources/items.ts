@@ -182,6 +182,119 @@ export const cosmicCandyPerm: Source = {
   fn: (n) => n * 0.001, inputs: [],
 }
 
+// ─── Golden Item Variants ────────────────────────────────────────────────────
+// Golden items replace their base version in the item bag.
+// Unlocked via fishing tributes, black hole bonuses, world quests, challenges, or skin rewards.
+// Use the SAME op as their base counterpart; the user activates one or the other.
+
+/** Golden Eye of Newt: Triple Rock Chance +50%, Golden Floor Multi ×1.50. */
+export const goldenEyeOfNewtTripleRock: Source = {
+  key: 'items.goldenEyeOfNewt', name: 'Golden Eye of Newt', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => a * 0.50, inputs: [],
+}
+export const goldenEyeOfNewtGoldenFloor: Source = {
+  key: 'items.goldenEyeOfNewt', name: 'Golden Eye of Newt', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => 1 + a * 0.50, inputs: [],
+}
+
+/** Golden Chaos Totem: Bomb Damage ×9.00, Bomb Recharge Rate ×2.30. */
+export const goldenChaosTotemBombDamage: Source = {
+  key: 'items.goldenChaosTotem', name: 'Golden Chaos Totem', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => 1 + a * 8.0, inputs: [],
+}
+export const goldenChaosTotemBombRecharge: Source = {
+  key: 'items.goldenChaosTotem', name: 'Golden Chaos Totem', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => 1 + a * 1.30, inputs: [],
+}
+
+/** Golden Primal Meat: Pickaxe Damage +200% (+2.0 additive), Super Star Spawn Rate ×1.50. Unlocked: Black Hole 13. */
+export const goldenPrimalMeatPickaxe: Source = {
+  key: 'items.goldenPrimalMeat', name: 'Golden Primal Meat', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => a * 2.0, inputs: [],
+}
+export const goldenPrimalMeatSuperStar: Source = {
+  key: 'items.goldenPrimalMeat', name: 'Golden Primal Meat', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => 1 + a * 0.50, inputs: [],
+}
+
+/** Golden Strawberries: EXP Gain ×6.00, Golden Vein Multi +400% (additive +4.0). Unlocked: Black Hole 4. */
+export const goldenStrawberriesExp: Source = {
+  key: 'items.goldenStrawberries', name: 'Golden Strawberries', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => 1 + a * 5.0, inputs: [],
+}
+export const goldenStrawberriesGoldenVein: Source = {
+  key: 'items.goldenStrawberries', name: 'Golden Strawberries', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => a * 4.0, inputs: [],
+}
+
+/**
+ * Golden Hamburger: Pickaxe Damage ×6 (base, scales +0.12x per Workshop level).
+ * Bomb Damage ×6 (base). Unlocked: Fishing – Tier 1 Blackened Basker Tribute.
+ * Base value used; Workshop scaling added when workshop sources are available.
+ */
+export const goldenHamburgerPickaxe: Source = {
+  key: 'items.goldenHamburger', name: 'Golden Hamburger', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => 1 + a * 5.0, inputs: [],
+}
+export const goldenHamburgerBomb: Source = {
+  key: 'items.goldenHamburger', name: 'Golden Hamburger', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => 1 + a * 5.0, inputs: [],
+}
+
+/**
+ * Golden Starfruit: All Star Multi +60% (base, scales with Workshop).
+ * Star Supernova Chance +20%. Unlocked: Divine Challenge reward.
+ */
+export const goldenStarfruitAllStarMulti: Source = {
+  key: 'items.goldenStarfruit', name: 'Golden Starfruit', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => a * 0.60, inputs: [],
+}
+export const goldenStarfruitSupernovaChance: Source = {
+  key: 'items.goldenStarfruit', name: 'Golden Starfruit', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => a * 0.20, inputs: [],
+}
+
+/**
+ * Golden Rainbow Lollipop: Rainbow Floor Chance +6% (base), Rainbow Floor Multi ×6 (base).
+ * Both scale with Aphrodite Idol upgrade. Unlocked: Black Hole 18.
+ */
+export const goldenRainbowLollipopChance: Source = {
+  key: 'items.goldenRainbowLollipop', name: 'Golden Rainbow Lollipop', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => a * 0.06, inputs: [],
+}
+export const goldenRainbowLollipopMul: Source = {
+  key: 'items.goldenRainbowLollipop', name: 'Golden Rainbow Lollipop', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => 1 + a * 5.0, inputs: [],
+}
+
+/** Golden Yummy Pizza: Golden Floor Multi ×1.30. All Floor Multi +1% permanent (cap +250%). Unlocked: World Quest 14. */
+export const goldenYummyPizzaGoldenFloor: Source = {
+  key: 'items.goldenYummyPizza', name: 'Golden Yummy Pizza', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => 1 + a * 0.30, inputs: [],
+}
+
+/** Golden Lootbug Lantern: Lootbug Spawn Rate ×6.00. Permanently +1 Banked Cap per lantern (cap +50). Unlocked: Fishing – Melting Gibbous Tier 2. */
+export const goldenLootbugLanternSpawn: Source = {
+  key: 'items.goldenLootbugLantern', name: 'Golden Lootbug Lantern', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => 1 + a * 5.0, inputs: [],
+}
+/** Permanent banked lootbug cap from golden lanterns used (cap: +50). */
+export const goldenLootbugLanternPermCap: Source = {
+  key: 'items.goldenLootbugLanternPerm', name: 'Golden Lootbug Lantern (permanent cap)', system: 'items', maxLevel: 50,
+  fn: (n) => n, inputs: [],
+}
+
+/** Golden Cosmic Candy: All Star Multi ×5.00. Permanent +0.10% All Star Multi per candy (cap +50%). Unlocked: World Quest 20. */
+export const goldenCosmicCandyBuff: Source = {
+  key: 'items.goldenCosmicCandy', name: 'Golden Cosmic Candy', system: 'items', type: 'buff', maxLevel: 1,
+  fn: (a) => 1 + a * 4.0, inputs: [],
+}
+/** Permanent All Star Multi bonus from Golden Cosmic Candy eaten (cap +50% = +0.50 decimal). */
+export const goldenCosmicCandyPerm: Source = {
+  key: 'items.goldenCosmicCandyPerm', name: 'Golden Cosmic Candy (permanent)', system: 'items', maxLevel: 500,
+  fn: (n) => n * 0.001, inputs: [],
+}
+
 export const itemSources = {
   apple, bread, droneJuiceDroneRadius, droneJuiceDroneSpeed,
   bananaCoffee, pike, eyeOfNewtTripleRock, rockCake,
@@ -195,4 +308,15 @@ export const itemSources = {
   lootbugLanternSpawn, lootbugLanternPermCap,
   goldFlakeSteakBuff, goldFlakeSteakPerm,
   cosmicCandyBuff, cosmicCandyPerm,
+  // Golden variants
+  goldenEyeOfNewtTripleRock, goldenEyeOfNewtGoldenFloor,
+  goldenChaosTotemBombDamage, goldenChaosTotemBombRecharge,
+  goldenPrimalMeatPickaxe, goldenPrimalMeatSuperStar,
+  goldenStrawberriesExp, goldenStrawberriesGoldenVein,
+  goldenHamburgerPickaxe, goldenHamburgerBomb,
+  goldenStarfruitAllStarMulti, goldenStarfruitSupernovaChance,
+  goldenRainbowLollipopChance, goldenRainbowLollipopMul,
+  goldenYummyPizzaGoldenFloor,
+  goldenLootbugLanternSpawn, goldenLootbugLanternPermCap,
+  goldenCosmicCandyBuff, goldenCosmicCandyPerm,
 }
