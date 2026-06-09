@@ -475,7 +475,7 @@
     pathD: string
     isActive: boolean
     isUnlocked: boolean
-    isDimmed: boolean
+    isHidden: boolean
   }
 
   const connections = $derived(
@@ -491,7 +491,7 @@
         pathD: convertGridPathToPixels(path.d),
         isActive,
         isUnlocked: isPathUnlocked,
-        isDimmed: normalizedFilter !== '' && (!matchingSkillIds.has(path.sourceId) || !matchingSkillIds.has(path.targetId))
+        isHidden: normalizedFilter !== '' && (!matchingSkillIds.has(path.sourceId) || !matchingSkillIds.has(path.targetId))
       }
     })
   )
@@ -531,9 +531,10 @@
   <div class="tree-wrapper">
     <!-- Viewport Container -->
     <div class="tree-viewport" style="--grid-unit: {GRID_UNIT_PX}px;">
-      <div class="tree-container">
+      <div class="tree-container" class:list-mode={normalizedFilter !== ''}>
 
         <!-- SVG Connection Lines Layer (with elbow joints) -->
+        {#if normalizedFilter === ''}
         <svg class="tree-svg" aria-hidden="true">
           <defs>
             <linearGradient id="active-grad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -547,10 +548,10 @@
               class="tree-line"
               class:unlocked={conn.isUnlocked}
               class:active={conn.isActive}
-              class:dimmed={conn.isDimmed}
+              class:hidden={conn.isHidden}
             />
           {/each}
-        </svg>
+        </svg>{/if}
 
         <!-- Interactive Skill Nodes Grid -->
         {#each ALL_SKILLS as skill (skill.id)}
@@ -560,7 +561,7 @@
             {@const owned = level > 0}
             {@const maxLevel = skill.costs.length}
             {@const locked = !isUnlocked(skill.id, $skillProgress)}
-            {@const isDimmed = normalizedFilter !== '' && !matchingSkillIds.has(skill.id)}
+            {@const isHidden = normalizedFilter !== '' && !matchingSkillIds.has(skill.id)}
 
             <button
               type="button"
@@ -568,10 +569,10 @@
               class:selected={selectedSkillId === skill.id}
               class:owned
               class:locked
-              class:dimmed={isDimmed}
+              class:hidden={isHidden}
+              style:left={normalizedFilter === '' ? `calc(${coord.x - 1.75} * var(--grid-unit))` : undefined}
+              style:top={normalizedFilter === '' ? `calc(${coord.y - 1.75} * var(--grid-unit))` : undefined}
               style="
-                left: calc({coord.x - 1.75} * var(--grid-unit));
-                top: calc({coord.y - 1.75} * var(--grid-unit));
                 width: calc({NODE_CELL_SIZE} * var(--grid-unit));
                 height: calc({NODE_CELL_SIZE} * var(--grid-unit));
               "
@@ -783,7 +784,7 @@
     stroke-width: calc(0.12 * var(--grid-unit));
     stroke-linejoin: round; /* Perfectly round 90 degree elbows */
     stroke-linecap: round;
-    transition: stroke 0.3s, stroke-width 0.3s, opacity 0.3s;
+    transition: stroke 0.3s, stroke-width 0.3s, opacity 0.3s, visibility 0.3s;
   }
 
   /* Connection line unlocked state (pathway open) */
@@ -799,8 +800,9 @@
     filter: drop-shadow(0 0 calc(0.1 * var(--grid-unit)) rgba(255, 153, 0, 0.4));
   }
 
-  .tree-line.dimmed {
-    opacity: 0.12;
+  .tree-line.hidden {
+    opacity: 0;
+    visibility: hidden;
   }
 
   /* ── Node Component styling ────────────────────────── */
@@ -817,7 +819,7 @@
     justify-content: center;
     cursor: pointer;
     z-index: 2;
-    transition: transform var(--transition-fast), opacity var(--transition-fast);
+    transition: transform var(--transition-fast), opacity var(--transition-fast), visibility var(--transition-fast);
   }
 
   .tree-node:hover:not(.locked) {
@@ -878,9 +880,24 @@
     opacity: 0.45;
   }
 
-  .tree-node.dimmed {
-    opacity: 0.15;
-    filter: grayscale(0.8);
+  /* Switches layout to a wrapped list when searching */
+  .tree-container.list-mode {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    justify-content: center;
+  }
+
+  /* Removes absolute positioning so they flow normally */
+  .tree-container.list-mode .tree-node {
+    position: relative;
+  }
+
+  .tree-node.hidden {
+    display: none; /* Completely removes non-matching nodes from the layout */
   }
 
   /* Lock Badge Overlay */
