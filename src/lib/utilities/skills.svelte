@@ -391,6 +391,19 @@
     return prereqLevel > 0
   }
 
+  // ── Global Skill Actions ──────────────────────────────────────────────────
+  function maxAllSkills(): void {
+    const updates: Record<string, number> = {}
+    for (const skill of ALL_SKILLS) {
+      updates[skill.id] = skill.costs.length
+    }
+    skillProgress.update(() => updates)
+  }
+
+  function resetAllSkills(): void {
+    skillProgress.update(() => ({}))
+  }
+
   // ── SP Stats ─────────────────────────────────────────────────────────────
   const spSpent = $derived(
     ALL_SKILLS.reduce((acc, skill) => {
@@ -514,154 +527,166 @@
     </div>
   </div>
 
-  <!-- Tree Viewport Container -->
-  <div class="tree-viewport" style="--grid-unit: {GRID_UNIT_PX}px;">
-    <div class="tree-container">
+  <!-- Tree Viewport & HUD Wrapper -->
+  <div class="tree-wrapper">
+    <!-- Viewport Container -->
+    <div class="tree-viewport" style="--grid-unit: {GRID_UNIT_PX}px;">
+      <div class="tree-container">
 
+        <!-- SVG Connection Lines Layer (with elbow joints) -->
+        <svg class="tree-svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="active-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#ff9900" />
+              <stop offset="100%" stop-color="#cc6600" />
+            </linearGradient>
+          </defs>
+          {#each connections as conn (conn.id)}
+            <path
+              d={conn.pathD}
+              class="tree-line"
+              class:unlocked={conn.isUnlocked}
+              class:active={conn.isActive}
+              class:dimmed={conn.isDimmed}
+            />
+          {/each}
+        </svg>
 
-      <!-- SVG Connection Lines Layer (with elbow joints) -->
-      <svg class="tree-svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="active-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#ff9900" />
-            <stop offset="100%" stop-color="#cc6600" />
-          </linearGradient>
-        </defs>
-        {#each connections as conn (conn.id)}
-          <path
-            d={conn.pathD}
-            class="tree-line"
-            class:unlocked={conn.isUnlocked}
-            class:active={conn.isActive}
-            class:dimmed={conn.isDimmed}
-          />
-        {/each}
-      </svg>
+        <!-- Interactive Skill Nodes Grid -->
+        {#each ALL_SKILLS as skill (skill.id)}
+          {@const coord = SKILL_COORDINATES[skill.id]}
+          {#if coord}
+            {@const level = $skillProgress[skill.id] ?? 0}
+            {@const owned = level > 0}
+            {@const maxLevel = skill.costs.length}
+            {@const locked = !isUnlocked(skill.id, $skillProgress)}
+            {@const isDimmed = normalizedFilter !== '' && !matchingSkillIds.has(skill.id)}
 
-      <!-- Interactive Skill Nodes Grid -->
-      {#each ALL_SKILLS as skill (skill.id)}
-        {@const coord = SKILL_COORDINATES[skill.id]}
-        {#if coord}
-          {@const level = $skillProgress[skill.id] ?? 0}
-          {@const owned = level > 0}
-          {@const maxLevel = skill.costs.length}
-          {@const locked = !isUnlocked(skill.id, $skillProgress)}
-          {@const isDimmed = normalizedFilter !== '' && !matchingSkillIds.has(skill.id)}
-
-          <button
-            type="button"
-            class="tree-node"
-            class:selected={selectedSkillId === skill.id}
-            class:owned
-            class:locked
-            class:dimmed={isDimmed}
-            style="
-              left: calc({coord.x - 1.75} * var(--grid-unit));
-              top: calc({coord.y - 1.75} * var(--grid-unit));
-              width: calc({NODE_CELL_SIZE} * var(--grid-unit));
-              height: calc({NODE_CELL_SIZE} * var(--grid-unit));
-            "
-            onclick={() => selectedSkillId = skill.id}
-            oncontextmenu={(e) => handleRightClick(skill, e)}
-            aria-label="{skill.name}, Level {level} of {maxLevel}"
-          >
-            <div class="node-border-outer">
-              <div class="node-icon-bg">
-                <WikiIcon filename={skill.image} size={52} alt="" />
+            <button
+              type="button"
+              class="tree-node"
+              class:selected={selectedSkillId === skill.id}
+              class:owned
+              class:locked
+              class:dimmed={isDimmed}
+              style="
+                left: calc({coord.x - 1.75} * var(--grid-unit));
+                top: calc({coord.y - 1.75} * var(--grid-unit));
+                width: calc({NODE_CELL_SIZE} * var(--grid-unit));
+                height: calc({NODE_CELL_SIZE} * var(--grid-unit));
+              "
+              onclick={() => selectedSkillId = skill.id}
+              oncontextmenu={(e) => handleRightClick(skill, e)}
+              aria-label="{skill.name}, Level {level} of {maxLevel}"
+            >
+              <div class="node-border-outer">
+                <div class="node-icon-bg">
+                  <WikiIcon filename={skill.image} size={52} alt="" />
+                </div>
               </div>
-            </div>
 
-            <!-- Prerequisite Locked Indicator -->
-            {#if locked}
-              <div class="lock-indicator" aria-label="Locked">
-                <Lock size={14} />
-              </div>
-            {/if}
+              <!-- Prerequisite Locked Indicator -->
+              {#if locked}
+                <div class="lock-indicator" aria-label="Locked">
+                  <Lock size={14} />
+                </div>
+              {/if}
 
-            <!-- Allocation Level Badge -->
-            {#if owned}
-              <div class="node-level-badge" class:maxed={level === maxLevel}>
-                {level}/{maxLevel}
-              </div>
-            {/if}
-          </button>
-        {/if}
-      {/each}
-    </div>
-  </div>
-
-  <!-- Bottom Sticky Details HUD Console -->
-  {#if selectedSkill}
-    {@const level = $skillProgress[selectedSkill.id] ?? 0}
-    {@const maxLevel = selectedSkill.costs.length}
-    {@const owned = level > 0}
-    {@const isMulti = maxLevel > 1}
-    {@const nextCost = level < maxLevel ? selectedSkill.costs[level] : null}
-    {@const locked = !isUnlocked(selectedSkill.id, $skillProgress)}
-
-    <div class="details-console">
-      <div class="console-body">
-        
-        <!-- Left details: Icon + Name + Descriptions -->
-        <div class="console-info">
-          <div class="console-identity">
-            <div class="console-icon">
-              <WikiIcon filename={selectedSkill.image} size={36} alt="" />
-            </div>
-            <div class="console-text">
-              <h3 class="console-name">{selectedSkill.name}</h3>
-              <span class="console-level">
-                {#if isMulti}
-                  Level {level} / {maxLevel}
-                {:else if owned}
-                  Purchased
-                {:else}
-                  Not Owned
-                {/if}
-              </span>
-            </div>
-          </div>
-          <ul class="console-bonuses">
-            {#each selectedSkill.bonuses as bonus}
-              <li>{bonus}</li>
-            {/each}
-          </ul>
-        </div>
-
-        <!-- Right details: Progression Controls -->
-        <div class="console-controls">
-          <div class="button-group">
-            {#if owned}
-              <Button variant="ghost" onclick={(e) => cycleDown(selectedSkill, e)}>
-                Refund Level
-              </Button>
-            {/if}
-
-            {#if locked}
-              <Button variant="primary" onclick={() => purchaseSkillCascading(selectedSkill)}>
-                Auto-Unlock Prerequisites
-              </Button>
-            {:else if level === maxLevel}
-              <Button disabled>
-                Maxed
-              </Button>
-            {:else}
-              <Button variant="primary" onclick={() => purchaseSkillCascading(selectedSkill)}>
-                Purchase ({nextCost} SP)
-              </Button>
-            {/if}
-          </div>
-
-          {#if selectedSkill.obeliskLevel}
-            <span class="obelisk-req">
-              Requires Obelisk Level {selectedSkill.obeliskLevel}
-            </span>
+              <!-- Allocation Level Badge -->
+              {#if owned}
+                <div class="node-level-badge" class:maxed={level === maxLevel}>
+                  {level}/{maxLevel}
+                </div>
+              {/if}
+            </button>
           {/if}
-        </div>
-
+        {/each}
       </div>
     </div>
-  {/if}
+
+    <!-- Bottom Sticky Details HUD Console -->
+    {#if selectedSkill}
+      {@const level = $skillProgress[selectedSkill.id] ?? 0}
+      {@const maxLevel = selectedSkill.costs.length}
+      {@const owned = level > 0}
+      {@const isMulti = maxLevel > 1}
+      {@const nextCost = level < maxLevel ? selectedSkill.costs[level] : null}
+      {@const locked = !isUnlocked(selectedSkill.id, $skillProgress)}
+
+      <div class="details-console">
+        <div class="console-body">
+          
+          <!-- Left details: Icon + Name + Descriptions -->
+          <div class="console-info">
+            <div class="console-identity">
+              <div class="console-icon">
+                <WikiIcon filename={selectedSkill.image} size={36} alt="" />
+              </div>
+              <div class="console-text">
+                <h3 class="console-name">{selectedSkill.name}</h3>
+                <span class="console-level">
+                  {#if isMulti}
+                    Level {level} / {maxLevel}
+                  {:else if owned}
+                    Purchased
+                  {:else}
+                    Not Owned
+                  {/if}
+                </span>
+              </div>
+            </div>
+            <ul class="console-bonuses">
+              {#each selectedSkill.bonuses as bonus}
+                <li>{bonus}</li>
+              {/each}
+            </ul>
+          </div>
+
+          <!-- Right details: Progression Controls -->
+          <div class="console-controls">
+            
+            <div class="global-actions">
+              <Button variant="ghost" onclick={maxAllSkills}>
+                Max All
+              </Button>
+              <Button variant="danger-outline" onclick={resetAllSkills} disabled={ownedCount === 0}>
+                Reset All
+              </Button>
+            </div>
+
+            <div class="button-group">
+              {#if owned}
+                <Button variant="ghost" onclick={(e) => cycleDown(selectedSkill, e)}>
+                  Refund Level
+                </Button>
+              {/if}
+
+              {#if locked}
+                <Button variant="primary" onclick={() => purchaseSkillCascading(selectedSkill)}>
+                  Auto-Unlock Prerequisites
+                </Button>
+              {:else if level === maxLevel}
+                <Button disabled>
+                  Maxed
+                </Button>
+              {:else}
+                <Button variant="primary" onclick={() => purchaseSkillCascading(selectedSkill)}>
+                  Purchase ({nextCost} SP)
+                </Button>
+              {/if}
+            </div>
+
+            {#if selectedSkill.obeliskLevel}
+              <span class="obelisk-req">
+                Requires Obelisk Level {selectedSkill.obeliskLevel}
+              </span>
+            {/if}
+          </div>
+
+        </div>
+      </div>
+    {/if}
+  </div>
 </div>
 
 <style>
@@ -717,14 +742,19 @@
   }
 
   /* ── Tree Viewport & Grid Layout ───────────────────── */
+  .tree-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
   .tree-viewport {
     width: 100%;
     overflow-x: auto;
     background-color: #1c140e; /* Warm consistent space background color */
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: var(--space-8) 0;
-    margin-bottom: 140px; /* Buffer space to avoid bottom panel overlapping grid contents */
+    /* 160px bottom padding gives space to scroll past the overlapping HUD */
+    padding: var(--space-8) 0 160px 0;
     position: relative;
     box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.9);
   }
@@ -894,16 +924,18 @@
 
   /* ── Bottom HUD Details Console Panel ───────────────── */
   .details-console {
-    position: fixed;
+    /* Use sticky behavior relative to the tree-wrapper container. */
+    position: sticky;
     bottom: 0;
-    left: 0;
-    right: 0;
     background: rgba(18, 14, 11, 0.95);
-    border-top: 2px solid #5a493b;
+    border: 1px solid #5a493b;
+    border-radius: var(--radius-lg);
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(8px);
     z-index: 100;
     padding: var(--space-4) var(--space-6);
+    /* Float it natively over the end padding area of the viewport. */
+    margin-top: -140px;
   }
 
   .console-body {
@@ -986,6 +1018,14 @@
     align-items: flex-end;
     gap: var(--space-2);
     min-width: 180px;
+  }
+
+  .global-actions {
+    display: flex;
+    gap: var(--space-2);
+    width: 100%;
+    justify-content: flex-end;
+    margin-bottom: var(--space-2);
   }
 
   .button-group {
