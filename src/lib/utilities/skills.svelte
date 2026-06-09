@@ -574,7 +574,7 @@
             <!-- Prerequisite Locked Indicator -->
             {#if locked}
               <div class="lock-indicator" aria-label="Locked">
-                <Lock size={10} />
+                <Lock size={14} />
               </div>
             {/if}
 
@@ -856,14 +856,14 @@
   /* Lock Badge Overlay */
   .lock-indicator {
     position: absolute;
-    top: calc(-0.06 * var(--grid-unit));
-    right: calc(-0.06 * var(--grid-unit));
-    width: calc(0.4 * var(--grid-unit));
-    height: calc(0.4 * var(--grid-unit));
+    top: calc(-0.1 * var(--grid-unit));
+    right: calc(-0.1 * var(--grid-unit));
+    width: calc(1.0 * var(--grid-unit));
+    height: calc(1.0 * var(--grid-unit));
     background: #201712;
-    border: 1.5px solid #d9534f;
+    border: 1.5px solid #e7423c;
     border-radius: 50%;
-    color: #d9534f;
+    color: #e7423c;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -873,17 +873,17 @@
   /* Skill Node Level badge */
   .node-level-badge {
     position: absolute;
-    bottom: calc(-0.06 * var(--grid-unit));
-    right: calc(-0.06 * var(--grid-unit));
+    bottom: calc(-0.2 * var(--grid-unit));
+    right: calc(-0.2 * var(--grid-unit));
     background: #15110e;
     border: 1.5px solid #ffcc00;
     color: #ffcc00;
     font-family: var(--font-mono);
-    font-size: calc(0.23 * var(--grid-unit));
+    font-size: calc(0.5 * var(--grid-unit));
     font-weight: bold;
     border-radius: 4px;
     padding: calc(0.02 * var(--grid-unit)) calc(0.08 * var(--grid-unit));
-    line-height: 1;
+    line-height: 1.2;
     box-shadow: 0 2px 4px rgba(0,0,0,0.6);
   }
 
