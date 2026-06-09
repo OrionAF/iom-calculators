@@ -13,6 +13,8 @@ Thumbs.db
 # Local notes & project context (not for distribution)
 iom_wiki/
 docs/
+src/lib/utilities/*.txt
+src/lib/components/*.txt
 
 # Agent / tooling scratch
 .cave/

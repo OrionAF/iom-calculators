@@ -365,6 +365,23 @@
     return path
   }
 
+  // Recursive helper to find and reset all descendants of a refunded skill
+  function refundSkillCascading(skillId: string, updates: Record<string, number> = {}): Record<string, number> {
+    updates[skillId] = 0
+
+    // Find all skills that have this skill as their prerequisite
+    for (const [childId, config] of Object.entries(SKILL_COORDINATES)) {
+      if (config.prereqId === skillId) {
+        const childLevel = $skillProgress[childId] ?? 0
+        if (childLevel > 0) {
+          // Recursively cascade the refund down the branches
+          refundSkillCascading(childId, updates)
+        }
+      }
+    }
+    return updates
+  }
+
   function isUnlocked(id: string, currentProgress: Record<string, number>): boolean {
     const config = SKILL_COORDINATES[id]
     if (!config || !config.prereqId) return true
@@ -418,7 +435,17 @@
     if (e) e.preventDefault()
     const current = $skillProgress[skill.id] ?? 0
     if (current === 0) return
-    setSkillLevel(skill.id, current - 1)
+
+    const nextLevel = current - 1
+    if (nextLevel === 0) {
+      // Cascade refund all descending skills
+      const updates: Record<string, number> = {}
+      refundSkillCascading(skill.id, updates)
+      skillProgress.update(s => ({ ...s, ...updates }))
+    } else {
+      // Decrement level normally for multi-level skills
+      setSkillLevel(skill.id, nextLevel)
+    }
   }
 
   function handleRightClick(skill: SkillNode, e: MouseEvent): void {
@@ -747,12 +774,7 @@
   .tree-viewport {
     width: 100%;
     overflow-x: auto;
-    background-color: #0d0a07;
-    background-image: 
-      radial-gradient(circle at 50% 10%, #1c140e 0%, #080604 100%),
-      radial-gradient(white, rgba(255,255,255,.05) 2px, transparent 40px),
-      radial-gradient(white, rgba(255,255,255,.04) 1px, transparent 30px);
-    background-size: 100% 100%, 200px 200px, 150px 150px;
+    background-color: #1c140e; /* Warm consistent space background color */
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: var(--space-8) 0;
@@ -765,7 +787,7 @@
     margin: 0 auto;
     position: relative;
     width: calc(37 * var(--grid-unit));
-    height: calc(324 * var(--grid-unit));
+    height: calc(154 * var(--grid-unit));
   }
 
   /* ── SVG Connection Pathways ────────────────────────── */
@@ -796,7 +818,7 @@
 
   /* Connection line active state (both nodes owned) */
   .tree-line.active {
-    stroke: url(#active-grad);
+    stroke: #ff9900;
     stroke-width: calc(0.15 * var(--grid-unit));
     filter: drop-shadow(0 0 calc(0.1 * var(--grid-unit)) rgba(255, 153, 0, 0.4));
   }
