@@ -4,6 +4,8 @@
   import { skillProgress, setSkillLevel } from '$lib/stores/skillProgress'
   import WikiIcon from '$lib/components/WikiIcon.svelte'
   import PageHeader from '$lib/components/PageHeader.svelte'
+  import Button from '$lib/components/Button.svelte'
+  import ResultCard from '$lib/components/ResultCard.svelte'
 
   // ── Grid Layout Constants ─────────────────────────────────────────────────
   const GRID_UNIT_PX = 30 // Proportional cell size in pixels
@@ -489,21 +491,10 @@
   />
 
   <!-- SP summary bar -->
-  <div class="summary-bar">
-    <div class="summary-stat">
-      <span class="summary-num">{spSpent.toLocaleString()}</span>
-      <span class="summary-label">SP spent</span>
-    </div>
-    <div class="summary-divider" aria-hidden="true"></div>
-    <div class="summary-stat">
-      <span class="summary-num">{ownedCount}</span>
-      <span class="summary-label">of {ALL_SKILLS.length} owned</span>
-    </div>
-    <div class="summary-divider" aria-hidden="true"></div>
-    <div class="summary-stat">
-      <span class="summary-num">{TOTAL_SP.toLocaleString()}</span>
-      <span class="summary-label">SP to max all</span>
-    </div>
+  <div class="summary-grid">
+    <ResultCard label="SP spent" value={spSpent.toLocaleString()} />
+    <ResultCard label="of {ALL_SKILLS.length} owned" value={ownedCount.toString()} />
+    <ResultCard label="SP to max all" value={TOTAL_SP.toLocaleString()} />
   </div>
 
   <!-- Search Toolbar -->
@@ -641,35 +632,23 @@
         <div class="console-controls">
           <div class="button-group">
             {#if owned}
-              <button
-                type="button"
-                class="console-btn refund-btn"
-                onclick={(e) => cycleDown(selectedSkill, e)}
-              >
+              <Button variant="ghost" onclick={(e) => cycleDown(selectedSkill, e)}>
                 Refund Level
-              </button>
+              </Button>
             {/if}
 
             {#if locked}
-              <button
-                type="button"
-                class="console-btn upgrade-btn cascading"
-                onclick={() => purchaseSkillCascading(selectedSkill)}
-              >
+              <Button variant="primary" onclick={() => purchaseSkillCascading(selectedSkill)}>
                 Auto-Unlock Prerequisites
-              </button>
+              </Button>
             {:else if level === maxLevel}
-              <button type="button" class="console-btn disabled-btn maxed" disabled>
+              <Button disabled>
                 Maxed
-              </button>
+              </Button>
             {:else}
-              <button
-                type="button"
-                class="console-btn upgrade-btn"
-                onclick={() => purchaseSkillCascading(selectedSkill)}
-              >
+              <Button variant="primary" onclick={() => purchaseSkillCascading(selectedSkill)}>
                 Purchase ({nextCost} SP)
-              </button>
+              </Button>
             {/if}
           </div>
 
@@ -694,44 +673,11 @@
   }
 
   /* ── Summary bar ────────────────────────────────────── */
-  .summary-bar {
-    display: flex;
-    align-items: center;
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: var(--space-4);
-    flex-wrap: wrap;
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-4) var(--space-6);
     margin-bottom: var(--space-6);
-  }
-
-  .summary-stat {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .summary-num {
-    font-family: var(--font-mono);
-    font-size: var(--text-xl);
-    font-weight: var(--weight-semibold);
-    color: var(--accent);
-    font-variant-numeric: tabular-nums;
-    line-height: 1;
-  }
-
-  .summary-label {
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-    letter-spacing: 0.04em;
-  }
-
-  .summary-divider {
-    width: 1px;
-    height: 32px;
-    background: var(--border);
-    flex-shrink: 0;
   }
 
   /* ── Toolbar ────────────────────────────────────────── */
@@ -1047,65 +993,6 @@
     gap: var(--space-2);
     width: 100%;
     justify-content: flex-end;
-  }
-
-  /* Buttons */
-  .console-btn {
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-semibold);
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition: background-color var(--transition-fast);
-  }
-
-  .upgrade-btn {
-    background: #ff9900;
-    color: #120e0b;
-    border-color: #ffaa33;
-  }
-
-  .upgrade-btn:hover {
-    background: #e68a00;
-  }
-
-  .upgrade-btn.cascading {
-    background: #a05a15;
-    color: #ffffff;
-    border-color: #c07a35;
-  }
-
-  .upgrade-btn.cascading:hover {
-    background: #85480f;
-  }
-
-  .refund-btn {
-    background: transparent;
-    color: var(--text-muted);
-    border-color: var(--border);
-  }
-
-  .refund-btn:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-primary);
-  }
-
-  .disabled-btn {
-    cursor: not-allowed;
-    background: #221b16;
-    border-color: #3d3127;
-    color: var(--text-dim);
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-  }
-
-  .disabled-btn.maxed {
-    color: #39e639;
-    border-color: rgba(57, 230, 57, 0.2);
-    background: rgba(57, 230, 57, 0.05);
   }
 
   .obelisk-req {
