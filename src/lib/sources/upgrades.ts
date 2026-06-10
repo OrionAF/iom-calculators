@@ -291,7 +291,7 @@ export const upgrObeliskArmor: Source = {
   name: 'Obelisk Armor Reduction',
   system: 'upgrades',
   maxLevel: 16,
-  fn: (l) => l * 0.02,
+  fn: (l) => l * -0.02,
   inputs: [],
 }
 
@@ -338,6 +338,7 @@ export const upgrTripleCraftChance: Source = {
 /**
  * Pickaxe Damage Per Card Owned +1% per card per upgrade level (unlocks at Lv 102).
  * Dynamic: scales with total cards owned. Max 16.
+ * Normal = 1 | Gilded = 2 | Polychrome = 3 | Infernal = 4
  */
 export const upgrPickaxeDmgPerCard: Source = {
   key: 'upgrades.pickaxeDmgPerCard',
@@ -669,8 +670,8 @@ export const upgrGoldenOreMul: Source = {
 }
 
 /** Star Supergiant Chance +0.1% per level (unlocks at Lv 255). Max 50. */
-export const upgrStarSupergiganChance: Source = {
-  key: 'upgrades.starSupergiganChance',
+export const upgrStarSupergiantChance: Source = {
+  key: 'upgrades.starSupergiantChance',
   name: 'Star Supergiant Chance',
   system: 'upgrades',
   maxLevel: 50,
@@ -709,8 +710,8 @@ export const upgrFuelDuration: Source = {
 }
 
 /** Super Star Supergiant Multiplier +0.2% per level (unlocks at Lv 275). Max 50. */
-export const upgrSuperStarSupergiganMul: Source = {
-  key: 'upgrades.superStarSupergiganMul',
+export const upgrSuperStarSupergiantMul: Source = {
+  key: 'upgrades.superStarSupergiantMul',
   name: 'Super Star Supergiant Multi',
   system: 'upgrades',
   maxLevel: 50,
@@ -728,8 +729,25 @@ export const upgrRainbowVeinMul: Source = {
   inputs: [],
 }
 
-// NOTE: 'Pet Skin Level Up Chance' +0.1% (Lv 285) — no stat registry key. Skipped.
-// NOTE: 'Polychrome Ore Card Multi' +0.05× (Lv 290) — no stat registry key. Skipped.
+/** Pet Skin Level Up Chance +0.1% per level (unlocks at Lv 285). Max 50. */
+export const upgrPetSkinLevelUpChance: Source = {
+  key: 'upgrades.petSkinLevelUpChance',
+  name: 'Pet Skin Level Up Chance',
+  system: 'upgrades',
+  maxLevel: 50,
+  fn: (l) => l * 0.001,
+  inputs: [],
+}
+
+/** Polychrome Ore Card Multi +0.05x per level (unlocks at Lv 290). Max 50. */
+export const upgrPolychromeOreCardMulti: Source = {
+  key: 'upgrades.polychromeOreCardMulti',
+  name: 'Polychrome Ore Card Multi',
+  system: 'upgrades',
+  maxLevel: 50,
+  fn: (l) => 1 + l * 0.05,
+  inputs: [],
+}
 
 /** 100× Craft Chance +0.03% per level (unlocks at Lv 295). Max 50. */
 export const upgrCraft100xChance: Source = {
@@ -747,7 +765,7 @@ export const upgrFreebieCooldown: Source = {
   name: 'Freebie Timer',
   system: 'upgrades',
   maxLevel: 50,
-  fn: (l) => l * 1,
+  fn: (l) => l * -1,
   inputs: [],
 }
 
@@ -800,8 +818,8 @@ export const upgrVeinIncomeMul: Source = {
 }
 
 /** Star Supergiant Multiplier +0.3% per level (unlocks at Lv 325). Max 50. */
-export const upgrStarSupergiganMul: Source = {
-  key: 'upgrades.starSupergiganMul',
+export const upgrStarSupergiantMul: Source = {
+  key: 'upgrades.starSupergiantMul',
   name: 'Star Supergiant Multi',
   system: 'upgrades',
   maxLevel: 50,
@@ -948,12 +966,14 @@ export const upgradeSources = {
   upgrGalacticFloorChance1,
   upgrPickaxeAndBombDmgW3,
   upgrGoldenOreMul,
-  upgrStarSupergiganChance,
+  upgrStarSupergiantChance,
   upgrGameSpeed,
   upgrFishingDronePower,
   upgrFuelDuration,
-  upgrSuperStarSupergiganMul,
+  upgrSuperStarSupergiantMul,
   upgrRainbowVeinMul,
+  upgrPetSkinLevelUpChance,
+  upgrPolychromeOreCardMulti,
   upgrCraft100xChance,
   upgrFreebieCooldown,
   // World 4
@@ -961,7 +981,7 @@ export const upgradeSources = {
   upgrBombDmgMul3,
   upgrGalacticFloorChance2,
   upgrVeinIncomeMul,
-  upgrStarSupergiganMul,
+  upgrStarSupergiantMul,
   upgrRainbowVoidMul,
   upgrLootfrogLootMul,
   upgrSuperStonksChance,
