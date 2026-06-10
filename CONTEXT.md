@@ -27,6 +27,9 @@ npm run test:watch   # vitest interactive
 ```
 
 No DB, no migrations, no env vars. Pure client-side SPA.
+- **`svelte.config.js`**: `vitePreprocess()` only — enables TS in `<style>` blocks
+- **`tsconfig.node.json`**: covers `vite.config.ts` only (`composite: true`)
+- **gitignored**: `iom_wiki/` (wiki source data), `docs/` (specs/plans) — both local-only, never committed
 
 ---
 
@@ -107,7 +110,8 @@ src/
 │   │   ├── loaded-stats.svelte      # 522 LOC — stat export viewer, search, collapse, 2-layer derived filter
 │   │   ├── store.svelte             # 842 LOC — in-game store tracker, tabs, scroll restore, mirror logic
 │   │   ├── skills.svelte            # 1060 LOC — skill tree tracker, SP counter, collapse, search
-│   │   └── settings.svelte          # 308 LOC — all setting controls + reset
+│   │   ├── settings.svelte          # 308 LOC — all setting controls + reset
+│   │   └── densityPreview.ts        # effectiveCols(intended,vw)+previewFor() — pure fns for settings density preview; tested
 │   │
 │   ├── actions/
 │   │   ├── focusTrap.ts             # Modal focus trap
@@ -123,10 +127,13 @@ src/
 ### Routing
 ```
 hashchange → currentRoute (readable) → App.svelte $effect
-  → dynamic import(destination.loader)
-  → mount component in <main>
+  → let cancelled = false
+  → destination.loader()         # dynamic import
+    .then(m => { if (!cancelled) activeComponent = m.default })
+    .catch(() => { if (!cancelled) activeComponent = null })  # silent fail → HomeGrid
+  → cleanup: cancelled = true    # cancels in-flight import on re-navigation
 ```
-Unknown hash → `null` → HomeGrid renders. No error state.
+Unknown hash → `null` → HomeGrid. Loader error → `null` → HomeGrid. Both silent.
 
 ### Stat Export (loaded-stats page)
 ```
@@ -157,11 +164,37 @@ user click → setValuePack(slug, true)
   → $storeProgress reactive → store.svelte re-renders tile state
 ```
 
+### Mirror Pack Business Logic (critical)
+```
+ValuePack.mirrorUnlockKey === GemUnlock.mirrorUnlockKey === SharedUnlockKey
+  → same real-world unlock available via 2 purchase paths (Store VP vs Gem Shop)
+  → canonical truth: storeProgress.unlocks[SharedUnlockKey]: boolean
+  → VP with mirrorUnlockKey → setUnlock(key, bool)   NOT setValuePack(slug, bool)
+  → GemUnlock owned check: $storeProgress.unlocks[u.mirrorUnlockKey]
+  → VP owned check: pack.mirrorUnlockKey
+      ? $storeProgress.unlocks[pack.mirrorUnlockKey]
+      : $storeProgress.valuePacks[pack.slug]
+```
+4 SharedUnlockKeys: `unlocked_permanent_drone`, `unlocked_megabomb`, `unlocked_transmuter_bomb`, `unlocked_battery_bomb`
+
+### GEM_UNLOCKS vs GEM_UPGRADES (critical distinction)
+- `GEM_UNLOCKS` → stored in `storeProgress.unlocks{}` via `mirrorUnlockKey` (boolean, NOT in `gemUpgrades`)
+- `GEM_UPGRADES` → stored in `storeProgress.gemUpgrades{}` as numeric rank [0..maxLevel]
+- Mixing these two = wrong store slice read/write
+
 ### Settings → DOM
 ```
 $settings.density → App.svelte $effect
-  → document.documentElement.setAttribute('data-density', density)
+  → document.documentElement.dataset.density = density
   → CSS :root[data-density="compact"] { --page-cols: 4 }
+
+$settings.fontScale → App.svelte $effect
+  → document.documentElement.classList.toggle('font-large', fontScale === 'large')
+  → CSS .font-large { --text-base: 18px; ... }
+
+$drawerOpen → App.svelte $effect
+  → document.body.style.overflow = drawerOpen ? 'hidden' : ''
+  → <main inert={$drawerOpen || undefined}>    # a11y: isolates main from touch/AT while drawer open
 ```
 
 ### Skill Interaction
@@ -203,8 +236,10 @@ click skill button → cycleUp(skill)
 - New source → `{key: 'system.name', name, system, maxLevel?, fn, inputs}` in `sources/<system>.ts`
 - New stat → add to `stats/registry.ts` AND `stats/catalog.ts` (both required, no enforcement)
 - New formula contribution → add to `formulas/<domain>.ts`, op order matters (`+` before `×` by convention)
+- Formula objects → `} satisfies FormulaMap` (NOT `as FormulaMap`) — compile-time key+shape validation
 - `unknown: true` = placeholder; engine skips; mark real wiring with actual source refs
 - Shared source key = one UI input for N formula contributions (intentional dedup)
+- `remaining.test.ts` = zero-input base regression for ALL non-fishing/stars formula domains; runs `computeStat(f, {}, {}) ≈ f.base` for every key — add any new formula domain here
 
 ### Store mutation rules
 - `stats` store: external reads via `$stats` only; mutations only through `loadStats`/`clearStats`
@@ -216,6 +251,10 @@ click skill button → cycleUp(skill)
 - All component styles scoped (Svelte default)
 - Global overrides use `:global(...)` — minimize usage
 - Page-level `.page` wrapper = standard top-level class in utility pages
+
+### `store/catalog.ts` exports (co-located helpers)
+- `vipEffectAt(unlockedTier, effectUnlockTier, baseValue, increment) → number` — step-function for founder tier effects; returns 0 if tier below unlock threshold
+- `formatVipEffectValue(value, unit: FounderEffectUnit) → string` — unit drives formatter: `'minutes'|'percent'|'multiplier'|'count'`; `percent` × 100 for display
 
 ---
 
