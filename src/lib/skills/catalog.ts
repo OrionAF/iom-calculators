@@ -58,7 +58,7 @@ const _ALL: SkillNode[] = [
     name: 'Ingot Intuition',
     image: 'Ingot Intuition.png',
     costs: [1],
-    bonuses: [{ label: 'Pickaxe Bar Cost -10', statKey: 'bar_craft_cost_multi' }],
+    bonuses: [{ label: 'Pickaxe Bar Cost -10', statKey: 'pickaxe_bar_cost_reduction' }],
   },
   {
     id: 'ArsenalAdvancement',
@@ -117,7 +117,7 @@ const _ALL: SkillNode[] = [
     costs: [2],
     bonuses: [
       { label: 'Freebie Pack Gives +1 Gem', statKey: 'freebie_gems_bonus' },
-      { label: '+1% chance for a Relic Chest' },
+      { label: '+1% chance for a Relic Chest', statKey: 'chance_for_relic_chest' },
     ],
   },
   {
@@ -180,7 +180,7 @@ const _ALL: SkillNode[] = [
     costs: [5],
     bonuses: [
       { label: 'Deals damage based on gems owned' },
-      { label: '3% chance to give a gem' },
+      { label: '3% chance to give a gem', statKey: 'gem_bomb_gem_chance' },
     ],
   },
   {
@@ -189,8 +189,8 @@ const _ALL: SkillNode[] = [
     image: 'Treasure Hunter.png',
     costs: [7],
     bonuses: [
-      { label: 'Freebie Pack Relic Chest Chance +1%' },
-      { label: 'Freebie Relic Chance Per 250 Relics Opened +1%' },
+      { label: 'Freebie Pack Relic Chest Chance +1%', statKey: 'chance_for_relic_chest' },
+      { label: 'Freebie Relic Chance Per 250 Relics Opened +1%', statKey: 'chance_for_relic_chest' },
     ],
   },
   {
@@ -242,7 +242,7 @@ const _ALL: SkillNode[] = [
     image: 'More Ore More Problems.png',
     costs: [12],
     bonuses: [
-      { label: '+2 Ores Appear Per Screen' },
+      { label: '+2 Ores Appear Per Screen', statKey: 'ores_on_screen' },
       { label: '-10% Bar Craft Costs', statKey: 'bar_craft_cost_multi' },
     ],
   },
@@ -253,7 +253,7 @@ const _ALL: SkillNode[] = [
     costs: [12],
     bonuses: [
       { label: '-60s Freebie Pack Timer', statKey: 'freebie_cooldown_seconds' },
-      { label: '+2% Freebie Relic Chance' },
+      { label: '+2% Freebie Relic Chance', statKey: 'chance_for_relic_chest' },
       { label: '5% for Freebie timer to instantly refresh', statKey: 'freebie_refresh_chance' },
     ],
   },
@@ -341,7 +341,8 @@ const _ALL: SkillNode[] = [
     costs: [28],
     bonuses: [
       { label: 'Unlocks the Veinmorpher Bomb' },
-      { label: 'Can turn ores into veins, veins into golden veins' },
+      { label: 'Can turn ores into veins', statKey: 'veinmorpher_chance' },
+      { label: 'Can turn veins into golden veins', statKey: 'veinmorpher_golden_chance' }
     ],
     obeliskLevel: 19,
   },
@@ -365,7 +366,7 @@ const _ALL: SkillNode[] = [
     bonuses: [
       { label: 'Contract Points Earned +2', statKey: 'contract_points_rewarded' },
       { label: 'Triple Contract Point Chance +8%', statKey: 'contract_triple_points_chance' },
-      { label: '+1 Contract Upgrade re-spec per prestige' },
+      { label: '+1 Contract Upgrade re-spec per prestige', statKey: 'contract_respec' },
     ],
     obeliskLevel: 20,
   },
@@ -456,9 +457,9 @@ const _ALL: SkillNode[] = [
     image: 'Block Bonker.png',
     costs: [50],
     bonuses: [
-      { label: 'Damage per Highest Stage +1%' },
-      { label: 'Max Stamina per Highest Stage +1%' },
-      { label: 'Speed Mod Gain +15 (cap Stage 100)' },
+      { label: 'Damage per Highest Stage +1%', statKey: 'archaeology_dmg_per_stage' },
+      { label: 'Max Stamina per Highest Stage +1%', statKey: 'archaeology_stm_per_stage' },
+      { label: 'Speed Mod Gain +15', statKey: 'archaeology_spd_mod_gain' },
     ],
     obeliskLevel: 30,
   },
@@ -468,9 +469,9 @@ const _ALL: SkillNode[] = [
     image: 'Avada Keda-.png',
     costs: [50],
     bonuses: [
-      { label: 'Ability Duration +5s' },
-      { label: 'Ability Cooldown -10s' },
-      { label: 'Ability Instacharge Chance +3%' },
+      { label: 'Ability Duration +5s', statKey: 'archaeology_ability_dur' },
+      { label: 'Ability Cooldown -10s', statKey: 'archaeology_ability_cd' },
+      { label: 'Ability Instacharge Chance +3%', statKey: 'archaeology_ability_insta' },
     ],
     obeliskLevel: 30,
   },
@@ -517,7 +518,7 @@ const _ALL: SkillNode[] = [
     image: 'Friendship Ended With Tier 1 Items.png',
     costs: [50, 63, 78],
     bonuses: [
-      { label: 'Tier 2 Items From Expert Notices +2' },
+      { label: 'Tier 2 Items From Expert Notices +2', statKey: 'fishing_t2_items_expert_notice' },
       { label: 'Item Duration +15%', statKey: 'item_duration_multi' },
       { label: 'Notice Fish Req -10%', statKey: 'fishing_notice_requirement' },
     ],
@@ -543,7 +544,7 @@ const _ALL: SkillNode[] = [
     image: "Please Sir Don't Make Me Prestige Again.png",
     costs: [65, 81, 102],
     bonuses: [
-      { label: 'Contract Re-Spec Cap +1', statKey: 'contract_cap_increase' },
+      { label: 'Contract Re-Spec Cap +1', statKey: 'contract_respec' },
       { label: '10× Contract Point Chance +0.25%', statKey: 'contract_10x_points_chance' },
     ],
     obeliskLevel: 43,
@@ -554,7 +555,7 @@ const _ALL: SkillNode[] = [
     image: 'Insane In The Vein Gain.png',
     costs: [70, 88, 109],
     bonuses: [
-      { label: 'Vein Polychrome Card Bonus +1×' },
+      { label: 'Vein Polychrome Card Bonus +1×', statKey: 'polychrome_card_bonus_vein' },
       { label: 'Rainbow Vein Multi +6%', statKey: 'rainbow_vein_multi' },
     ],
     obeliskLevel: 44,
@@ -565,7 +566,7 @@ const _ALL: SkillNode[] = [
     image: 'Ctrl+C Ctrl+V Stars.png',
     costs: [75, 94, 117],
     bonuses: [
-      { label: 'Orion Star Cap +2' },
+      { label: 'Orion Star Cap +2', statKey: 'star_orion_cap' },
       { label: 'Star Supernova Multi +6%', statKey: 'star_supernova_multi' },
       { label: 'Super Star 10× Chance +1%', statKey: 'super_star_10x_chance' },
     ],
@@ -578,8 +579,8 @@ const _ALL: SkillNode[] = [
     costs: [100, 125, 156],
     bonuses: [
       { label: 'Rod Multiplier +10%', statKey: 'fishing_rod_power' },
-      { label: 'Abyss Dock Tick Req -2' },
-      { label: 'Tier 2 Dock Tick Req -1' },
+      { label: 'Abyss Dock Tick Req -2', statKey: 'fishing_abyss_dock_tick_req' },
+      { label: 'Tier 2 Dock Tick Req -1', statKey: 'fishing_t2_dock_tick_req' },
       { label: 'Fishing Drones +5', statKey: 'fishing_drone_capacity' },
     ],
     obeliskLevel: 50,
@@ -617,7 +618,7 @@ const _ALL: SkillNode[] = [
     costs: [250, 313, 391],
     bonuses: [
       { label: 'Void Portal Multi +5% per level', statKey: 'void_portal_base_multi' },
-      { label: 'Void Drone Grade Cap +4 per level' },
+      { label: 'Void Drone Grade Cap +4 per level', statKey: 'drone_void_grade_cap_increase' },
     ],
     obeliskLevel: 60,
   },
@@ -651,7 +652,7 @@ const _ALL: SkillNode[] = [
     image: 'Frog Frenzy.png',
     costs: [750, 938, 1172],
     bonuses: [
-      { label: 'Frogger Drone Grade Cap +2' },
+      { label: 'Frogger Drone Grade Cap +2', statKey: 'drone_frogger_grade_cap_increase' },
       { label: 'Triple Lootfrog Chance +1%', statKey: 'lootfrog_triple_spawn_chance' },
       { label: 'Frog Capacity +1', statKey: 'lootfrog_capacity' },
     ],
@@ -665,8 +666,8 @@ const _ALL: SkillNode[] = [
     bonuses: [
       { label: 'Novagiant Combo Multi +5%', statKey: 'novagiant_combo_multi' },
       { label: 'Star Supergiant Chance +1%', statKey: 'star_supergiant_chance' },
-      { label: 'Capricorn Cap +3' },
-      { label: 'Gemini Cap +2' },
+      { label: 'Capricorn Cap +3', statKey: 'star_capricorn_cap' },
+      { label: 'Gemini Cap +2', statKey: 'star_gemini_cap' },
     ],
     obeliskLevel: 64,
   },
@@ -677,7 +678,7 @@ const _ALL: SkillNode[] = [
     costs: [2000],
     bonuses: [
       { label: 'Pickaxe Damage ×2.50', statKey: 'pickaxe_damage' },
-      { label: 'Scorpio Star Cap +5' },
+      { label: 'Scorpio Star Cap +5', statKey: 'star_scorpio_cap' },
       { label: 'Contract Upgrade Cap +2', statKey: 'contract_cap_increase' },
       { label: 'Workshop Upgrade Cap +1', statKey: 'bomb_workshop_cap_increase' },
     ],
@@ -692,7 +693,7 @@ const _ALL: SkillNode[] = [
       { label: 'Golden Void Portal Chance +2%', statKey: 'golden_void_portal_chance' },
       { label: 'Galactic Floor Chance +2%', statKey: 'galactic_floor_chance' },
       { label: 'Golden Ore Chance +1%', statKey: 'golden_ore_chance' },
-      { label: 'Chain Drone Cap +5' },
+      { label: 'Chain Drone Cap +5', statKey: 'drone_chain_grade_cap_increase' },
     ],
     obeliskLevel: 64,
   },

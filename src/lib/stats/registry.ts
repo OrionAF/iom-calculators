@@ -1287,6 +1287,160 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     icon: '27_Statue_Rodentia_Normal.png.png' 
   },
 
+  // ─── Stats not exported ──────────────────────────────────────────────────────────
+
+  ores_on_screen: {
+    name: 'Amount Of Ores Appearing On Screen',
+    description: 'The exact amount of ores/veins that appear on screen.  Base is 10',
+    icon: 'Golden_Ore_Icon.png',
+    affix: { prefix: '+' }
+  },
+  chance_for_relic_chest: {
+    name: 'Change For A Relic Chest',
+    description: 'The chance of receiving a Relic Chest from a Freebie.  Base is 10%',
+    icon: 'Relic_Chest.png',
+    affix: { suffix: '%'}
+  },
+  pickaxe_bar_cost_reduction: {
+    name: 'Pickaxe Bar Cost Reduction',
+    description: 'Reduces the amount of bars required to upgrade the pickaxe on the "Upgrades" menu by this amount.',
+    icon: 'Bar_Cost_Reduction.png',
+    affix: { prefix: '-'}
+  },
+  gem_bomb_gem_chance: {
+    name: 'Gem Bomb Gem Chance',
+    description: 'The chance of receiving a single gem when throwing a Gem Bomb',
+    icon: 'Gem_Bomb.png',
+    affix: { suffix: '%' }
+  },
+  veinmorpher_chance: {
+    name: 'Veinmorpher Vein Chance',
+    description: "Chance to Morph All Ores to Veins. Improves vein income substantially. Both chances are rolled separately and can occur at the same time. Since the ore isn't marked, firing multiple times will repeat the checks.",
+    icon: 'Veinmorpher_Bomb.png',
+    affix: { suffix: '%' }
+  },
+  veinmorpher_golden_chance: {
+    name: 'Veinmorpher Golden Chance',
+    description: "Chance to Make All Veins Golden. Improves vein income substantially. Both chances are rolled separately and can occur at the same time. Since the ore isn't marked, firing multiple times will repeat the checks.",
+    icon: 'Veinmorpher_Bomb_Golden.png',
+    affix: { suffix: '%' }
+  },
+  contract_respec: {
+    name: 'Contract Point Re-spec',
+    description: 'Contract point re-specs allow you to reset your contract upgrades and refund your spent contract points to reallocate them as desired. (Max 4)',
+    icon: 'Contract_Point.png',
+    affix: { prefix: '+' }
+  },
+  archaeology_dmg_per_stage: {
+    name: 'Damage per highest stage',
+    description: 'Increases your damage in Archaeology by +1% per highest stage, capped at Stage 100. For example, reaching stage 48, gives you +48% increased damage.',
+    icon: 'Archaeology_Strength.png',
+    affix: { suffix: '%' }
+  },
+  archaeology_stm_per_stage: {
+    name: 'Max stamina per highest stage',
+    description: 'Increases your Max Stamina in Archaeology by +1% per higest stage, capped at stage 100. For example, reaching stage 48, gives you +48% max stamina.',
+    icon: 'Archaeology_Agility.png',
+    affix: { suffix: '%' }
+  },
+  archaeology_spd_mod_gain: {
+    name: 'Speed Mod Gain',
+    description: 'The amount of hits in Archaeology you receive with increased attack speed when breaking an ore with the Speed Mod.',
+    icon: 'Archaeology_Speed_Mod_Chance.png',
+    affix: { prefix: '+' }
+  },
+  archaeology_ability_dur: {
+    name: 'Ability Duration',
+    description: 'The amount of seconds added to the duration of all abilities in Archaeology',
+    icon: 'Obelisk_Fight_Duration_Icon.png',
+    affix: { prefix: '+' }
+  },
+  archaeology_ability_cd: {
+    name: 'Ability Cooldown',
+    description: 'The amount of seconds removed from the cooldown of all abilities in Archaeology.',
+    icon: 'Time-Turner.png',
+    affix: { prefix: '-' }
+  },
+  archaeology_ability_insta: {
+    name: 'Ability Instacharge Chance',
+    description: 'The chance the cooldown of the ability is instantly reset in Archaeology.  Can trigger when an ability is activated.',
+    icon: 'Archaeology_Ability_Instacharge.png',
+    affix: { suffix: '%' }
+  },
+  fishing_t2_items_expert_notice: {
+    name: 'T2 Items From Expert Notices',
+    description: 'The amount of T2 items received from completing Expert Notices in Fishing.',
+    icon: 'T2_Item_Box.png',
+    affix: { prefix: '+' }
+  },
+  polychrome_card_bonus_vein: {
+    name: 'Polychrome Card Bonus - Veins',
+    description: 'Increases the bonus on all Polychrome Vein cards.',
+    icon: 'Polychrome_Vein_Card_Multi.png',
+    affix: { prefix: '+', suffix: '×' }
+  },
+  star_orion_cap: {
+    name: 'Orion Star Cap',
+    description: 'Increases the level cap of Orion star.',
+    icon: 'Orion.png',
+    affix: { prefix: '+' }
+  },
+  star_capricorn_cap: {
+    name: 'Capricorn Star Cap',
+    description: 'Increases the level cap of Capricorn star.',
+    icon: 'Capricorn.png',
+    affix: { prefix: '+' }
+  },
+  star_gemini_cap: {
+    name: 'Gemini Star Cap',
+    description: 'Increases the level cap of Gemini star.',
+    icon: 'Gemini.png',
+    affix: { prefix: '+' }
+  },
+  star_scorpio_cap: {
+    name: 'Scorpio Star Cap',
+    description: 'Increases the level cap of Scorpio star.',
+    icon: 'Scorpio.png',
+    affix: { prefix: '+' }
+  },
+  fishing_abyss_dock_tick_req: {
+    name: 'Abyss Dock Tick Req',
+    description: 'Reduces the amount of ticks required on the Abyss Dock',
+    icon: 'Abyss_Legendary_Fish_Head.png',
+    affix: { prefix: '-' }
+  },
+  fishing_t2_dock_tick_req: {
+    name: 'T2 Dock Tick Req',
+    description: 'Reduces the amount of ticks required on all T2 docks',
+    icon: 'Tier_2_Dock_Ticks.png',
+    affix: { prefix: '-' }
+  },
+  drone_void_grade_cap_increase: {
+    name: 'Void Drone Grade Cap Increase',
+    description: 'Increases the Grade cap for the Void Drone',
+    icon: 'Drone_Void_Icon.png',
+    affix: { prefix: '+' }
+  },
+  drone_frogger_grade_cap_increase: {
+    name: 'Frogger Drone Grade Cap Increase',
+    description: 'Increases the Grade cap for the Frogger Drone',
+    icon: 'Drone_Frogger_Icon.png',
+    affix: { prefix: '+' }
+  },
+  drone_chain_grade_cap_increase: {
+    name: 'Chain Drone Grade Cap Increase',
+    description: 'Increases the Grade cap for the Chain Drone',
+    icon: 'Drone_Chain_Icon.png',
+    affix: { prefix: '+' }
+  },
+  template_stat_entry: {
+    name: '',
+    description: '',
+    icon: '',
+    affix: { }
+  },
+
+
 }
 
 // ─── Lookup helpers ────────────────────────────────────────────────────────
