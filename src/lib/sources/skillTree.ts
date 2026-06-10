@@ -42,6 +42,21 @@ const completionistGatekeeperTier2Dock: Source = {
   inputs: [LEGENDARY_FISH_INPUT],
 }
 
+// ─── Ingot Intuition ────────────────────────────────────────────────────────────
+// NOTE: "Pickaxe Bar Cost -10" is a flat bar reduction for Upgrade Pickaxe, not a
+// percentage. bar_upgrade_cost_reduction is the closest registry key (it's a
+// multiplier); the formula will need to handle the flat -10 semantics explicitly.
+
+/** Ingot Intuition → Bar Upgrade Cost -10 (flat bars). Max 1. → bar_upgrade_cost_reduction */
+const ingotIntuitionBarCost: Source = {
+  key: 'skillTree.ingotIntuition',
+  name: 'Ingot Intuition',
+  system: 'skillTree',
+  maxLevel: 1,
+  fn: (l) => l * 10,
+  inputs: [],
+}
+
 // ─── Fishing With Friends ─────────────────────────────────────────────────────
 // Obelisk Level 37, max 3 levels.
 
@@ -175,6 +190,50 @@ const withThisFishShinyChance: Source = {
   inputs: [FISH_CARD_INPUT],
 }
 
+// ─── Friendship Ended With Tier 1 Items ─────────────────────────────────────────
+// (partial — notice req already above; adding missing bonuses)
+
+/** Friendship Ended → Item Duration +15% per level. Max 3. → item_duration_multi */
+const friendshipEndedItemDuration: Source = {
+  key: 'skillTree.friendshipEndedWithTier1Items',
+  name: 'Friendship Ended With Tier 1 Items',
+  system: 'skillTree',
+  maxLevel: 3,
+  fn: (l) => l * 0.15,
+  inputs: [],
+}
+
+// TODO no registry key: 'Tier 2 Items From Expert Notices +2' (Friendship Ended)
+const friendshipEndedTier2Items: Source = {
+  key: 'skillTree.friendshipEndedWithTier1Items',
+  name: 'Friendship Ended With Tier 1 Items',
+  system: 'skillTree',
+  maxLevel: 3,
+  fn: (l) => l * 2,
+  inputs: [],
+}
+
+// ─── Motley School (partial — rod + drones above; adding missing bonuses) ────────
+// TODO no registry key: 'Abyss Dock Tick Req -2'
+const motleySchoolAbyssDockTick: Source = {
+  key: 'skillTree.motleySchool',
+  name: 'Motley School',
+  system: 'skillTree',
+  maxLevel: 3,
+  fn: (l) => l * 2,
+  inputs: [],
+}
+
+// TODO no registry key: 'Tier 2 Dock Tick Req -1'
+const motleySchoolTier2DockTick: Source = {
+  key: 'skillTree.motleySchool',
+  name: 'Motley School',
+  system: 'skillTree',
+  maxLevel: 3,
+  fn: (l) => l,
+  inputs: [],
+}
+
 // ─── Pickaxe nodes ───────────────────────────────────────────────────────────────
 
 const luckyStrikesCritChance: Source = { key: 'skillTree.luckyStrikes', name: 'Lucky Strikes', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.05, inputs: [] }
@@ -201,6 +260,18 @@ const relicRampageDamage: Source = { key: 'skillTree.relicRampage', name: 'Relic
 /** ×2.50 Pickaxe Damage */
 const idleObeliskMincerDamage: Source = { key: 'skillTree.idleObeliskMincer', name: 'Idle Obelisk Mincer', system: 'skillTree', maxLevel: 1, fn: (l) => 1 + l * 1.5, inputs: [] }
 
+// ─── Three's A Crowd ─────────────────────────────────────────────────────────────
+
+/** Three's A Crowd → +1 Drone. Max 1. → drone_count */
+const threesACrowdDrone: Source = {
+  key: 'skillTree.threesACrowd',
+  name: "Three's A Crowd",
+  system: 'skillTree',
+  maxLevel: 1,
+  fn: (l) => l,
+  inputs: [],
+}
+
 // ─── Bomb nodes ───────────────────────────────────────────────────────────────────
 
 const biggerBlastsDamage: Source = { key: 'skillTree.biggerBlasts', name: 'Bigger Blasts', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.25, inputs: [] }
@@ -212,14 +283,38 @@ const arsenalAdvancementFreeBomb: Source = { key: 'skillTree.arsenalAdvancement'
 const allRoundBomberDamage: Source = { key: 'skillTree.allRoundBomber', name: 'All-Round Bomber', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.40, inputs: [] }
 const allRoundBomberRecharge: Source = { key: 'skillTree.allRoundBomber', name: 'All-Round Bomber', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.10, inputs: [] }
 const allRoundBomberCritChance: Source = { key: 'skillTree.allRoundBomber', name: 'All-Round Bomber', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.05, inputs: [] }
-/** Demolition Expert: +20% bomb super crit, +3% free bomb */
+/**
+ * Demolition Expert → Bomb Crit Damage: +0.5% per % of Bomb Crit Chance (dynamic).
+ * Max 1. fn = level × bombCritChance_decimal × 0.5 → bomb_crit_damage
+ * Runtime input: bombCritChance as decimal stat value (e.g. 0.50 for 50%).
+ */
+const demolitionExpertBombCritDmg: Source = {
+  key: 'skillTree.demolitionExpert',
+  name: 'Demolition Expert',
+  system: 'skillTree',
+  maxLevel: 1,
+  fn: (l, rt) => l * (rt['bombCritChance'] ?? 0) * 0.5,
+  inputs: [{ key: 'bombCritChance', label: 'Bomb Crit Chance (stat value)', type: 'number', min: 0 }],
+}
+
+/** Demolition Expert → +20% Bomb Super Crit Chance, +3% Free Bomb Chance */
 const demolitionExpertSuperCrit: Source = { key: 'skillTree.demolitionExpert', name: 'Demolition Expert', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.20, inputs: [] }
 const demolitionExpertFreeBomb: Source = { key: 'skillTree.demolitionExpert', name: 'Demolition Expert', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.03, inputs: [] }
 /** Flamboyant Bombs: +150% bomb damage, +10% ultra crit, +5 capacity */
 const flamboyantBombsDamage: Source = { key: 'skillTree.flamboyantBombs', name: 'Flamboyant Bombs', system: 'skillTree', maxLevel: 1, fn: (l) => l * 1.50, inputs: [] }
 const flamboyantBombsUltraCrit: Source = { key: 'skillTree.flamboyantBombs', name: 'Flamboyant Bombs', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.10, inputs: [] }
 const flamboyantBombsCapacity: Source = { key: 'skillTree.flamboyantBombs', name: 'Flamboyant Bombs', system: 'skillTree', maxLevel: 1, fn: (l) => l * 5, inputs: [] }
-/** Chronokeeper: Banked Freebie Cap +1, Bomb Capacity +10 */
+// TODO no registry key: 'Offline Items And Relics Doubled' (Chronokeeper)
+const chronokeeperOfflineDouble: Source = {
+  key: 'skillTree.chronokeeper',
+  name: 'Chronokeeper',
+  system: 'skillTree',
+  maxLevel: 1,
+  fn: (l) => l,
+  inputs: [],
+}
+
+/** Chronokeeper → Bomb Capacity +10. Max 1. */
 const chronokeeperBombCapacity: Source = { key: 'skillTree.chronokeeper', name: 'Chronokeeper', system: 'skillTree', maxLevel: 1, fn: (l) => l * 10, inputs: [] }
 
 // ─── Ore / floor nodes ─────────────────────────────────────────────────────────────
@@ -235,7 +330,17 @@ const iHaveWaresGoldenFloor: Source = { key: 'skillTree.iHaveWaresIfYouHaveCoin'
 const perfectGoldGoldenFloor: Source = { key: 'skillTree.perfectGold', name: 'Perfect Gold', system: 'skillTree', maxLevel: 1, fn: (l) => l * 2.0, inputs: [] }
 /** Optical Phenomenon: Rainbow Floor Chance +1% */
 const opticalPhenomenonRainbowFloor: Source = { key: 'skillTree.opticalPhenomenon', name: 'Optical Phenomenon', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
-/** I Buried It Here: Golden Void Portal Chance +2%, Galactic Floor +2%, Golden Ore +1% (max 3) */
+// TODO no registry key: 'Chain Drone Cap +5' (I Buried It Here)
+const iBuriedItHereChainDroneCap: Source = {
+  key: 'skillTree.iBuriedItHere',
+  name: 'I Buried It Here',
+  system: 'skillTree',
+  maxLevel: 3,
+  fn: (l) => l * 5,
+  inputs: [],
+}
+
+/** I Buried It Here → Golden Void Portal Chance +2%, Galactic Floor +2%, Golden Ore +1% (max 3) */
 const iBuriedItHereGoldenVoidChance: Source = { key: 'skillTree.iBuriedItHere', name: 'I Buried It Here', system: 'skillTree', maxLevel: 3, fn: (l) => l * 0.02, inputs: [] }
 const iBuriedItHereGalacticFloor: Source = { key: 'skillTree.iBuriedItHere', name: 'I Buried It Here', system: 'skillTree', maxLevel: 3, fn: (l) => l * 0.02, inputs: [] }
 const iBuriedItHereGoldenOre: Source = { key: 'skillTree.iBuriedItHere', name: 'I Buried It Here', system: 'skillTree', maxLevel: 3, fn: (l) => l * 0.01, inputs: [] }
@@ -250,30 +355,56 @@ const heftyHammers10xCraft: Source = { key: 'skillTree.heftyHammers', name: 'Hef
 const imRunningOutRainbowFloor: Source = { key: 'skillTree.imRunningOutOfCreativeNames', name: "I'm Running Out Of Creative Names", system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
 const imRunningOut10xCraft: Source = { key: 'skillTree.imRunningOutOfCreativeNames', name: "I'm Running Out Of Creative Names", system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.02, inputs: [] }
 const imRunningOutBarCraft: Source = { key: 'skillTree.imRunningOutOfCreativeNames', name: "I'm Running Out Of Creative Names", system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.10, inputs: [] }
-/** More Ore More Problems: Bar Craft Cost -10% */
+// TODO no registry key: '+2 Ores Appear Per Screen' (More Ore More Problems)
+const moreOreMoreProblemsOreScreen: Source = {
+  key: 'skillTree.moreOreMoreProblems',
+  name: 'More Ore More Problems',
+  system: 'skillTree',
+  maxLevel: 1,
+  fn: (l) => l * 2,
+  inputs: [],
+}
+
+/** More Ore More Problems → Bar Craft Cost -10%. Max 1. */
 const moreOreMoreProblemsBarCraft: Source = { key: 'skillTree.moreOreMoreProblems', name: 'More Ore More Problems', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.10, inputs: [] }
 
 // ─── Contract nodes ────────────────────────────────────────────────────────────────
 
-/** Who's Asking For All These Bars?: +2 Contract Points, +8% Triple Contract Chance */
+/** Who's Asking → +2 Contract Points. Max 1. → contract_points_rewarded */
 const whosAskingContractPoints: Source = { key: 'skillTree.whosAskingForAllTheseBars', name: "Who's Asking For All These Bars?", system: 'skillTree', maxLevel: 1, fn: (l) => l * 2, inputs: [] }
+/** Who's Asking → Triple Contract Point Chance +8%. Max 1. → contract_triple_points_chance */
 const whosAskingTripleContract: Source = { key: 'skillTree.whosAskingForAllTheseBars', name: "Who's Asking For All These Bars?", system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.08, inputs: [] }
-/** Please Sir Don't Make Me Prestige Again: +0.25% 10x Contract Chance per level (max 3) */
+// TODO no registry key: '+1 Contract Upgrade re-spec per prestige' (Who's Asking)
+const whosAskingContractRespec: Source = { key: 'skillTree.whosAskingForAllTheseBars', name: "Who's Asking For All These Bars?", system: 'skillTree', maxLevel: 1, fn: (l) => l, inputs: [] }
+/** Please Sir → 10× Contract Point Chance +0.25% per level. Max 3. → contract_10x_points_chance */
 const pleaseSirContract10x: Source = { key: 'skillTree.pleaseSirDontMakeMePrestigeAgain', name: "Please Sir Don't Make Me Prestige Again", system: 'skillTree', maxLevel: 3, fn: (l) => l * 0.0025, inputs: [] }
-/** Idle Obelisk Mincer: Contract Upgrade Cap +2 */
+// TODO no registry key: 'Contract Re-Spec Cap +1 per level' (Please Sir — separate from contract_cap_increase)
+const pleaseSirContractRespecCap: Source = { key: 'skillTree.pleaseSirDontMakeMePrestigeAgain', name: "Please Sir Don't Make Me Prestige Again", system: 'skillTree', maxLevel: 3, fn: (l) => l, inputs: [] }
+/** Idle Obelisk Mincer → Contract Upgrade Cap +2. Max 1. → contract_cap_increase */
 const idleObeliskMincerContractCap: Source = { key: 'skillTree.idleObeliskMincer', name: 'Idle Obelisk Mincer', system: 'skillTree', maxLevel: 1, fn: (l) => l * 2, inputs: [] }
-/** Do These Upgrades Ever End: +1 Artifact Cap, +1 Workshop Cap */
+/** Idle Obelisk Mincer → Workshop Upgrade Cap +1. Max 1. → bomb_workshop_cap_increase */
+const idleObeliskMincerWorkshopCap: Source = { key: 'skillTree.idleObeliskMincer', name: 'Idle Obelisk Mincer', system: 'skillTree', maxLevel: 1, fn: (l) => l, inputs: [] }
+// TODO no registry key: 'Scorpio Star Cap +5' (Idle Obelisk Mincer)
+const idleObeliskMincerScorpioCap: Source = { key: 'skillTree.idleObeliskMincer', name: 'Idle Obelisk Mincer', system: 'skillTree', maxLevel: 1, fn: (l) => l * 5, inputs: [] }
+/** Do These Upgrades Ever End → +1 Artifact Upgrade Cap. Max 1. → artifact_cap_increase */
 const doTheseUpgradesArtifactCap: Source = { key: 'skillTree.doTheseUpgradesEverEnd', name: 'Do These Upgrades Ever End', system: 'skillTree', maxLevel: 1, fn: (l) => l, inputs: [] }
+/** Do These Upgrades Ever End → +1 Workshop Upgrade Cap. Max 1. → bomb_workshop_cap_increase */
+const doTheseUpgradesWorkshopCap: Source = { key: 'skillTree.doTheseUpgradesEverEnd', name: 'Do These Upgrades Ever End', system: 'skillTree', maxLevel: 1, fn: (l) => l, inputs: [] }
 
 // ─── Chest / freebie nodes ─────────────────────────────────────────────────────────
 
-/** Gems & Chests: Freebie Pack Gives +1 Gem */
+/** Gems & Chests → Freebie Pack Gives +1 Gem. Max 1. → freebie_gems_bonus */
 const gemsAndChestsFreebie: Source = { key: 'skillTree.gemsAndChests', name: 'Gems & Chests', system: 'skillTree', maxLevel: 1, fn: (l) => l, inputs: [] }
+// TODO no registry key: '+1% Relic Chest chance' (Gems & Chests)
+const gemsAndChestsRelicChest: Source = { key: 'skillTree.gemsAndChests', name: 'Gems & Chests', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
 /** Just Wait Faster: Freebie Pack Timer -60s */
 const justWaitFasterCooldown: Source = { key: 'skillTree.justWaitFaster', name: 'Just Wait Faster', system: 'skillTree', maxLevel: 1, fn: (l) => l * 60, inputs: [] }
-/** Free? That's A Great Price!: Freebie Timer -60s, Instant Refresh +5% */
+/** Free? That's A Great Price! → Freebie Pack Timer -60s. Max 1. → freebie_cooldown_seconds */
 const freeThatsGreatCooldown: Source = { key: 'skillTree.freeThatsAGreatPrice', name: "Free? That's A Great Price!", system: 'skillTree', maxLevel: 1, fn: (l) => l * 60, inputs: [] }
+/** Free? That's A Great Price! → Instant Refresh Chance +5%. Max 1. → freebie_refresh_chance */
 const freeThatsGreatRefresh: Source = { key: 'skillTree.freeThatsAGreatPrice', name: "Free? That's A Great Price!", system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.05, inputs: [] }
+// TODO no registry key: '+2% Freebie Relic Chance' (Free? That's A Great Price!)
+const freeThatsGreatRelicChance: Source = { key: 'skillTree.freeThatsAGreatPrice', name: "Free? That's A Great Price!", system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.02, inputs: [] }
 /** Chronokeeper: Banked Freebie Cap +1 */
 const chronokeeperFrebieCap: Source = { key: 'skillTree.chronokeeper', name: 'Chronokeeper', system: 'skillTree', maxLevel: 1, fn: (l) => l, inputs: [] }
 /** Saving For A Rainy Day: Banked Freebie Cap +2, Banked Lootbug Cap +2, Lootbug Gem Cost -1 */
@@ -289,10 +420,15 @@ const mechanicalEvolutionSuitCap: Source = { key: 'skillTree.mechanicalEvolution
 const gasolineGuzzlerFuelDuration: Source = { key: 'skillTree.gasolineGuzzler', name: 'Gasoline Guzzler', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.20, inputs: [] }
 const gasolineGuzzlerCoalTime: Source = { key: 'skillTree.gasolineGuzzler', name: 'Gasoline Guzzler', system: 'skillTree', maxLevel: 1, fn: (l) => l * 10, inputs: [] }
 const gasolineGuzzlerCoalCap: Source = { key: 'skillTree.gasolineGuzzler', name: 'Gasoline Guzzler', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.25, inputs: [] }
-/** Call Of The Void: Void Portal Multi +5%/level, max 3 */
+/** Call Of The Void → Void Portal Multi +5% per level. Max 3. → void_portal_base_multi */
 const callOfTheVoidPortalMulti: Source = { key: 'skillTree.callOfTheVoid', name: 'Call Of The Void', system: 'skillTree', maxLevel: 3, fn: (l) => l * 0.05, inputs: [] }
-/** Frog Frenzy: Triple Lootfrog +1%, Frog Capacity +1 (max 3) */
+// TODO no registry key: 'Void Drone Grade Cap +4 per level' (Call Of The Void)
+const callOfTheVoidGradeCap: Source = { key: 'skillTree.callOfTheVoid', name: 'Call Of The Void', system: 'skillTree', maxLevel: 3, fn: (l) => l * 4, inputs: [] }
+// TODO no registry key: 'Frogger Drone Grade Cap +2' (Frog Frenzy)
+const frogFrenzyFroggerGradeCap: Source = { key: 'skillTree.frogFrenzy', name: 'Frog Frenzy', system: 'skillTree', maxLevel: 3, fn: (l) => l * 2, inputs: [] }
+/** Frog Frenzy → Triple Lootfrog Chance +1% per level. Max 3. → lootfrog_triple_spawn_chance */
 const frogFrenzyTripleLootfrog: Source = { key: 'skillTree.frogFrenzy', name: 'Frog Frenzy', system: 'skillTree', maxLevel: 3, fn: (l) => l * 0.01, inputs: [] }
+/** Frog Frenzy → Frog Capacity +1 per level. Max 3. → lootfrog_capacity */
 const frogFrenzyLootfrogCap: Source = { key: 'skillTree.frogFrenzy', name: 'Frog Frenzy', system: 'skillTree', maxLevel: 3, fn: (l) => l, inputs: [] }
 
 // ─── Vein nodes ────────────────────────────────────────────────────────────────────
@@ -302,7 +438,10 @@ const leprechaunsLegacyAllStar: Source = { key: 'skillTree.leprechaunsLegacy', n
 const leprechaunsLegacyVeinIncome: Source = { key: 'skillTree.leprechaunsLegacy', name: "Leprechaun's Legacy", system: 'skillTree', maxLevel: 1, fn: (l) => 1 + l * 0.10, inputs: [] }
 const leprechaunsLegacyGoldenFloor: Source = { key: 'skillTree.leprechaunsLegacy', name: "Leprechaun's Legacy", system: 'skillTree', maxLevel: 1, fn: (l) => 1 + l * 0.10, inputs: [] }
 const leprechaunsLegacyBombRecharge: Source = { key: 'skillTree.leprechaunsLegacy', name: "Leprechaun's Legacy", system: 'skillTree', maxLevel: 1, fn: (l) => 1 + l * 0.10, inputs: [] }
-/** Insane In The Vein Gain: Rainbow Vein Multi +6% per level (max 3) */
+// TODO no registry key: 'Vein Polychrome Card Bonus +1× per level' (Insane In The Vein Gain)
+const insaneInTheVeinGainVeinPoly: Source = { key: 'skillTree.insaneInTheVeinGain', name: 'Insane In The Vein Gain', system: 'skillTree', maxLevel: 3, fn: (l) => l, inputs: [] }
+
+/** Insane In The Vein Gain → Rainbow Vein Multi +6% per level. Max 3. → rainbow_vein_multi */
 const insaneInTheVeinGainRainbowVein: Source = { key: 'skillTree.insaneInTheVeinGain', name: 'Insane In The Vein Gain', system: 'skillTree', maxLevel: 3, fn: (l) => l * 0.06, inputs: [] }
 
 // ─── Lootbug nodes ─────────────────────────────────────────────────────────────────
@@ -317,9 +456,56 @@ const anyoneUpLootinLootMulti: Source = { key: 'skillTree.anyoneUpLootinTheyBugs
 const ppGoUpPrestigePts: Source = { key: 'skillTree.ppGoUp', name: 'PP Go Up', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.25, inputs: [] }
 const ppGoUpExp: Source = { key: 'skillTree.ppGoUp', name: 'PP Go Up', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.25, inputs: [] }
 
+// ─── Stonks ───────────────────────────────────────────────────────────────────────
+// TODO no registry key for any Stonks skill bonuses.
+// Each line gives a flat 1% chance for a specific freebie reward type.
+// Possibly contributes to stonks_chance but semantics differ — needs manual check.
+const stonksGemChance: Source = { key: 'skillTree.stonks', name: 'Stonks', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
+const stonksItemChance: Source = { key: 'skillTree.stonks', name: 'Stonks', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
+const stonksRelicChance: Source = { key: 'skillTree.stonks', name: 'Stonks', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
+
+// ─── Treasure Hunter ──────────────────────────────────────────────────────────────
+// TODO no registry key for either Treasure Hunter bonus.
+const treasureHunterRelicChestChance: Source = { key: 'skillTree.treasureHunter', name: 'Treasure Hunter', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
+const treasureHunterRelicPerOpened: Source = { key: 'skillTree.treasureHunter', name: 'Treasure Hunter', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
+
+// ─── Block Bonker ─────────────────────────────────────────────────────────────────
+// TODO no registry keys for any Block Bonker bonus.
+const blockBonkerDamagePerStage: Source = { key: 'skillTree.blockBonker', name: 'Block Bonker', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
+const blockBonkerStaminaPerStage: Source = { key: 'skillTree.blockBonker', name: 'Block Bonker', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
+const blockBonkerSpeedMod: Source = { key: 'skillTree.blockBonker', name: 'Block Bonker', system: 'skillTree', maxLevel: 1, fn: (l) => l * 15, inputs: [] }
+
+// ─── Avada Keda-' ────────────────────────────────────────────────────────────────
+// TODO no registry keys for any Avada Keda bonus.
+const avadaKedaAbilityDuration: Source = { key: 'skillTree.avadaKeda', name: "Avada Keda-'", system: 'skillTree', maxLevel: 1, fn: (l) => l * 5, inputs: [] }
+const avadaKedaAbilityCooldown: Source = { key: 'skillTree.avadaKeda', name: "Avada Keda-'", system: 'skillTree', maxLevel: 1, fn: (l) => l * 10, inputs: [] }
+const avadaKedaInstacharge: Source = { key: 'skillTree.avadaKeda', name: "Avada Keda-'", system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.03, inputs: [] }
+
+// ─── Pond Yield ───────────────────────────────────────────────────────────────────
+
+const GOLDEN_FROGS_CAUGHT_INPUT = {
+  key: 'goldenFrogsCaught',
+  label: 'Golden Frogs Caught',
+  type: 'integer' as const,
+  min: 0,
+}
+
+/**
+ * Pond Yield → Golden Frog Multiplier +0.001× per Golden Frog Caught. Max 1.
+ * Dynamic: scales with total golden frogs caught. → lootfrog_golden_multi
+ */
+const pondYieldGoldenFrogMul: Source = {
+  key: 'skillTree.pondYield',
+  name: 'Pond Yield',
+  system: 'skillTree',
+  maxLevel: 1,
+  fn: (l, rt) => l * (rt['goldenFrogsCaught'] ?? 0) * 0.001,
+  inputs: [GOLDEN_FROGS_CAUGHT_INPUT],
+}
+
 // ─── Misc nodes ─────────────────────────────────────────────────────────────────────
 
-/** Have You Tried Getting Luckier?: All Pets level up chance +15%, Chest Meter Fill Rate 15x */
+/** Have You Tried Getting Luckier? → All Pets level up chance +15%, Chest Meter Fill Rate 15x */
 const haveYouTriedGettingLuckierPetLevelup: Source = { key: 'skillTree.haveYouTriedGettingLuckier', name: 'Have You Tried Getting Luckier?', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.15, inputs: [] }
 const haveYouTriedGettingLuckierChestMeter: Source = { key: 'skillTree.haveYouTriedGettingLuckier', name: 'Have You Tried Getting Luckier?', system: 'skillTree', maxLevel: 1, fn: (l) => 1 + l * 14, inputs: [] }
 
@@ -350,7 +536,17 @@ const ctrlFStarsSuperStarSupernovaMul: Source = {
 // ─── Ctrl+C Ctrl+V Stars ──────────────────────────────────────────────────────
 // Obelisk Level 45, max 3 levels. Cost: 75, 94, 117 skill points.
 
-/** Ctrl+C Ctrl+V Stars → Star Supernova Multi: +0.06 per level */
+// TODO no registry key: 'Orion Star Cap +2 per level' (Ctrl+C Ctrl+V Stars)
+const ctrlCCtrlVStarsOrionCap: Source = {
+  key: 'skillTree.ctrlCCtrlVStars',
+  name: 'Ctrl+C Ctrl+V Stars',
+  system: 'skillTree',
+  maxLevel: 3,
+  fn: (l) => l * 2,
+  inputs: [],
+}
+
+/** Ctrl+C Ctrl+V Stars → Star Supernova Multi +0.06 per level. Max 3. → star_supernova_multi */
 const ctrlCCtrlVStarsSupernovaMul: Source = {
   key: 'skillTree.ctrlCCtrlVStars',
   name: 'Ctrl+C Ctrl+V Stars',
@@ -383,13 +579,33 @@ const whyAreThereStarsNovagiant: Source = {
   inputs: [],
 }
 
-/** Why Are There Stars → Star Supergiant Chance: +0.01 per level */
+/** Why Are There Stars → Star Supergiant Chance +0.01 per level. Max 3. → star_supergiant_chance */
 const whyAreThereStarsSupergiant: Source = {
   key: 'skillTree.whyAreThereStarsInMyMiningGame',
   name: 'Why Are There Stars In My Mining Game',
   system: 'skillTree',
   maxLevel: 3,
   fn: (l) => l * 0.01,
+  inputs: [],
+}
+
+// TODO no registry key: 'Capricorn Cap +3 per level' (Why Are There Stars)
+const whyAreThereStarsCapricornCap: Source = {
+  key: 'skillTree.whyAreThereStarsInMyMiningGame',
+  name: 'Why Are There Stars In My Mining Game',
+  system: 'skillTree',
+  maxLevel: 3,
+  fn: (l) => l * 3,
+  inputs: [],
+}
+
+// TODO no registry key: 'Gemini Cap +2 per level' (Why Are There Stars)
+const whyAreThereStarsGeminiCap: Source = {
+  key: 'skillTree.whyAreThereStarsInMyMiningGame',
+  name: 'Why Are There Stars In My Mining Game',
+  system: 'skillTree',
+  maxLevel: 3,
+  fn: (l) => l * 2,
   inputs: [],
 }
 
@@ -410,6 +626,48 @@ export const skillTreeSources = {
   motleySchoolDrones,
   withThisFishFishMulti,
   withThisFishShinyChance,
+  // New pickaxe / misc nodes
+  ingotIntuitionBarCost,
+  threesACrowdDrone,
+  friendshipEndedItemDuration,
+  friendshipEndedTier2Items,
+  motleySchoolAbyssDockTick,
+  motleySchoolTier2DockTick,
+  doTheseUpgradesWorkshopCap,
+  idleObeliskMincerWorkshopCap,
+  idleObeliskMincerScorpioCap,
+  iBuriedItHereChainDroneCap,
+  // New bomb nodes
+  demolitionExpertBombCritDmg,
+  chronokeeperOfflineDouble,
+  moreOreMoreProblemsOreScreen,
+  // New chest/freebie nodes
+  gemsAndChestsRelicChest,
+  freeThatsGreatRelicChance,
+  whosAskingContractRespec,
+  pleaseSirContractRespecCap,
+  treasureHunterRelicChestChance,
+  treasureHunterRelicPerOpened,
+  // New drone/frog nodes
+  pondYieldGoldenFrogMul,
+  frogFrenzyFroggerGradeCap,
+  callOfTheVoidGradeCap,
+  // New vein node
+  insaneInTheVeinGainVeinPoly,
+  // New star nodes
+  ctrlCCtrlVStarsOrionCap,
+  whyAreThereStarsCapricornCap,
+  whyAreThereStarsGeminiCap,
+  // New misc nodes (no registry key)
+  stonksGemChance,
+  stonksItemChance,
+  stonksRelicChance,
+  blockBonkerDamagePerStage,
+  blockBonkerStaminaPerStage,
+  blockBonkerSpeedMod,
+  avadaKedaAbilityDuration,
+  avadaKedaAbilityCooldown,
+  avadaKedaInstacharge,
   // Pickaxe-relevant nodes
   luckyStrikesCritChance,
   luckyStrikesCritDamage,
