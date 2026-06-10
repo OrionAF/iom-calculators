@@ -564,4 +564,4 @@ export const SKILL_SECTIONS: SkillSection[] = [
 export const ALL_SKILLS: SkillNode[] = _ALL
 
 /** Total SP to fully unlock all skills (per wiki trivia). */
-export const TOTAL_SP = 18716
+export const TOTAL_SP = 18714
