@@ -68,6 +68,8 @@ export const mythicRelicGoldenFloorChance: Source = { key: 'relics.mythic.golden
 export const mythicRelicPetLevelup: Source = { key: 'relics.mythic.petLevelup', name: 'Mythic Relic – Pet Level Up Chance', system: 'relics', maxLevel: 50, fn: (n) => n * 0.005, inputs: [] }
 /** Mythic: Star Supernova Chance +0.10% per relic. Cap 100. */
 export const mythicRelicNovaChance: Source = { key: 'relics.mythic.novaChance', name: 'Mythic Relic – Star Supernova Chance', system: 'relics', maxLevel: 100, fn: (n) => n * 0.001, inputs: [] }
+/** Mythic: Polychrome Vein Card Multi +0.05% per relic. Cap 500. */
+export const mythicRelicPolyVeinCard: Source = { key: 'relics.mythic.polyVeinCard', name: 'Mythic Relic – Polychrome Vein Card Multi', system: 'relics', maxLevel: 500, fn: (n) => n * 0.0005, inputs: [] }
 
 // ─── Divine Relics ────────────────────────────────────────────────────────────
 // Divine relics have a base cap of 5, extendable to 26 total.
@@ -109,6 +111,7 @@ export const relicSources = {
   mythicRelicGoldenFloorChance,
   mythicRelicPetLevelup,
   mythicRelicNovaChance,
+  mythicRelicPolyVeinCard,
   divineRelicRainbowFloor,
   divineRelicSupernovaMul,
   divineRelicRainbowFloorMul,
