@@ -72,10 +72,10 @@ export const wsPickaxeDmgW3: Source = {
   maxLevel: 47, fn: (n) => 1 + n * 0.08, inputs: [],
 }
 
-/** W3: BoP has a chance to convert ores into golde +0.15% per level. Max 47. */
+/** W3: BoP has a chance to convert ores into gold +0.15% per level. Max 47. */
 export const wsBoPgoldenChanceW3: Source = {
   key: 'workshop.BoPgoldenChanceW3', name: 'Workshop: BoP Golden Chance (W3)', system: 'workshop',
-  maxLevel: 47, fn: (n) => n * 0.015, inputs: [],
+  maxLevel: 47, fn: (n) => n * 0.0015, inputs: [],
 }
 
 /**
