@@ -15,6 +15,7 @@ iom_wiki/
 docs/
 src/lib/utilities/*.txt
 src/lib/components/*.txt
+CONTEXT.md
 
 # Agent / tooling scratch
 .cave/
