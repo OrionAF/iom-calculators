@@ -230,7 +230,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Number of Drones',
     description: 'Gives extra drones.',
     icon: 'Number_Of_Drones.png',
-    affix: { prefix: '#'}
+    affix: { prefix: ''}
   },
   drone_damage_percent: {
     name: 'Drone Damage',
@@ -1301,6 +1301,18 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     icon: 'Relic_Chest.png',
     affix: { suffix: '%'}
   },
+  freebie_chance_for_skill_shard: {
+    name: 'Skill Shard Chance From Freebies',
+    description: 'Increases the chance of receiving Skill Shards from Freebies',
+    icon: 'Skill_Shard.png',
+    affix: { suffix: '%' }
+  },
+  freebie_chance_for_bonus_relic: {
+    name: 'Bonus Relic Chest From Freebies',
+    description: 'The chance to receive a bonus Relic Chest from Freebies.',
+    icon: 'Relic_Chest.png',
+    affix: { suffix: '%' }
+  },
   pickaxe_bar_cost_reduction: {
     name: 'Pickaxe Bar Cost Reduction',
     description: 'Reduces the amount of bars required to upgrade the pickaxe on the "Upgrades" menu by this amount.',
@@ -1367,6 +1379,36 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     icon: 'Archaeology_Ability_Instacharge.png',
     affix: { suffix: '%' }
   },
+  archaeology_fragment_gain_multi: {
+    name: 'Arch - Fragment Gain',
+    description: 'Multiplies the amount of fragments gained in Archaeology.',
+    icon: 'Archaeology_Fragment_Gain.png',
+    affix: { suffix: '×' }
+  },
+  archaeology_exp_gain_multi: {
+    name: 'Arch - Exp Gain',
+    description: 'Multiplies the amount of Exp gained in Archaeology.',
+    icon: 'Archaeology_Exp_Gain.png',
+    affix: { suffix: '×' }
+  },
+  archaeology_crosshair_auto_tap: {
+    name: 'Arch - Crosshair Auto-Tap',
+    description: 'Increases the chance of a Crosshair Auto-Tap',
+    icon: 'Archaeology_Crosshair_Auto-Tap.png',
+    affix: { suffix: '%' }
+  },
+  archaeology_lood_mod_chance: {
+    name: 'Arch - Loot Mod Chance',
+    description: 'Increases the chance a rock spawns with the Loot Mod.',
+    icon: 'Archaeology_Loot_Mod_Chance.png',
+    affix: { suffix: '%' }
+  },
+  archaeology_golden_crosshair_chance: {
+    name: 'Arch Golden Crosshair Chance',
+    description: 'Increases the chance of a Golden Crosshair',
+    icon: 'Archaeology_Gold_Crosshair.png',
+    affix: { suffix: '%' }
+  },
   fishing_t2_items_expert_notice: {
     name: 'T2 Items From Expert Notices',
     description: 'The amount of T2 items received from completing Expert Notices in Fishing.',
@@ -1374,9 +1416,27 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     affix: { prefix: '+' }
   },
   polychrome_card_bonus_vein: {
-    name: 'Polychrome Card Bonus - Veins',
+    name: 'Poly Card Bonus - Veins',
     description: 'Increases the bonus on all Polychrome Vein cards.',
-    icon: 'Polychrome_Vein_Card_Multi.png',
+    icon: 'Card_Backing_Polychrome.png',
+    affix: { prefix: '+', suffix: '×' }
+  },
+  polychrome_card_bonus_ore: {
+    name: 'Poly Card Bonus - Ores',
+    description: 'Increases the bonus on all Polychrome Ore cards.',
+    icon: 'Card_Backing_Polychrome.png',
+    affix: { prefix: '+', suffix: '×' }
+  },
+  polychrome_card_bonus_star: {
+    name: 'Poly Card Bonus - Star',
+    description: 'Increases the bonus on all Polychrome Star cards.',
+    icon: 'Card_Backing_Polychrome.png',
+    affix: { prefix: '+', suffix: '×' }
+  },
+  polychrome_card_bonus_fish: {
+    name: 'Poly Card Bonus - Fish',
+    description: 'Increases the bonus on all Polychrome Fish cards.',
+    icon: 'Card_Backing_Polychrome.png',
     affix: { prefix: '+', suffix: '×' }
   },
   star_orion_cap: {
@@ -1432,6 +1492,29 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     description: 'Increases the Grade cap for the Chain Drone',
     icon: 'Drone_Chain_Icon.png',
     affix: { prefix: '+' }
+  },
+  founder_supply_drop_cd: {
+    name: 'Supply Drop Cooldown',
+    description: 'The amount of time until the Founder Supply Drop spawns.',
+    icon: 'Supply_Drop.png'
+  },
+  founder_double_supply_drop_chance: {
+    name: 'Double Supply Drop Chance',
+    description: 'The chance that the Founder Supply Drop is doubled.',
+    icon: 'Double_Supply_Drop.png',
+    affix: { suffix: '%' }
+  },
+  founder_triple_supply_drop_chance: {
+    name: 'Triple Supply Drop Chance',
+    description: 'The chance that the Founder Supply Drop is tripled.',
+    icon: 'Triple_Supply_Drop.png',
+    affix: { suffix: '%' }
+  },
+  founder_golden_supply_drop_chance: {
+    name: 'Golden Supply Drop Chance',
+    description: 'The chance that the Founder Supply Drop is Golden(5x value).',
+    icon: 'Golden_Supply_Drop.png',
+    affix: { suffix: '%' }
   },
   template_stat_entry: {
     name: '',

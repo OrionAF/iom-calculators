@@ -325,14 +325,14 @@ export const FOUNDER_TIERS: readonly FounderTier[] = [
     tier: 1,
     vipPointsRequired: 960,
     effects: [
-      { label: 'Founder Supply Drop Cooldown', baseValue: 60, increment: -2, unit: 'minutes' },
+      { label: 'Founder Supply Drop Cooldown', derivedStatKey:'founder_supply_drop_cd', baseValue: 60, increment: -2, unit: 'minutes' },
     ],
   },
   {
     tier: 2,
     vipPointsRequired: 1440,
     effects: [
-      { label: 'Double Supply Drop Chance', baseValue: 0.12, increment: 0.06, unit: 'percent' },
+      { label: 'Double Supply Drop Chance', derivedStatKey:'founder_double_supply_drop_chance', baseValue: 0.12, increment: 0.06, unit: 'percent' },
     ],
   },
   {
@@ -367,7 +367,7 @@ export const FOUNDER_TIERS: readonly FounderTier[] = [
     tier: 7,
     vipPointsRequired: 7440,
     effects: [
-      { label: 'Triple Supply Drop Chance', baseValue: 0.16, increment: 0.08, unit: 'percent' },
+      { label: 'Triple Supply Drop Chance', derivedStatKey:'founder_triple_supply_drop_chance', baseValue: 0.16, increment: 0.08, unit: 'percent' },
     ],
   },
   {
@@ -395,14 +395,14 @@ export const FOUNDER_TIERS: readonly FounderTier[] = [
     tier: 11,
     vipPointsRequired: 21600,
     effects: [
-      { label: 'Golden Supply Drop Chance', baseValue: 0.10, increment: 0.02, unit: 'percent' },
+      { label: 'Golden Supply Drop Chance', derivedStatKey:'founder_golden_supply_drop_chance', baseValue: 0.10, increment: 0.02, unit: 'percent' },
     ],
   },
   {
     tier: 12,
     vipPointsRequired: 28800,
     effects: [
-      { label: 'Gem Bomb Gem Chance', baseValue: 0.005, increment: 0.005, unit: 'percent' },
+      { label: 'Gem Bomb Gem Chance', derivedStatKey: 'gem_bomb_gem_chance', baseValue: 0.005, increment: 0.005, unit: 'percent' },
     ],
   },
 ]
@@ -467,7 +467,9 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     unlockRequirement: 'Requirement: N/A',
     effects: [
       {
-        label: '+1% Freebie Pack Skill Shard Chance' 
+        label: '+1% Freebie Pack Skill Shard Chance',
+        derivedStatKey: 'freebie_chance_for_skill_shard',
+        value: 0.01
       },
     ],
   },
@@ -685,7 +687,9 @@ export const VALUE_PACKS: readonly ValuePack[] = [
         value: 2
       },
       {
-        label: '+15% Bonus Relic from Freebie'
+        label: '+15% Bonus Relic from Freebie',
+        derivedStatKey: 'freebie_chance_for_bonus_relic',
+        value: 0.15
       },
     ],
   },
@@ -696,7 +700,9 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     unlockRequirement: 'Obelisk Level 30',
     effects: [
       {
-        label: '1.25x Fragment Gain'
+        label: '1.25x Fragment Gain',
+        derivedStatKey: 'archaeology_fragment_gain_multi',
+        value: 1.25
       },
       {
         label: '+1 Gem from Freebie Pack',
@@ -850,16 +856,24 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     unlockRequirement: 'Obelisk Level 37, Unlocked "This Is Gonna Take A While.." skill',
     effects: [
       {
-        label: '1.15x Poly Ore Multi'
+        label: '1.15x Poly Ore Multi',
+        derivedStatKey: 'polychrome_card_bonus_ore',
+        value: 1.15
       },
       {
-        label: '1.15x Poly Vein Multi'
+        label: '1.15x Poly Vein Multi',
+        derivedStatKey: 'polychrome_card_bonus_vein',
+        value: 1.15
       },
       {
-        label: '1.15x Poly Star Multi'
+        label: '1.15x Poly Star Multi',
+        derivedStatKey: 'polychrome_card_bonus_star',
+        value: 1.15
       },
       {
-        label: '1.15x Poly Fish Multi'
+        label: '1.15x Poly Fish Multi',
+        derivedStatKey: 'polychrome_card_bonus_fish',
+        value: 1.15
       },
     ],
   },
@@ -924,16 +938,24 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     unlockRequirement: 'Obelisk Level 66',
     effects: [
       {
-        label: 'Archaeology Exp 1.15x'
+        label: 'Archaeology Exp 1.15x',
+        derivedStatKey: 'archaeology_exp_gain_multi',
+        value: 1.15
       },
       {
-        label: 'Crosshair Auto-Tap +5%'
+        label: 'Crosshair Auto-Tap +5%',
+        derivedStatKey: 'archaeology_crosshair_auto_tap',
+        value: 0.05
       },
       {
-        label: 'Loot Mod Chance +2%'
+        label: 'Loot Mod Chance +2%',
+        derivedStatKey: 'archaeology_lood_mod_chance',
+        value: 0.02
       },
       {
-        label: 'Golden Crosshair Chance +2%'
+        label: 'Golden Crosshair Chance +2%',
+        derivedStatKey: 'archaeology_golden_crosshair_chance',
+        value: 0.02
       },
     ],
   },

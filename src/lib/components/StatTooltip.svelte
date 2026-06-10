@@ -5,7 +5,6 @@
 <script lang="ts">
   import WikiIcon from './WikiIcon.svelte'
   import { getStatMeta } from '$lib/stats/registry'
-  import { formatStatByKey } from '$lib/format'
 
   interface Props {
     derivedStatKey: string
@@ -13,12 +12,9 @@
     label: string
   }
 
-  let { derivedStatKey, value, label }: Props = $props()
+  let { derivedStatKey, label }: Props = $props()
 
   const meta = $derived(getStatMeta(derivedStatKey))
-  const formattedValue = $derived(
-    meta && value !== undefined ? formatStatByKey(derivedStatKey, value) : null
-  )
 
   let active = $state(false)
   let uid = $state(0)
@@ -82,12 +78,6 @@
       </div>
       <div class="tip-body">
         <p class="tip-desc">{meta.description}</p>
-        {#if formattedValue}
-          <div class="tip-value-badge">
-            <span class="tip-value-label">adds</span>
-            <span class="tip-value">{formattedValue}</span>
-          </div>
-        {/if}
       </div>
     </span>
   </span>
@@ -229,33 +219,5 @@
     color: var(--text-muted);
     line-height: 1.55;
     margin: 0 0 var(--space-2) 0;
-  }
-
-  /* ── Value badge ── */
-  .tip-value-badge {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 5px;
-    background: color-mix(in srgb, var(--accent) 12%, var(--bg-raised));
-    border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
-    border-radius: var(--radius-md);
-    padding: 3px var(--space-2);
-  }
-
-  .tip-value-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .tip-value {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-    font-variant-numeric: tabular-nums;
   }
 </style>
