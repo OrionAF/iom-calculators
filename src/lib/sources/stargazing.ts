@@ -606,7 +606,16 @@ const starDracoGalacticMul: Source = {
 }
 
 // ── Cetus (max 32: base 20 + Star Caps 2 + Fishing Storm Serpent T1 10) ───────
-// NOTE: Cetus → 'Polychrome Ore Card Multi +0.15×' — no stat key.
+
+/** Cetus → Polychrome Ore Card Multi +0.15 per level. Max 32. → polychrome_card_bonus_ore */
+const starCetusPolyCardMul: Source = {
+  key: 'stargazing.starCetus',
+  name: 'Cetus (Star)',
+  system: 'stargazing',
+  maxLevel: 32,
+  fn: (l) => l * 0.15,
+  inputs: [],
+}
 
 /** Cetus → Fish Income Multi +2% per level. Max 32. → fishing_income_multi */
 const starCetusFishIncome: Source = {
@@ -714,6 +723,7 @@ export const stargazingSources = {
   starHerculesGoldenOreMul,
   starDracoGalacticChance,
   starDracoGalacticMul,
+  starCetusPolyCardMul,
   starCetusFishIncome,
   starEridanusAllFloor,
   starEridanusStonksMul,
