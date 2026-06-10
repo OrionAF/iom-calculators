@@ -1516,12 +1516,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     icon: 'Golden_Supply_Drop.png',
     affix: { suffix: '%' }
   },
-  template_stat_entry: {
-    name: '',
-    description: '',
-    icon: '',
-    affix: { }
-  },
+
 
 
 }

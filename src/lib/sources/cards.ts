@@ -6,7 +6,7 @@ import type { Source } from '$lib/engine/types'
 // ─── Pet Cards (rarity 0=none, 1=base, 2=gilded, 3=polychrome) ──────────────
 export const cardNagini: Source = {
   key: 'cards.nagini', name: 'Card: Nagini', system: 'cards',
-  maxLevel: 3, fn: (n) => ([0.01, 0.02, 0.04] as const)[Math.min(n, 3)], inputs: [],
+  maxLevel: 3, fn: (n) => ([0, 0.01, 0.02, 0.04] as const)[Math.min(n, 3)], inputs: [],
 }
 
 
