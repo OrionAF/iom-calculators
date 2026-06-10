@@ -2,7 +2,7 @@ import { persistedStore } from '$lib/storage/persistedStore'
 import type { Notation } from '$lib/format'
 
 export type ValueDisplayMode = 'notation' | 'raw'
-export type FontScale = 'normal' | 'large'
+export type FontScale = 'small' | 'normal' | 'large'
 export type Density   = 'compact' | 'normal' | 'spacious' | 'super-spacious'
 
 export interface Settings {
@@ -30,7 +30,7 @@ function isValidValueDisplayMode(v: unknown): v is ValueDisplayMode {
   return v === 'notation' || v === 'raw'
 }
 function isValidFontScale(v: unknown): v is FontScale {
-  return v === 'normal' || v === 'large'
+  return v === 'small' || v === 'normal' || v === 'large'
 }
 function isValidDensity(v: unknown): v is Density {
   return v === 'compact' || v === 'normal' || v === 'spacious' || v === 'super-spacious'

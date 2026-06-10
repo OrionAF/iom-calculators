@@ -1,5 +1,16 @@
 import type { Source } from '$lib/engine/types'
 
+// ─── Ore Cards (rarity 0=none, 1=base, 2=gilded, 3=polychrome) ──────────────
+// Formula is (base(4)+Cetus+Upgrades)*(1+pets)*bundle*tribute
+
+// ─── Pet Cards (rarity 0=none, 1=base, 2=gilded, 3=polychrome) ──────────────
+export const cardNagini: Source = {
+  key: 'cards.nagini', name: 'Card: Nagini', system: 'cards',
+  maxLevel: 3, fn: (n) => ([0.01, 0.02, 0.04] as const)[Math.min(n, 3)], inputs: [],
+}
+
+
+
 // ─── Misc Cards (rarity 0=none, 1=base, 2=gilded, 3=polychrome) ──────────────
 
 /** Alex: Pickaxe Damage ×1.10 / ×1.20 / ×1.40 */
@@ -23,6 +34,12 @@ export const cardWorld1: Source = {
 /** World 2: Rainbow Floor Multi ×1.06 / ×1.12 / ×1.24 */
 export const cardWorld2: Source = {
   key: 'cards.world2', name: 'Card: World 2', system: 'cards',
+  maxLevel: 3, fn: (n) => ([1, 1.06, 1.12, 1.24] as const)[Math.min(n, 3)], inputs: [],
+}
+
+/** World 3: Galactic Floor Multi ×1.06 / ×1.12 / ×1.24 */
+export const cardWorld3: Source = {
+  key: 'cards.world3', name: 'Card: World 3', system: 'cards',
   maxLevel: 3, fn: (n) => ([1, 1.06, 1.12, 1.24] as const)[Math.min(n, 3)], inputs: [],
 }
 
@@ -159,8 +176,9 @@ export const cardFishingRod: Source = {
 }
 
 export const cardSources = {
+  cardNagini,
   cardAlex, cardBone,
-  cardWorld1, cardWorld2, cardWorld4,
+  cardWorld1, cardWorld2, cardWorld3, cardWorld4,
   cardCeliosHat, cardJulk,
   cardLootbug, cardGoldenLootbug,
   cardGoldenOre, cardGoldenVein, cardRainbowVein,

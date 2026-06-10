@@ -75,7 +75,6 @@ export const oresFormulas = {
     base: 0,
     contributions: [
       { source: rel.mythicRelicGoldenFloorChance, op: '+' },
-      { source: U, op: '+', unknown: true },
     ],
   },
   golden_floor_multi: {
@@ -133,12 +132,19 @@ export const oresFormulas = {
     base: 0,
     contributions: [
       { source: sk.iBuriedItHereGalacticFloor,      op: '+' },
+      { source: card.cardNagini,      op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
-  galactic_floor_multi:  { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+  galactic_floor_multi:  {
+    base: 10,
+    contributions: [
+      { source: U, op: '+', unknown: true }] },
+
+
+
   prismatic_floor_chance:{ base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
-  prismatic_floor_multi: { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+  prismatic_floor_multi: { base: 1, contributions: [{ source: U, op: '+', unknown: true }] },
   pizzas_eaten:          { base: 0, contributions: [] },
   steak_eaten:           { base: 0, contributions: [] },
   all_floor_multipliers: {
