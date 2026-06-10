@@ -1,8 +1,9 @@
 <script lang="ts">
   import { Search, Lock } from 'lucide-svelte'
   import { ALL_SKILLS, TOTAL_SP, type SkillNode } from '$lib/skills/catalog'
-  import { skillProgress, setSkillLevel } from '$lib/stores/skillProgress'
+  import { skillProgress, setSkillLevel, maxAllSkills, resetAllSkills } from '$lib/stores/skillProgress'
   import WikiIcon from '$lib/components/WikiIcon.svelte'
+  import StatTooltip from '$lib/components/StatTooltip.svelte'
   import PageHeader from '$lib/components/PageHeader.svelte'
   import Button from '$lib/components/Button.svelte'
   import ResultCard from '$lib/components/ResultCard.svelte'
@@ -344,7 +345,7 @@
   function matchesFilter(skill: SkillNode, q: string): boolean {
     if (!q) return true
     if (skill.name.toLowerCase().includes(q)) return true
-    if (skill.bonuses.some(b => b.toLowerCase().includes(q))) return true
+    if (skill.bonuses.some(b => b.label.toLowerCase().includes(q))) return true
     return false
   }
 
@@ -389,19 +390,6 @@
     if (!config || !config.prereqId) return true
     const prereqLevel = currentProgress[config.prereqId] ?? 0
     return prereqLevel > 0
-  }
-
-  // ── Global Skill Actions ──────────────────────────────────────────────────
-  function maxAllSkills(): void {
-    const updates: Record<string, number> = {}
-    for (const skill of ALL_SKILLS) {
-      updates[skill.id] = skill.costs.length
-    }
-    skillProgress.update(() => updates)
-  }
-
-  function resetAllSkills(): void {
-    skillProgress.update(() => ({}))
   }
 
   // ── SP Stats ─────────────────────────────────────────────────────────────
@@ -572,10 +560,8 @@
               class:hidden={isHidden}
               style:left={normalizedFilter === '' ? `calc(${coord.x - 1.75} * var(--grid-unit))` : undefined}
               style:top={normalizedFilter === '' ? `calc(${coord.y - 1.75} * var(--grid-unit))` : undefined}
-              style="
-                width: calc({NODE_CELL_SIZE} * var(--grid-unit));
-                height: calc({NODE_CELL_SIZE} * var(--grid-unit));
-              "
+              style:width="calc({NODE_CELL_SIZE} * var(--grid-unit))"
+              style:height="calc({NODE_CELL_SIZE} * var(--grid-unit))"
               onclick={() => selectedSkillId = skill.id}
               oncontextmenu={(e) => handleRightClick(skill, e)}
               aria-label="{skill.name}, Level {level} of {maxLevel}"
@@ -638,7 +624,13 @@
             </div>
             <ul class="console-bonuses">
               {#each selectedSkill.bonuses as bonus}
-                <li>{bonus}</li>
+                <li>
+                  {#if bonus.statKey}
+                    <StatTooltip derivedStatKey={bonus.statKey} value={undefined} label={bonus.label} />
+                  {:else}
+                    {bonus.label}
+                  {/if}
+                </li>
               {/each}
             </ul>
           </div>
@@ -808,8 +800,6 @@
   /* ── Node Component styling ────────────────────────── */
   .tree-node {
     position: absolute;
-    width: calc(5 * var(--grid-unit));
-    height: calc(5 * var(--grid-unit));
     border-radius: 50%;
     border: none;
     background: none;
@@ -927,7 +917,7 @@
     color: #ffcc00;
     font-family: var(--font-mono);
     font-size: calc(0.5 * var(--grid-unit));
-    font-weight: bold;
+    font-weight: var(--weight-bold);
     border-radius: 4px;
     padding: calc(0.02 * var(--grid-unit)) calc(0.08 * var(--grid-unit));
     line-height: 1.2;
@@ -948,15 +938,14 @@
     border: 1px solid #5a493b;
     border-radius: var(--radius-lg);
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
-    z-index: 100;
+    z-index: var(--z-toast);
     padding: var(--space-4) var(--space-6);
     /* Float it natively over the end padding area of the viewport. */
     margin-top: -140px;
   }
 
   .console-body {
-    max-width: var(--max-width-content, 1200px);
+    max-width: var(--content-max-width);
     margin: 0 auto;
     display: flex;
     align-items: flex-start;
@@ -999,9 +988,9 @@
   .console-name {
     font-family: var(--font-display);
     font-size: var(--text-base);
-    font-weight: var(--weight-semibold);
+    font-weight: var(--weight-bold);
     color: var(--accent);
-    line-height: var(--leading-none);
+    line-height: var(--leading-tight);
   }
 
   .console-level {
@@ -1019,7 +1008,7 @@
 
   .console-bonuses li {
     font-size: var(--text-sm);
-    color: var(--text-secondary);
+    color: var(--text-muted);
     line-height: var(--leading-snug);
   }
 
@@ -1054,8 +1043,8 @@
 
   .obelisk-req {
     font-family: var(--font-mono);
-    font-size: 10px;
-    color: #d9534f;
+    font-size: var(--text-xs);
+    color: var(--error);
     letter-spacing: 0.04em;
   }
 </style>

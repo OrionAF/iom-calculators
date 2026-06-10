@@ -7,6 +7,7 @@
   import { settings, setNotation, setFontScale, setDensity, setStatTooltips, resetSettings } from '$lib/stores/settings'
   import { clearStats } from '$lib/stores/stats'
   import { resetStoreProgress } from '$lib/stores/storeProgress'
+  import { resetSkillProgress } from '$lib/stores/skillProgress'
   import { focusOnMount } from '$lib/actions/focusOnMount'
   import type { Notation, } from '$lib/format'
   import type { FontScale, Density } from '$lib/stores/settings'
@@ -63,6 +64,7 @@
     clearStats()
     resetSettings()
     resetStoreProgress()
+    resetSkillProgress()
     scrubStorage(localStorage)
     scrubStorage(sessionStorage)
   }
@@ -151,7 +153,9 @@
     <p>This will delete:</p>
     <ul class="modal-list">
       <li>Your imported stat export</li>
-      <li>Your notation preference</li>
+      <li>All settings (notation, font scale, density)</li>
+      <li>Your Store progress</li>
+      <li>Your Skill Tree progress</li>
     </ul>
     <p>Calculator pages and the app itself stay. This cannot be undone.</p>
   {/snippet}
