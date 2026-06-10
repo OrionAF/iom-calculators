@@ -470,15 +470,21 @@ const treasureHunterRelicChestChance: Source = { key: 'skillTree.treasureHunter'
 const treasureHunterRelicPerOpened: Source = { key: 'skillTree.treasureHunter', name: 'Treasure Hunter', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
 
 // ─── Block Bonker ─────────────────────────────────────────────────────────────────
-// TODO no registry keys for any Block Bonker bonus.
+
+/** Block Bonker → Damage per Highest Stage +1%. Max 1. → archaeology_dmg_per_stage */
 const blockBonkerDamagePerStage: Source = { key: 'skillTree.blockBonker', name: 'Block Bonker', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
+/** Block Bonker → Max Stamina per Highest Stage +1%. Max 1. → archaeology_stm_per_stage */
 const blockBonkerStaminaPerStage: Source = { key: 'skillTree.blockBonker', name: 'Block Bonker', system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.01, inputs: [] }
+/** Block Bonker → Speed Mod Gain +15 (cap Stage 100). Max 1. → archaeology_spd_mod_gain */
 const blockBonkerSpeedMod: Source = { key: 'skillTree.blockBonker', name: 'Block Bonker', system: 'skillTree', maxLevel: 1, fn: (l) => l * 15, inputs: [] }
 
 // ─── Avada Keda-' ────────────────────────────────────────────────────────────────
-// TODO no registry keys for any Avada Keda bonus.
+
+/** Avada Keda-' → Ability Duration +5s. Max 1. → archaeology_ability_dur */
 const avadaKedaAbilityDuration: Source = { key: 'skillTree.avadaKeda', name: "Avada Keda-'", system: 'skillTree', maxLevel: 1, fn: (l) => l * 5, inputs: [] }
+/** Avada Keda-' → Ability Cooldown -10s. Max 1. → archaeology_ability_cd */
 const avadaKedaAbilityCooldown: Source = { key: 'skillTree.avadaKeda', name: "Avada Keda-'", system: 'skillTree', maxLevel: 1, fn: (l) => l * 10, inputs: [] }
+/** Avada Keda-' → Ability Instacharge Chance +3%. Max 1. → archaeology_ability_insta */
 const avadaKedaInstacharge: Source = { key: 'skillTree.avadaKeda', name: "Avada Keda-'", system: 'skillTree', maxLevel: 1, fn: (l) => l * 0.03, inputs: [] }
 
 // ─── Pond Yield ───────────────────────────────────────────────────────────────────
