@@ -56,6 +56,10 @@ const founderFn = (unlockTier: number, base: number, incr: number) =>
     return base + Math.max(0, tier - unlockTier) * incr
   }
 
+/** Founder Tier 1: Supply Drop Cooldown. Base 60s, -2s per tier. op='+'. */
+export const founderSupplyDropCd: Source = { key: 'store.founder', name: 'Founder Bundle (Supply Drop Cooldown)', system: 'store', maxLevel: 1, fn: founderFn(1, 60, -2), inputs: [FOUNDER_TIER_INPUT] }
+/** Founder Tier 2: Double Supply Drop Chance. Base 12% (0.12), +6% per tier. op='+'. */
+export const founderDoubleSupplyDrop: Source = { key: 'store.founder', name: 'Founder Bundle (Double Supply Drop Chance)', system: 'store', maxLevel: 1, fn: founderFn(2, 0.12, 0.06), inputs: [FOUNDER_TIER_INPUT] }
 /** Founder Tier 3: 10x Craft Chance. Base 2% (0.02), +1% per tier. op='+'. */
 export const founderCraft10x: Source = { key: 'store.founder', name: 'Founder Bundle (10x Craft Chance)', system: 'store', maxLevel: 1, fn: founderFn(3, 0.02, 0.01), inputs: [FOUNDER_TIER_INPUT] }
 /** Founder Tier 4: Bomb of Plenty Multi. Base 2, +1 per tier. op='+'. */
@@ -70,6 +74,12 @@ export const founderFreebieGems: Source = { key: 'store.founder', name: 'Founder
 export const founderRainbowFloor: Source = { key: 'store.founder', name: 'Founder Bundle (Rainbow Floor Chance)', system: 'store', maxLevel: 1, fn: founderFn(9, 0.01, 0.01), inputs: [FOUNDER_TIER_INPUT] }
 /** Founder Tier 10: Game Speed. Base 10% (0.10), +1% per tier. op='+'. */
 export const founderGameSpeed: Source = { key: 'store.founder', name: 'Founder Bundle (Game Speed)', system: 'store', maxLevel: 1, fn: founderFn(10, 0.10, 0.01), inputs: [FOUNDER_TIER_INPUT] }
+/** Founder Tier 7: Triple Supply Drop Chance. Base 16% (0.16), +8% per tier. op='+'. */
+export const founderTripleSupplyDrop: Source = { key: 'store.founder', name: 'Founder Bundle (Triple Supply Drop Chance)', system: 'store', maxLevel: 1, fn: founderFn(7, 0.16, 0.08), inputs: [FOUNDER_TIER_INPUT] }
+/** Founder Tier 11: Golden Supply Drop Chance. Base 10% (0.10), +2% per tier. op='+'. */
+export const founderGoldenSupplyDrop: Source = { key: 'store.founder', name: 'Founder Bundle (Golden Supply Drop Chance)', system: 'store', maxLevel: 1, fn: founderFn(11, 0.10, 0.02), inputs: [FOUNDER_TIER_INPUT] }
+/** Founder Tier 12: Gem Bomb Gem Chance. Base 0.5% (0.005), +0.5% per tier. op='+'. */
+export const founderGemBombGemChance: Source = { key: 'store.founder', name: 'Founder Bundle (Gem Bomb Gem Chance)', system: 'store', maxLevel: 1, fn: founderFn(12, 0.005, 0.005), inputs: [FOUNDER_TIER_INPUT] }
 
 // ─── Value Packs (binary owned) ───────────────────────────────────────────────
 
@@ -152,6 +162,24 @@ export const vpSupergiants3SuperStarsChance: Source = { key: 'store.vp.stargazin
 export const vpSupergiants3StarMul: Source = { key: 'store.vp.stargazingSupergiantBundle', name: 'Stargazing Supergiant Bundle!', system: 'store', maxLevel: 1, fn: mul(1.10), inputs: [] }
 export const vpSupergiants3TripleStar: Source = { key: 'store.vp.stargazingSupergiantBundle', name: 'Stargazing Supergiant Bundle!', system: 'store', maxLevel: 1, fn: add(0.03), inputs: [] }
 export const vpSupergiants10xSuperStar: Source = { key: 'store.vp.stargazingSupergiantBundle', name: 'Stargazing Supergiant Bundle!', system: 'store', maxLevel: 1, fn: add(0.01), inputs: [] }
+// ─── Ascension Bundle (new in V2.1.1) ───────────────────────────────────────
+export const vpAscensionArchExp: Source = { key: 'store.vp.ascensionBundle', name: 'Ascension Bundle!', system: 'store', maxLevel: 1, fn: mul(1.15), inputs: [] }
+export const vpAscensionAutoTap: Source = { key: 'store.vp.ascensionBundle', name: 'Ascension Bundle!', system: 'store', maxLevel: 1, fn: add(0.05), inputs: [] }
+export const vpAscensionLootMod: Source = { key: 'store.vp.ascensionBundle', name: 'Ascension Bundle!', system: 'store', maxLevel: 1, fn: add(0.02), inputs: [] }
+export const vpAscensionGoldenCrosshair: Source = { key: 'store.vp.ascensionBundle', name: 'Ascension Bundle!', system: 'store', maxLevel: 1, fn: add(0.02), inputs: [] }
+
+// ─── Polychrome Potency Bundle ───────────────────────────────────────────────
+export const vpPolyPotencyOre: Source = { key: 'store.vp.polychromePotencyBundle', name: 'Polychrome Potency Bundle!', system: 'store', maxLevel: 1, fn: mul(1.15), inputs: [] }
+export const vpPolyPotencyVein: Source = { key: 'store.vp.polychromePotencyBundle', name: 'Polychrome Potency Bundle!', system: 'store', maxLevel: 1, fn: mul(1.15), inputs: [] }
+export const vpPolyPotencyStar: Source = { key: 'store.vp.polychromePotencyBundle', name: 'Polychrome Potency Bundle!', system: 'store', maxLevel: 1, fn: mul(1.15), inputs: [] }
+export const vpPolyPotencyFish: Source = { key: 'store.vp.polychromePotencyBundle', name: 'Polychrome Potency Bundle!', system: 'store', maxLevel: 1, fn: mul(1.15), inputs: [] }
+
+// ─── Capitalist Bundle (second effect) ───────────────────────────────────────
+export const vpCapitalistRelicChance: Source = { key: 'store.vp.capitalistBundle', name: 'Capitalist Bundle!', system: 'store', maxLevel: 1, fn: add(0.15), inputs: [] }
+
+// ─── Skill Surge Bundle ───────────────────────────────────────────────────────
+export const vpSkillSurgeSkillShard: Source = { key: 'store.vp.skillSurgeBundle', name: 'Skill Surge Bundle!', system: 'store', maxLevel: 1, fn: add(0.01), inputs: [] }
+
 export const vpHalfWayRainbowFloorMul: Source = { key: 'store.vp.halfWayBundle', name: 'Half Way Bundle!', system: 'store', maxLevel: 1, fn: mul(1.10), inputs: [] }
 export const vpHalfWayNovagiant: Source = { key: 'store.vp.halfWayBundle', name: 'Half Way Bundle!', system: 'store', maxLevel: 1, fn: mul(1.10), inputs: [] }
 export const vpHalfWayFishingRod: Source = { key: 'store.vp.halfWayBundle', name: 'Half Way Bundle!', system: 'store', maxLevel: 1, fn: mul(1.10), inputs: [] }
@@ -164,8 +192,10 @@ export const storeSources = {
   gemPickaxeDamage, gemBombDamage, gemBombCapacity, gemFreebieBank,
   gemChestMeter, gemItemsInChests, gemOreSellPrice,
   // Founder
+  founderSupplyDropCd, founderDoubleSupplyDrop,
   founderCraft10x, founderBomBofPlenty, founderGoldenLootbug, founderFreebieBank,
-  founderFreebieGems, founderRainbowFloor, founderGameSpeed,
+  founderTripleSupplyDrop, founderFreebieGems, founderRainbowFloor, founderGameSpeed,
+  founderGoldenSupplyDrop, founderGemBombGemChance,
   // Value packs
   vpDroneCount, vpFreebie5xChance, vpBankersFreebieBank, vpBankersLootbugBank,
   vpBankersFreebieGems, vpBankersFreebie5x, vpGottaGoFastGameSpeed, vpGoldenLootbug,
@@ -190,4 +220,8 @@ export const storeSources = {
   vpSupergiants3StarsChance, vpSupergiants3SuperStarsChance, vpSupergiants3StarMul,
   vpSupergiants3TripleStar, vpSupergiants10xSuperStar,
   vpHalfWayRainbowFloorMul, vpHalfWayNovagiant, vpHalfWayFishingRod, vpHalfWayFreebieGems,
+  // New bundles
+  vpAscensionArchExp, vpAscensionAutoTap, vpAscensionLootMod, vpAscensionGoldenCrosshair,
+  vpPolyPotencyOre, vpPolyPotencyVein, vpPolyPotencyStar, vpPolyPotencyFish,
+  vpCapitalistRelicChance, vpSkillSurgeSkillShard,
 }
