@@ -153,7 +153,13 @@
     <div class="meta-strip">
       <span class="meta-version">{$stats.version}</span>
       <span class="meta-divider" aria-hidden="true">·</span>
-      <span class="meta-time">{formatTime($stats.time)}</span>
+      {#if typeof $stats.time === 'number' && Number.isFinite($stats.time)}
+        <span class="meta-time">{formatTime($stats.time)}</span>
+      {:else}
+        <span class="meta-warning">
+          Export was partially missing. Please try again making sure to export everything from the code in-game.
+        </span>
+      {/if}
     </div>
 
     <div class="toolbar">
@@ -257,7 +263,9 @@
   /* ── Metadata strip ────────────────────────────────── */
   .meta-strip {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    row-gap: var(--space-1);
     gap: var(--space-2);
     margin-bottom: var(--space-6);
     font-family: var(--font-mono);
@@ -267,6 +275,11 @@
 
   .meta-divider {
     color: var(--text-dim);
+  }
+
+  .meta-warning {
+    color: var(--warning);
+    font-family: var(--font-body);
   }
 
   /* ── Toolbar (search + mode toggle) ────────────────── */

@@ -10,6 +10,7 @@
     form?: string
     fullWidth?: boolean
     onclick?: (e: MouseEvent) => void
+    onblur?: (e: FocusEvent) => void
     children: Snippet
     'aria-label'?: string
     'aria-haspopup'?: 'dialog' | 'menu' | 'true'
@@ -23,6 +24,7 @@
     form,
     fullWidth = false,
     onclick,
+    onblur,
     children,
     'aria-label': ariaLabel,
     'aria-haspopup': ariaHaspopup,
@@ -37,6 +39,7 @@
   {disabled}
   {form}
   {onclick}
+  {onblur}
   aria-label={ariaLabel}
   aria-haspopup={ariaHaspopup}
   aria-pressed={ariaPressed}

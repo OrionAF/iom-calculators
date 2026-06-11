@@ -3,7 +3,6 @@ import { persistedStore } from '$lib/storage/persistedStore'
 export type ParseError =
   | { kind: 'invalid-json'; message: string }
   | { kind: 'missing-stats-key' }
-  | { kind: 'unsupported-version'; version: string }
 
 export type Result<T, E> =
   | { ok: true; value: T }
@@ -12,7 +11,8 @@ export type Result<T, E> =
 export interface StatsExport {
   version: string
   stats: Record<string, number>
-  time: number
+  /** Excel-serial export timestamp. Optional: some exports omit it. */
+  time?: number
 }
 
 const STORAGE_KEY = 'iom-stats'

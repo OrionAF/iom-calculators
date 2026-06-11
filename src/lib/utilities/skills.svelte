@@ -405,6 +405,41 @@
     ALL_SKILLS.filter(s => ($skillProgress[s.id] ?? 0) > 0).length
   )
 
+  // ── Viewport-aware page copy (same pattern as Settings density preview) ──
+  let viewportWidth = $state(typeof window !== 'undefined' ? window.innerWidth : 1280)
+
+  $effect(() => {
+    if (typeof window === 'undefined') return
+    const handler = () => { viewportWidth = window.innerWidth }
+    window.addEventListener('resize', handler)
+    return () => window.removeEventListener('resize', handler)
+  })
+
+  const pageDescription = $derived(
+    viewportWidth >= 768
+      ? 'Inspect and unlock your permanent perks. Click a node to select it — purchase and refund from the console below, or right-click a node to quick-buy with prerequisites.'
+      : 'Inspect and unlock your permanent perks. Tap a node to select it, then purchase or refund from the console below.'
+  )
+
+  const spRemaining = $derived(TOTAL_SP - spSpent)
+
+  // ── Two-click confirm for the destructive bulk actions ────────────────────
+  // First click arms the button (label + variant change); second click runs it.
+  // Moving focus anywhere else disarms — no timers involved.
+  let armedAction = $state<'max' | 'reset' | null>(null)
+
+  function handleMaxAll(): void {
+    if (armedAction === 'max') { maxAllSkills(); armedAction = null }
+    else armedAction = 'max'
+  }
+
+  function handleResetAll(): void {
+    if (armedAction === 'reset') { resetAllSkills(); armedAction = null }
+    else armedAction = 'reset'
+  }
+
+  function disarm(): void { armedAction = null }
+
   // ── Selected Node State ───────────────────────────────────────────────────
   let selectedSkillId = $state('LuckyStrikes')
   const selectedSkill = $derived(
@@ -488,12 +523,13 @@
 <div class="page flex-layout">
   <PageHeader
     title="Skill Tree"
-    description="Inspect and unlock your permanent perks. Click to select, right-click to instantly purchase (with automatic prerequisite unlocking)."
+    description={pageDescription}
   />
 
   <!-- SP summary bar -->
   <div class="summary-grid">
     <ResultCard label="SP spent" value={spSpent.toLocaleString()} />
+    <ResultCard label="SP remaining" value={spRemaining.toLocaleString()} />
     <ResultCard label="of {ALL_SKILLS.length} owned" value={ownedCount.toString()} />
     <ResultCard label="SP to max all" value={TOTAL_SP.toLocaleString()} />
   </div>
@@ -518,6 +554,9 @@
   <!-- Tree Viewport & HUD Wrapper -->
   <div class="tree-wrapper">
     <!-- Viewport Container -->
+    {#if normalizedFilter !== '' && matchingSkillIds.size === 0}
+      <p class="no-results">No skills match your filter.</p>
+    {:else}
     <div class="tree-viewport" style="--grid-unit: {GRID_UNIT_PX}px;">
       <div class="tree-container" class:list-mode={normalizedFilter !== ''}>
 
@@ -590,6 +629,7 @@
         {/each}
       </div>
     </div>
+    {/if}
 
     <!-- Bottom Sticky Details HUD Console -->
     {#if selectedSkill}
@@ -639,11 +679,20 @@
           <div class="console-controls">
             
             <div class="global-actions">
-              <Button variant="ghost" onclick={maxAllSkills}>
-                Max All
+              <Button
+                variant={armedAction === 'max' ? 'primary' : 'ghost'}
+                onclick={handleMaxAll}
+                onblur={disarm}
+              >
+                {#if armedAction === 'max'}Confirm Max All?{:else}Max All{/if}
               </Button>
-              <Button variant="danger-outline" onclick={resetAllSkills} disabled={ownedCount === 0}>
-                Reset All
+              <Button
+                variant={armedAction === 'reset' ? 'danger' : 'danger-outline'}
+                onclick={handleResetAll}
+                onblur={disarm}
+                disabled={ownedCount === 0}
+              >
+                {#if armedAction === 'reset'}Confirm Reset?{:else}Reset All{/if}
               </Button>
             </div>
 
@@ -701,6 +750,15 @@
   /* ── Toolbar ────────────────────────────────────────── */
   .toolbar {
     margin-bottom: var(--space-6);
+  }
+
+  .no-results {
+    padding: var(--space-8) var(--space-4);
+    text-align: center;
+    color: var(--text-muted);
+    background: color-mix(in srgb, var(--bg-surface) 55%, transparent);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-lg);
   }
 
   .search-wrap {

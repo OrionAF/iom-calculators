@@ -77,6 +77,71 @@
     stage = 'idle'
     confirmInput = ''
   }
+
+  // ── Backup: export/import of THIS TOOL's data (not the game's) ───────────
+  const BACKUP_MARKER = 'iom-calculators-backup'
+
+  let importError = $state('')
+  let pendingImport = $state<Record<string, string> | null>(null)
+  let fileInput = $state<HTMLInputElement | null>(null)
+
+  function collectToolData(): Record<string, string> {
+    const data: Record<string, string> = {}
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key && key.startsWith(STORAGE_PREFIX)) data[key] = localStorage.getItem(key) ?? ''
+    }
+    return data
+  }
+
+  function exportBackup(): void {
+    const payload = {
+      app: BACKUP_MARKER,
+      exportedAt: new Date().toISOString(),
+      note: 'Backup of IOM Calculators tool data (tracker progress + settings). This is NOT an in-game stat export and cannot be entered into Idle Obelisk Miner.',
+      data: collectToolData(),
+    }
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `iom-calculators-backup-${new Date().toISOString().slice(0, 10)}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  function onImportFile(e: Event): void {
+    importError = ''
+    const input = e.target as HTMLInputElement
+    const file = input.files?.[0]
+    input.value = ''  // allow picking the same file again
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(String(reader.result))
+        if (parsed?.app !== BACKUP_MARKER || typeof parsed.data !== 'object' || parsed.data === null) {
+          importError = "Not an IOM Calculators backup file. (If this is your in-game stat export, paste it in the sidebar instead.)"
+          return
+        }
+        pendingImport = parsed.data as Record<string, string>
+      } catch {
+        importError = 'Could not read that file as JSON.'
+      }
+    }
+    reader.readAsText(file)
+  }
+
+  function applyImport(): void {
+    if (!pendingImport) return
+    scrubStorage(localStorage)
+    for (const [key, value] of Object.entries(pendingImport)) {
+      if (key.startsWith(STORAGE_PREFIX) && typeof value === 'string') {
+        localStorage.setItem(key, value)
+      }
+    }
+    location.reload()
+  }
 </script>
 
 <div class="page">
@@ -121,6 +186,48 @@
       description="Show a tooltip when hovering or tapping a stat effect in the Store. Displays the stat's name, description, and the value this pack adds."
       checked={$settings.statTooltips}
       onchange={setStatTooltips}
+    />
+  </section>
+
+  <section class="backup-zone">
+    <h2 class="backup-title">Backup</h2>
+    <p class="backup-description">
+      Save or restore <strong>this tool's</strong> data — Store and Skill Tree progress, settings,
+      and your loaded stat export. This is not the game's export: the file below cannot be
+      entered into Idle Obelisk Miner, and the in-game EXPORTSTATS code belongs in the sidebar, not here.
+    </p>
+
+    <div class="backup-card">
+      <div class="backup-card-text">
+        <h3 class="backup-card-title">Export tool data</h3>
+        <p class="backup-card-desc">Download a JSON backup of everything IOM Calculators stores in this browser.</p>
+      </div>
+      <Button variant="ghost" onclick={exportBackup}>
+        {#snippet children()}Export…{/snippet}
+      </Button>
+    </div>
+
+    <div class="backup-card">
+      <div class="backup-card-text">
+        <h3 class="backup-card-title">Import tool data</h3>
+        <p class="backup-card-desc">Replace this browser's data with a backup file, then reload the app.</p>
+      </div>
+      <Button variant="ghost" onclick={() => fileInput?.click()} aria-haspopup="dialog">
+        {#snippet children()}Import…{/snippet}
+      </Button>
+    </div>
+
+    {#if importError}
+      <p class="import-error" role="alert">{importError}</p>
+    {/if}
+
+    <input
+      bind:this={fileInput}
+      type="file"
+      accept="application/json,.json"
+      hidden
+      onchange={onImportFile}
+      aria-label="Choose backup file"
     />
   </section>
 
@@ -208,9 +315,98 @@
   {/snippet}
 </Modal>
 
+<Modal
+  open={pendingImport !== null}
+  title="Import backup?"
+  onclose={() => (pendingImport = null)}
+>
+  {#snippet children()}
+    <p>
+      This replaces the tool data currently stored in this browser
+      ({Object.keys(pendingImport ?? {}).length} entries) — Store progress, Skill Tree progress,
+      settings, and your loaded stat export. The app reloads afterwards.
+    </p>
+    <p>This cannot be undone unless you exported a backup first.</p>
+  {/snippet}
+  {#snippet footer()}
+    <Button variant="ghost" onclick={() => (pendingImport = null)}>{#snippet children()}Cancel{/snippet}</Button>
+    <Button variant="primary" onclick={applyImport}>{#snippet children()}Import and reload{/snippet}</Button>
+  {/snippet}
+</Modal>
+
 <style>
+  /* Keep controls readable: settings is a narrow-content page, don't let
+     option cards stretch across ultrawide layouts. */
+  .page {
+    max-width: 760px;
+  }
+
   .settings-section {
     margin-bottom: var(--space-12);
+  }
+
+  /* ── Backup zone ─────────────────────────────────────── */
+  .backup-zone {
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .backup-title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-bottom: var(--space-1);
+  }
+
+  .backup-description {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: var(--leading-base);
+    margin-bottom: var(--space-4);
+  }
+
+  .backup-description strong {
+    color: var(--text-primary);
+  }
+
+  .backup-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .backup-card + .backup-card {
+    margin-top: var(--space-3);
+  }
+
+  .backup-card-text { flex: 1; min-width: 0; }
+
+  .backup-card-title {
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+    color: var(--text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .backup-card-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: var(--leading-base);
+  }
+
+  .import-error {
+    font-size: var(--text-sm);
+    color: var(--error);
+    margin-top: var(--space-3);
   }
 
   /* ── Danger zone ─────────────────────────────────────── */

@@ -17,8 +17,6 @@
         return `Invalid JSON: ${e.message}`
       case 'missing-stats-key':
         return 'Export is missing the "stats" field. Did you paste the right code?'
-      case 'unsupported-version':
-        return `Unsupported export version: ${e.version}`
     }
   }
 
