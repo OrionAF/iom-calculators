@@ -29,7 +29,7 @@ export const droneJuiceDroneSpeed: Source = {
   fn: (a) => a * 0.50, inputs: [],
 }
 
-/** Banana Coffee: Game Speed ×1.20. Duration 2m. (Also grants +0.10% Game Speed per Cephalus Idol level) */
+/** Banana Coffee: Game Speed ×1.20 (wiki: "Mining Speed" = game_speed_multi). Duration 2m. (Also +0.10% Game Speed per Cephalus Idol level via archaeology) */
 export const bananaCoffee: Source = {
   key: 'items.bananaCoffee', name: 'Banana Coffee', system: 'items', type: 'buff', maxLevel: 1,
   fn: (a) => 1 + a * 0.20, inputs: [],
@@ -143,6 +143,11 @@ export const hamburgerBomb: Source = {
 export const yummyPizzaGoldenFloor: Source = {
   key: 'items.yummyPizza', name: 'Yummy Pizza', system: 'items', type: 'buff', maxLevel: 1,
   fn: (a) => 1 + a * 0.15, inputs: [],
+}
+/** Yummy Pizza: All Floor Multi +1% permanent per pizza eaten. Cap +200%. → all_floor_multipliers */
+export const yummyPizzaAllFloorPerm: Source = {
+  key: 'items.yummyPizzaPerm', name: 'Yummy Pizza (permanent)', system: 'items', maxLevel: 200,
+  fn: (n) => n * 0.01, inputs: [],
 }
 
 // ─── Tier 3 Items ─────────────────────────────────────────────────────────────
@@ -267,10 +272,15 @@ export const goldenRainbowLollipopMul: Source = {
   fn: (a) => 1 + a * 5.0, inputs: [],
 }
 
-/** Golden Yummy Pizza: Golden Floor Multi ×1.30. All Floor Multi +1% permanent (cap +250%). Unlocked: World Quest 14. */
+/** Golden Yummy Pizza: Golden Floor Multi ×1.30. Duration 800s. Unlocked: World Quest 14. */
 export const goldenYummyPizzaGoldenFloor: Source = {
   key: 'items.goldenYummyPizza', name: 'Golden Yummy Pizza', system: 'items', type: 'buff', maxLevel: 1,
   fn: (a) => 1 + a * 0.30, inputs: [],
+}
+/** Golden Yummy Pizza: All Floor Multi +1% permanent per pizza eaten. Cap +250%. → all_floor_multipliers */
+export const goldenYummyPizzaAllFloorPerm: Source = {
+  key: 'items.goldenYummyPizzaPerm', name: 'Golden Yummy Pizza (permanent)', system: 'items', maxLevel: 250,
+  fn: (n) => n * 0.01, inputs: [],
 }
 
 /** Golden Lootbug Lantern: Lootbug Spawn Rate ×6.00. Permanently +1 Banked Cap per lantern (cap +50). Unlocked: Fishing – Melting Gibbous Tier 2. */
@@ -304,7 +314,7 @@ export const itemSources = {
   starfruitAllStarMulti, starfruitSupernovaChance,
   lasagnaGoldenOreChance, lasagnaGoldenOreMul,
   iceCreamSuperStarSpawn, rainbowLollipopChance, rainbowLollipopMul,
-  hamburgerPickaxe, hamburgerBomb, yummyPizzaGoldenFloor,
+  hamburgerPickaxe, hamburgerBomb, yummyPizzaGoldenFloor, yummyPizzaAllFloorPerm,
   lootbugLanternSpawn, lootbugLanternPermCap,
   goldFlakeSteakBuff, goldFlakeSteakPerm,
   cosmicCandyBuff, cosmicCandyPerm,
@@ -316,7 +326,7 @@ export const itemSources = {
   goldenHamburgerPickaxe, goldenHamburgerBomb,
   goldenStarfruitAllStarMulti, goldenStarfruitSupernovaChance,
   goldenRainbowLollipopChance, goldenRainbowLollipopMul,
-  goldenYummyPizzaGoldenFloor,
+  goldenYummyPizzaGoldenFloor, goldenYummyPizzaAllFloorPerm,
   goldenLootbugLanternSpawn, goldenLootbugLanternPermCap,
   goldenCosmicCandyBuff, goldenCosmicCandyPerm,
 }
