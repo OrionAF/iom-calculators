@@ -406,7 +406,15 @@ const noticeT1TripleContractChance: Source = {
   inputs: [],
 }
 
-// TODO no registry key: T1 Notice 'Pet Level Up Chance +0.50% per level, max 35'
+/** T1 Notice: Pet Level Up Chance +0.50% per level. Max 35. → pet_levelup_chance_multi */
+const noticeT1PetLevelUp: Source = {
+  key: 'fishing.notice.t1.petLevelUp',
+  name: 'T1 Notice – Pet Level Up Chance',
+  system: 'fishing',
+  maxLevel: 35,
+  fn: (l) => l * 0.005,
+  inputs: [],
+}
 
 /** T1 Notice: Super Star Supernova Multi +4% per level. Max 30. → super_star_supernova_multi */
 const noticeT1SuperStarSupernovaMul: Source = {
@@ -519,7 +527,15 @@ const noticeT2StarSupergiants: Source = {
   inputs: [],
 }
 
-// TODO no registry key: T2 Notice 'Freebie Jackpot Chance +0.1% per level, max 30'
+/** T2 Notice: Freebie Jackpot Chance +0.1% per level. Max 30. → freebie_5x_chance */
+const noticeT2FreebieJackpot: Source = {
+  key: 'fishing.notice.t2.freebieJackpot',
+  name: 'T2 Notice – Freebie Jackpot Chance',
+  system: 'fishing',
+  maxLevel: 30,
+  fn: (l) => l * 0.001,
+  inputs: [],
+}
 
 /**
  * T2 Notice: Lasagna Golden Ore Multi +0.15× per level. Max 30.
@@ -581,6 +597,7 @@ export const fishingSources = {
   noticeT1RainbowFloorChance,
   noticeT1ExpGain,
   noticeT1TripleContractChance,
+  noticeT1PetLevelUp,
   noticeT1SuperStarSupernovaMul,
   noticeT1AllFloorMul,
   noticeT1BombRecharge,
@@ -592,5 +609,6 @@ export const fishingSources = {
   noticeT2ContractChance10x,
   noticeT2CraftChance100x,
   noticeT2StarSupergiants,
+  noticeT2FreebieJackpot,
   noticeT2LasagnaGoldenOreMul,
 } satisfies Record<string, Source>
