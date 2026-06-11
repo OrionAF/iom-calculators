@@ -144,6 +144,16 @@ const superShinyChanceT2: Source = {
   inputs: [],
 }
 
+/** T2 Upgrade 5: Poly Card Multi — adds +0.08 per level to fish polychrome card multiplier. Max 25. → polychrome_card_bonus_fish */
+const polyCardMultiT2: Source = {
+  key: 'fishing.polyCardMultiT2',
+  name: 'Poly Card Multi Upgrade (T2)',
+  system: 'fishing',
+  maxLevel: 25,
+  fn: (l) => l * 0.08,
+  inputs: [],
+}
+
 /** T2 Upgrade 6: Drone Cloner — multiplies total drones ×1.05 per level (compounding). Max 30. */
 const droneCloner: Source = {
   key: 'fishing.droneCloner',
@@ -258,6 +268,19 @@ const droneCapE1C: Source = {
 
 // ─── Tier 2 Enhancements ─────────────────────────────────────────────────────
 
+/**
+ * T2 Enhance 1: Tier 2 Dock Ticks — reduces T2 dock tick requirement by 1 per level. Max 10.
+ * Positive fn per reduction convention. → fishing_abyss_dock_tick_req
+ */
+const tier2DockTicksE2: Source = {
+  key: 'fishing.tier2DockTicksE2',
+  name: 'Tier 2 Dock Ticks Enhancement (T2)',
+  system: 'fishing',
+  maxLevel: 10,
+  fn: (l) => l * 1,
+  inputs: [],
+}
+
 /** T2 Enhance 2: Triple Tick Chance — adds +0.4% (0.004) per level. Max 20. */
 const tripleTickE2: Source = {
   key: 'fishing.tripleTickE2',
@@ -288,6 +311,229 @@ const tier2DockE2: Source = {
   inputs: [],
 }
 
+/** T2 Enhance 5: Poly Card Multi — adds +0.10 per level to fish polychrome card multiplier. Max 20. → polychrome_card_bonus_fish */
+const polyCardMultiE2: Source = {
+  key: 'fishing.polyCardMultiE2',
+  name: 'Poly Card Multi Enhancement (T2)',
+  system: 'fishing',
+  maxLevel: 20,
+  fn: (l) => l * 0.10,
+  inputs: [],
+}
+
+// ─── Tier 1 Notice Upgrades ───────────────────────────────────────────────────
+// Permanent upgrades purchased with fishing notice tokens.
+// Max levels: base max + 15 (5 from T2 notice upgrade cap, 10 from Melting Gibbous T1 tribute).
+// "×N.NNx" descriptions are interpreted as additive +% per level (not compound).
+
+/** T1 Notice: Golden Floor Multiplier +2% per level. Max 40. → golden_floor_multi */
+const noticeT1GoldenFloor: Source = {
+  key: 'fishing.notice.t1.goldenFloor',
+  name: 'T1 Notice – Golden Floor Multi',
+  system: 'fishing',
+  maxLevel: 40,
+  fn: (l) => l * 0.02,
+  inputs: [],
+}
+
+/** T1 Notice: Rainbow Vein Multiplier +5% per level. Max 40. → rainbow_vein_multi */
+const noticeT1RainbowVeinMul: Source = {
+  key: 'fishing.notice.t1.rainbowVeinMul',
+  name: 'T1 Notice – Rainbow Vein Multi',
+  system: 'fishing',
+  maxLevel: 40,
+  fn: (l) => l * 0.05,
+  inputs: [],
+}
+
+/** T1 Notice: Pickaxe & Bomb Damage +15% per level. Max 40. → pickaxe_damage */
+const noticeT1PickaxeDmg: Source = {
+  key: 'fishing.notice.t1.pickaxeDmg',
+  name: 'T1 Notice – Pickaxe Damage',
+  system: 'fishing',
+  maxLevel: 40,
+  fn: (l) => l * 0.15,
+  inputs: [],
+}
+
+/** T1 Notice: Pickaxe & Bomb Damage +15% per level. Max 40. → bomb_damage */
+const noticeT1BombDmg: Source = {
+  key: 'fishing.notice.t1.bombDmg',
+  name: 'T1 Notice – Bomb Damage',
+  system: 'fishing',
+  maxLevel: 40,
+  fn: (l) => l * 0.15,
+  inputs: [],
+}
+
+/** T1 Notice: All Star Multiplier +1% per level. Max 35. → all_star_multi */
+const noticeT1AllStarMul: Source = {
+  key: 'fishing.notice.t1.allStarMul',
+  name: 'T1 Notice – All Star Multi',
+  system: 'fishing',
+  maxLevel: 35,
+  fn: (l) => l * 0.01,
+  inputs: [],
+}
+
+/** T1 Notice: Rainbow Floor Chance +2%. Max 1 (binary). → rainbow_floor_chance */
+const noticeT1RainbowFloorChance: Source = {
+  key: 'fishing.notice.t1.rainbowFloorChance',
+  name: 'T1 Notice – Rainbow Floor Chance',
+  system: 'fishing',
+  maxLevel: 1,
+  fn: (l) => l * 0.02,
+  inputs: [],
+}
+
+/** T1 Notice: Experience Gain +20% per level. Max 45. → experience_multi */
+const noticeT1ExpGain: Source = {
+  key: 'fishing.notice.t1.expGain',
+  name: 'T1 Notice – Experience Gain',
+  system: 'fishing',
+  maxLevel: 45,
+  fn: (l) => l * 0.20,
+  inputs: [],
+}
+
+/** T1 Notice: Triple Contract Point Chance +1% per level. Max 30. → contract_triple_points_chance */
+const noticeT1TripleContractChance: Source = {
+  key: 'fishing.notice.t1.tripleContract',
+  name: 'T1 Notice – Triple Contract Chance',
+  system: 'fishing',
+  maxLevel: 30,
+  fn: (l) => l * 0.01,
+  inputs: [],
+}
+
+// TODO no registry key: T1 Notice 'Pet Level Up Chance +0.50% per level, max 35'
+
+/** T1 Notice: Super Star Supernova Multi +4% per level. Max 30. → super_star_supernova_multi */
+const noticeT1SuperStarSupernovaMul: Source = {
+  key: 'fishing.notice.t1.superStarSupernovaMul',
+  name: 'T1 Notice – Super Star Supernova Multi',
+  system: 'fishing',
+  maxLevel: 30,
+  fn: (l) => l * 0.04,
+  inputs: [],
+}
+
+/** T1 Notice: All Floor Multiplier +20%. Max 1 (binary). → all_floor_multipliers */
+const noticeT1AllFloorMul: Source = {
+  key: 'fishing.notice.t1.allFloorMul',
+  name: 'T1 Notice – All Floor Multi',
+  system: 'fishing',
+  maxLevel: 1,
+  fn: (l) => l * 0.20,
+  inputs: [],
+}
+
+/** T1 Notice: Bomb Recharge Rate +0.5% per level. Max 35. → bomb_recharge_speed */
+const noticeT1BombRecharge: Source = {
+  key: 'fishing.notice.t1.bombRecharge',
+  name: 'T1 Notice – Bomb Recharge Rate',
+  system: 'fishing',
+  maxLevel: 35,
+  fn: (l) => l * 0.005,
+  inputs: [],
+}
+
+/** T1 Notice: Golden Vein Multiplier +4% per level. Max 40. → golden_vein_multi */
+const noticeT1GoldenVeinMul: Source = {
+  key: 'fishing.notice.t1.goldenVeinMul',
+  name: 'T1 Notice – Golden Vein Multi',
+  system: 'fishing',
+  maxLevel: 40,
+  fn: (l) => l * 0.04,
+  inputs: [],
+}
+
+/**
+ * T1 Notice: Star Supernova Multiplier +1× per level. Max 18.
+ * Absolute addition to the supernova multiplier value. → star_supernova_multi
+ */
+const noticeT1StarSupernovaMul: Source = {
+  key: 'fishing.notice.t1.starSupernovaMul',
+  name: 'T1 Notice – Star Supernova Multi',
+  system: 'fishing',
+  maxLevel: 18,
+  fn: (l) => l,
+  inputs: [],
+}
+
+/** T1 Notice: 10× Craft Chance +0.5% per level. Max 25. → craft_10x_chance */
+const noticeT1CraftChance10x: Source = {
+  key: 'fishing.notice.t1.craftChance10x',
+  name: 'T1 Notice – 10x Craft Chance',
+  system: 'fishing',
+  maxLevel: 25,
+  fn: (l) => l * 0.005,
+  inputs: [],
+}
+
+/** T1 Notice: Remove World 3 −30% Game Speed Mod. +30% game speed. Max 1 (binary). → game_speed_multi */
+const noticeT1RemoveW3SpeedMod: Source = {
+  key: 'fishing.notice.t1.removeW3Speed',
+  name: 'T1 Notice – Remove W3 Speed Mod',
+  system: 'fishing',
+  maxLevel: 1,
+  fn: (l) => l * 0.30,
+  inputs: [],
+}
+
+// ─── Tier 2 Notice Upgrades ───────────────────────────────────────────────────
+// Max levels: base max + 5 (from Melting Gibbous Tier 1 Tribute).
+// T2 Notice 'Tier 1 Notice Upgrade Cap' (+1/level, max 10) is meta — no stat key.
+// T2 Notice 'Midas Drone Enhancement' (max 1) is a feature unlock — no stat key.
+
+/** T2 Notice: 10× Contract Point Chance +0.1% per level. Max 30. → contract_10x_points_chance */
+const noticeT2ContractChance10x: Source = {
+  key: 'fishing.notice.t2.contractChance10x',
+  name: 'T2 Notice – 10x Contract Chance',
+  system: 'fishing',
+  maxLevel: 30,
+  fn: (l) => l * 0.001,
+  inputs: [],
+}
+
+// TODO no registry key: T2 Notice 'Veinseeker Grade Cap +1 per level, max 30'
+//   no drone_veinseeker_grade_cap_increase key; drone_chain/frogger/void exist
+
+/** T2 Notice: 100× Craft Chance +0.1% per level. Max 20. → craft_100x_chance */
+const noticeT2CraftChance100x: Source = {
+  key: 'fishing.notice.t2.craftChance100x',
+  name: 'T2 Notice – 100x Craft Chance',
+  system: 'fishing',
+  maxLevel: 20,
+  fn: (l) => l * 0.001,
+  inputs: [],
+}
+
+/** T2 Notice: Star Supergiant Chance +0.2% per level. Max 30. → star_supergiant_chance */
+const noticeT2StarSupergiants: Source = {
+  key: 'fishing.notice.t2.starSupergiants',
+  name: 'T2 Notice – Star Supergiant Chance',
+  system: 'fishing',
+  maxLevel: 30,
+  fn: (l) => l * 0.002,
+  inputs: [],
+}
+
+// TODO no registry key: T2 Notice 'Freebie Jackpot Chance +0.1% per level, max 30'
+
+/**
+ * T2 Notice: Lasagna Golden Ore Multi +0.15× per level. Max 30.
+ * Conditional: only applies when Lasagna item is active. → golden_ore_multi
+ */
+const noticeT2LasagnaGoldenOreMul: Source = {
+  key: 'fishing.notice.t2.lasagnaGoldenOre',
+  name: 'T2 Notice – Lasagna Golden Ore Multi',
+  system: 'fishing',
+  maxLevel: 30,
+  fn: (l) => l * 0.15,
+  inputs: [],
+}
+
 // ─── Export ───────────────────────────────────────────────────────────────────
 
 export const fishingSources = {
@@ -307,6 +553,7 @@ export const fishingSources = {
   shinyMultiT2,
   tier2DockT2,
   superShinyChanceT2,
+  polyCardMultiT2,
   droneCloner,
   // T1 Enhancements
   fishMultiE1,
@@ -320,7 +567,30 @@ export const fishingSources = {
   shinyMultiE1,
   droneCapE1C,
   // T2 Enhancements
+  tier2DockTicksE2,
   tripleTickE2,
   superShinyMultiE2,
   tier2DockE2,
+  polyCardMultiE2,
+  // T1 Notice Upgrades
+  noticeT1GoldenFloor,
+  noticeT1RainbowVeinMul,
+  noticeT1PickaxeDmg,
+  noticeT1BombDmg,
+  noticeT1AllStarMul,
+  noticeT1RainbowFloorChance,
+  noticeT1ExpGain,
+  noticeT1TripleContractChance,
+  noticeT1SuperStarSupernovaMul,
+  noticeT1AllFloorMul,
+  noticeT1BombRecharge,
+  noticeT1GoldenVeinMul,
+  noticeT1StarSupernovaMul,
+  noticeT1CraftChance10x,
+  noticeT1RemoveW3SpeedMod,
+  // T2 Notice Upgrades
+  noticeT2ContractChance10x,
+  noticeT2CraftChance100x,
+  noticeT2StarSupergiants,
+  noticeT2LasagnaGoldenOreMul,
 } satisfies Record<string, Source>
