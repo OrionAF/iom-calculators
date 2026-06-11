@@ -1238,7 +1238,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Fishing Rod Power',
     description: 'The fishing power of your fishing rod',
     icon: 'Fishing_Rod_Power.png',
-    base: 1,
+    base: 10,
     category: 'fishing',
   },
   fishing_drone_capacity: {
@@ -1246,6 +1246,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     description: 'The number of Fishing Drones you have available to assign to docks.',
     icon: 'Fishing_Drone_Capacity.png',
     unit: 'count',
+    base: 0,
     category: 'fishing',
   },
   fishing_drone_power: {
@@ -1341,7 +1342,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     description: 'The multiplier on fish caught when a catch is shiny. (Base: 3x)',
     icon: 'Shiny_Multiplier.png',
     unit: 'multiplier',
-    base: 3,
+    base: 5,
     category: 'fishing',
   },
   fishing_super_shiny_chance: {
@@ -1356,7 +1357,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     description: 'The multiplier on fish caught when a shiny catch is super shiny. (Base: 2x)',
     icon: 'Super_Shiny_Multiplier.png',
     unit: 'multiplier',
-    base: 2,
+    base: 3,
     category: 'fishing',
   },
   fishing_tick_speed: {

@@ -10,6 +10,7 @@ import { constructSources as con } from '$lib/sources/construct'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { challengeSources as ch } from '$lib/sources/challenges'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { workshopSources as ws } from '$lib/sources/workshop'
 
 // Placeholder for contributions whose per-level values are not yet known.
 // Marked unknown: true so the engine skips them and the UI flags them.
@@ -30,12 +31,12 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_rod_power: {
     contributions: [
-      { source: f.rodBase,          op: '×' },
-      { source: f.rodMultiT1,       op: '×' },
-      { source: f.rodMultiE1,       op: '×' },
-      { source: sk.motleySchoolRod, op: '×' },
-      { source: UNKNOWN,            op: '+', unknown: true },  // Half Way Bundle (Store)
-      { source: card.cardFishingRod,  op: '×' },
+      { source: f.rodBase,              op: '×' },
+      { source: f.rodMultiT1,           op: '×' },
+      { source: f.rodMultiE1,           op: '×' },
+      { source: sk.motleySchoolRod,     op: '×' },
+      { source: st.vpHalfWayFishingRod, op: '+' },
+      { source: card.cardFishingRod,    op: '×' },
     ],
   },
 
@@ -82,7 +83,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: sk.fishingWithFriendsDronePower,       op: '+' },
       { source: sk.completionistGatekeeperDronePower,  op: '+' },
       { source: arch.idolTethysDronePower,    op: '+' },
-      { source: UNKNOWN,                              op: '+', unknown: true },  // Workshop World 3 Upgrade
+      { source: ws.wsDronePowerW3,           op: '+' },
     ],
   },
 
