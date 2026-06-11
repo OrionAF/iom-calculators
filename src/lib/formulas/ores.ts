@@ -12,6 +12,7 @@ import { challengeSources as ch } from '$lib/sources/challenges'
 import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
@@ -27,7 +28,8 @@ export const oresFormulas = {
       { source: pet.petNaginiAllFloorMul,          op: '+' },
       { source: sg.starEridanusAllFloor,           op: '+' },
       { source: f.noticeT1AllFloorMul,             op: '+' },
-      { source: U, op: '+', unknown: true },    // Upgrades: Mithril Bar
+      { source: up.upgrTripleRockChance,         op: '+' },
+
     ],
   },
   ore_sell_price_multi: {
@@ -43,7 +45,10 @@ export const oresFormulas = {
       { source: card.cardJulk,                  op: '×' },
       { source: st.gemOreSellPrice,             op: '×' },
       { source: st.vpBallerOreSell,             op: '×' },
-      { source: U, op: '+', unknown: true },    // Pets (Penguin skin) + Contracts + Skins
+      { source: up.upgrOreSellPrice,             op: '+' },
+      { source: up.upgrGalacticFloorChance1,    op: '+' },
+      { source: up.upgrGalacticFloorChance2,    op: '+' },
+    // Pets skin + Skins
     ],
   },
   ore_income_multi: {
@@ -82,7 +87,8 @@ export const oresFormulas = {
       { source: st.vpGoldenOreMul,             op: '×' },
       { source: sg.starHerculesGoldenOreMul,   op: '+' },
       { source: sg.ssGoldenOreMul,             op: '+' },
-      { source: U, op: '+', unknown: true },   // Store + Upgrades
+      { source: up.upgrGoldenOreMul,            op: '+' },
+
     ],
   },
   golden_floor_chance: {
@@ -110,7 +116,8 @@ export const oresFormulas = {
       { source: st.vpProgressionGoldenFloor,        op: '×' },
       { source: sg.starGeminiGoldenFloor,      op: '×' },
       { source: f.noticeT1GoldenFloor,         op: '+' },
-      { source: U, op: '+', unknown: true },        // Drones (fueled Chain) + Items (Eye of Newt+Iris) + Upgrades
+      { source: up.upgrGoldenFloorMul,          op: '+' },
+      { source: U, op: '+', unknown: true },        // Drones (fueled Chain) + Items (Eye of Newt+Iris)
     ],
   },
   rainbow_floor_chance: {
@@ -144,7 +151,8 @@ export const oresFormulas = {
       { source: card.cardWorld2,                    op: '×' },
       { source: st.vpHalfWayRainbowFloorMul,        op: '×' },
       { source: sg.starPiscesRainbowFloor,          op: '+' },
-      { source: U, op: '+', unknown: true },        // Relics + Upgrades
+      { source: up.upgrRainbowFloorMul,         op: '+' },
+
     ],
   },
   galactic_floor_chance: {
@@ -178,7 +186,8 @@ export const oresFormulas = {
     base: 0,
     contributions: [
       { source: con.staCrochetPrismaticFloor,  op: '+' },
-      { source: U, op: '+', unknown: true },   // Fueled Prism (temp), Cards, Upgrades, WQ8
+      { source: up.upgrPrismaticFloorChance,    op: '+' },
+      { source: U, op: '+', unknown: true },   // Fueled Prism (temp), WQ8
     ],
   },
   prismatic_floor_multi: {
@@ -188,7 +197,8 @@ export const oresFormulas = {
       { source: con.staFallacyPrismaticMul,         op: '+' },
       { source: arch.idolMnemosyne,                 op: '+' },
       { source: ct.ctPrismaticFloorMul,             op: '+' },
-      { source: U, op: '+', unknown: true },   // Fueled Prism (temp), Upgrades
+      { source: up.upgrPrismaticFloorMul,       op: '+' },
+      { source: U, op: '+', unknown: true },   // Fueled Prism (temp)
     ],
   },
   pizzas_eaten:          { base: 0, contributions: [] },
@@ -199,6 +209,29 @@ export const oresFormulas = {
       { source: con.staSopranoAllFloors,  op: '+' },
       { source: card.cardWorld4,          op: '×' },
       { source: card.cardYummyPizza,      op: '×' },
+      { source: U, op: '+', unknown: true },
+    ],
+  },
+
+  polychrome_card_bonus_ore: {
+    base: 0,
+    contributions: [
+      { source: up.upgrPolychromeOreCardMulti, op: '×' },
+      { source: pet.petHappyBotQuestPolyOre,   op: '+' },
+      { source: U, op: '+', unknown: true },   // Stargazing: Cetus poly card, Cards
+    ],
+  },
+  polychrome_card_bonus_star: {
+    base: 0,
+    contributions: [
+      { source: pet.petHappyBotQuestPolyStar,  op: '+' },
+      { source: U, op: '+', unknown: true },
+    ],
+  },
+  polychrome_card_bonus_vein: {
+    base: 0,
+    contributions: [
+      { source: pet.petHappyBotQuestPolyVein,  op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },

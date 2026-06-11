@@ -12,6 +12,7 @@ import { cardSources as card } from '$lib/sources/cards'
 import { challengeSources as ch } from '$lib/sources/challenges'
 import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
@@ -72,14 +73,32 @@ export const pickaxeFormulas = {
       { source: sg.starScorpioPickaxeDmg,             op: '+' },
       // ── Fishing ──────────────────────────────────────────────────────────────
       { source: f.noticeT1PickaxeDmg,                op: '+' },
-      { source: U, op: '+', unknown: true },  // Upgrades: base + many bars
+      // ── Upgrades ─────────────────────────────────────────────────────────
+      { source: up.upgrUpgradePickaxe,            op: '+' },
+      { source: up.upgrPickaxeDmg1,               op: '+' },
+      { source: up.upgrPickaxeDmg2,               op: '+' },
+      { source: up.upgrPickaxeDmg3,               op: '+' },
+      { source: up.upgrPickaxeDmg4,               op: '+' },
+      { source: up.upgrPickaxeDmg5,               op: '+' },
+      { source: up.upgrPickaxeDmgPerCard,          op: '+' },
+      { source: up.upgrPickaxeDmgPerStatue1,       op: '+' },
+      { source: up.upgrPickaxeDmgPerStatue2,       op: '+' },
+      { source: up.upgrPickaxeDmgPerPolyCard,      op: '+' },
+      { source: up.upgrPickaxeDmgMul1,             op: '×' },
+      { source: up.upgrPickaxeDmgMul2,             op: '×' },
+      { source: up.upgrPickaxeDmgMul3,             op: '×' },
+      { source: up.upgrPickaxeAndBombDmgW3,        op: '×' },
+      { source: up.upgrPickaxeAndBombDmgW4,        op: '×' },
+
     ],
   },
   pickaxe_attack_speed_per_second: {
     base: 0,
     contributions: [
       { source: it.bananaCoffee,  op: '×' },
-      { source: U, op: '+', unknown: true },  // Upgrades: Gold + VR-ERROR
+      { source: up.upgrAttackSpeed1,               op: '+' },
+      { source: up.upgrAttackSpeed2,               op: '+' },
+
     ],
   },
   pickaxe_radius_percent: {
@@ -88,7 +107,8 @@ export const pickaxeFormulas = {
       { source: sk.superDamageRadius,     op: '+' },
       { source: it.bread,                 op: '×' },
       { source: art.artPickaxeRadiusT1,   op: '+' },
-      { source: U, op: '+', unknown: true },  // Upgrades
+      { source: up.upgrPickaxeRadius,              op: '+' },
+
     ],
   },
   pickaxe_crit_chance: {
@@ -97,7 +117,10 @@ export const pickaxeFormulas = {
       { source: sk.luckyStrikesCritChance,   op: '+' },
       { source: it.apple,                    op: '+' },
       { source: it.juicyPlumsCritChance,     op: '+' },
-      { source: U, op: '+', unknown: true },  // Upgrades: Tin Pickaxe + Crit Chance + Halium
+      { source: up.upgrCritChance1,               op: '+' },
+      { source: up.upgrCritChance2,               op: '+' },
+      { source: up.upgrCritChance3,               op: '+' },
+
     ],
   },
   pickaxe_crit_damage: {
@@ -108,7 +131,9 @@ export const pickaxeFormulas = {
       { source: it.pike,                     op: '+' },
       { source: it.juicyPlumsCritDamage,     op: '+' },
       { source: ct.ctPickaxeCritDmg,         op: '+' },
-      { source: U, op: '+', unknown: true },  // Relics + Upgrades
+      { source: up.upgrCritDmg1,                  op: '+' },
+      { source: up.upgrCritDmg2,                  op: '+' },
+
     ],
   },
   pickaxe_super_crit_chance: {
@@ -119,14 +144,16 @@ export const pickaxeFormulas = {
       { source: ct.ctPickaxeSuperCrit,           op: '+' },
       { source: ch.chPickaxeSuperCritChance,     op: '+' },
       { source: ch.chPickaxeBombSuperCrit,       op: '+' },
-      { source: U, op: '+', unknown: true },  // Items (Rock Cake + Cassandra Idol)
+      { source: up.upgrSuperCritChance1,          op: '+' },
+      { source: up.upgrSuperCritChance2,          op: '+' },
+
     ],
   },
-  pickaxe_super_crit_damage: {
+    pickaxe_super_crit_damage: {
     base: 0,
     contributions: [
-      { source: ct.ctPickaxeDmgPerContract,    op: '+' },  // note: also applies here per wiki
-      { source: U, op: '+', unknown: true },
+      { source: ct.ctPickaxeDmgPerContract,        op: '+' },
+      { source: up.upgrSuperCritDmg,               op: '+' },
     ],
   },
   pickaxe_ultra_crit_chance: {
@@ -136,7 +163,9 @@ export const pickaxeFormulas = {
       { source: sk.tonsOfDamageUltraCrit,      op: '+' },
       { source: pet.petDwarfUltraCrit,         op: '+' },
       { source: ct.ctUltraCritChance,          op: '+' },
-      { source: U, op: '+', unknown: true },  // Items + Construct + Upgrades
+      { source: up.upgrUltraCritChance1,          op: '+' },
+      { source: up.upgrUltraCritChance2,          op: '+' },
+
     ],
   },
   pickaxe_ultra_crit_damage: { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
@@ -146,7 +175,8 @@ export const pickaxeFormulas = {
       { source: sk.waitMyUltraCritsCanCritOmega, op: '+' },
       { source: art.artOmegaCritT4,              op: '+' },
       { source: ct.ctOmegaCritChance,            op: '+' },
-      { source: U, op: '+', unknown: true },  // Upgrades
+      { source: up.upgrOmegaCritChance,           op: '+' },
+
     ],
   },
   pickaxe_omega_crit_damage: { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },

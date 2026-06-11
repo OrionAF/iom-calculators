@@ -9,6 +9,7 @@ import { petSources as pet } from '$lib/sources/pets'
 import { challengeSources as ch } from '$lib/sources/challenges'
 import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
@@ -27,7 +28,8 @@ export const craftingFormulas = {
       { source: sk.oreEfficiencyDoubleCraft,     op: '+' },
       { source: pet.petAxolotlDoubleCraft,       op: '+' },
       { source: ch.chDoubleCraft,                op: '+' },
-      { source: U, op: '+', unknown: true },     // Pets + Upgrades
+      { source: up.upgrDoubleCraftChance,         op: '+' },
+
     ],
   },
   triple_craft_chance: {
@@ -36,7 +38,8 @@ export const craftingFormulas = {
       { source: sk.heftyHammersTripleCraft,      op: '+' },
       { source: art.artTripleCraftT1,            op: '+' },
       { source: ct.ctTripleCraft,                op: '+' },
-      { source: U, op: '+', unknown: true },     // Prestige + Upgrades + Contracts
+      { source: up.upgrTripleCraftChance,         op: '+' },
+
     ],
   },
   craft_5x_chance: {
@@ -54,7 +57,8 @@ export const craftingFormulas = {
       { source: st.founderCraft10x,              op: '+' },
       { source: st.vpCraftmaster10xCraft,        op: '+' },
       { source: f.noticeT1CraftChance10x,        op: '+' },
-      { source: U, op: '+', unknown: true },     // Upgrades
+      { source: up.upgrCraft10xChance,            op: '+' },
+
     ],
   },
   craft_20x_chance: {
@@ -71,7 +75,8 @@ export const craftingFormulas = {
       { source: st.vpCraftmaster100xCraft,       op: '+' },
       { source: sg.starOrionCraft100x,           op: '+' },
       { source: f.noticeT2CraftChance100x,       op: '+' },
-      { source: U, op: '+', unknown: true },     // Upgrades
+      { source: up.upgrCraft100xChance,           op: '+' },
+
     ],
   },
   bar_output_multi: {
@@ -79,6 +84,7 @@ export const craftingFormulas = {
     contributions: [
       { source: art.artBarOutputT4,              op: '+' },
       { source: st.perkBarOutput,                op: '×' },
+      { source: up.upgrBarOutputMul,              op: '+' },
       { source: U, op: '×', unknown: true },     // Cards
     ],
   },

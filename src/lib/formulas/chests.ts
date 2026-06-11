@@ -8,6 +8,7 @@ import { fishingSources as f } from '$lib/sources/fishing'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { petSources as pet } from '$lib/sources/pets'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'store', fn: () => 0, inputs: [] }
 
@@ -19,7 +20,8 @@ export const chestsFormulas = {
       { source: sk.haveYouTriedGettingLuckierChestMeter, op: '×' },
       { source: st.gemChestMeter,                        op: '×' },
       { source: sg.starEridanusSuperStonks,      op: '+' },
-      { source: U, op: '+', unknown: true },             // Upgrades
+      { source: up.upgrMeterFillRate,            op: '+' },
+
     ],
   },
   chest_items_bonus: {
@@ -88,7 +90,8 @@ export const chestsFormulas = {
       { source: sk.justWaitFasterCooldown,   op: '+' },
       { source: sk.freeThatsGreatCooldown,   op: '+' },
       { source: con.staEastwoodFreebieTimer,     op: '+' },
-      { source: U, op: '+', unknown: true }, // Store Founder + Cards + Upgrades
+      { source: up.upgrFreebieCooldown,          op: '+' },
+      { source: U, op: '+', unknown: true }, // Store Founder + Cards
     ],
   },
   stonks_chance: {
@@ -115,7 +118,8 @@ export const chestsFormulas = {
       { source: card.cardSuperStonks,            op: '+' },
       { source: ch.chSuperStonksChance,          op: '+' },
       { source: st.vpChiefExecSuperStonksChance, op: '+' },
-      { source: U, op: '+', unknown: true },
+      { source: up.upgrSuperStonksChance,        op: '+' },
+
     ],
   },
   super_stonks_multi: {

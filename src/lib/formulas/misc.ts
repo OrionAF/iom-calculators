@@ -11,6 +11,7 @@ import { cardSources as card } from '$lib/sources/cards'
 import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'store', fn: () => 0, inputs: [] }
 
@@ -26,7 +27,8 @@ export const miscFormulas = {
       { source: st.vpGottaGoFastGameSpeed,        op: '+' },
       { source: sg.ssGameSpeed,                op: '+' },
       { source: f.noticeT1RemoveW3SpeedMod,    op: '+' },
-      { source: U, op: '+', unknown: true },      // Upgrades + Skins + Floors (ores)
+      { source: up.upgrGameSpeed,                 op: '+' },
+      { source: U, op: '+', unknown: true },      // Skins + Floors (ores)
     ],
   },
   item_duration_multi: {
@@ -56,7 +58,8 @@ export const miscFormulas = {
       { source: con.staFelinePetLevelup,                 op: '+' },
       { source: st.vpPetTrainerPetLevel,                 op: '×' },
       { source: f.noticeT1PetLevelUp,          op: '+' },
-      { source: U, op: '+', unknown: true },      // Store + Upgrades + Skins
+      { source: up.upgrPetLevelChance,            op: '+' },
+      { source: U, op: '+', unknown: true },      // Store + Skins
     ],
   },
 } satisfies FormulaMap

@@ -13,6 +13,7 @@ import { droneSources as drone } from '$lib/sources/drones'
 import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { challengeSources as ch } from '$lib/sources/challenges'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
@@ -58,7 +59,15 @@ export const bombsFormulas = {
       { source: drone.droneSuitBearUpgrade,    op: '+' },
       // ── Fishing ──────────────────────────────────────────────────────────
       { source: f.noticeT1BombDmg,             op: '+' },
-      { source: U, op: '+', unknown: true },   // Upgrades
+      { source: up.upgrBombDmg1,               op: '+' },
+      { source: up.upgrBombDmg2,               op: '+' },
+      { source: up.upgrBombDmg3,               op: '+' },
+      { source: up.upgrBombDmgMul1,            op: '×' },
+      { source: up.upgrBombDmgMul2,            op: '×' },
+      { source: up.upgrBombDmgMul3,            op: '×' },
+      { source: up.upgrPickaxeAndBombDmgW3,    op: '×' },
+      { source: up.upgrPickaxeAndBombDmgW4,    op: '×' },
+
     ],
   },
   bomb_crit_chance: {
@@ -73,8 +82,10 @@ export const bombsFormulas = {
     base: 0,
     contributions: [
       { source: rel.commonRelicBombCritDamage, op: '+' },
-      { source: art.artBombDmgT1,              op: '+' },  // wiki: also adds to crit dmg
-      { source: U, op: '+', unknown: true },   // Challenges + Upgrades + Fishing
+      { source: art.artBombDmgT1,              op: '+' },
+      { source: ch.chBombCritDmg,              op: '+' },
+      { source: up.upgrBombCritDmg1,           op: '+' },
+      { source: up.upgrBombCritDmg2,           op: '+' },
     ],
   },
   bomb_recharge_speed: {
@@ -92,7 +103,8 @@ export const bombsFormulas = {
       { source: st.vpBomberBombRecharge,             op: '×' },
       { source: sg.starVirgoRecharge,               op: '+' },
       { source: f.noticeT1BombRecharge,              op: '+' },
-      { source: U, op: '+', unknown: true },         // Drones Elixir + Lootbugs + Upgrades
+      { source: up.upgrBombRechargeRate,            op: '+' },
+      { source: U, op: '+', unknown: true },         // Drones Elixir + Lootbugs
     ],
   },
   bomb_free_chance: {
@@ -100,7 +112,7 @@ export const bombsFormulas = {
     contributions: [
       { source: sk.arsenalAdvancementFreeBomb, op: '+' },
       { source: sk.demolitionExpertFreeBomb,   op: '+' },
-      { source: U, op: '+', unknown: true },   // Upgrades: Gold level 36
+      { source: up.upgrFreeBombChance,          op: '+' },
     ],
   },
   bomb_capacity: {
@@ -144,11 +156,19 @@ export const bombsFormulas = {
       { source: ct.ctUltraCritChance,              op: '+' },
       { source: ch.chBombUltraCritRegular,      op: '+' },
       { source: ch.chBombUltraCritExtreme,     op: '+' },
-      { source: U, op: '+', unknown: true },   // Upgrades
+      { source: up.upgrBombUltraCrit1,          op: '+' },
+      { source: up.upgrBombUltraCrit2,          op: '+' },
+
     ],
   },
   bomb_ultra_crit_damage:    { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
-  bomb_omega_crit_chance:    { base: 0, contributions: [{ source: ct.ctOmegaCritChance, op: '+' }, { source: U, op: '+', unknown: true }] },
+  bomb_omega_crit_chance: {
+    base: 0,
+    contributions: [
+      { source: ct.ctOmegaCritChance,           op: '+' },
+      { source: up.upgrBombOmegaCrit,            op: '+' },
+    ],
+  },
   bomb_omega_crit_damage:    { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
   bomb_cherry3x_chance:      { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
   bomb_battery_cap_increases:{ base: 0, contributions: [{ source: U, op: '+', unknown: true }] },

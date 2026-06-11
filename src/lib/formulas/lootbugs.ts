@@ -8,6 +8,7 @@ import { cardSources as card } from '$lib/sources/cards'
 import { challengeSources as ch } from '$lib/sources/challenges'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'store', fn: () => 0, inputs: [] }
 
@@ -21,7 +22,8 @@ export const lootbugsFormulas = {
       { source: ch.chLootbugSpawn,             op: '+' },
       { source: sg.starSagittariusLootbugSpawn, op: '+' },
       { source: arch.idolEros,                 op: '+' },
-      { source: U, op: '+', unknown: true }, // Drones fueled Bear (temp) + Cards + Upgrades
+      { source: up.upgrLootbugSpawnRate,       op: '+' },
+      { source: U, op: '+', unknown: true }, // Drones fueled Bear (temp) + Cards
     ],
   },
   lootbug_triple_chance: {

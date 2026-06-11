@@ -8,6 +8,7 @@ import { droneSources as drone } from '$lib/sources/drones'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { constructSources as con } from '$lib/sources/construct'
 import { petSources as pet } from '$lib/sources/pets'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'drones', fn: () => 0, inputs: [] }
 
@@ -52,7 +53,8 @@ export const dronesFormulas = {
       { source: drone.coalFuelDuration,        op: '+' },
       { source: pet.petAxolotlSkinFuelDuration, op: '+' },
       { source: con.staAppetiteFuelDuration,   op: '+' },
-      { source: U, op: '+', unknown: true },         // Upgrades
+      { source: up.upgrFuelDuration,            op: '+' },
+
     ],
   },
   coal_capacity_multi: {
@@ -67,6 +69,7 @@ export const dronesFormulas = {
     base: 0,
     contributions: [
       { source: drone.coalFuelSave,            op: '+' },
+      { source: up.upgrFuelSaveChance,          op: '+' },
       { source: U, op: '+', unknown: true },   // Upgrades
     ],
   },
@@ -116,6 +119,7 @@ export const dronesFormulas = {
       { source: pet.petNaginiQuestGoldenVoidMul,     op: '+' },
       { source: st.vpVoidOverdriveGoldenPortalMul,   op: '×' },
       { source: arch.idolThemis,               op: '+' },
+      { source: up.upgrGoldenVoidChance,         op: '+' },
       { source: U, op: '+', unknown: true },         // Fishing Dune's Eelworm T2
     ],
   },
@@ -133,6 +137,7 @@ export const dronesFormulas = {
     base: 5,
     contributions: [
       { source: arch.idolCronusPortalMulUnlock, op: '+' },
+      { source: up.upgrRainbowVoidMul,          op: '+' },
       { source: U, op: '+', unknown: true },   // Cards Butterfly Pet, Upgrades
     ],
   },

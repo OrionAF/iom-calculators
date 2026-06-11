@@ -8,6 +8,7 @@ import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { constructSources as con } from '$lib/sources/construct'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { challengeSources as ch } from '$lib/sources/challenges'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 // Placeholder for contributions whose per-level values are not yet known.
 // Marked unknown: true so the engine skips them and the UI flags them.
@@ -67,7 +68,8 @@ export const fishingFormulas = {
       { source: f.droneBaseT1, op: '+' },
       { source: arch.idolPoseidon,         op: '+' },
       { source: arch.idolAres,             op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true },  // Dynamite Bar Upgrade
+      { source: up.upgrFishingDronePower,       op: '+' },
+
     ],
   },
 

@@ -12,6 +12,7 @@ import { droneSources as drone } from '$lib/sources/drones'
 import { fishingSources as f } from '$lib/sources/fishing'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { constructSources as con } from '$lib/sources/construct'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const UNKNOWN: Source = {
   key: '_unknown',
@@ -123,7 +124,8 @@ export const starsFormulas = {
       { source: sg.super10xChance,             op: '+' },
       { source: sk.ctrlCCtrlVStarsSuper10x,   op: '+' },
       { source: pet.petStarfishSuper10xChance, op: '+' },
-      { source: UNKNOWN,                       op: '+', unknown: true },  // Store + Fishing + Upgrades
+      { source: up.upgrSuperStar10xChance,     op: '+' },
+      { source: UNKNOWN,                       op: '+', unknown: true },  // Store + Fishing
     ],
   },
 
@@ -210,7 +212,8 @@ export const starsFormulas = {
       { source: ch.chStarSupergiants,          op: '+' },
       { source: ct.ctStarSupergiants,          op: '+' },
       { source: f.noticeT2StarSupergiants,     op: '+' },
-      { source: UNKNOWN,                        op: '+', unknown: true },  // Store + Upgrades
+      { source: up.upgrStarSupergiantChance,   op: '+' },
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Store
     ],
   },
 
@@ -224,7 +227,8 @@ export const starsFormulas = {
       { source: sg.supergigantsMulti, op: '+' },
       { source: con.staWarmthStarSupergiants,  op: '+' },
       { source: arch.idolHyperion,             op: '+' },
-      { source: UNKNOWN,              op: '+', unknown: true },  // Store + Cards + Upgrades
+      { source: up.upgrStarSupergiantMul,      op: '+' },
+      { source: UNKNOWN,              op: '+', unknown: true },  // Store + Cards
     ],
   },
 
@@ -250,6 +254,7 @@ export const starsFormulas = {
     base: 3,
     contributions: [
       { source: con.staWarmthSuperStarSupergiants, op: '+' },
+      { source: up.upgrSuperStarSupergiantMul, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true },
     ],
   },

@@ -9,6 +9,7 @@ import { challengeSources as ch } from '$lib/sources/challenges'
 import { constructSources as con } from '$lib/sources/construct'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { droneSources as drone } from '$lib/sources/drones'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'store', fn: () => 0, inputs: [] }
 
@@ -29,7 +30,8 @@ export const lootfrogsFormulas = {
     contributions: [
       { source: ws.wsLootfrogLootW4,              op: '+' },
       { source: st.vpFrogFrenzyLootfrogMul,       op: '×' },
-      { source: U, op: '+', unknown: true },      // Workshop + Cards + Upgrades
+      { source: up.upgrLootfrogLootMul,           op: '+' },
+      { source: U, op: '+', unknown: true },      // Workshop + Cards
     ],
   },
   lootfrog_golden_chance: {

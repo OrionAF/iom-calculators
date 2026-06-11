@@ -5,6 +5,7 @@ import { petSources as pet } from '$lib/sources/pets'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
@@ -28,7 +29,8 @@ export const contractsFormulas = {
       { source: sk.whosAskingTripleContract, op: '+' },
       { source: con.staAffluenceTripleContract, op: '+' },
       { source: f.noticeT1TripleContractChance, op: '+' },
-      { source: U, op: '+', unknown: true },  // Upgrades + Skins
+      { source: up.upgrTripleContractChance,   op: '+' },
+      { source: U, op: '+', unknown: true },  // Skins
     ],
   },
   contract_5x_points_chance: {

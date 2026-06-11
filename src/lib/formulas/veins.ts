@@ -13,6 +13,7 @@ import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { droneSources as drone } from '$lib/sources/drones'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
@@ -41,7 +42,8 @@ export const veinsFormulas = {
       { source: st.vpVeinExtractorVeinIncome,      op: '×' },
       { source: st.vpProgressionVeinIncome,        op: '×' },
       { source: arch.idolChione,               op: '+' },
-      { source: U, op: '+', unknown: true },  // Cards + Upgrades + Floors
+      { source: up.upgrVeinIncomeMul,          op: '+' },
+      { source: U, op: '+', unknown: true },  // Cards + Floors
     ],
   },
   golden_vein_chance: {
@@ -51,7 +53,8 @@ export const veinsFormulas = {
       { source: pet.petTotemGoldenVeinChance,      op: '+' },
       { source: ct.ctGoldenVeinChance,             op: '+' },
       { source: st.vpVeinExtractorGoldenVeinChance, op: '+' },
-      { source: U, op: '+', unknown: true },   // Pets + Construct + Stargazing + Upgrades + Contracts
+      { source: up.upgrGoldenVeinChance,        op: '+' },
+      { source: U, op: '+', unknown: true },   // Pets + Stargazing
     ],
   },
   golden_vein_multi: {
@@ -67,7 +70,8 @@ export const veinsFormulas = {
       { source: st.vpVeinExtractorGoldenVeinMul,   op: '×' },
       { source: sg.starAriesGoldenVein,         op: '+' },
       { source: f.noticeT1GoldenVeinMul,        op: '+' },
-      { source: U, op: '+', unknown: true },   // Drones fueled Veinseeker (temp) + Upgrades
+      { source: up.upgrGoldenVeinMul,           op: '+' },
+      { source: U, op: '+', unknown: true },   // Drones fueled Veinseeker (temp)
     ],
   },
   rainbow_vein_chance: {
@@ -79,7 +83,8 @@ export const veinsFormulas = {
       { source: con.staRandomnessRainbowVein,  op: '+' },
       { source: con.staNatureRainbowVein,      op: '+' },
       { source: sg.ssRainbowVeinChance,        op: '+' },
-      { source: U, op: '+', unknown: true },   // Store + Upgrades + Floors WQ16
+      { source: up.upgrRainbowVeinChance,       op: '+' },
+      { source: U, op: '+', unknown: true },   // Store + Floors WQ16
     ],
   },
   rainbow_vein_multi: {
@@ -88,7 +93,8 @@ export const veinsFormulas = {
       { source: sk.insaneInTheVeinGainRainbowVein, op: '+' },
       { source: card.cardRainbowVein,              op: '×' },
       { source: f.noticeT1RainbowVeinMul,      op: '+' },
-      { source: U, op: '+', unknown: true },   // Cards + Upgrades
+      { source: up.upgrRainbowVeinMul,          op: '+' },
+
     ],
   },
   gleaming_vein_chance: {

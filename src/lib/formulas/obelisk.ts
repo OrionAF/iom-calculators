@@ -3,6 +3,7 @@ import type { FormulaMap, Source } from '$lib/engine/types'
 import { artifactSources as art } from '$lib/sources/artifacts'
 import { challengeSources as ch } from '$lib/sources/challenges'
 import { petSources as pet } from '$lib/sources/pets'
+import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'prestige', fn: () => 0, inputs: [] }
 
@@ -22,7 +23,8 @@ export const obeliskFormulas = {
       { source: art.artObeliskArmorT3,         op: '+' },
       { source: ch.chObeliskArmor,             op: '+' },
       { source: pet.petDuckSkinObeliskArmor,   op: '+' },
-      { source: U, op: '+', unknown: true },   // Upgrades: Angelite Bar
+      { source: up.upgrObeliskArmor,           op: '+' },
+
     ],
   },
 } satisfies FormulaMap
