@@ -3,7 +3,7 @@ import type { Notation } from '$lib/format'
 
 export type ValueDisplayMode = 'notation' | 'raw'
 export type FontScale = 'small' | 'normal' | 'large' | 'xlarge'
-export type Density   = 'compact' | 'normal' | 'spacious' | 'super-spacious'
+export type Density = 'compact' | 'normal' | 'spacious' | 'super-spacious'
 
 export interface Settings {
   notation: Notation
@@ -39,42 +39,40 @@ function isValidStatTooltips(v: unknown): v is boolean {
   return v === true || v === false
 }
 
-const _settings = persistedStore<Settings>(
-  STORAGE_KEY,
-  DEFAULTS,
-  (parsed) => {
-    if (parsed === null || typeof parsed !== 'object') return { ...DEFAULTS }
-    const p = parsed as Record<string, unknown>
-    return {
-      notation:         isValidNotation(p.notation)               ? p.notation         : DEFAULTS.notation,
-      valueDisplayMode: isValidValueDisplayMode(p.valueDisplayMode) ? p.valueDisplayMode  : DEFAULTS.valueDisplayMode,
-      fontScale:        isValidFontScale(p.fontScale)               ? p.fontScale          : DEFAULTS.fontScale,
-      density:          isValidDensity(p.density)                   ? p.density            : DEFAULTS.density,
-      statTooltips:     isValidStatTooltips(p.statTooltips)         ? p.statTooltips       : DEFAULTS.statTooltips,
-    }
-  },
-)
+const _settings = persistedStore<Settings>(STORAGE_KEY, DEFAULTS, (parsed) => {
+  if (parsed === null || typeof parsed !== 'object') return { ...DEFAULTS }
+  const p = parsed as Record<string, unknown>
+  return {
+    notation: isValidNotation(p.notation) ? p.notation : DEFAULTS.notation,
+    valueDisplayMode: isValidValueDisplayMode(p.valueDisplayMode)
+      ? p.valueDisplayMode
+      : DEFAULTS.valueDisplayMode,
+    fontScale: isValidFontScale(p.fontScale) ? p.fontScale : DEFAULTS.fontScale,
+    density: isValidDensity(p.density) ? p.density : DEFAULTS.density,
+    statTooltips: isValidStatTooltips(p.statTooltips) ? p.statTooltips : DEFAULTS.statTooltips,
+  }
+})
 
 export const settings = { subscribe: _settings.subscribe }
 
 export function setNotation(n: Notation): void {
-  _settings.update(s => ({ ...s, notation: n }))
+  _settings.update((s) => ({ ...s, notation: n }))
 }
 
 export function setValueDisplayMode(m: ValueDisplayMode): void {
-  _settings.update(s => ({ ...s, valueDisplayMode: m }))
+  _settings.update((s) => ({ ...s, valueDisplayMode: m }))
 }
 
 export function setFontScale(f: FontScale): void {
-  _settings.update(s => ({ ...s, fontScale: f }))
+  _settings.update((s) => ({ ...s, fontScale: f }))
 }
 
 export function setDensity(d: Density): void {
-  _settings.update(s => ({ ...s, density: d }))
+  _settings.update((s) => ({ ...s, density: d }))
 }
 
 export function setStatTooltips(v: boolean): void {
-  _settings.update(s => ({ ...s, statTooltips: v }))
+  _settings.update((s) => ({ ...s, statTooltips: v }))
 }
 
 export function resetSettings(): void {

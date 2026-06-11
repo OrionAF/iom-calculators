@@ -10,22 +10,24 @@ describe('fishingFormulas — super_shiny_chance', () => {
   })
 
   it('T2 upgrade level 20 only → 0.20', () => {
-    expect(computeStat(f, { 'fishing.superShinyChanceT2': 20 }, {})).toBeCloseTo(0.20)
+    expect(computeStat(f, { 'fishing.superShinyChanceT2': 20 }, {})).toBeCloseTo(0.2)
   })
 
   it('Completionist Gatekeeper level 1 + 10 legendary fish → +0.10', () => {
-    expect(computeStat(f,
-      { 'skillTree.completionistGatekeeper': 1 },
-      { legendaryFishFound: 10 }
-    )).toBeCloseTo(0.10)
+    expect(
+      computeStat(f, { 'skillTree.completionistGatekeeper': 1 }, { legendaryFishFound: 10 }),
+    ).toBeCloseTo(0.1)
   })
 
   it('both sources combined: T2 level 5 + Gatekeeper level 1 + 50 fish', () => {
     // 5×0.01 + 1×50×0.01 = 0.05 + 0.50 = 0.55
-    expect(computeStat(f,
-      { 'fishing.superShinyChanceT2': 5, 'skillTree.completionistGatekeeper': 1 },
-      { legendaryFishFound: 50 }
-    )).toBeCloseTo(0.55)
+    expect(
+      computeStat(
+        f,
+        { 'fishing.superShinyChanceT2': 5, 'skillTree.completionistGatekeeper': 1 },
+        { legendaryFishFound: 50 },
+      ),
+    ).toBeCloseTo(0.55)
   })
 })
 
@@ -37,15 +39,13 @@ describe('fishingFormulas — drone_multiplier', () => {
   })
 
   it('T1 upgrade max (20) + T1 enhance max (25) → 1 + 1.20 + 2.00 = 4.20', () => {
-    expect(computeStat(f,
-      { 'fishing.droneMultiT1': 20, 'fishing.droneMultiE1': 25 }, {}
-    )).toBeCloseTo(4.20)
+    expect(
+      computeStat(f, { 'fishing.droneMultiT1': 20, 'fishing.droneMultiE1': 25 }, {}),
+    ).toBeCloseTo(4.2)
   })
 
   it('Fishing With Friends level 3 → +0.30', () => {
-    expect(computeStat(f,
-      { 'skillTree.fishingWithFriends': 3 }, {}
-    )).toBeCloseTo(1.30)
+    expect(computeStat(f, { 'skillTree.fishingWithFriends': 3 }, {})).toBeCloseTo(1.3)
   })
 })
 
@@ -57,9 +57,9 @@ describe('fishingFormulas — income_multi', () => {
   })
 
   it('T1 upgrade level 10 + T1 enhance level 10 → 1 + 0.30 + 0.50 = 1.80', () => {
-    expect(computeStat(f,
-      { 'fishing.fishMultiT1': 10, 'fishing.fishMultiE1': 10 }, {}
-    )).toBeCloseTo(1.80)
+    expect(
+      computeStat(f, { 'fishing.fishMultiT1': 10, 'fishing.fishMultiE1': 10 }, {}),
+    ).toBeCloseTo(1.8)
   })
 })
 
@@ -72,11 +72,17 @@ describe('fishingFormulas — tick_reduction_seconds', () => {
 
   it('T1 upgrade max (40) + T1 enhance max (20) + LPtP max (3) = 36s', () => {
     // 40×0.5 + 20×0.5 + 3×2 = 20 + 10 + 6 = 36
-    expect(computeStat(f, {
-      'fishing.tickSpeedT1': 40,
-      'fishing.tickSpeedE1': 20,
-      'skillTree.letsPickUpThePace': 3,
-    }, {})).toBeCloseTo(36)
+    expect(
+      computeStat(
+        f,
+        {
+          'fishing.tickSpeedT1': 40,
+          'fishing.tickSpeedE1': 20,
+          'skillTree.letsPickUpThePace': 3,
+        },
+        {},
+      ),
+    ).toBeCloseTo(36)
   })
 })
 
@@ -92,10 +98,9 @@ describe('fishingFormulas — shiny_chance', () => {
   })
 
   it('With This Fish level 1 + 10 fish cards → 0.01', () => {
-    expect(computeStat(f,
-      { 'skillTree.withThisFishISummonTwoMoreFish': 1 },
-      { fishCardCount: 10 }
-    )).toBeCloseTo(0.01)
+    expect(
+      computeStat(f, { 'skillTree.withThisFishISummonTwoMoreFish': 1 }, { fishCardCount: 10 }),
+    ).toBeCloseTo(0.01)
   })
 })
 
@@ -107,9 +112,9 @@ describe('fishingFormulas — shiny_multi', () => {
   })
 
   it('T2 upgrade level 20 + T1 enhance level 20 → 3 + 1.00 + 1.00 = 5.00', () => {
-    expect(computeStat(f,
-      { 'fishing.shinyMultiT2': 20, 'fishing.shinyMultiE1': 20 }, {}
-    )).toBeCloseTo(5.00)
+    expect(
+      computeStat(f, { 'fishing.shinyMultiT2': 20, 'fishing.shinyMultiE1': 20 }, {}),
+    ).toBeCloseTo(5.0)
   })
 })
 
@@ -121,9 +126,7 @@ describe('fishingFormulas — super_shiny_multi', () => {
   })
 
   it('T2 enhance level 20 → 2 + 3.00 = 5.00', () => {
-    expect(computeStat(f,
-      { 'fishing.superShinyMultiE2': 20 }, {}
-    )).toBeCloseTo(5.00)
+    expect(computeStat(f, { 'fishing.superShinyMultiE2': 20 }, {})).toBeCloseTo(5.0)
   })
 })
 
@@ -138,9 +141,9 @@ describe('fishingFormulas — drone_capacity', () => {
   it('T1 upgrade (50) + Drone Cloner (5): (50) × 1.05^5', () => {
     const additive = 50
     const cloner = Math.pow(1.05, 5)
-    expect(computeStat(f,
-      { 'fishing.droneCapT1': 50, 'fishing.droneCloner': 5 }, {}
-    )).toBeCloseTo(additive * cloner)
+    expect(computeStat(f, { 'fishing.droneCapT1': 50, 'fishing.droneCloner': 5 }, {})).toBeCloseTo(
+      additive * cloner,
+    )
   })
 })
 

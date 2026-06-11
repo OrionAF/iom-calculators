@@ -1,12 +1,8 @@
 import { persistedStore } from '$lib/storage/persistedStore'
 
-export type ParseError =
-  | { kind: 'invalid-json'; message: string }
-  | { kind: 'missing-stats-key' }
+export type ParseError = { kind: 'invalid-json'; message: string } | { kind: 'missing-stats-key' }
 
-export type Result<T, E> =
-  | { ok: true; value: T }
-  | { ok: false; error: E }
+export type Result<T, E> = { ok: true; value: T } | { ok: false; error: E }
 
 export interface StatsExport {
   version: string
@@ -27,10 +23,8 @@ function isValidExport(v: unknown): v is StatsExport {
   )
 }
 
-const _stats = persistedStore<StatsExport | null>(
-  STORAGE_KEY,
-  null,
-  (parsed) => (isValidExport(parsed) ? parsed : null),
+const _stats = persistedStore<StatsExport | null>(STORAGE_KEY, null, (parsed) =>
+  isValidExport(parsed) ? parsed : null,
 )
 
 export const stats = { subscribe: _stats.subscribe }

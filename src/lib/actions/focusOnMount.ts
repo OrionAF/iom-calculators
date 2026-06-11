@@ -12,7 +12,11 @@ export function focusOnMount(node: HTMLElement) {
       // For <input> / <textarea>: focus AND select existing content so a stray
       // keystroke replaces, rather than appends to, any prior value.
       ;(node as HTMLInputElement).focus()
-      try { (node as HTMLInputElement).select() } catch { /* noop */ }
+      try {
+        ;(node as HTMLInputElement).select()
+      } catch {
+        /* noop */
+      }
     } else {
       node.focus()
     }

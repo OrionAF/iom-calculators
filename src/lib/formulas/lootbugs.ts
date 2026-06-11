@@ -11,67 +11,73 @@ import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { upgradeSources as up } from '$lib/sources/upgrades'
 
-const U: Source = { key: '_unknown', name: 'Unknown source', system: 'store', fn: () => 0, inputs: [] }
+const U: Source = {
+  key: '_unknown',
+  name: 'Unknown source',
+  system: 'store',
+  fn: () => 0,
+  inputs: [],
+}
 
 export const lootbugsFormulas: FormulaMap = defineFormulas({
   lootbug_spawn_rate: {
     contributions: [
-      { source: it.lootbugLanternSpawn,            op: '×' },
-      { source: it.goldenLootbugLanternSpawn,      op: '×' },
-      { source: pet.petDuckLootbugSpawn,           op: '+' },
-      { source: ch.chLootbugSpawn,             op: '+' },
+      { source: it.lootbugLanternSpawn, op: '×' },
+      { source: it.goldenLootbugLanternSpawn, op: '×' },
+      { source: pet.petDuckLootbugSpawn, op: '+' },
+      { source: ch.chLootbugSpawn, op: '+' },
       { source: sg.starSagittariusLootbugSpawn, op: '+' },
-      { source: arch.idolEros,                 op: '+' },
-      { source: up.upgrLootbugSpawnRate,       op: '+' },
+      { source: arch.idolEros, op: '+' },
+      { source: up.upgrLootbugSpawnRate, op: '+' },
       { source: U, op: '+', unknown: true }, // Drones fueled Bear (temp) + Cards
     ],
   },
   lootbug_triple_chance: {
     contributions: [
-      { source: pet.petWhaleLootbugTriple,     op: '+' },
-      { source: sg.starLibraTripleLootbug,     op: '+' },
-      { source: U, op: '+', unknown: true },   // Cards + Skins
+      { source: pet.petWhaleLootbugTriple, op: '+' },
+      { source: sg.starLibraTripleLootbug, op: '+' },
+      { source: U, op: '+', unknown: true }, // Cards + Skins
     ],
   },
   lootbug_golden_chance: {
     contributions: [
-      { source: card.cardGoldenLootbug,           op: '+' },
-      { source: st.founderGoldenLootbug,          op: '+' },
-      { source: st.vpGoldenLootbug,               op: '+' },
-      { source: U, op: '+', unknown: true },      // Stargazing: Aquarius + Cards
+      { source: card.cardGoldenLootbug, op: '+' },
+      { source: st.founderGoldenLootbug, op: '+' },
+      { source: st.vpGoldenLootbug, op: '+' },
+      { source: U, op: '+', unknown: true }, // Stargazing: Aquarius + Cards
     ],
   },
   lootbug_bank_cap: {
     contributions: [
-      { source: sk.savingForARainyDayLootbugCap,  op: '+' },
-      { source: sk.anyoneUpLootinBankCap,         op: '+' },
-      { source: it.lootbugLanternPermCap,         op: '+' },
-      { source: it.goldenLootbugLanternPermCap,   op: '+' },
-      { source: con.staEastwoodLootbugCap,        op: '+' },
-      { source: pet.petWhaleQuestLootbugBank,     op: '+' },
-      { source: st.vpBankersLootbugBank,          op: '+' },
-      { source: st.vpBiggerBankersLootbugBank,    op: '+' },
-      { source: st.vpLootbugBonanzaBankCap,       op: '+' },
-      { source: sg.starOphiuchusFreebie,       op: '+' },
+      { source: sk.savingForARainyDayLootbugCap, op: '+' },
+      { source: sk.anyoneUpLootinBankCap, op: '+' },
+      { source: it.lootbugLanternPermCap, op: '+' },
+      { source: it.goldenLootbugLanternPermCap, op: '+' },
+      { source: con.staEastwoodLootbugCap, op: '+' },
+      { source: pet.petWhaleQuestLootbugBank, op: '+' },
+      { source: st.vpBankersLootbugBank, op: '+' },
+      { source: st.vpBiggerBankersLootbugBank, op: '+' },
+      { source: st.vpLootbugBonanzaBankCap, op: '+' },
+      { source: sg.starOphiuchusFreebie, op: '+' },
       { source: sg.ssBankedFreebieLootbugLootbug, op: '+' },
-      { source: arch.idolTheseusBankUnlock,    op: '+' },
-      { source: U, op: '+', unknown: true },      // Fishing + Skins
+      { source: arch.idolTheseusBankUnlock, op: '+' },
+      { source: U, op: '+', unknown: true }, // Fishing + Skins
     ],
   },
   lootbug_gem_cost_reduction: {
     contributions: [
       { source: sk.savingForARainyDayLootbugGem, op: '+' },
-      { source: U, op: '+', unknown: true },     // Pets + Skins
+      { source: U, op: '+', unknown: true }, // Pets + Skins
     ],
   },
   lootbug_loot_multi: {
     contributions: [
-      { source: sk.anyoneUpLootinLootMulti,       op: '+' },
-      { source: card.cardLootbug,                 op: '×' },
-      { source: st.vpLootbugBonanzaLootMul,       op: '×' },
-      { source: sg.ssLootbugLootMul,           op: '+' },
-      { source: arch.idolTheseus,              op: '+' },
-      { source: U, op: '+', unknown: true },      // Store + Cards + Fishing
+      { source: sk.anyoneUpLootinLootMulti, op: '+' },
+      { source: card.cardLootbug, op: '×' },
+      { source: st.vpLootbugBonanzaLootMul, op: '×' },
+      { source: sg.ssLootbugLootMul, op: '+' },
+      { source: arch.idolTheseus, op: '+' },
+      { source: U, op: '+', unknown: true }, // Store + Cards + Fishing
     ],
   },
   lootfrog_lanterns_used: { contributions: [] },

@@ -7,7 +7,7 @@ describe('STAT_CATALOG', () => {
   })
 
   it('has unique category ids', () => {
-    const ids = STAT_CATALOG.map(c => c.id)
+    const ids = STAT_CATALOG.map((c) => c.id)
     expect(new Set(ids).size).toBe(ids.length)
   })
 
@@ -30,8 +30,6 @@ describe('STAT_CATALOG', () => {
       }
     }
   })
-
-
 })
 
 describe('STATUE_STATE_LABELS', () => {

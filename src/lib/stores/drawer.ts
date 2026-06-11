@@ -8,6 +8,12 @@ import { writable } from 'svelte/store'
  */
 export const drawerOpen = writable<boolean>(false)
 
-export function openDrawer(): void  { drawerOpen.set(true)  }
-export function closeDrawer(): void { drawerOpen.set(false) }
-export function toggleDrawer(): void { drawerOpen.update(v => !v) }
+export function openDrawer(): void {
+  drawerOpen.set(true)
+}
+export function closeDrawer(): void {
+  drawerOpen.set(false)
+}
+export function toggleDrawer(): void {
+  drawerOpen.update((v) => !v)
+}

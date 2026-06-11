@@ -20,6 +20,6 @@ export function previewFor(
   const s = effectiveCols(intendedStat, vw)
   return {
     'store grids': `${p.cols} col${p.cols === 1 ? '' : 's'}${p.clamped ? ' (clamped)' : ''}`,
-    'stat pairs':  `${s.cols} per row${s.clamped ? ' (clamped)' : ''}`,
+    'stat pairs': `${s.cols} per row${s.clamped ? ' (clamped)' : ''}`,
   }
 }

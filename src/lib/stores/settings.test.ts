@@ -1,6 +1,14 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { get } from 'svelte/store'
-import { settings, setNotation, setValueDisplayMode, setFontScale, setDensity, setStatTooltips, resetSettings } from './settings'
+import {
+  settings,
+  setNotation,
+  setValueDisplayMode,
+  setFontScale,
+  setDensity,
+  setStatTooltips,
+  resetSettings,
+} from './settings'
 
 const STORAGE_KEY = 'iom-settings'
 
@@ -161,7 +169,7 @@ describe('settings store — partial-config upgrade tolerance', () => {
   it('falls back to default for the bad field but keeps the good field', () => {
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify({ notation: 'scientific', valueDisplayMode: 'binary' })
+      JSON.stringify({ notation: 'scientific', valueDisplayMode: 'binary' }),
     )
     resetSettings()
     expect(get(settings).notation).toBe('standard')

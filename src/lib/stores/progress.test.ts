@@ -32,9 +32,10 @@ describe('skillSourceKey', () => {
   })
 
   it('every skillTree source key is reachable from some skill id', () => {
-    const reachable = new Set(ALL_SKILLS.map(s => skillSourceKey(s.id)))
-    const unreachable = [...new Set(Object.values(skillTreeSources).map(s => s.key))]
-      .filter(key => !reachable.has(key))
+    const reachable = new Set(ALL_SKILLS.map((s) => skillSourceKey(s.id)))
+    const unreachable = [...new Set(Object.values(skillTreeSources).map((s) => s.key))].filter(
+      (key) => !reachable.has(key),
+    )
     expect(unreachable, `orphaned source keys: ${unreachable.join(', ')}`).toHaveLength(0)
   })
 })

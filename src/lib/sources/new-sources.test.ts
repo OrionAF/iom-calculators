@@ -17,7 +17,7 @@ describe('workshopSources', () => {
     expect(ws.wsBombDmgW2.fn(20, {})).toBeCloseTo(7.0)
   })
   it('bomb damage W3: 10 levels → ×2.50 multiplicative', () => {
-    expect(ws.wsBombDmgW3.fn(10, {})).toBeCloseTo(2.50)
+    expect(ws.wsBombDmgW3.fn(10, {})).toBeCloseTo(2.5)
   })
   it('pickaxe damage W3: 25 levels → ×3.0 multiplicative', () => {
     expect(ws.wsPickaxeDmgW3.fn(25, {})).toBeCloseTo(3.0)
@@ -29,29 +29,29 @@ describe('workshopSources', () => {
     expect(ws.wsFishingTicksW3.fn(5, {})).toBe(5)
   })
   it('hamburger bonus W3: 10 levels → +1.20 factor', () => {
-    expect(ws.wsHamburgerBonusW3.fn(10, {})).toBeCloseTo(1.20)
+    expect(ws.wsHamburgerBonusW3.fn(10, {})).toBeCloseTo(1.2)
   })
 })
 
 // ─── Contracts ────────────────────────────────────────────────────────────────
 describe('contractSources', () => {
   it('pickaxe per contract: 100 contracts → +1.00 additive', () => {
-    expect(ct.ctPickaxeDmgPerContract.fn(100, {})).toBeCloseTo(1.00)
+    expect(ct.ctPickaxeDmgPerContract.fn(100, {})).toBeCloseTo(1.0)
   })
   it('bomb per contract: 50 contracts → +0.50 additive', () => {
-    expect(ct.ctBombDmgPerContract.fn(50, {})).toBeCloseTo(0.50)
+    expect(ct.ctBombDmgPerContract.fn(50, {})).toBeCloseTo(0.5)
   })
   it('triple craft W1: max 5 → +5%', () => {
     expect(ct.ctTripleCraft.fn(5, {})).toBeCloseTo(0.05)
   })
   it('ore sell W2: max 10 → +150%', () => {
-    expect(ct.ctOreSellPriceW2.fn(10, {})).toBeCloseTo(1.50)
+    expect(ct.ctOreSellPriceW2.fn(10, {})).toBeCloseTo(1.5)
   })
   it('pickaxe+bomb W3: 5 levels → ×1.40 multiplicative', () => {
-    expect(ct.ctPickaxeBombDmgW3.fn(5, {})).toBeCloseTo(1.40)
+    expect(ct.ctPickaxeBombDmgW3.fn(5, {})).toBeCloseTo(1.4)
   })
   it('omega crit W3: max 15 → +30%', () => {
-    expect(ct.ctOmegaCritChance.fn(15, {})).toBeCloseTo(0.30)
+    expect(ct.ctOmegaCritChance.fn(15, {})).toBeCloseTo(0.3)
   })
   it('all star mul W4: max 5 → +3.25%', () => {
     expect(ct.ctAllStarMul.fn(5, {})).toBeCloseTo(0.0325)
@@ -61,10 +61,10 @@ describe('contractSources', () => {
 // ─── Artifacts ────────────────────────────────────────────────────────────────
 describe('artifactSources', () => {
   it('pickaxe T1: max 25 → +250% additive', () => {
-    expect(art.artPickaxeDmgT1.fn(25, {})).toBeCloseTo(2.50)
+    expect(art.artPickaxeDmgT1.fn(25, {})).toBeCloseTo(2.5)
   })
   it('bomb T2: max 25 → +1250% additive', () => {
-    expect(art.artBombDmgT2.fn(25, {})).toBeCloseTo(12.50)
+    expect(art.artBombDmgT2.fn(25, {})).toBeCloseTo(12.5)
   })
   it('bomb T3: max 25 → +2000% additive', () => {
     expect(art.artBombDmgT3.fn(25, {})).toBeCloseTo(20.0)
@@ -73,7 +73,7 @@ describe('artifactSources', () => {
     expect(art.artBombCapT3.fn(10, {})).toBe(30)
   })
   it('floor clear T2: max 10 → -50%', () => {
-    expect(art.artFloorClearT2.fn(10, {})).toBeCloseTo(-0.50)
+    expect(art.artFloorClearT2.fn(10, {})).toBeCloseTo(-0.5)
   })
   it('pickaxe T4: level 5, 10 statues → +500%', () => {
     expect(art.artPickaxeDmgT4.fn(5, { statueCount: 10 })).toBeCloseTo(5.0)
@@ -82,7 +82,7 @@ describe('artifactSources', () => {
     expect(art.artPickaxeDmgT4.fn(10, { statueCount: 0 })).toBe(0)
   })
   it('bomb T4: level 3, 4 statues → +180%', () => {
-    expect(art.artBombDmgT4.fn(3, { statueCount: 4 })).toBeCloseTo(1.80)
+    expect(art.artBombDmgT4.fn(3, { statueCount: 4 })).toBeCloseTo(1.8)
   })
   it('bar output T4: max 10 → +4%', () => {
     expect(art.artBarOutputT4.fn(10, {})).toBeCloseTo(0.04)
@@ -105,7 +105,7 @@ describe('constructSources', () => {
   })
   it('statue of awareness ultra crit: tier 1/2 → 0, tier 3 → +20%', () => {
     expect(con.staAwarenessUltraCrit.fn(1, {})).toBe(0)
-    expect(con.staAwarenessUltraCrit.fn(3, {})).toBeCloseTo(0.20)
+    expect(con.staAwarenessUltraCrit.fn(3, {})).toBeCloseTo(0.2)
   })
   it('statue of slaying prestige: tier 1 → ×2, tier 3 → ×5', () => {
     expect(con.staSlayingPrestigePts.fn(1, {})).toBe(2)
@@ -122,10 +122,10 @@ describe('constructSources', () => {
     expect(con.staComfortDmg.fn(0, { w4StatueCount: 9 })).toBe(0)
   })
   it('statue of comfort W4: owned, 9 statues → +450%', () => {
-    expect(con.staComfortDmg.fn(1, { w4StatueCount: 9 })).toBeCloseTo(4.50)
+    expect(con.staComfortDmg.fn(1, { w4StatueCount: 9 })).toBeCloseTo(4.5)
   })
   it('statue of randomness: golden vein chance tier 3 → +10%', () => {
-    expect(con.staRandomnessGoldenVeinChance.fn(3, {})).toBeCloseTo(0.10)
+    expect(con.staRandomnessGoldenVeinChance.fn(3, {})).toBeCloseTo(0.1)
   })
 })
 
@@ -141,22 +141,22 @@ describe('petSources', () => {
     expect(pet.petDinoPickaxeDmg.fn(5, {})).toBeCloseTo(2.0)
   })
   it('duck exp: level 10 → +120% additive', () => {
-    expect(pet.petDuckExp.fn(10, {})).toBeCloseTo(1.20)
+    expect(pet.petDuckExp.fn(10, {})).toBeCloseTo(1.2)
   })
   it('leprechaun game speed: level 20 → +30%', () => {
-    expect(pet.petLeprechaunGameSpeed.fn(20, {})).toBeCloseTo(0.30)
+    expect(pet.petLeprechaunGameSpeed.fn(20, {})).toBeCloseTo(0.3)
   })
   it('axolotl bar craft: level 10 → -10% (reduction)', () => {
-    expect(pet.petAxolotlBarCraft.fn(10, {})).toBeCloseTo(-0.10)
+    expect(pet.petAxolotlBarCraft.fn(10, {})).toBeCloseTo(-0.1)
   })
   it('starfish supernova: level 5 → +1%', () => {
     expect(pet.petStarfishSupernovaChance.fn(5, {})).toBeCloseTo(0.01)
   })
   it('nagini golden ore: level 10 → +0.50 additive', () => {
-    expect(pet.petNaginiGoldenOreMul.fn(10, {})).toBeCloseTo(0.50)
+    expect(pet.petNaginiGoldenOreMul.fn(10, {})).toBeCloseTo(0.5)
   })
   it('dwarf quest prestige: max 10 → +120%', () => {
-    expect(pet.petDwarfQuestPrestigePts.fn(10, {})).toBeCloseTo(1.20)
+    expect(pet.petDwarfQuestPrestigePts.fn(10, {})).toBeCloseTo(1.2)
   })
   it('whale quest lootbug: rank 5 → +5 cap', () => {
     expect(pet.petWhaleQuestLootbugBank.fn(5, {})).toBe(5)
@@ -169,25 +169,25 @@ describe('cardSources', () => {
     expect(card.cardAlex.fn(0, {})).toBeCloseTo(1.0)
   })
   it('alex: rarity 1 base → ×1.10', () => {
-    expect(card.cardAlex.fn(1, {})).toBeCloseTo(1.10)
+    expect(card.cardAlex.fn(1, {})).toBeCloseTo(1.1)
   })
   it('alex: rarity 2 gilded → ×1.20', () => {
-    expect(card.cardAlex.fn(2, {})).toBeCloseTo(1.20)
+    expect(card.cardAlex.fn(2, {})).toBeCloseTo(1.2)
   })
   it('alex: rarity 3 polychrome → ×1.40', () => {
-    expect(card.cardAlex.fn(3, {})).toBeCloseTo(1.40)
+    expect(card.cardAlex.fn(3, {})).toBeCloseTo(1.4)
   })
   it('bone: rarity 3 → ×1.15 bomb damage', () => {
     expect(card.cardBone.fn(3, {})).toBeCloseTo(1.15)
   })
   it("celio's hat: rarity 3 → ×1.40 prestige pts", () => {
-    expect(card.cardCeliosHat.fn(3, {})).toBeCloseTo(1.40)
+    expect(card.cardCeliosHat.fn(3, {})).toBeCloseTo(1.4)
   })
   it('prestige card: rarity 3 → ×0.80 floor clear (reduction)', () => {
-    expect(card.cardPrestige.fn(3, {})).toBeCloseTo(0.80)
+    expect(card.cardPrestige.fn(3, {})).toBeCloseTo(0.8)
   })
   it('super star card: rarity 2 → ×1.10 all star', () => {
-    expect(card.cardSuperStar.fn(2, {})).toBeCloseTo(1.10)
+    expect(card.cardSuperStar.fn(2, {})).toBeCloseTo(1.1)
   })
   it('freebie card: rarity 3 → +4 gems', () => {
     expect(card.cardFreebie.fn(3, {})).toBe(4)

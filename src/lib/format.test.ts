@@ -266,5 +266,4 @@ describe('formatStatByKey — affix rules in notation mode', () => {
     expect(formatStatByKey('bomb_crit_chance', 1234, 'engineering')).toBe('1.23e3%')
     expect(formatStatByKey('prestige_point_multi', 1.23e8, 'engineering')).toBe('123e6×')
   })
-
 })

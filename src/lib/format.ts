@@ -2,12 +2,30 @@ export type Notation = 'standard' | 'scientific' | 'engineering'
 
 // Index 0 → 'k' (10³); index 19 → 'nvdc' (10⁶⁰).
 const SUFFIXES = [
-  'k', 'm', 'b', 't', 'q', 'qi', 'sx', 'sp', 'oc', 'no',
-  'dc', 'udc', 'ddc', 'tdc', 'qadc', 'qidc', 'sxdc', 'spdc', 'ocdc', 'nvdc',
+  'k',
+  'm',
+  'b',
+  't',
+  'q',
+  'qi',
+  'sx',
+  'sp',
+  'oc',
+  'no',
+  'dc',
+  'udc',
+  'ddc',
+  'tdc',
+  'qadc',
+  'qidc',
+  'sxdc',
+  'spdc',
+  'ocdc',
+  'nvdc',
 ] as const
 
 const SUFFIX_BY_NAME: Record<string, number> = Object.fromEntries(
-  SUFFIXES.map((s, i) => [s, (i + 1) * 3])
+  SUFFIXES.map((s, i) => [s, (i + 1) * 3]),
 )
 
 /**
@@ -76,10 +94,13 @@ function formatEngineering(n: number): string {
 
 export function formatStat(n: number, notation: Notation = 'standard'): string {
   switch (notation) {
-    case 'scientific':  return formatScientific(n)
-    case 'engineering': return formatEngineering(n)
+    case 'scientific':
+      return formatScientific(n)
+    case 'engineering':
+      return formatEngineering(n)
     case 'standard':
-    default:            return formatStandard(n)
+    default:
+      return formatStandard(n)
   }
 }
 
@@ -111,32 +132,32 @@ interface UnitSign {
 }
 
 const UNIT_AFFIX: Record<StatUnit, { prefix?: string; suffix?: string }> = {
-  percent:    { suffix: '%' },
+  percent: { suffix: '%' },
   multiplier: { suffix: '×' },
-  flat:       {},
-  count:      {},
-  seconds:    { suffix: 's' },
-  minutes:    { suffix: ' minutes' },
-  perSecond:  { suffix: ' p/s' },
-  level:      { prefix: 'Level ' },
+  flat: {},
+  count: {},
+  seconds: { suffix: 's' },
+  minutes: { suffix: ' minutes' },
+  perSecond: { suffix: ' p/s' },
+  level: { prefix: 'Level ' },
 }
 
 // Kept for keys not in the registry yet (e.g. unrecognized export keys).
 // Order matters: longer/more-specific suffixes first to avoid partial matches.
 const KEY_SUFFIX_RULES: ReadonlyArray<{ suffix: string; us: UnitSign }> = [
-  { suffix: '_crit_damage',   us: { unit: 'multiplier' } },
-  { suffix: '_multipliers',   us: { unit: 'multiplier' } },
-  { suffix: '_multiplier',    us: { unit: 'multiplier' } },
-  { suffix: '_reduction',     us: { unit: 'multiplier' } },
-  { suffix: '_increases',     us: { sign: '+' } },
-  { suffix: '_increase',      us: { sign: '+' } },
-  { suffix: '_capacity',      us: { sign: '+' } },
-  { suffix: '_percent',       us: { unit: 'percent' } },
-  { suffix: '_chance',        us: { unit: 'percent' } },
-  { suffix: '_bonus',         us: { sign: '+' } },
-  { suffix: '_multi',         us: { unit: 'multiplier' } },
-  { suffix: '_cap',           us: { sign: '+' } },
-  { suffix: '_rate',          us: { unit: 'multiplier' } },
+  { suffix: '_crit_damage', us: { unit: 'multiplier' } },
+  { suffix: '_multipliers', us: { unit: 'multiplier' } },
+  { suffix: '_multiplier', us: { unit: 'multiplier' } },
+  { suffix: '_reduction', us: { unit: 'multiplier' } },
+  { suffix: '_increases', us: { sign: '+' } },
+  { suffix: '_increase', us: { sign: '+' } },
+  { suffix: '_capacity', us: { sign: '+' } },
+  { suffix: '_percent', us: { unit: 'percent' } },
+  { suffix: '_chance', us: { unit: 'percent' } },
+  { suffix: '_bonus', us: { sign: '+' } },
+  { suffix: '_multi', us: { unit: 'multiplier' } },
+  { suffix: '_cap', us: { sign: '+' } },
+  { suffix: '_rate', us: { unit: 'multiplier' } },
   { suffix: 'recharge_speed', us: { unit: 'multiplier' } },
 ]
 
@@ -185,13 +206,20 @@ export function formatSourceValue(statKey: string, value: number): string {
   const { unit, sign } = resolveUnitSign(statKey)
   const prefix = sign ?? ''
   switch (unit) {
-    case 'percent':    return prefix + trimNumber(value * 100) + '%'
-    case 'multiplier': return prefix + trimNumber(value) + '×'
-    case 'minutes':    return prefix + trimNumber(value) + ' minutes'
-    case 'seconds':    return prefix + trimNumber(value) + 's'
-    case 'perSecond':  return prefix + trimNumber(value) + ' p/s'
-    case 'level':      return 'Level ' + trimNumber(value)
-    default:           return prefix + formatStat(value)
+    case 'percent':
+      return prefix + trimNumber(value * 100) + '%'
+    case 'multiplier':
+      return prefix + trimNumber(value) + '×'
+    case 'minutes':
+      return prefix + trimNumber(value) + ' minutes'
+    case 'seconds':
+      return prefix + trimNumber(value) + 's'
+    case 'perSecond':
+      return prefix + trimNumber(value) + ' p/s'
+    case 'level':
+      return 'Level ' + trimNumber(value)
+    default:
+      return prefix + formatStat(value)
   }
 }
 

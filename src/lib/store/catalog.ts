@@ -72,7 +72,7 @@ export interface GemUpgrade {
 
 /** Max rank of a gem upgrade — taken from its sources (they own maxLevel). */
 export function gemUpgradeMaxLevel(upgrade: GemUpgrade): number {
-  return Math.max(0, ...upgrade.effects.map(e => e.source?.maxLevel ?? 0))
+  return Math.max(0, ...upgrade.effects.map((e) => e.source?.maxLevel ?? 0))
 }
 
 export interface FounderTier {
@@ -89,33 +89,25 @@ export const PERKS: readonly Perk[] = [
     slug: '2x_ore_income',
     name: '2x Ore Income',
     icon: '2x Ore Income.png',
-    effects: [
-      { label: '2x Ore Income', source: st.perkOreIncome }
-    ],
+    effects: [{ label: '2x Ore Income', source: st.perkOreIncome }],
   },
   {
     slug: '2x_prestige_point_income',
     name: '2x Prestige Point Income',
     icon: '2x Prestige Point Income.png',
-    effects: [
-      { label: '2x Prestige Point Income', source: st.perkPrestigePts }
-    ],
+    effects: [{ label: '2x Prestige Point Income', source: st.perkPrestigePts }],
   },
   {
     slug: '2x_bar_income',
     name: '2x Bar Income',
     icon: '2x Bar Income.png',
-    effects: [
-      { label: '2x Bar Income', source: st.perkBarOutput }
-    ],
+    effects: [{ label: '2x Bar Income', source: st.perkBarOutput }],
   },
   {
     slug: '3x_bomb_damage',
     name: '3x Bomb Damage',
     icon: '3x Bomb Damage.png',
-    effects: [
-      { label: '3x Bomb Damage', source: st.perkBombDamage }
-    ],
+    effects: [{ label: '3x Bomb Damage', source: st.perkBombDamage }],
   },
 ]
 
@@ -146,7 +138,11 @@ export const GEM_UNLOCKS: readonly GemUnlock[] = [
     gemCost: 200,
     mirrorUnlockKey: 'unlocked_permanent_drone',
     effects: [
-      { label: 'Give an additional Drone that will automatic mine your ore even when you are offline.', source: st.vpDroneCount }
+      {
+        label:
+          'Give an additional Drone that will automatic mine your ore even when you are offline.',
+        source: st.vpDroneCount,
+      },
     ],
   },
   {
@@ -158,7 +154,7 @@ export const GEM_UNLOCKS: readonly GemUnlock[] = [
     effects: [
       {
         label: 'Deals 25x damage to all ores on short cooldown',
-      }
+      },
     ],
   },
   {
@@ -170,7 +166,7 @@ export const GEM_UNLOCKS: readonly GemUnlock[] = [
     effects: [
       {
         label: 'Marks ores to drop bars, scales with rock size',
-      }
+      },
     ],
   },
   {
@@ -182,7 +178,7 @@ export const GEM_UNLOCKS: readonly GemUnlock[] = [
     effects: [
       {
         label: 'Charges 2 random bombs, 0.1% to increase all bomb caps by 1',
-      }
+      },
     ],
   },
 ]
@@ -197,9 +193,7 @@ export const GEM_UPGRADES: readonly GemUpgrade[] = [
     name: 'Pickaxe Damage',
     icon: 'Pickaxe Damage.png',
     gemCost: 200,
-    effects: [
-      { label: '+0.20x per level', source: st.gemPickaxeDamage }
-    ],
+    effects: [{ label: '+0.20x per level', source: st.gemPickaxeDamage }],
   },
   {
     slug: 'bomb_damage_capacity',
@@ -208,7 +202,7 @@ export const GEM_UPGRADES: readonly GemUpgrade[] = [
     gemCost: 225,
     effects: [
       { label: '+20% damage per level', source: st.gemBombDamage },
-      { label: '+2 capacity per level', source: st.gemBombCapacity }
+      { label: '+2 capacity per level', source: st.gemBombCapacity },
     ],
   },
   {
@@ -216,36 +210,28 @@ export const GEM_UPGRADES: readonly GemUpgrade[] = [
     name: 'Banked Freebie Cap',
     icon: 'Banked_Freebie_Cap.png',
     gemCost: 250,
-    effects: [
-      { label: '+1 Freebie per level', source: st.gemFreebieBank }
-    ],
+    effects: [{ label: '+1 Freebie per level', source: st.gemFreebieBank }],
   },
   {
     slug: 'chest_meter_fill_rate',
     name: 'Chest Meter Fill Rate',
     icon: 'Chest_Meter_Gain_Multiplier.png',
     gemCost: 300,
-    effects: [
-      { label: '5x per level (multiplicative)', source: st.gemChestMeter }
-    ],
+    effects: [{ label: '5x per level (multiplicative)', source: st.gemChestMeter }],
   },
   {
     slug: 'items_contained_in_chests',
     name: 'Items Contained In Chests',
     icon: 'Items Contained In Chests.png',
     gemCost: 650,
-    effects: [
-      { label: '+1 item per level', source: st.gemItemsInChests }
-    ],
+    effects: [{ label: '+1 item per level', source: st.gemItemsInChests }],
   },
   {
     slug: 'ore_sell_price',
     name: 'Ore Sell Price',
     icon: 'Ore_Sell_Price_Multiplier.png',
     gemCost: 850,
-    effects: [
-      { label: '+100% per level', source: st.gemOreSellPrice }
-    ],
+    effects: [{ label: '+100% per level', source: st.gemOreSellPrice }],
   },
 ]
 
@@ -255,86 +241,62 @@ export const FOUNDER_TIERS: readonly FounderTier[] = [
   {
     tier: 1,
     vipPointsRequired: 960,
-    effects: [
-      { label: 'Founder Supply Drop Cooldown', source: st.founderSupplyDropCd },
-    ],
+    effects: [{ label: 'Founder Supply Drop Cooldown', source: st.founderSupplyDropCd }],
   },
   {
     tier: 2,
     vipPointsRequired: 1440,
-    effects: [
-      { label: 'Double Supply Drop Chance', source: st.founderDoubleSupplyDrop },
-    ],
+    effects: [{ label: 'Double Supply Drop Chance', source: st.founderDoubleSupplyDrop }],
   },
   {
     tier: 3,
     vipPointsRequired: 2080,
-    effects: [
-      { label: '10x Craft Chance', source: st.founderCraft10x },
-    ],
+    effects: [{ label: '10x Craft Chance', source: st.founderCraft10x }],
   },
   {
     tier: 4,
     vipPointsRequired: 2880,
-    effects: [
-      { label: 'Bomb Of Plenty Multiplier', source: st.founderBomBofPlenty },
-    ],
+    effects: [{ label: 'Bomb Of Plenty Multiplier', source: st.founderBomBofPlenty }],
   },
   {
     tier: 5,
     vipPointsRequired: 3920,
-    effects: [
-      { label: 'Golden Lootbug Chance', source: st.founderGoldenLootbug },
-    ],
+    effects: [{ label: 'Golden Lootbug Chance', source: st.founderGoldenLootbug }],
   },
   {
     tier: 6,
     vipPointsRequired: 5360,
-    effects: [
-      { label: 'Banked Freebies', source: st.founderFreebieBank },
-    ],
+    effects: [{ label: 'Banked Freebies', source: st.founderFreebieBank }],
   },
   {
     tier: 7,
     vipPointsRequired: 7440,
-    effects: [
-      { label: 'Triple Supply Drop Chance', source: st.founderTripleSupplyDrop },
-    ],
+    effects: [{ label: 'Triple Supply Drop Chance', source: st.founderTripleSupplyDrop }],
   },
   {
     tier: 8,
     vipPointsRequired: 9920,
-    effects: [
-      { label: 'Gems From Freebie', source: st.founderFreebieGems },
-    ],
+    effects: [{ label: 'Gems From Freebie', source: st.founderFreebieGems }],
   },
   {
     tier: 9,
     vipPointsRequired: 12480,
-    effects: [
-      { label: 'Rainbow Floor Chance', source: st.founderRainbowFloor },
-    ],
+    effects: [{ label: 'Rainbow Floor Chance', source: st.founderRainbowFloor }],
   },
   {
     tier: 10,
     vipPointsRequired: 16000,
-    effects: [
-      { label: 'Game Speed', source: st.founderGameSpeed },
-    ],
+    effects: [{ label: 'Game Speed', source: st.founderGameSpeed }],
   },
   {
     tier: 11,
     vipPointsRequired: 21600,
-    effects: [
-      { label: 'Golden Supply Drop Chance', source: st.founderGoldenSupplyDrop },
-    ],
+    effects: [{ label: 'Golden Supply Drop Chance', source: st.founderGoldenSupplyDrop }],
   },
   {
     tier: 12,
     vipPointsRequired: 28800,
-    effects: [
-      { label: 'Gem Bomb Gem Chance', source: st.founderGemBombGemChance },
-    ],
+    effects: [{ label: 'Gem Bomb Gem Chance', source: st.founderGemBombGemChance }],
   },
 ]
 
@@ -347,9 +309,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'permadrone vp.png',
     unlockRequirement: 'Disappears if bought with gems',
     mirrorUnlockKey: 'unlocked_permanent_drone',
-    effects: [
-      { label: 'Additional automatic mining drone', source: st.vpDroneCount },
-    ],
+    effects: [{ label: 'Additional automatic mining drone', source: st.vpDroneCount }],
   },
   {
     slug: 'megabomb_pack',
@@ -359,7 +319,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     mirrorUnlockKey: 'unlocked_megabomb',
     effects: [
       {
-        label: '25x damage to all ores on short cooldown' 
+        label: '25x damage to all ores on short cooldown',
       },
     ],
   },
@@ -371,7 +331,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     mirrorUnlockKey: 'unlocked_transmuter_bomb',
     effects: [
       {
-        label: 'Marks ores to drop bars, scales with rock size' 
+        label: 'Marks ores to drop bars, scales with rock size',
       },
     ],
   },
@@ -383,7 +343,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     mirrorUnlockKey: 'unlocked_battery_bomb',
     effects: [
       {
-        label: 'Charges 2 random other bombs.  0.1% to increase bomb cap by 1' 
+        label: 'Charges 2 random other bombs.  0.1% to increase bomb cap by 1',
       },
     ],
   },
@@ -392,18 +352,14 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     name: 'Skill Surge Bundle!',
     icon: 'skillsurgebundle vp.png',
     unlockRequirement: 'Requirement: N/A',
-    effects: [
-      { label: '+1% Freebie Pack Skill Shard Chance', source: st.vpSkillSurgeSkillShard },
-    ],
+    effects: [{ label: '+1% Freebie Pack Skill Shard Chance', source: st.vpSkillSurgeSkillShard }],
   },
   {
     slug: 'investment_package',
     name: 'Investment Package!',
     icon: 'investment vp.png',
     unlockRequirement: 'Requirement: N/A',
-    effects: [
-      { label: '5% Chance to hit a Freebie Pack Jackpot', source: st.vpFreebie5xChance },
-    ],
+    effects: [{ label: '5% Chance to hit a Freebie Pack Jackpot', source: st.vpFreebie5xChance }],
   },
   {
     slug: 'bankers_bundle',
@@ -422,18 +378,14 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     name: 'Gotta Go Fast Bundle!',
     icon: 'gofast vp.png',
     unlockRequirement: 'Requirement: N/A',
-    effects: [
-      { label: '+10% Game Speed', source: st.vpGottaGoFastGameSpeed },
-    ],
+    effects: [{ label: '+10% Game Speed', source: st.vpGottaGoFastGameSpeed }],
   },
   {
     slug: 'golden_lootbug_bundle',
     name: 'Golden Lootbug Bundle!',
     icon: 'goldenlootbug vp.png',
     unlockRequirement: 'Requirement: N/A',
-    effects: [
-      { label: '20% to spawn a Golden Lootbug', source: st.vpGoldenLootbug },
-    ],
+    effects: [{ label: '20% to spawn a Golden Lootbug', source: st.vpGoldenLootbug }],
   },
   {
     slug: 'bigger_bankers_bundle',
@@ -452,9 +404,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     name: 'Baller Skin Bundle!',
     icon: 'baller vp.png',
     unlockRequirement: 'Requirement: N/A',
-    effects: [
-      { label: '2.00x Ore Sell Price', source: st.vpBallerOreSell },
-    ],
+    effects: [{ label: '2.00x Ore Sell Price', source: st.vpBallerOreSell }],
   },
   {
     slug: 'pet_trainer_bundle',
@@ -597,18 +547,14 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     name: "Fisher's Bundle!",
     icon: 'fishingbundle vp.png',
     unlockRequirement: 'Obelisk Level 37',
-    effects: [
-      { label: '+10% Triple Fishing Tick Chance', source: st.vpFishersTripleTick },
-    ],
+    effects: [{ label: '+10% Triple Fishing Tick Chance', source: st.vpFishersTripleTick }],
   },
   {
     slug: 'anglers_bundle',
     name: "Angler's Bundle!",
     icon: 'anglerbundle vp.png',
     unlockRequirement: 'Obelisk Level 39',
-    effects: [
-      { label: '+6% Tiny Notice Chance', source: st.vpAnglersNotice },
-    ],
+    effects: [{ label: '+6% Tiny Notice Chance', source: st.vpAnglersNotice }],
   },
   {
     slug: 'singularity_bundle',

@@ -10,10 +10,16 @@ describe('starsFormulas — star_spawn_rate', () => {
   })
 
   it('stargazing upgrade max (20) + Gemini max (34) → 1.00 + 0.68 = 1.68', () => {
-    expect(computeStat(f, {
-      'stargazing.spawnRate': 20,
-      'stargazing.starGemini': 34,
-    }, {})).toBeCloseTo(1.68)
+    expect(
+      computeStat(
+        f,
+        {
+          'stargazing.spawnRate': 20,
+          'stargazing.starGemini': 34,
+        },
+        {},
+      ),
+    ).toBeCloseTo(1.68)
   })
 })
 
@@ -25,10 +31,16 @@ describe('starsFormulas — star_auto_catch_chance', () => {
   })
 
   it('upgrade level 15 + Taurus max (22) → 0.60 + 0.44 = 1.04', () => {
-    expect(computeStat(f, {
-      'stargazing.autoCatch': 15,
-      'stargazing.starTaurus': 22,
-    }, {})).toBeCloseTo(1.04)
+    expect(
+      computeStat(
+        f,
+        {
+          'stargazing.autoCatch': 15,
+          'stargazing.starTaurus': 22,
+        },
+        {},
+      ),
+    ).toBeCloseTo(1.04)
   })
 })
 
@@ -40,10 +52,16 @@ describe('starsFormulas — star_supernova_chance', () => {
   })
 
   it('upgrade level 20 + Hercules max (55) → 0.10 + 0.0825 = 0.1825', () => {
-    expect(computeStat(f, {
-      'stargazing.novaChance': 20,
-      'stargazing.starHercules': 55,
-    }, {})).toBeCloseTo(0.1825)
+    expect(
+      computeStat(
+        f,
+        {
+          'stargazing.novaChance': 20,
+          'stargazing.starHercules': 55,
+        },
+        {},
+      ),
+    ).toBeCloseTo(0.1825)
   })
 })
 
@@ -54,8 +72,8 @@ describe('starsFormulas — star_supernova_multi', () => {
     expect(computeStat(f, {}, {})).toBeCloseTo(10)
   })
 
-  it("Ctrl+F Stars (level 1) → 10 + 0.20 = 10.20", () => {
-    expect(computeStat(f, { 'skillTree.ctrlFStars': 1 }, {})).toBeCloseTo(10.20)
+  it('Ctrl+F Stars (level 1) → 10 + 0.20 = 10.20', () => {
+    expect(computeStat(f, { 'skillTree.ctrlFStars': 1 }, {})).toBeCloseTo(10.2)
   })
 
   it('Ctrl+C Ctrl+V Stars level 3 → 10 + 3×0.06 = 10.18', () => {
@@ -63,10 +81,16 @@ describe('starsFormulas — star_supernova_multi', () => {
   })
 
   it('both skill tree nodes: 10 + 0.20 + 0.18 = 10.38', () => {
-    expect(computeStat(f, {
-      'skillTree.ctrlFStars': 1,
-      'skillTree.ctrlCCtrlVStars': 3,
-    }, {})).toBeCloseTo(10.38)
+    expect(
+      computeStat(
+        f,
+        {
+          'skillTree.ctrlFStars': 1,
+          'skillTree.ctrlCCtrlVStars': 3,
+        },
+        {},
+      ),
+    ).toBeCloseTo(10.38)
   })
 })
 
@@ -78,7 +102,7 @@ describe('starsFormulas — star_supergiant_multi', () => {
   })
 
   it('super star upgrade level 20 → 3 + 20×0.10 = 5.00', () => {
-    expect(computeStat(f, { 'stargazing.supergigantsMulti': 20 }, {})).toBeCloseTo(5.00)
+    expect(computeStat(f, { 'stargazing.supergigantsMulti': 20 }, {})).toBeCloseTo(5.0)
   })
 })
 
@@ -90,10 +114,16 @@ describe('starsFormulas — all_star_multi', () => {
   })
 
   it('upgrade level 30 + Scorpio level 100 → 1 + 0.30 + 0.50 = 1.80', () => {
-    expect(computeStat(f, {
-      'stargazing.allStarMulti': 30,
-      'stargazing.starScorpio': 100,
-    }, {})).toBeCloseTo(1.80)
+    expect(
+      computeStat(
+        f,
+        {
+          'stargazing.allStarMulti': 30,
+          'stargazing.starScorpio': 100,
+        },
+        {},
+      ),
+    ).toBeCloseTo(1.8)
   })
 })
 
@@ -105,10 +135,16 @@ describe('starsFormulas — novagiant_combo_multi', () => {
   })
 
   it('super star upgrade level 15 + Why Are There Stars level 3 → 1 + 0.30 + 0.15 = 1.45', () => {
-    expect(computeStat(f, {
-      'stargazing.novagiant': 15,
-      'skillTree.whyAreThereStarsInMyMiningGame': 3,
-    }, {})).toBeCloseTo(1.45)
+    expect(
+      computeStat(
+        f,
+        {
+          'stargazing.novagiant': 15,
+          'skillTree.whyAreThereStarsInMyMiningGame': 3,
+        },
+        {},
+      ),
+    ).toBeCloseTo(1.45)
   })
 })
 

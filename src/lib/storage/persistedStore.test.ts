@@ -30,7 +30,7 @@ describe('persistedStore', () => {
 
   it('writes to localStorage on update', () => {
     const s = persistedStore('test-key', { foo: 1 })
-    s.update(v => ({ ...v, foo: v.foo + 10 }))
+    s.update((v) => ({ ...v, foo: v.foo + 10 }))
     expect(JSON.parse(localStorage.getItem('test-key')!)).toEqual({ foo: 11 })
   })
 
@@ -54,7 +54,9 @@ describe('persistedStore', () => {
 
   it('catches validate throws and falls back to defaults', () => {
     localStorage.setItem('test-key', JSON.stringify({ bad: true }))
-    const s = persistedStore('test-key', { foo: 1 }, () => { throw new Error('nope') })
+    const s = persistedStore('test-key', { foo: 1 }, () => {
+      throw new Error('nope')
+    })
     expect(get(s)).toEqual({ foo: 1 })
   })
 

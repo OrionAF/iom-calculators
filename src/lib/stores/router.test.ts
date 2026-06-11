@@ -20,7 +20,7 @@ describe('navigate', () => {
 describe('currentRoute', () => {
   it('resolves fishing route to destination with label and kind', () => {
     let route = null
-    const unsubscribe = currentRoute.subscribe(value => {
+    const unsubscribe = currentRoute.subscribe((value) => {
       route = value
     })
     window.location.hash = '#fishing'
@@ -34,7 +34,7 @@ describe('currentRoute', () => {
 
   it('returns null for unknown route', () => {
     let route = null
-    const unsubscribe = currentRoute.subscribe(value => {
+    const unsubscribe = currentRoute.subscribe((value) => {
       route = value
     })
     window.location.hash = '#unknown'

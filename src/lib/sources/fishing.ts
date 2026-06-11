@@ -317,7 +317,7 @@ const polyCardMultiE2: Source = {
   name: 'Poly Card Multi Enhancement (T2)',
   system: 'fishing',
   maxLevel: 20,
-  fn: (l) => l * 0.10,
+  fn: (l) => l * 0.1,
   inputs: [],
 }
 
@@ -392,7 +392,7 @@ const noticeT1ExpGain: Source = {
   name: 'T1 Notice – Experience Gain',
   system: 'fishing',
   maxLevel: 45,
-  fn: (l) => l * 0.20,
+  fn: (l) => l * 0.2,
   inputs: [],
 }
 
@@ -432,7 +432,7 @@ const noticeT1AllFloorMul: Source = {
   name: 'T1 Notice – All Floor Multi',
   system: 'fishing',
   maxLevel: 1,
-  fn: (l) => l * 0.20,
+  fn: (l) => l * 0.2,
   inputs: [],
 }
 
@@ -485,7 +485,7 @@ const noticeT1RemoveW3SpeedMod: Source = {
   name: 'T1 Notice – Remove W3 Speed Mod',
   system: 'fishing',
   maxLevel: 1,
-  fn: (l) => l * 0.30,
+  fn: (l) => l * 0.3,
   inputs: [],
 }
 

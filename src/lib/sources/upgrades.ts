@@ -35,7 +35,7 @@ export const upgrUpgradePickaxe: Source = {
   name: 'Upgrade Pickaxe',
   system: 'upgrades',
   maxLevel: 155,
-  fn: (l) => l === 0 ? 0 : (l + 1) * (l + 2) / 2,
+  fn: (l) => (l === 0 ? 0 : ((l + 1) * (l + 2)) / 2),
   inputs: [],
 }
 
@@ -85,7 +85,7 @@ export const upgrBombDmg1: Source = {
   name: 'Bomb Damage (W1-1)',
   system: 'upgrades',
   maxLevel: 16,
-  fn: (l) => l * 0.20,
+  fn: (l) => l * 0.2,
   inputs: [],
 }
 
@@ -95,7 +95,7 @@ export const upgrOreSellPrice: Source = {
   name: 'Ore Sell Price',
   system: 'upgrades',
   maxLevel: 16,
-  fn: (l) => l * 0.10,
+  fn: (l) => l * 0.1,
   inputs: [],
 }
 
@@ -115,7 +115,7 @@ export const upgrPickaxeDmg1: Source = {
   name: 'Pickaxe Damage (W1-1)',
   system: 'upgrades',
   maxLevel: 16,
-  fn: (l) => l * 0.10,
+  fn: (l) => l * 0.1,
   inputs: [],
 }
 
@@ -188,7 +188,7 @@ export const upgrPickaxeDmg3: Source = {
   name: 'Pickaxe Damage (W1-3)',
   system: 'upgrades',
   maxLevel: 16,
-  fn: (l) => l * 0.20,
+  fn: (l) => l * 0.2,
   inputs: [],
 }
 
@@ -198,7 +198,7 @@ export const upgrBombDmg2: Source = {
   name: 'Bomb Damage (W1-2)',
   system: 'upgrades',
   maxLevel: 16,
-  fn: (l) => l * 0.40,
+  fn: (l) => l * 0.4,
   inputs: [],
 }
 
@@ -261,7 +261,7 @@ export const upgrSuperCritDmg: Source = {
   name: 'Pickaxe Super Crit Damage',
   system: 'upgrades',
   maxLevel: 11,
-  fn: (l) => l * 0.10,
+  fn: (l) => l * 0.1,
   inputs: [],
 }
 
@@ -695,7 +695,7 @@ export const upgrFishingDronePower: Source = {
   name: 'Fishing Drone Base Power',
   system: 'upgrades',
   maxLevel: 50,
-  fn: (l) => l * 0.10,
+  fn: (l) => l * 0.1,
   inputs: [],
 }
 
@@ -780,7 +780,7 @@ export const upgrPickaxeDmgMul3: Source = {
   name: 'Pickaxe Damage ×0.10 (W4)',
   system: 'upgrades',
   maxLevel: 50,
-  fn: (l) => 1 + l * 0.10,
+  fn: (l) => 1 + l * 0.1,
   inputs: [],
 }
 
@@ -793,7 +793,7 @@ export const upgrBombDmgMul3: Source = {
   name: 'Bomb Damage ×0.10 (W4)',
   system: 'upgrades',
   maxLevel: 50,
-  fn: (l) => 1 + l * 0.10,
+  fn: (l) => 1 + l * 0.1,
   inputs: [],
 }
 

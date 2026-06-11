@@ -46,7 +46,7 @@ describe('resolvedStats store', () => {
     setValuePack('fishers_bundle', true)
     const after = get(resolvedStats)['fishing_triple_tick_chance']
     expect(after.provenance).toBe('computed')
-    expect((after.value ?? 0) - (before.value ?? 0)).toBeCloseTo(0.10)
+    expect((after.value ?? 0) - (before.value ?? 0)).toBeCloseTo(0.1)
   })
 
   it('founder tier feeds founder-affected stats', () => {
@@ -64,12 +64,22 @@ describe('resolvedStats store', () => {
   })
 
   it('exported stats override computed ones and add export-only keys', () => {
-    loadStats(JSON.stringify({
-      version: '1',
-      stats: { fishing_shiny_multi: 99, some_export_only_stat: 7 },
-    }))
+    loadStats(
+      JSON.stringify({
+        version: '1',
+        stats: { fishing_shiny_multi: 99, some_export_only_stat: 7 },
+      }),
+    )
     const all = get(resolvedStats)
-    expect(all['fishing_shiny_multi']).toEqual({ value: 99, provenance: 'export', incomplete: false })
-    expect(all['some_export_only_stat']).toEqual({ value: 7, provenance: 'export', incomplete: false })
+    expect(all['fishing_shiny_multi']).toEqual({
+      value: 99,
+      provenance: 'export',
+      incomplete: false,
+    })
+    expect(all['some_export_only_stat']).toEqual({
+      value: 7,
+      provenance: 'export',
+      incomplete: false,
+    })
   })
 })

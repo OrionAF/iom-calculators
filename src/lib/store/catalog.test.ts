@@ -13,7 +13,7 @@ import { formatSourceValue } from '$lib/format'
 
 describe('VALUE_PACKS', () => {
   it('has unique slugs', () => {
-    const slugs = VALUE_PACKS.map(p => p.slug)
+    const slugs = VALUE_PACKS.map((p) => p.slug)
     expect(new Set(slugs).size).toBe(slugs.length)
   })
 
@@ -39,15 +39,17 @@ describe('VALUE_PACKS', () => {
   })
 
   it('has exactly 4 mirror unlock packs (one per gem unlock)', () => {
-    const mirrors = VALUE_PACKS.filter(p => p.mirrorUnlockKey !== undefined)
+    const mirrors = VALUE_PACKS.filter((p) => p.mirrorUnlockKey !== undefined)
     expect(mirrors.length).toBe(4)
   })
 })
 
 describe('PERKS', () => {
-  it('has 4 perks', () => { expect(PERKS.length).toBe(4) })
+  it('has 4 perks', () => {
+    expect(PERKS.length).toBe(4)
+  })
   it('has unique slugs', () => {
-    const slugs = PERKS.map(p => p.slug)
+    const slugs = PERKS.map((p) => p.slug)
     expect(new Set(slugs).size).toBe(slugs.length)
   })
   it('all entries have non-empty name and icon', () => {
@@ -59,9 +61,11 @@ describe('PERKS', () => {
 })
 
 describe('PERK_BUNDLES', () => {
-  it('has 2 bundles', () => { expect(PERK_BUNDLES.length).toBe(2) })
+  it('has 2 bundles', () => {
+    expect(PERK_BUNDLES.length).toBe(2)
+  })
   it('all perkSlugs reference valid PERK entries', () => {
-    const validSlugs = new Set(PERKS.map(p => p.slug))
+    const validSlugs = new Set(PERKS.map((p) => p.slug))
     for (const bundle of PERK_BUNDLES) {
       for (const slug of bundle.perkSlugs) {
         expect(validSlugs.has(slug)).toBe(true)
@@ -76,10 +80,12 @@ describe('PERK_BUNDLES', () => {
 })
 
 describe('GEM_UNLOCKS', () => {
-  it('has 4 unlocks', () => { expect(GEM_UNLOCKS.length).toBe(4) })
+  it('has 4 unlocks', () => {
+    expect(GEM_UNLOCKS.length).toBe(4)
+  })
   it('all mirrorUnlockKey values correspond to a value pack with the same key', () => {
     const valuePackMirrors = new Set(
-      VALUE_PACKS.filter(p => p.mirrorUnlockKey).map(p => p.mirrorUnlockKey)
+      VALUE_PACKS.filter((p) => p.mirrorUnlockKey).map((p) => p.mirrorUnlockKey),
     )
     for (const unlock of GEM_UNLOCKS) {
       expect(valuePackMirrors.has(unlock.mirrorUnlockKey)).toBe(true)
@@ -88,7 +94,9 @@ describe('GEM_UNLOCKS', () => {
 })
 
 describe('GEM_UPGRADES', () => {
-  it('has 6 upgrades', () => { expect(GEM_UPGRADES.length).toBe(6) })
+  it('has 6 upgrades', () => {
+    expect(GEM_UPGRADES.length).toBe(6)
+  })
   it('gemUpgradeMaxLevel > 0 for all entries (derived from sources)', () => {
     for (const u of GEM_UPGRADES) expect(gemUpgradeMaxLevel(u)).toBeGreaterThan(0)
   })
@@ -110,7 +118,7 @@ describe('FOUNDER_TIERS', () => {
   it('vipPointsRequired is strictly increasing', () => {
     for (let i = 1; i < FOUNDER_TIERS.length; i++) {
       expect(FOUNDER_TIERS[i].vipPointsRequired).toBeGreaterThan(
-        FOUNDER_TIERS[i - 1].vipPointsRequired
+        FOUNDER_TIERS[i - 1].vipPointsRequired,
       )
     }
   })
@@ -126,12 +134,12 @@ describe('FOUNDER_TIERS', () => {
 
   it('founder effect values come from source.fn(tier)', () => {
     // Tier 5 Golden Lootbug Chance at tier 7: 0.06 + 2×0.03 = 0.12
-    const tier5 = FOUNDER_TIERS.find(t => t.tier === 5)!
+    const tier5 = FOUNDER_TIERS.find((t) => t.tier === 5)!
     expect(tier5.effects[0].source.fn(7, {})).toBeCloseTo(0.12, 10)
     // Below unlock tier → 0
     expect(tier5.effects[0].source.fn(4, {})).toBe(0)
     // Tier 1 cooldown at tier 12: 60 - 11×2 = 38
-    const tier1 = FOUNDER_TIERS.find(t => t.tier === 1)!
+    const tier1 = FOUNDER_TIERS.find((t) => t.tier === 1)!
     expect(tier1.effects[0].source.fn(12, {})).toBe(38)
   })
 })
@@ -141,14 +149,15 @@ describe('catalog ↔ sources coverage', () => {
 
   it('every effect source in the catalog is a registered storeSources entry', () => {
     const all = [
-      ...VALUE_PACKS.flatMap(p => p.effects),
-      ...PERKS.flatMap(p => p.effects),
-      ...GEM_UNLOCKS.flatMap(u => u.effects),
-      ...GEM_UPGRADES.flatMap(u => u.effects),
-      ...FOUNDER_TIERS.flatMap(t => t.effects),
+      ...VALUE_PACKS.flatMap((p) => p.effects),
+      ...PERKS.flatMap((p) => p.effects),
+      ...GEM_UNLOCKS.flatMap((u) => u.effects),
+      ...GEM_UPGRADES.flatMap((u) => u.effects),
+      ...FOUNDER_TIERS.flatMap((t) => t.effects),
     ]
     for (const e of all) {
-      if (e.source) expect(knownSources.has(e.source), `unregistered source: ${e.source.key}`).toBe(true)
+      if (e.source)
+        expect(knownSources.has(e.source), `unregistered source: ${e.source.key}`).toBe(true)
     }
   })
 

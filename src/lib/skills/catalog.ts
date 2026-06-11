@@ -1,6 +1,6 @@
 export interface SkillBonus {
   label: string
-  statKey?: string  // key into STAT_REGISTRY; enables tooltip + future compute
+  statKey?: string // key into STAT_REGISTRY; enables tooltip + future compute
 }
 
 export interface SkillNode {
@@ -190,7 +190,10 @@ const _ALL: SkillNode[] = [
     costs: [7],
     bonuses: [
       { label: 'Freebie Pack Relic Chest Chance +1%', statKey: 'chance_for_relic_chest' },
-      { label: 'Freebie Relic Chance Per 250 Relics Opened +1%', statKey: 'chance_for_relic_chest' },
+      {
+        label: 'Freebie Relic Chance Per 250 Relics Opened +1%',
+        statKey: 'chance_for_relic_chest',
+      },
     ],
   },
   {
@@ -282,7 +285,9 @@ const _ALL: SkillNode[] = [
     name: 'Optical Phenomenon',
     image: 'Optical Phenomenon.png',
     costs: [18],
-    bonuses: [{ label: '+1% Rainbow Floor Chance (Gives 50× Ores)', statKey: 'rainbow_floor_chance' }],
+    bonuses: [
+      { label: '+1% Rainbow Floor Chance (Gives 50× Ores)', statKey: 'rainbow_floor_chance' },
+    ],
   },
 
   // ── Obelisk Level 17–18 ─────────────────────────────────────────────────────
@@ -342,7 +347,7 @@ const _ALL: SkillNode[] = [
     bonuses: [
       { label: 'Unlocks the Veinmorpher Bomb' },
       { label: 'Can turn ores into veins', statKey: 'veinmorpher_chance' },
-      { label: 'Can turn veins into golden veins', statKey: 'veinmorpher_golden_chance' }
+      { label: 'Can turn veins into golden veins', statKey: 'veinmorpher_golden_chance' },
     ],
     obeliskLevel: 19,
   },
@@ -562,7 +567,7 @@ const _ALL: SkillNode[] = [
   },
   {
     id: 'CtrlCCtrlV',
-    name: "Ctrl+C Ctrl+V Stars",
+    name: 'Ctrl+C Ctrl+V Stars',
     image: 'Ctrl+C Ctrl+V Stars.png',
     costs: [75, 94, 117],
     bonuses: [
@@ -635,7 +640,12 @@ const _ALL: SkillNode[] = [
     name: 'Pond Yield',
     image: 'Pond Yield.png',
     costs: [750],
-    bonuses: [{ label: 'Golden Frog Multiplier +0.001× per Golden Frog Caught', statKey: 'lootfrog_golden_multi' }],
+    bonuses: [
+      {
+        label: 'Golden Frog Multiplier +0.001× per Golden Frog Caught',
+        statKey: 'lootfrog_golden_multi',
+      },
+    ],
     obeliskLevel: 60,
   },
   {
@@ -705,42 +715,48 @@ export const SKILL_SECTIONS: SkillSection[] = [
   {
     id: 'early',
     label: 'No Requirement',
-    skills: _ALL.filter(s => s.obeliskLevel === undefined),
+    skills: _ALL.filter((s) => s.obeliskLevel === undefined),
   },
   {
     id: 'ol17',
     label: 'Obelisk Lv. 17–18',
-    skills: _ALL.filter(s => s.obeliskLevel !== undefined && s.obeliskLevel <= 18),
+    skills: _ALL.filter((s) => s.obeliskLevel !== undefined && s.obeliskLevel <= 18),
   },
   {
     id: 'ol19',
     label: 'Obelisk Lv. 19–20',
-    skills: _ALL.filter(s => s.obeliskLevel !== undefined && s.obeliskLevel >= 19 && s.obeliskLevel <= 20),
+    skills: _ALL.filter(
+      (s) => s.obeliskLevel !== undefined && s.obeliskLevel >= 19 && s.obeliskLevel <= 20,
+    ),
   },
   {
     id: 'ol23',
     label: 'Obelisk Lv. 23–26',
-    skills: _ALL.filter(s => s.obeliskLevel !== undefined && s.obeliskLevel >= 23 && s.obeliskLevel <= 26),
+    skills: _ALL.filter(
+      (s) => s.obeliskLevel !== undefined && s.obeliskLevel >= 23 && s.obeliskLevel <= 26,
+    ),
   },
   {
     id: 'ol30',
     label: 'Obelisk Lv. 30',
-    skills: _ALL.filter(s => s.obeliskLevel === 30),
+    skills: _ALL.filter((s) => s.obeliskLevel === 30),
   },
   {
     id: 'ol37',
     label: 'Obelisk Lv. 37',
-    skills: _ALL.filter(s => s.obeliskLevel === 37),
+    skills: _ALL.filter((s) => s.obeliskLevel === 37),
   },
   {
     id: 'ol43',
     label: 'Obelisk Lv. 43–50',
-    skills: _ALL.filter(s => s.obeliskLevel !== undefined && s.obeliskLevel >= 43 && s.obeliskLevel <= 50),
+    skills: _ALL.filter(
+      (s) => s.obeliskLevel !== undefined && s.obeliskLevel >= 43 && s.obeliskLevel <= 50,
+    ),
   },
   {
     id: 'ol60',
     label: 'Obelisk Lv. 60+',
-    skills: _ALL.filter(s => s.obeliskLevel !== undefined && s.obeliskLevel >= 60),
+    skills: _ALL.filter((s) => s.obeliskLevel !== undefined && s.obeliskLevel >= 60),
   },
 ]
 

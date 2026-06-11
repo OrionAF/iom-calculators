@@ -11,11 +11,7 @@ function clone<T>(v: T): T {
   return v === null || typeof v !== 'object' ? v : structuredClone(v)
 }
 
-function readStorage<T>(
-  key: string,
-  defaults: T,
-  validate?: (parsed: unknown) => T,
-): T {
+function readStorage<T>(key: string, defaults: T, validate?: (parsed: unknown) => T): T {
   if (typeof window === 'undefined') return clone(defaults)
   try {
     const raw = localStorage.getItem(key)
@@ -38,7 +34,11 @@ function writeStorage<T>(key: string, value: T): void {
 
 function removeStorage(key: string): void {
   if (typeof window === 'undefined') return
-  try { localStorage.removeItem(key) } catch { /* ignore */ }
+  try {
+    localStorage.removeItem(key)
+  } catch {
+    /* ignore */
+  }
 }
 
 /**
@@ -58,7 +58,7 @@ export function persistedStore<T>(
   const inner = writable<T>(initial)
   let muted = false
 
-  inner.subscribe(value => {
+  inner.subscribe((value) => {
     if (!muted) writeStorage(key, value)
   })
 

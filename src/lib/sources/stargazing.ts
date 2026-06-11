@@ -166,7 +166,7 @@ const supergigantsMulti: Source = {
   name: 'Supergiant Star Multiplier (Super Star)',
   system: 'stargazing',
   maxLevel: 20,
-  fn: (l) => l * 0.10,
+  fn: (l) => l * 0.1,
   inputs: [],
 }
 
@@ -601,7 +601,7 @@ const starDracoGalacticMul: Source = {
   name: 'Draco (Star)',
   system: 'stargazing',
   maxLevel: 40,
-  fn: (l) => l * 0.10,
+  fn: (l) => l * 0.1,
   inputs: [],
 }
 

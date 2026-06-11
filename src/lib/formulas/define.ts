@@ -11,6 +11,6 @@ export function defineFormulas(map: Record<string, StatContributions>): FormulaM
     Object.entries(map).map(([key, { contributions }]) => [
       key,
       { base: STAT_REGISTRY[key]?.base ?? 0, contributions },
-    ])
+    ]),
   )
 }

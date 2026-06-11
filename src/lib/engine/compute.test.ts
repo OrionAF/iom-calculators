@@ -38,7 +38,7 @@ const srcC: Source = {
   system: 'items',
   maxLevel: 1,
   type: 'buff',
-  fn: (active) => active ? 1.5 : 1,
+  fn: (active) => (active ? 1.5 : 1),
   inputs: [],
 }
 
@@ -71,9 +71,7 @@ const multiplicativeFormula: StatFormula = {
 // Setter formula: base=5, srcA sets result
 const setterFormula: StatFormula = {
   base: 5,
-  contributions: [
-    { source: srcA, op: '=' },
-  ],
+  contributions: [{ source: srcA, op: '=' }],
 }
 
 // Mixed: base=0, srcA(+), srcC(×)
@@ -108,13 +106,13 @@ describe('computeStat', () => {
 
   it('additive: dynamic source uses runtime input', () => {
     const levels = { 'test.srcB': 1 }
-    const rt     = { fish: 10 }
-    expect(computeStat(additiveFormula, levels, rt)).toBeCloseTo(0.10)
+    const rt = { fish: 10 }
+    expect(computeStat(additiveFormula, levels, rt)).toBeCloseTo(0.1)
   })
 
   it('additive: both sources combined', () => {
     const levels = { 'test.srcA': 5, 'test.srcB': 1 }
-    const rt     = { fish: 10 }
+    const rt = { fish: 10 }
     expect(computeStat(additiveFormula, levels, rt)).toBeCloseTo(0.15)
   })
 
@@ -152,8 +150,7 @@ describe('computeStat', () => {
       ],
     }
     const levels = { 'test.srcA': 10, 'test.srcC': 1 }
-    expect(computeStat(reordered, levels, {}))
-      .toBeCloseTo(computeStat(mixedFormula, levels, {}))
+    expect(computeStat(reordered, levels, {})).toBeCloseTo(computeStat(mixedFormula, levels, {}))
   })
 
   it("'×1+': multiplies by (1 + bonus fraction)", () => {
@@ -167,7 +164,7 @@ describe('computeStat', () => {
       ],
     }
     const levels = { 'test.srcA': 10, 'test.srcD': 11 }
-    expect(computeStat(bonusFormula, levels, {})).toBeCloseTo((4 + 0.10) * (1 + 22))
+    expect(computeStat(bonusFormula, levels, {})).toBeCloseTo((4 + 0.1) * (1 + 22))
   })
 
   it("'×1+' at level 0 is neutral (×1)", () => {
@@ -186,13 +183,13 @@ describe('computeStat', () => {
       ],
     }
     const levels = { 'test.srcA': 3, 'test.srcB': 1, 'test.srcC': 1 }
-    expect(computeStat(f, levels, { fish: 10 })).toBeCloseTo((0.03 + 0.10) * 1.5)
+    expect(computeStat(f, levels, { fish: 10 })).toBeCloseTo((0.03 + 0.1) * 1.5)
   })
 
   it('unknown contributions are skipped', () => {
     // srcB is unknown — only srcA contributes
     const levels = { 'test.srcA': 5, 'test.srcB': 3 }
-    const rt     = { fish: 100 }
+    const rt = { fish: 100 }
     expect(computeStat(unknownFormula, levels, rt)).toBeCloseTo(0.05)
   })
 
@@ -206,7 +203,7 @@ describe('computeStat', () => {
 describe('getRequiredSources', () => {
   it('returns sources for known contributions only', () => {
     const sources = getRequiredSources(unknownFormula)
-    expect(sources.map(s => s.key)).toEqual(['test.srcA'])
+    expect(sources.map((s) => s.key)).toEqual(['test.srcA'])
   })
 
   it('deduplicates when a source appears multiple times', () => {
@@ -222,7 +219,7 @@ describe('getRequiredSources', () => {
 
   it('preserves declaration order', () => {
     const sources = getRequiredSources(additiveFormula)
-    expect(sources.map(s => s.key)).toEqual(['test.srcA', 'test.srcB'])
+    expect(sources.map((s) => s.key)).toEqual(['test.srcA', 'test.srcB'])
   })
 })
 
@@ -235,7 +232,7 @@ describe('getRequiredRuntimeInputs', () => {
 
   it('returns inputs from sources that declare them', () => {
     const inputs = getRequiredRuntimeInputs(additiveFormula)
-    expect(inputs.map(i => i.key)).toContain('fish')
+    expect(inputs.map((i) => i.key)).toContain('fish')
   })
 
   it('deduplicates when multiple sources share the same input key', () => {
@@ -254,12 +251,12 @@ describe('getRequiredRuntimeInputs', () => {
       ],
     }
     const inputs = getRequiredRuntimeInputs(formula)
-    expect(inputs.filter(i => i.key === 'fish')).toHaveLength(1)
+    expect(inputs.filter((i) => i.key === 'fish')).toHaveLength(1)
   })
 
   it('excludes inputs from unknown contributions', () => {
     const inputs = getRequiredRuntimeInputs(unknownFormula)
-    expect(inputs.map(i => i.key)).not.toContain('fish')
+    expect(inputs.map((i) => i.key)).not.toContain('fish')
   })
 })
 
@@ -289,10 +286,10 @@ describe('computeAll', () => {
   })
 
   it('computes each stat independently', () => {
-    const levels  = { 'test.srcA': 5 }
+    const levels = { 'test.srcA': 5 }
     const results = computeAll(formulas, levels, {})
-    expect(results['stat_a']).toBeCloseTo(0.05)  // additive: 5 × 0.01
-    expect(results['stat_b']).toBeCloseTo(0.05)  // setter: base=5 overridden to 0.05
+    expect(results['stat_a']).toBeCloseTo(0.05) // additive: 5 × 0.01
+    expect(results['stat_b']).toBeCloseTo(0.05) // setter: base=5 overridden to 0.05
   })
 })
 
@@ -300,12 +297,12 @@ describe('computeAll', () => {
 
 describe('getRequiredSourcesForMap', () => {
   const formulas: FormulaMap = {
-    stat_a: additiveFormula,        // srcA, srcB
-    stat_b: multiplicativeFormula,  // srcC, srcD
+    stat_a: additiveFormula, // srcA, srcB
+    stat_b: multiplicativeFormula, // srcC, srcD
   }
 
   it('collects sources from all formulas in the map', () => {
-    const keys = getRequiredSourcesForMap(formulas).map(s => s.key)
+    const keys = getRequiredSourcesForMap(formulas).map((s) => s.key)
     expect(keys).toContain('test.srcA')
     expect(keys).toContain('test.srcB')
     expect(keys).toContain('test.srcC')
@@ -314,11 +311,11 @@ describe('getRequiredSourcesForMap', () => {
 
   it('deduplicates sources that appear in multiple formulas', () => {
     const formulas2: FormulaMap = {
-      stat_x: additiveFormula,  // srcA, srcB
-      stat_y: unknownFormula,   // srcA (known), srcB (unknown → excluded)
+      stat_x: additiveFormula, // srcA, srcB
+      stat_y: unknownFormula, // srcA (known), srcB (unknown → excluded)
     }
     const sources = getRequiredSourcesForMap(formulas2)
-    expect(sources.filter(s => s.key === 'test.srcA')).toHaveLength(1)
+    expect(sources.filter((s) => s.key === 'test.srcA')).toHaveLength(1)
   })
 })
 
@@ -327,12 +324,12 @@ describe('getRequiredSourcesForMap', () => {
 describe('getRequiredRuntimeInputsForMap', () => {
   it('collects runtime inputs across all formulas, deduplicated', () => {
     const formulas: FormulaMap = {
-      stat_a: additiveFormula,        // 'fish' via srcB
-      stat_b: multiplicativeFormula,  // no runtime inputs
+      stat_a: additiveFormula, // 'fish' via srcB
+      stat_b: multiplicativeFormula, // no runtime inputs
     }
     const inputs = getRequiredRuntimeInputsForMap(formulas)
-    expect(inputs.map(i => i.key)).toContain('fish')
-    expect(inputs.filter(i => i.key === 'fish')).toHaveLength(1)
+    expect(inputs.map((i) => i.key)).toContain('fish')
+    expect(inputs.filter((i) => i.key === 'fish')).toHaveLength(1)
   })
 
   it('returns empty array when no formulas need runtime inputs', () => {

@@ -23,7 +23,7 @@ describe('computeFishingStats', () => {
       rt: { legendaryFishFound: 30 },
     })
     // 20×0.01 + 3×30×0.01 = 0.20 + 0.90 = 1.10
-    expect(result.superShinyChance).toBeCloseTo(1.10)
+    expect(result.superShinyChance).toBeCloseTo(1.1)
   })
 
   it('tick reduction: T1 max (40) + enhance max (20) + LPtP max (3)', () => {
@@ -49,6 +49,6 @@ describe('computeFishingStats', () => {
       rt: {},
     })
     // 1 + 20×0.06 + 25×0.08 + 3×0.10 = 1 + 1.20 + 2.00 + 0.30 = 4.50
-    expect(result.droneMultiplier).toBeCloseTo(4.50)
+    expect(result.droneMultiplier).toBeCloseTo(4.5)
   })
 })

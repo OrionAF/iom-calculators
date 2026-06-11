@@ -28,42 +28,39 @@ export function skillSourceKey(skillId: string): string {
   return `skillTree.${stem}`
 }
 
-export const progressLevels = derived(
-  [storeProgress, skillProgress],
-  ([$store, $skills]) => {
-    const levels: Record<string, number> = {}
+export const progressLevels = derived([storeProgress, skillProgress], ([$store, $skills]) => {
+  const levels: Record<string, number> = {}
 
-    for (const [id, level] of Object.entries($skills)) {
-      if (level > 0) levels[skillSourceKey(id)] = level
-    }
-
-    for (const pack of VALUE_PACKS) {
-      const owned = pack.mirrorUnlockKey
-        ? $store.unlocks[pack.mirrorUnlockKey] === true
-        : $store.valuePacks[pack.slug] === true
-      if (!owned) continue
-      for (const e of pack.effects) if (e.source) levels[e.source.key] = 1
-    }
-
-    for (const unlock of GEM_UNLOCKS) {
-      if ($store.unlocks[unlock.mirrorUnlockKey] !== true) continue
-      for (const e of unlock.effects) if (e.source) levels[e.source.key] = 1
-    }
-
-    for (const perk of PERKS) {
-      if ($store.perks[perk.slug] !== true) continue
-      for (const e of perk.effects) if (e.source) levels[e.source.key] = 1
-    }
-
-    for (const upgrade of GEM_UPGRADES) {
-      const rank = $store.gemUpgrades[upgrade.slug] ?? 0
-      if (rank <= 0) continue
-      for (const e of upgrade.effects) if (e.source) levels[e.source.key] = rank
-    }
-
-    // All founder effects share one source key; its level is the tier.
-    if ($store.founder.tier > 0) levels['store.founder'] = $store.founder.tier
-
-    return levels
+  for (const [id, level] of Object.entries($skills)) {
+    if (level > 0) levels[skillSourceKey(id)] = level
   }
-)
+
+  for (const pack of VALUE_PACKS) {
+    const owned = pack.mirrorUnlockKey
+      ? $store.unlocks[pack.mirrorUnlockKey] === true
+      : $store.valuePacks[pack.slug] === true
+    if (!owned) continue
+    for (const e of pack.effects) if (e.source) levels[e.source.key] = 1
+  }
+
+  for (const unlock of GEM_UNLOCKS) {
+    if ($store.unlocks[unlock.mirrorUnlockKey] !== true) continue
+    for (const e of unlock.effects) if (e.source) levels[e.source.key] = 1
+  }
+
+  for (const perk of PERKS) {
+    if ($store.perks[perk.slug] !== true) continue
+    for (const e of perk.effects) if (e.source) levels[e.source.key] = 1
+  }
+
+  for (const upgrade of GEM_UPGRADES) {
+    const rank = $store.gemUpgrades[upgrade.slug] ?? 0
+    if (rank <= 0) continue
+    for (const e of upgrade.effects) if (e.source) levels[e.source.key] = rank
+  }
+
+  // All founder effects share one source key; its level is the tier.
+  if ($store.founder.tier > 0) levels['store.founder'] = $store.founder.tier
+
+  return levels
+})

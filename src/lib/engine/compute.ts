@@ -20,10 +20,10 @@ export function computeStat(
   for (const { source, op, unknown } of formula.contributions) {
     if (unknown) continue
     const contribution = source.fn(levels[source.key] ?? 0, rt)
-    if      (op === '+')   sum += contribution
-    else if (op === '×')   factor *= contribution
+    if (op === '+') sum += contribution
+    else if (op === '×') factor *= contribution
     else if (op === '×1+') factor *= 1 + contribution
-    else if (op === '=')   base = contribution
+    else if (op === '=') base = contribution
   }
   return (base + sum) * factor
 }
@@ -35,9 +35,9 @@ export function computeStat(
 export function getRequiredSources(formula: StatFormula): Source[] {
   const seen = new Set<string>()
   return formula.contributions
-    .filter(c => !c.unknown)
-    .map(c => c.source)
-    .filter(s => seen.has(s.key) ? false : (seen.add(s.key), true))
+    .filter((c) => !c.unknown)
+    .map((c) => c.source)
+    .filter((s) => (seen.has(s.key) ? false : (seen.add(s.key), true)))
 }
 
 /**
@@ -47,9 +47,9 @@ export function getRequiredSources(formula: StatFormula): Source[] {
 export function getRequiredRuntimeInputs(formula: StatFormula): RuntimeInput[] {
   const seen = new Set<string>()
   return formula.contributions
-    .filter(c => !c.unknown)
-    .flatMap(c => c.source.inputs)
-    .filter(i => seen.has(i.key) ? false : (seen.add(i.key), true))
+    .filter((c) => !c.unknown)
+    .flatMap((c) => c.source.inputs)
+    .filter((i) => (seen.has(i.key) ? false : (seen.add(i.key), true)))
 }
 
 /**
@@ -57,7 +57,7 @@ export function getRequiredRuntimeInputs(formula: StatFormula): RuntimeInput[] {
  * Used by the UI to display a "some sources may be missing" warning.
  */
 export function hasUnknownContributions(formula: StatFormula): boolean {
-  return formula.contributions.some(c => c.unknown)
+  return formula.contributions.some((c) => c.unknown)
 }
 
 /**
@@ -70,7 +70,7 @@ export function computeAll(
   rt: Record<string, number>,
 ): Record<string, number> {
   return Object.fromEntries(
-    Object.entries(formulas).map(([key, f]) => [key, computeStat(f, levels, rt)])
+    Object.entries(formulas).map(([key, f]) => [key, computeStat(f, levels, rt)]),
   )
 }
 
@@ -81,8 +81,8 @@ export function computeAll(
 export function getRequiredSourcesForMap(formulas: FormulaMap): Source[] {
   const seen = new Set<string>()
   return Object.values(formulas)
-    .flatMap(f => getRequiredSources(f))
-    .filter(s => seen.has(s.key) ? false : (seen.add(s.key), true))
+    .flatMap((f) => getRequiredSources(f))
+    .filter((s) => (seen.has(s.key) ? false : (seen.add(s.key), true)))
 }
 
 /**
@@ -92,6 +92,6 @@ export function getRequiredSourcesForMap(formulas: FormulaMap): Source[] {
 export function getRequiredRuntimeInputsForMap(formulas: FormulaMap): RuntimeInput[] {
   const seen = new Set<string>()
   return Object.values(formulas)
-    .flatMap(f => getRequiredRuntimeInputs(f))
-    .filter(i => seen.has(i.key) ? false : (seen.add(i.key), true))
+    .flatMap((f) => getRequiredRuntimeInputs(f))
+    .filter((i) => (seen.has(i.key) ? false : (seen.add(i.key), true)))
 }

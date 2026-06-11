@@ -16,93 +16,98 @@ import { droneSources as drone } from '$lib/sources/drones'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { upgradeSources as up } from '$lib/sources/upgrades'
 
-const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
+const U: Source = {
+  key: '_unknown',
+  name: 'Unknown source',
+  system: 'upgrades',
+  fn: () => 0,
+  inputs: [],
+}
 
 export const veinsFormulas: FormulaMap = defineFormulas({
   vein_spawn_rate_multi: {
     contributions: [
-      { source: con.staRandomnessVeinSpawn,        op: '+' },
-      { source: art.artVeinSpawnT4,                op: '+' },
-      { source: pet.petTotemVeinSpawn,             op: '+' },
-      { source: st.vpPetTrainerVeinSpawn,          op: '×' },
-      { source: drone.droneSuitVeinseekerPassive,   op: '+' },
-      { source: drone.droneSuitVeinseekerUpgrade,   op: '+' },
-      { source: sg.starAriesVeinSpawn,              op: '+' },
-      { source: U, op: '+', unknown: true },  // Prestige + Elixir drone (temp) + Store + Cards
+      { source: con.staRandomnessVeinSpawn, op: '+' },
+      { source: art.artVeinSpawnT4, op: '+' },
+      { source: pet.petTotemVeinSpawn, op: '+' },
+      { source: st.vpPetTrainerVeinSpawn, op: '×' },
+      { source: drone.droneSuitVeinseekerPassive, op: '+' },
+      { source: drone.droneSuitVeinseekerUpgrade, op: '+' },
+      { source: sg.starAriesVeinSpawn, op: '+' },
+      { source: U, op: '+', unknown: true }, // Prestige + Elixir drone (temp) + Store + Cards
     ],
   },
   vein_income_multi: {
     contributions: [
-      { source: sk.leprechaunsLegacyVeinIncome,    op: '×' },
-      { source: it.iceCreamSuperStarSpawn,         op: '×' },  // also affects super star spawn
-      { source: rel.legendaryRelicVeinIncome,      op: '+' },
-      { source: pet.petDuckQuestVeinIncome,        op: '+' },
-      { source: ct.ctVeinIncomeW2,                 op: '+' },
-      { source: st.vpVeinExtractorVeinIncome,      op: '×' },
-      { source: st.vpProgressionVeinIncome,        op: '×' },
-      { source: arch.idolChione,               op: '+' },
-      { source: up.upgrVeinIncomeMul,          op: '+' },
-      { source: U, op: '+', unknown: true },  // Cards + Floors
+      { source: sk.leprechaunsLegacyVeinIncome, op: '×' },
+      { source: it.iceCreamSuperStarSpawn, op: '×' }, // also affects super star spawn
+      { source: rel.legendaryRelicVeinIncome, op: '+' },
+      { source: pet.petDuckQuestVeinIncome, op: '+' },
+      { source: ct.ctVeinIncomeW2, op: '+' },
+      { source: st.vpVeinExtractorVeinIncome, op: '×' },
+      { source: st.vpProgressionVeinIncome, op: '×' },
+      { source: arch.idolChione, op: '+' },
+      { source: up.upgrVeinIncomeMul, op: '+' },
+      { source: U, op: '+', unknown: true }, // Cards + Floors
     ],
   },
   golden_vein_chance: {
     contributions: [
       { source: con.staRandomnessGoldenVeinChance, op: '+' },
-      { source: pet.petTotemGoldenVeinChance,      op: '+' },
-      { source: ct.ctGoldenVeinChance,             op: '+' },
+      { source: pet.petTotemGoldenVeinChance, op: '+' },
+      { source: ct.ctGoldenVeinChance, op: '+' },
       { source: st.vpVeinExtractorGoldenVeinChance, op: '+' },
-      { source: up.upgrGoldenVeinChance,        op: '+' },
-      { source: U, op: '+', unknown: true },   // Pets + Stargazing
+      { source: up.upgrGoldenVeinChance, op: '+' },
+      { source: U, op: '+', unknown: true }, // Pets + Stargazing
     ],
   },
   golden_vein_multi: {
     contributions: [
-      { source: it.goldenStrawberriesGoldenVein,   op: '+' },
-      { source: rel.legendaryRelicVeinIncome,      op: '+' },
-      { source: con.staPropGoldenVeinMul,          op: '×' },
-      { source: pet.petTotemGoldenVeinMul,         op: '+' },
-      { source: pet.petDuckQuestGoldenVeinMul,     op: '+' },
-      { source: ch.chGoldenVeinMul,                op: '+' },
-      { source: card.cardGoldenVein,               op: '×' },
-      { source: st.vpVeinExtractorGoldenVeinMul,   op: '×' },
-      { source: sg.starAriesGoldenVein,         op: '+' },
-      { source: f.noticeT1GoldenVeinMul,        op: '+' },
-      { source: up.upgrGoldenVeinMul,           op: '+' },
-      { source: U, op: '+', unknown: true },   // Drones fueled Veinseeker (temp)
+      { source: it.goldenStrawberriesGoldenVein, op: '+' },
+      { source: rel.legendaryRelicVeinIncome, op: '+' },
+      { source: con.staPropGoldenVeinMul, op: '×' },
+      { source: pet.petTotemGoldenVeinMul, op: '+' },
+      { source: pet.petDuckQuestGoldenVeinMul, op: '+' },
+      { source: ch.chGoldenVeinMul, op: '+' },
+      { source: card.cardGoldenVein, op: '×' },
+      { source: st.vpVeinExtractorGoldenVeinMul, op: '×' },
+      { source: sg.starAriesGoldenVein, op: '+' },
+      { source: f.noticeT1GoldenVeinMul, op: '+' },
+      { source: up.upgrGoldenVeinMul, op: '+' },
+      { source: U, op: '+', unknown: true }, // Drones fueled Veinseeker (temp)
     ],
   },
   rainbow_vein_chance: {
     contributions: [
-      { source: ct.ctRainbowVeinMul,               op: '+' },  // note: W4 contract is +multi but wiki labels as chance
+      { source: ct.ctRainbowVeinMul, op: '+' }, // note: W4 contract is +multi but wiki labels as chance
       { source: st.vpVeinExtractorRainbowVeinChance, op: '+' },
-      { source: pet.petTotemSkinRainbowVein,   op: '+' },
-      { source: con.staRandomnessRainbowVein,  op: '+' },
-      { source: con.staNatureRainbowVein,      op: '+' },
-      { source: sg.ssRainbowVeinChance,        op: '+' },
-      { source: up.upgrRainbowVeinChance,       op: '+' },
-      { source: U, op: '+', unknown: true },   // Store + Floors WQ16
+      { source: pet.petTotemSkinRainbowVein, op: '+' },
+      { source: con.staRandomnessRainbowVein, op: '+' },
+      { source: con.staNatureRainbowVein, op: '+' },
+      { source: sg.ssRainbowVeinChance, op: '+' },
+      { source: up.upgrRainbowVeinChance, op: '+' },
+      { source: U, op: '+', unknown: true }, // Store + Floors WQ16
     ],
   },
   rainbow_vein_multi: {
     contributions: [
       { source: sk.insaneInTheVeinGainRainbowVein, op: '+' },
-      { source: card.cardRainbowVein,              op: '×' },
-      { source: f.noticeT1RainbowVeinMul,      op: '+' },
-      { source: up.upgrRainbowVeinMul,          op: '+' },
-
+      { source: card.cardRainbowVein, op: '×' },
+      { source: f.noticeT1RainbowVeinMul, op: '+' },
+      { source: up.upgrRainbowVeinMul, op: '+' },
     ],
   },
   gleaming_vein_chance: {
     contributions: [
-      { source: arch.archGleamingChance,       op: '+' },
-      { source: U, op: '+', unknown: true },   // Cards: Infernal Dino, Stargazing BH14, Fishing Shellstealer T1
+      { source: arch.archGleamingChance, op: '+' },
+      { source: U, op: '+', unknown: true }, // Cards: Infernal Dino, Stargazing BH14, Fishing Shellstealer T1
     ],
   },
   gleaming_vein_multi: {
     contributions: [
-      { source: drone.coalGleamingVein,        op: '+' },
-      { source: arch.archGleamingMul,          op: '+' },
-      { source: U, op: '+', unknown: true },   // Cards: Gleaming Vein, Fishing Shellstealer T2
+      { source: drone.coalGleamingVein, op: '+' },
+      { source: arch.archGleamingMul, op: '+' },
+      { source: U, op: '+', unknown: true }, // Cards: Gleaming Vein, Fishing Shellstealer T2
     ],
   },
 })

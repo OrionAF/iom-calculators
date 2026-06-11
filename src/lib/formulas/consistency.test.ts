@@ -9,7 +9,9 @@ describe('formula ↔ source consistency', () => {
       for (const c of formula.contributions) {
         if (c.unknown || c.source.op === undefined) continue
         if (c.op !== c.source.op) {
-          mismatches.push(`${statKey} ← ${c.source.key}: formula '${c.op}' vs source '${c.source.op}'`)
+          mismatches.push(
+            `${statKey} ← ${c.source.key}: formula '${c.op}' vs source '${c.source.op}'`,
+          )
         }
       }
     }
@@ -32,7 +34,7 @@ describe('formula ↔ source consistency', () => {
   })
 
   it('every formula key resolves to a registry entry', () => {
-    const missing = Object.keys(ALL_FORMULAS).filter(k => !STAT_REGISTRY[k])
+    const missing = Object.keys(ALL_FORMULAS).filter((k) => !STAT_REGISTRY[k])
     expect(missing, missing.join(', ')).toHaveLength(0)
   })
 })

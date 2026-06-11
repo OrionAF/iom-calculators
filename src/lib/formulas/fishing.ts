@@ -23,7 +23,6 @@ const UNKNOWN: Source = {
 }
 
 export const fishingFormulas: FormulaMap = defineFormulas({
-
   /**
    * Fishing Rod Power
    * base = 1 (base rod power before any upgrades)
@@ -31,12 +30,12 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_rod_power: {
     contributions: [
-      { source: f.rodBase,              op: '×' },
-      { source: f.rodMultiT1,           op: '×' },
-      { source: f.rodMultiE1,           op: '×' },
-      { source: sk.motleySchoolRod,     op: '×' },
+      { source: f.rodBase, op: '×' },
+      { source: f.rodMultiT1, op: '×' },
+      { source: f.rodMultiE1, op: '×' },
+      { source: sk.motleySchoolRod, op: '×' },
       { source: st.vpHalfWayFishingRod, op: '+' },
-      { source: card.cardFishingRod,    op: '×' },
+      { source: card.cardFishingRod, op: '×' },
     ],
   },
 
@@ -47,14 +46,14 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_drone_capacity: {
     contributions: [
-      { source: f.droneCapT1,              op: '+' },
-      { source: f.droneCapT1B,             op: '+' },
-      { source: f.droneCapE1,              op: '+' },
-      { source: f.droneCapE1C,             op: '+' },
+      { source: f.droneCapT1, op: '+' },
+      { source: f.droneCapT1B, op: '+' },
+      { source: f.droneCapE1, op: '+' },
+      { source: f.droneCapE1C, op: '+' },
       { source: sk.fishingWithFriendsDrones, op: '+' },
-      { source: sk.motleySchoolDrones,     op: '+' },
-      { source: arch.idolAres,             op: '+' },
-      { source: f.droneCloner,             op: '×' },
+      { source: sk.motleySchoolDrones, op: '+' },
+      { source: arch.idolAres, op: '+' },
+      { source: f.droneCloner, op: '×' },
     ],
   },
 
@@ -65,10 +64,9 @@ export const fishingFormulas: FormulaMap = defineFormulas({
   fishing_drone_power: {
     contributions: [
       { source: f.droneBaseT1, op: '+' },
-      { source: arch.idolPoseidon,         op: '+' },
-      { source: arch.idolAres,             op: '+' },
-      { source: up.upgrFishingDronePower,       op: '+' },
-
+      { source: arch.idolPoseidon, op: '+' },
+      { source: arch.idolAres, op: '+' },
+      { source: up.upgrFishingDronePower, op: '+' },
     ],
   },
 
@@ -78,12 +76,12 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_drone_multiplier: {
     contributions: [
-      { source: f.droneMultiT1,                       op: '+' },
-      { source: f.droneMultiE1,                       op: '+' },
-      { source: sk.fishingWithFriendsDronePower,       op: '+' },
-      { source: sk.completionistGatekeeperDronePower,  op: '+' },
-      { source: arch.idolTethysDronePower,    op: '+' },
-      { source: ws.wsDronePowerW3,           op: '+' },
+      { source: f.droneMultiT1, op: '+' },
+      { source: f.droneMultiE1, op: '+' },
+      { source: sk.fishingWithFriendsDronePower, op: '+' },
+      { source: sk.completionistGatekeeperDronePower, op: '+' },
+      { source: arch.idolTethysDronePower, op: '+' },
+      { source: ws.wsDronePowerW3, op: '+' },
     ],
   },
 
@@ -93,12 +91,12 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_tier2_dock_multi: {
     contributions: [
-      { source: f.tier2DockT2,                         op: '+' },
-      { source: f.tier2DockE2,                         op: '+' },
-      { source: sk.completionistGatekeeperTier2Dock,   op: '+' },
-      { source: pet.petNibblesQuestTier2Dock,  op: '+' },
-      { source: arch.idolTethysTier2Dock,      op: '+' },
-      { source: UNKNOWN,                               op: '+', unknown: true },  // Legendary Hauler + BH10 + Card
+      { source: f.tier2DockT2, op: '+' },
+      { source: f.tier2DockE2, op: '+' },
+      { source: sk.completionistGatekeeperTier2Dock, op: '+' },
+      { source: pet.petNibblesQuestTier2Dock, op: '+' },
+      { source: arch.idolTethysTier2Dock, op: '+' },
+      { source: UNKNOWN, op: '+', unknown: true }, // Legendary Hauler + BH10 + Card
     ],
   },
 
@@ -108,14 +106,14 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_income_multi: {
     contributions: [
-      { source: f.fishMultiT1,                     op: '+' },
-      { source: f.fishMultiE1,                     op: '+' },
-      { source: sk.fishingWithFriendsFishMulti,    op: '+' },
-      { source: sk.withThisFishFishMulti,          op: '+' },
-      { source: con.staCraftFishIncomeMul,     op: '×' },
-      { source: sg.starCetusFishIncome,        op: '+' },
-      { source: sg.ssFishIncomeMul,            op: '+' },
-      { source: UNKNOWN,                           op: '+', unknown: true },  // Legendary Hauler Bundle
+      { source: f.fishMultiT1, op: '+' },
+      { source: f.fishMultiE1, op: '+' },
+      { source: sk.fishingWithFriendsFishMulti, op: '+' },
+      { source: sk.withThisFishFishMulti, op: '+' },
+      { source: con.staCraftFishIncomeMul, op: '×' },
+      { source: sg.starCetusFishIncome, op: '+' },
+      { source: sg.ssFishIncomeMul, op: '+' },
+      { source: UNKNOWN, op: '+', unknown: true }, // Legendary Hauler Bundle
     ],
   },
 
@@ -125,8 +123,8 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_tick_reduction_seconds: {
     contributions: [
-      { source: f.tickSpeedT1,            op: '+' },
-      { source: f.tickSpeedE1,            op: '+' },
+      { source: f.tickSpeedT1, op: '+' },
+      { source: f.tickSpeedE1, op: '+' },
       { source: sk.letsPickUpThePaceTick, op: '+' },
     ],
   },
@@ -137,10 +135,10 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_double_tick_chance: {
     contributions: [
-      { source: f.doubleTickT1,                  op: '+' },
-      { source: f.doubleTickE1,                  op: '+' },
-      { source: sk.letsPickUpThePaceDouble,      op: '+' },
-      { source: arch.idolAstraeusDblTick,     op: '+' },
+      { source: f.doubleTickT1, op: '+' },
+      { source: f.doubleTickE1, op: '+' },
+      { source: sk.letsPickUpThePaceDouble, op: '+' },
+      { source: arch.idolAstraeusDblTick, op: '+' },
     ],
   },
 
@@ -150,12 +148,12 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_triple_tick_chance: {
     contributions: [
-      { source: f.tripleTickT1,                  op: '+' },
-      { source: f.tripleTickE2,                  op: '+' },
-      { source: sk.letsPickUpThePaceTriple,      op: '+' },
-      { source: st.vpFishersTripleTick,          op: '+' },
-      { source: pet.petNibblesTripleTick,        op: '+' },
-      { source: UNKNOWN,                         op: '+', unknown: true },  // Megalodon Tier 1 Tribute
+      { source: f.tripleTickT1, op: '+' },
+      { source: f.tripleTickE2, op: '+' },
+      { source: sk.letsPickUpThePaceTriple, op: '+' },
+      { source: st.vpFishersTripleTick, op: '+' },
+      { source: pet.petNibblesTripleTick, op: '+' },
+      { source: UNKNOWN, op: '+', unknown: true }, // Megalodon Tier 1 Tribute
     ],
   },
 
@@ -165,9 +163,9 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_5x_tick_chance: {
     contributions: [
-      { source: UNKNOWN, op: '+', unknown: true },  // Divine Relic
-      { source: UNKNOWN, op: '+', unknown: true },  // Legendary Hauler Bundle
-      { source: UNKNOWN, op: '+', unknown: true },  // Infernal Mr Nibbles Card
+      { source: UNKNOWN, op: '+', unknown: true }, // Divine Relic
+      { source: UNKNOWN, op: '+', unknown: true }, // Legendary Hauler Bundle
+      { source: UNKNOWN, op: '+', unknown: true }, // Infernal Mr Nibbles Card
     ],
   },
 
@@ -176,9 +174,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    * base = 1
    */
   fishing_token_multi: {
-    contributions: [
-      { source: f.tokenMultiE1, op: '+' },
-    ],
+    contributions: [{ source: f.tokenMultiE1, op: '+' }],
   },
 
   /**
@@ -186,9 +182,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    * base = 0 — total fraction by which the notice fish requirement is reduced
    */
   fishing_notice_requirement: {
-    contributions: [
-      { source: sk.friendshipEndedNoticeReq, op: '+' },
-    ],
+    contributions: [{ source: sk.friendshipEndedNoticeReq, op: '+' }],
   },
 
   /**
@@ -198,8 +192,8 @@ export const fishingFormulas: FormulaMap = defineFormulas({
   fishing_tiny_notice_chance: {
     contributions: [
       { source: f.tinyNoticeE1, op: '+' },
-      { source: UNKNOWN,        op: '+', unknown: true },  // Angler's Bundle (Store)
-      { source: UNKNOWN,        op: '+', unknown: true },  // Mr Nibbles Pet Card
+      { source: UNKNOWN, op: '+', unknown: true }, // Angler's Bundle (Store)
+      { source: UNKNOWN, op: '+', unknown: true }, // Mr Nibbles Pet Card
     ],
   },
 
@@ -209,8 +203,8 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_shiny_chance: {
     contributions: [
-      { source: f.shinyChanceT1,              op: '+' },
-      { source: sk.withThisFishShinyChance,   op: '+' },
+      { source: f.shinyChanceT1, op: '+' },
+      { source: sk.withThisFishShinyChance, op: '+' },
       { source: pet.petNibblesSkinShinyChance, op: '+' },
     ],
   },
@@ -221,10 +215,10 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_shiny_multi: {
     contributions: [
-      { source: f.shinyMultiT2,  op: '+' },
-      { source: f.shinyMultiE1,  op: '+' },
-      { source: ch.chShinyFishMul,             op: '+' },
-      { source: pet.petNibblesShinyFishMul,    op: '+' },
+      { source: f.shinyMultiT2, op: '+' },
+      { source: f.shinyMultiE1, op: '+' },
+      { source: ch.chShinyFishMul, op: '+' },
+      { source: pet.petNibblesShinyFishMul, op: '+' },
     ],
   },
 
@@ -234,8 +228,8 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_super_shiny_chance: {
     contributions: [
-      { source: f.superShinyChanceT2,                   op: '+' },
-      { source: sk.completionistGatekeeperSuperShiny,   op: '+' },
+      { source: f.superShinyChanceT2, op: '+' },
+      { source: sk.completionistGatekeeperSuperShiny, op: '+' },
     ],
   },
 
@@ -247,8 +241,8 @@ export const fishingFormulas: FormulaMap = defineFormulas({
   fishing_super_shiny_multi: {
     contributions: [
       { source: f.superShinyMultiE2, op: '+' },
-      { source: arch.idolTethysSuperShiny,     op: '+' },
-      { source: UNKNOWN,             op: '+', unknown: true },  // Tier 1 Cthulhu Tribute
+      { source: arch.idolTethysSuperShiny, op: '+' },
+      { source: UNKNOWN, op: '+', unknown: true }, // Tier 1 Cthulhu Tribute
     ],
   },
 
@@ -258,17 +252,14 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    * Left as fully unknown pending further research.
    */
   fishing_tick_speed: {
-    contributions: [
-      { source: UNKNOWN, op: '+', unknown: true },
-    ],
+    contributions: [{ source: UNKNOWN, op: '+', unknown: true }],
   },
 
   polychrome_card_bonus_fish: {
     contributions: [
-      { source: f.polyCardMultiT2,  op: '+' },
-      { source: f.polyCardMultiE2,  op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true },  // Archaeology star card
+      { source: f.polyCardMultiT2, op: '+' },
+      { source: f.polyCardMultiE2, op: '+' },
+      { source: UNKNOWN, op: '+', unknown: true }, // Archaeology star card
     ],
   },
-
 })

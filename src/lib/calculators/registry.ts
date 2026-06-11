@@ -58,5 +58,5 @@ export const destinations: Destination[] = [
 ]
 
 export function findDestination(hash: string): Destination | undefined {
-  return destinations.find(d => d.hash === hash)
+  return destinations.find((d) => d.hash === hash)
 }
