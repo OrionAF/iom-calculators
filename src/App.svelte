@@ -11,6 +11,7 @@
     const root = document.documentElement
     root.classList.toggle('font-small', $settings.fontScale === 'small')
     root.classList.toggle('font-large', $settings.fontScale === 'large')
+    root.classList.toggle('font-xlarge', $settings.fontScale === 'xlarge')
     root.dataset.density = $settings.density
   })
 

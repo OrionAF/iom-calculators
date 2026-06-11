@@ -157,7 +157,7 @@
   --text-base: 14px;
   --text-lg:   16px;
   --text-xl:   18px;
-  --text-2xl:  24px;
+  --text-2xl:  26px;
   --text-3xl:  34px;
 }
 .font-large {
@@ -168,6 +168,15 @@
   --text-xl:   22px;
   --text-2xl:  30px;
   --text-3xl:  44px;
+}
+.font-xlarge {
+  --text-xs:   14px;
+  --text-sm:   16px;
+  --text-base: 20px;
+  --text-lg:   22px;
+  --text-xl:   24px;
+  --text-2xl:  34px;
+  --text-3xl:  48px;
 }
 
 /* ── Reset & base ─────────────────────────────────────────── */

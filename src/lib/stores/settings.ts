@@ -2,7 +2,7 @@ import { persistedStore } from '$lib/storage/persistedStore'
 import type { Notation } from '$lib/format'
 
 export type ValueDisplayMode = 'notation' | 'raw'
-export type FontScale = 'small' | 'normal' | 'large'
+export type FontScale = 'small' | 'normal' | 'large' | 'xlarge'
 export type Density   = 'compact' | 'normal' | 'spacious' | 'super-spacious'
 
 export interface Settings {
