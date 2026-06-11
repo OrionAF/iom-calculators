@@ -11,6 +11,8 @@ import { constructSources as con } from '$lib/sources/construct'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { droneSources as drone } from '$lib/sources/drones'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { tributesSources as tr } from '$lib/sources/tributes'
+import { worldquestsSources as wq } from '$lib/sources/worldquests'
 
 const U: Source = {
   key: '_unknown',
@@ -44,6 +46,8 @@ export const lootfrogsFormulas: FormulaMap = defineFormulas({
       { source: ch.chGoldenFrogChance, op: '+' },
       { source: con.staAntagonismGoldenFrogChance, op: '+' },
       { source: U, op: '+', unknown: true }, // Stargazing BH6, Fishing Melting G T2, WQ3
+      { source: tr.trMeltingGibbousT2GFC, op: '+' },
+      { source: wq.wqGoldenFrogChanceQ3, op: '+' },
     ],
   },
   lootfrog_golden_multi: {
@@ -64,7 +68,7 @@ export const lootfrogsFormulas: FormulaMap = defineFormulas({
   lootfrog_10x_spawn_chance: {
     contributions: [
       { source: drone.coalLootfrog10x, op: '+' },
-      { source: U, op: '+', unknown: true }, // Floors WQ11
+      { source: wq.wqLootfrog10SpawnChanceQ11, op: '+' },
     ],
   },
   lootfrog_big_chance: {
@@ -78,7 +82,8 @@ export const lootfrogsFormulas: FormulaMap = defineFormulas({
   lootfrog_big_multi: {
     contributions: [
       { source: arch.idolSisyphusBigFrogMul, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards: Big Frog, Floors WQ18
+      { source: U, op: '+', unknown: true }, // Cards: Big Frog Misc Card
+      { source: wq.wqBigLootfrogMultiQ18, op: '×1+' },
     ],
   },
 })

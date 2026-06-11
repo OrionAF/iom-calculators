@@ -79,7 +79,7 @@ export const wqVeinIncomeMultiQ10: Source = {
   name: 'World Quest: Vein Income Multi 1.10×',
   system: 'worldquests',
   maxLevel: 1,
-  fn: (n) => n * 1.1,
+  fn: (n) => 1 + n * 0.1,
   inputs: [],
 }
 export const wqLootfrog10SpawnChanceQ11: Source = {

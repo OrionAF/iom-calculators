@@ -14,6 +14,7 @@ import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { skinsSources as sn } from '$lib/sources/skins'
 
 const U: Source = {
   key: '_unknown',
@@ -38,6 +39,7 @@ export const prestigeFormulas: FormulaMap = defineFormulas({
       { source: st.perkPrestigePts, op: '×' },
       { source: sg.starLibraPrestige, op: '+' },
       { source: U, op: '+', unknown: true }, // Prestige + Store + Cards + Construct + Skins
+      { source: sn.snPrestigePointGain, op: '×1+' },
     ],
   },
   experience_multi: {
@@ -70,6 +72,7 @@ export const prestigeFormulas: FormulaMap = defineFormulas({
       { source: arch.idolAthenaExp, op: '+' },
       { source: up.upgrExpGain, op: '+' },
       { source: U, op: '+', unknown: true }, // Prestige + Drones Elixir + Store + Skins
+      { source: sn.snExpGain, op: '×1+' },
     ],
   },
   floor_clear_requirement_multi: {
@@ -80,6 +83,7 @@ export const prestigeFormulas: FormulaMap = defineFormulas({
       { source: card.cardPrestige, op: '×' },
       { source: con.staRhythmFloorClear, op: '+' },
       { source: U, op: '+', unknown: true }, // Skins
+      { source: sn.snFloorClearReq, op: '×1+' },
     ],
   },
   artifact_cap_increase: {

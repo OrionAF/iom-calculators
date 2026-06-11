@@ -10,6 +10,7 @@ import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { petSources as pet } from '$lib/sources/pets'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { skinsSources as sn } from '$lib/sources/skins'
 
 const U: Source = {
   key: '_unknown',
@@ -91,8 +92,9 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: pet.petHappyBotQuestFreebieBank, op: '+' },
       { source: sg.starOphiuchusFreebie, op: '+' },
       { source: sg.ssBankedFreebieLootbugFreebie, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards: Glimmering Geoduck; Skins: 14th Reward
-      { source: U, op: '×', unknown: true }, // Skins: 21st Reward (multiplies ALL Freebie Cap)
+      { source: U, op: '+', unknown: true }, // Cards: Glimmering Geoduck Legendary Fish Card
+      { source: sn.snBankedFreebies, op: '+' },
+      { source: sn.snBankedFreebiesLootbugs, op: '×1+' }, // 21st Reward (multiplies ALL Freebie Cap)
     ],
   },
   freebie_cooldown_seconds: {
@@ -118,6 +120,7 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: sg.starEridanusStonksMul, op: '+' },
       { source: ch.chAllStonksMulStonks, op: '+' },
       { source: U, op: '+', unknown: true }, // Cards + Skins
+      { source: sn.snStonksMulti, op: '×1+' },
     ],
   },
   super_stonks_chance: {
@@ -147,6 +150,12 @@ export const chestsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: con.staCombatUltraStonksMul, op: '+' },
       { source: ch.chAllStonksMulUltra, op: '+' },
+    ],
+  },
+  all_stonks_multi: {
+    contributions: [
+      { source: U, op: '×', unknown: true }, // Challenges: Divine Challenge Upgrade
+      { source: U, op: '×', unknown: true }, // Construct: Statue of Combat
     ],
   },
 })

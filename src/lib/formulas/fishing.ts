@@ -11,6 +11,7 @@ import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { challengeSources as ch } from '$lib/sources/challenges'
 import { upgradeSources as up } from '$lib/sources/upgrades'
 import { workshopSources as ws } from '$lib/sources/workshop'
+import { tributesSources as tr } from '$lib/sources/tributes'
 
 // Placeholder for contributions whose per-level values are not yet known.
 // Marked unknown: true so the engine skips them and the UI flags them.
@@ -252,7 +253,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: f.superShinyMultiE2, op: '+' },
       { source: arch.idolTethysSuperShiny, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Tier 1 Cthulhu Tribute
+      { source: tr.trCthulhuT1SSM, op: '+' }, // adds to base 2x
     ],
   },
 

@@ -70,10 +70,24 @@ export function loadWikiStats(readFile: (path: string) => string): Map<string, W
   return out
 }
 
+/**
+ * Normalize stat names for wiki ↔ registry matching: the registry uses the
+ * '×' sign and full words where the wiki page titles use ASCII 'x' and
+ * 'Multi' ('5× Craft Chance' vs '5x Craft Chance').
+ */
+function normalizeName(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/×/g, 'x')
+    .replace(/\bmultiplier\b/g, 'multi')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 function registryKeyByName(): Map<string, string> {
   const map = new Map<string, string>()
   for (const [key, meta] of Object.entries(STAT_REGISTRY)) {
-    map.set(meta.name.toLowerCase(), key)
+    map.set(normalizeName(meta.name), key)
   }
   return map
 }
@@ -106,7 +120,7 @@ export function buildWikiReport(readFile: (path: string) => string): string {
   let statsWithFindings = 0
 
   for (const [name, wiki] of wikiStats) {
-    const key = nameToKey.get(name.toLowerCase())
+    const key = nameToKey.get(normalizeName(name))
     if (!key) {
       unmatched.push(name)
       continue

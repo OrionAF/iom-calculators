@@ -15,6 +15,8 @@ import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { droneSources as drone } from '$lib/sources/drones'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { tributesSources as tr } from '$lib/sources/tributes'
+import { worldquestsSources as wq } from '$lib/sources/worldquests'
 
 const U: Source = {
   key: '_unknown',
@@ -48,7 +50,8 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: st.vpProgressionVeinIncome, op: '×' },
       { source: arch.idolChione, op: '+' },
       { source: up.upgrVeinIncomeMul, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards + Floors
+      { source: U, op: '+', unknown: true }, // Cards: Infernal Duck × Infernal Veinseeker
+      { source: wq.wqVeinIncomeMultiQ10, op: '×' },
     ],
   },
   golden_vein_chance: {
@@ -86,7 +89,8 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: con.staNatureRainbowVein, op: '+' },
       { source: sg.ssRainbowVeinChance, op: '+' },
       { source: up.upgrRainbowVeinChance, op: '+' },
-      { source: U, op: '+', unknown: true }, // Store + Floors WQ16
+      { source: U, op: '+', unknown: true }, // Store: Vein Extractor (already wired?)
+      { source: wq.wqRainbowVeinChanceQ16, op: '+' },
     ],
   },
   rainbow_vein_multi: {
@@ -100,14 +104,16 @@ export const veinsFormulas: FormulaMap = defineFormulas({
   gleaming_vein_chance: {
     contributions: [
       { source: arch.archGleamingChance, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards: Infernal Dino, Stargazing BH14, Fishing Shellstealer T1
+      { source: U, op: '+', unknown: true }, // Cards: Infernal Dino; Stargazing: BH14
+      { source: tr.trGlacialShellstealerT1GVC, op: '+' },
     ],
   },
   gleaming_vein_multi: {
     contributions: [
       { source: drone.coalGleamingVein, op: '+' },
       { source: arch.archGleamingMul, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards: Gleaming Vein, Fishing Shellstealer T2
+      { source: U, op: '+', unknown: true }, // Cards: Gleaming Vein Misc Card
+      { source: tr.trGlacialShellstealerT2GVM, op: '+' }, // adds to base 5x
     ],
   },
 })

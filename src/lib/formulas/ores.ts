@@ -14,6 +14,9 @@ import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { tributesSources as tr } from '$lib/sources/tributes'
+import { worldquestsSources as wq } from '$lib/sources/worldquests'
+import { skinsSources as sn } from '$lib/sources/skins'
 
 const U: Source = {
   key: '_unknown',
@@ -61,6 +64,7 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: up.upgrGalacticFloorChance1, op: '+' },
       { source: up.upgrGalacticFloorChance2, op: '+' },
       // Pets skin + Skins
+      { source: sn.snOreSellPrice, op: '×1+' },
     ],
   },
   ore_income_multi: {
@@ -139,7 +143,8 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: st.vpPetTrainerRainbowFloor, op: '+' },
       { source: pet.petLeprechaunSkinRainbowFloor, op: '+' },
       { source: f.noticeT1RainbowFloorChance, op: '+' },
-      { source: U, op: '+', unknown: true }, // Store + Floors WQ
+      { source: U, op: '+', unknown: true }, // Store: Tier 9 Founder Perk
+      { source: wq.wqRainbowFloorChanceQ2, op: '+' },
     ],
   },
   rainbow_floor_multi: {
@@ -154,6 +159,7 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: st.vpHalfWayRainbowFloorMul, op: '×' },
       { source: sg.starPiscesRainbowFloor, op: '+' },
       { source: up.upgrRainbowFloorMul, op: '+' },
+      { source: tr.trRainbowTroutT1RFM, op: '×' },
     ],
   },
   galactic_floor_chance: {
@@ -168,6 +174,7 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: sg.ssGalacticFloorChance, op: '+' },
       { source: arch.idolSisyphusGalactic, op: '+' },
       { source: U, op: '+', unknown: true },
+      { source: wq.wqGalacticRainbowFloorChanceQ13, op: '+' },
     ],
   },
   galactic_floor_multi: {
@@ -175,7 +182,7 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: card.cardWorld3, op: '×' },
       { source: pet.petLeprechaunQuestGalacticMul, op: '+' },
       { source: sg.starDracoGalacticMul, op: '+' },
-      { source: U, op: '+', unknown: true }, // Fishing: Megalodon T1
+      { source: tr.trMegalodonT1GFM, op: '×' },
     ],
   },
 
@@ -184,6 +191,7 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: con.staCrochetPrismaticFloor, op: '+' },
       { source: up.upgrPrismaticFloorChance, op: '+' },
       { source: U, op: '+', unknown: true }, // Fueled Prism (temp), WQ8
+      { source: wq.wqPrismaticFloorChanceQ8, op: '+' },
     ],
   },
   prismatic_floor_multi: {
@@ -204,6 +212,9 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: card.cardWorld4, op: '×' },
       { source: card.cardYummyPizza, op: '×' },
       { source: U, op: '+', unknown: true },
+      { source: tr.trRainbowTroutT2AFM, op: '×' },
+      { source: sn.snAllFloorMulti, op: '×' },
+      { source: wq.wqAllFloorMultiQ17, op: '×1+' },
     ],
   },
 

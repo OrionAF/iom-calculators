@@ -135,7 +135,7 @@ export const snAllFloorMulti: Source = {
   name: 'Skins: All Floor Multipliers 1.15× (17/22)',
   system: 'skins',
   maxLevel: 1,
-  fn: (n) => n * 1.15,
+  fn: (n) => 1 + n * 0.15,
   inputs: [],
 }
 export const snGameSpeedT2: Source = {

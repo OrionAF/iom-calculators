@@ -15,6 +15,8 @@ import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { challengeSources as ch } from '$lib/sources/challenges'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { tributesSources as tr } from '$lib/sources/tributes'
+import { skinsSources as sn } from '$lib/sources/skins'
 
 const U: Source = {
   key: '_unknown',
@@ -115,6 +117,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: ch.chBombCritDmg, op: '+' },
       { source: up.upgrBombCritDmg1, op: '+' },
       { source: up.upgrBombCritDmg2, op: '+' },
+      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
     ],
   },
   bomb_recharge_speed: {
@@ -160,6 +163,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: con.staAppetiteBombCap, op: '×' },
       { source: U, op: '+', unknown: true }, // Workshop Bomb Battery Cap
+      { source: sn.snBombCapacity, op: '×1+' },
     ],
   },
   bomb_super_crit_chance: {
@@ -183,6 +187,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: ch.chBombUltraCritExtreme, op: '+' },
       { source: up.upgrBombUltraCrit1, op: '+' },
       { source: up.upgrBombUltraCrit2, op: '+' },
+      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
     ],
   },
   bomb_ultra_crit_damage: {
@@ -192,6 +197,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: ct.ctOmegaCritChance, op: '+' },
       { source: up.upgrBombOmegaCrit, op: '+' },
+      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
     ],
   },
   bomb_omega_crit_damage: {
@@ -207,6 +213,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: rel.mythicRelicBombMulti, op: '+' },
       { source: U, op: '+', unknown: true }, // Workshop
+      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
     ],
   },
   bomb_workshop_cap_increase: {
