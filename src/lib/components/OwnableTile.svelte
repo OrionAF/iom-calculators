@@ -100,7 +100,9 @@
   /* States */
   .tile-owned {
     border-color: var(--border-accent);
-    background: color-mix(in srgb, var(--accent) 6%, var(--bg-surface));
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 60%),
+      var(--bg-surface);
     box-shadow: var(--shadow-glow);
   }
   .tile-partial {
@@ -153,5 +155,6 @@
     top: var(--space-2);
     right: var(--space-2);
     color: var(--accent);
+    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent) 45%, transparent));
   }
 </style>

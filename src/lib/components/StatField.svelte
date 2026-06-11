@@ -1,3 +1,8 @@
+<script module lang="ts">
+  // Module-level counter for unique label/control ids (same pattern as StatTooltip).
+  let _counter = 0
+</script>
+
 <script lang="ts">
   interface Props {
     label: string
@@ -17,6 +22,8 @@
     onchange,
   }: Props = $props()
 
+  const fieldId = `stat-field-${++_counter}`
+
   function handleInput(e: Event) {
     const target = e.target as HTMLInputElement | HTMLSelectElement
     onchange?.(target.value)
@@ -25,7 +32,11 @@
 
 <div class="stat-field">
   <div class="field-header">
-    <label class="field-label">{label}</label>
+    {#if source === 'export'}
+      <span class="field-label">{label}</span>
+    {:else}
+      <label class="field-label" for={fieldId}>{label}</label>
+    {/if}
     <span class="badge" class:export={source === 'export'} class:manual={source === 'manual'}>
       {source === 'export' ? 'from export' : 'manual'}
     </span>
@@ -34,7 +45,7 @@
   {#if source === 'export'}
     <div class="field-value-display">{value}</div>
   {:else if type === 'select'}
-    <select class="field-input" onchange={handleInput} aria-label={label}>
+    <select class="field-input" id={fieldId} onchange={handleInput} aria-label={label}>
       {#each options as opt}
         <option value={opt} selected={opt === String(value)}>{opt}</option>
       {/each}
@@ -42,6 +53,7 @@
   {:else}
     <input
       class="field-input"
+      id={fieldId}
       {type}
       value={String(value)}
       oninput={handleInput}
@@ -94,7 +106,7 @@
     font-family: var(--font-mono);
     font-size: var(--text-base);
     color: var(--text-primary);
-    background: var(--bg-surface);
+    background: var(--bg-inset);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: var(--space-2) var(--space-3);
@@ -108,7 +120,7 @@
     font-family: var(--font-mono);
     font-size: var(--text-base);
     color: var(--text-primary);
-    background: var(--bg-surface);
+    background: var(--bg-inset);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: var(--space-2) var(--space-3);

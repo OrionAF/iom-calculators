@@ -103,10 +103,13 @@
 
   .tabstrip {
     display: flex;
-    gap: 2px;
+    gap: var(--space-1);
     overflow-x: auto;
     scroll-snap-type: x proximity;
-    border-bottom: 1px solid var(--border);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    padding: 3px;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
     mask-image: linear-gradient(
@@ -129,7 +132,7 @@
     min-height: 44px;
     background: none;
     border: none;
-    border-bottom: 2px solid transparent;
+    border-radius: var(--radius-pill);
     color: var(--text-muted);
     font-family: var(--font-body);
     font-size: var(--text-sm);
@@ -142,11 +145,11 @@
   .tab:focus-visible {
     outline: 2px solid var(--focus-ring);
     outline-offset: -2px;
-    border-radius: var(--radius-sm);
   }
   .tab.active {
     color: var(--accent);
-    border-bottom-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent);
     font-weight: var(--weight-bold);
   }
   @media (hover: hover) {

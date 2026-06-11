@@ -33,13 +33,28 @@
     flex-wrap: wrap;
   }
   .page-title {
+    position: relative;
     font-family: var(--font-display);
     font-size: var(--text-2xl);
     font-weight: var(--weight-bold);
-    color: var(--accent);
-    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+    line-height: var(--leading-tight);
     flex: 1;
     min-width: 0;
+    padding-bottom: var(--space-2);
+  }
+  /* molten underline bar */
+  .page-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 4px;
+    border-radius: var(--radius-pill);
+    background: var(--grad-molten);
+    animation: dash-grow 0.5s var(--ease-out) 0.05s both;
   }
   .page-description {
     font-size: var(--text-base);

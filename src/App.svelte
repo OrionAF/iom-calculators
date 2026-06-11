@@ -58,12 +58,16 @@
     class="main-content"
     inert={$drawerOpen || undefined}
   >
-    {#if $currentRoute && activeComponent}
-      {@const Cmp = activeComponent}
-      <Cmp />
-    {:else}
-      <HomeGrid />
-    {/if}
+    {#key $currentRoute?.hash ?? 'home'}
+      <div class="route-view">
+        {#if $currentRoute && activeComponent}
+          {@const Cmp = activeComponent}
+          <Cmp />
+        {:else}
+          <HomeGrid />
+        {/if}
+      </div>
+    {/key}
   </main>
 </div>
 
@@ -81,10 +85,15 @@
     width: 100%;
   }
 
+  .route-view {
+    animation: fade-up 0.3s var(--ease-out) both;
+  }
+
   /* Desktop: offset main content by sidebar width */
   @media (min-width: 1024px) {
     .main-content {
       margin-left: var(--sidebar-width);
+      padding: var(--space-8);
     }
   }
 

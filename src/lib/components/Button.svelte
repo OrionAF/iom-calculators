@@ -51,11 +51,12 @@
     justify-content: center;
     gap: var(--space-2);
     min-height: 44px;
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-5);
+    border-radius: var(--radius-pill);
     font-family: var(--font-body);
     font-size: var(--text-sm);
     font-weight: var(--weight-bold);
+    letter-spacing: 0.02em;
     cursor: pointer;
     text-align: center;
     transition:
@@ -63,8 +64,13 @@
       color var(--transition-fast),
       border-color var(--transition-fast),
       box-shadow var(--transition-fast),
-      opacity var(--transition-fast);
+      opacity var(--transition-fast),
+      transform var(--transition-bounce);
   }
+  @media (hover: hover) {
+    .btn:hover:not(:disabled) { transform: translateY(-1px) scale(1.02); }
+  }
+  .btn:active:not(:disabled) { transform: scale(0.97); }
   .btn:focus-visible {
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
@@ -75,31 +81,41 @@
   }
   .btn-full { width: 100%; }
 
-  /* primary — solid accent */
+  /* primary — molten fill */
   .btn-primary {
-    background: var(--accent);
+    background: var(--grad-molten);
     color: var(--accent-text);
     border: 1px solid var(--accent);
   }
   @media (hover: hover) {
-    .btn-primary:hover:not(:disabled) { background: var(--accent-hover); border-color: var(--accent-hover); }
+    .btn-primary:hover:not(:disabled) {
+      border-color: var(--accent-hover);
+      box-shadow: var(--shadow-glow);
+    }
+  }
+  .btn-primary:active:not(:disabled) {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
   }
 
   /* ghost — neutral outlined */
   .btn-ghost {
     background: none;
     color: var(--text-muted);
-    border: 1px solid var(--border);
-    font-weight: var(--weight-medium);
+    border: 1px solid var(--border-strong);
+    font-weight: var(--weight-semibold);
   }
   @media (hover: hover) {
-    .btn-ghost:hover:not(:disabled) { color: var(--text-primary); border-color: var(--text-muted); }
+    .btn-ghost:hover:not(:disabled) {
+      color: var(--text-primary);
+      border-color: var(--text-dim);
+      background: var(--bg-surface);
+    }
   }
 
   /* danger — solid red */
   .btn-danger {
     background: var(--error);
-    color: var(--text-primary);
+    color: var(--accent-text);
     border: 1px solid var(--error);
   }
   @media (hover: hover) {
@@ -113,12 +129,13 @@
   .btn-danger-outline {
     background: transparent;
     color: var(--error);
-    border: 1px solid var(--error);
+    border: 1px solid color-mix(in srgb, var(--error) 55%, transparent);
   }
   @media (hover: hover) {
     .btn-danger-outline:hover:not(:disabled) {
       background: var(--error);
-      color: var(--text-primary);
+      border-color: var(--error);
+      color: var(--accent-text);
     }
   }
 </style>

@@ -73,10 +73,10 @@
   .group-label {
     padding: 0;
     margin-bottom: var(--space-2);
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
     color: var(--text-primary);
-    letter-spacing: 0.04em;
   }
 
   .group-description {
@@ -108,7 +108,8 @@
 
   .option.selected {
     border-color: var(--border-accent);
-    background: color-mix(in srgb, var(--accent) 6%, var(--bg-surface));
+    background: color-mix(in srgb, var(--accent) 7%, var(--bg-surface));
+    box-shadow: var(--shadow-glow);
   }
 
   @media (hover: hover) {
@@ -145,7 +146,7 @@
     position: absolute;
     inset: 3px;
     border-radius: 50%;
-    background: var(--accent);
+    background: var(--grad-molten);
     transform: scale(0);
     transition: transform var(--transition-fast);
   }

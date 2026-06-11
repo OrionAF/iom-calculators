@@ -22,11 +22,15 @@
     padding: var(--space-12) var(--space-6);
     gap: var(--space-4);
     min-height: 300px;
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--bg-surface) 55%, transparent);
   }
 
   :global(.icon) {
-    opacity: 0.4;
-    color: var(--text-muted);
+    opacity: 0.55;
+    color: var(--accent-dim);
+    animation: float-y 3.4s ease-in-out infinite;
   }
 
   .title {

@@ -7,6 +7,8 @@ export type LucideIcon = typeof Icon
 export interface Destination {
   hash: string
   label: string
+  /** One-line summary shown on the home grid. */
+  description: string
   icon: LucideIcon
   kind: DestinationKind
   loader: () => Promise<{ default: Component }>
@@ -16,6 +18,7 @@ export const destinations: Destination[] = [
   {
     hash: 'loaded-stats',
     label: 'Loaded Stats',
+    description: 'Inspect every stat from your export — search, group, and compare values.',
     icon: ChartBar,
     kind: 'data',
     loader: () => import('../utilities/loaded-stats.svelte'),
@@ -23,6 +26,7 @@ export const destinations: Destination[] = [
   {
     hash: 'store',
     label: 'Store',
+    description: 'Track the Value Packs, Perks, Gem Shop upgrades and Founder tiers you own.',
     icon: ShoppingBag,
     kind: 'data',
     loader: () => import('../utilities/store.svelte'),
@@ -30,6 +34,7 @@ export const destinations: Destination[] = [
   {
     hash: 'skills',
     label: 'Skills',
+    description: 'Plan the skill tree and keep an eye on your SP budget.',
     icon: Zap,
     kind: 'data',
     loader: () => import('../utilities/skills.svelte'),
@@ -37,6 +42,7 @@ export const destinations: Destination[] = [
   {
     hash: 'fishing',
     label: 'Fishing',
+    description: 'Estimated gold income per hour from your fishing stats.',
     icon: Fish,
     kind: 'calculator',
     loader: () => import('./fishing.svelte'),
@@ -44,6 +50,7 @@ export const destinations: Destination[] = [
   {
     hash: 'settings',
     label: 'Settings',
+    description: 'Notation, layout density, font size and locally stored data.',
     icon: Settings,
     kind: 'utility',
     loader: () => import('../utilities/settings.svelte'),

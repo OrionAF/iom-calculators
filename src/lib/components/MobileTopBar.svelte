@@ -35,8 +35,8 @@
     padding-left: calc(var(--space-3) + env(safe-area-inset-left));
     padding-right: calc(var(--space-3) + env(safe-area-inset-right));
     padding-top: calc(var(--space-2) + env(safe-area-inset-top));
-    background: color-mix(in srgb, var(--bg-base) 92%, transparent);
-    backdrop-filter: blur(8px);
+    background: color-mix(in srgb, var(--bg-base) 88%, transparent);
+    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border);
   }
@@ -66,10 +66,10 @@
     flex: 1;
     min-width: 0;
     font-family: var(--font-display);
-    font-size: var(--text-base);
+    font-size: var(--text-lg);
     font-weight: var(--weight-bold);
-    color: var(--accent);
-    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
     margin: 0;
     text-align: center;
     /* leave room for the hamburger by mirroring its width on the right */

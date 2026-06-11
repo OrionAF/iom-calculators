@@ -76,6 +76,8 @@
     position: fixed;
     inset: 0;
     background: var(--overlay-bg);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     z-index: var(--z-overlay);
     border: 0;
     padding: 0;
@@ -91,14 +93,15 @@
     width: calc(100vw - var(--space-4) * 2);
     max-width: 480px;
     max-height: calc(100dvh - var(--space-8) * 2);
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
+    background: var(--bg-raised);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-surface);
+    border-top: 2px solid var(--accent);
+    box-shadow: var(--shadow-raised);
     z-index: calc(var(--z-overlay) + 1);
     display: flex;
     flex-direction: column;
-    animation: fade-in 180ms ease-out;
+    animation: pop-in 220ms var(--ease-bounce);
   }
 
   .modal-header {
@@ -114,7 +117,7 @@
     font-size: var(--text-xl);
     font-weight: var(--weight-bold);
     color: var(--text-primary);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.01em;
     margin: 0;
   }
 

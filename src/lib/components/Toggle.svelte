@@ -47,10 +47,10 @@
   }
 
   .toggle-label {
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
     color: var(--text-primary);
-    letter-spacing: 0.04em;
   }
 
   .toggle-desc {
@@ -85,8 +85,8 @@
     width: 42px;
     height: 24px;
     border-radius: 12px;
-    background: var(--bg-raised);
-    border: 1.5px solid var(--border);
+    background: var(--bg-inset);
+    border: 1.5px solid var(--border-strong);
     position: relative;
     pointer-events: none;
     transition: background var(--transition-fast), border-color var(--transition-fast);
@@ -102,18 +102,19 @@
     height: 14px;
     border-radius: 50%;
     background: var(--text-dim);
-    transition: transform 180ms var(--ease-out), background var(--transition-fast);
+    transition: transform 260ms var(--ease-bounce), background var(--transition-fast);
   }
 
   /* Checked state */
   .toggle-input:checked ~ .toggle-track {
-    background: color-mix(in srgb, var(--accent) 20%, var(--bg-raised));
-    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 22%, var(--bg-inset));
+    border-color: var(--border-accent);
+    box-shadow: var(--shadow-glow);
   }
 
   .toggle-input:checked ~ .toggle-track::after {
     transform: translateX(18px);
-    background: var(--accent);
+    background: var(--grad-molten);
   }
 
   /* Focus ring */

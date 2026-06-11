@@ -57,8 +57,13 @@
   ontouchend={onTouchEnd}
 >
   <div class="sidebar-header">
-    <Pickaxe class="sidebar-logo" size={20} aria-hidden="true" />
-    <span class="sidebar-title">IOM Calc</span>
+    <span class="logo-plate" aria-hidden="true">
+      <Pickaxe class="sidebar-logo" size={18} aria-hidden="true" />
+    </span>
+    <span class="wordmark">
+      <span class="wordmark-main">IOM</span>
+      <span class="wordmark-sub">Calculators</span>
+    </span>
     <button class="close-btn" onclick={closeDrawer} aria-label="Close navigation">
     <X size={18} aria-hidden="true" />
   </button>
@@ -143,6 +148,8 @@
     position: fixed;
     inset: 0;
     background: var(--overlay-bg);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     z-index: var(--z-overlay);
     cursor: pointer;
   }
@@ -153,7 +160,9 @@
     left: 0;
     height: 100dvh;
     width: var(--sidebar-width);
-    background: var(--bg-sidebar);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--ember) 4%, transparent), transparent 140px),
+      var(--bg-sidebar);
     border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
@@ -167,21 +176,58 @@
   .sidebar-header {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-3);
     margin-bottom: var(--space-4);
     padding-bottom: var(--space-4);
     border-bottom: 1px solid var(--border);
   }
 
+  .logo-plate {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+    background:
+      linear-gradient(160deg, color-mix(in srgb, var(--accent) 16%, transparent), color-mix(in srgb, var(--ember) 6%, transparent)),
+      var(--bg-raised);
+    border: 1px solid var(--border-accent);
+    box-shadow: var(--shadow-glow);
+    transition: rotate var(--transition-bounce), scale var(--transition-bounce);
+  }
+  .sidebar-header:hover .logo-plate {
+    rotate: -10deg;
+    scale: 1.06;
+  }
+
   :global(.sidebar-logo) { color: var(--accent); }
 
-  .sidebar-title {
-    font-family: var(--font-display);
-    font-size: var(--text-base);
-    font-weight: var(--weight-bold);
-    color: var(--accent);
-    letter-spacing: 0.06em;
+  .wordmark {
     flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .wordmark-main {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+  }
+
+  .wordmark-sub {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: var(--weight-semibold);
+    color: var(--accent);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 2px;
   }
 
   .close-btn {
@@ -199,12 +245,23 @@
   .close-btn:hover { color: var(--text-primary); }
 
   .nav-section-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-body);
     font-size: var(--text-xs);
-    font-weight: var(--weight-medium);
+    font-weight: var(--weight-semibold);
     color: var(--text-dim);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.16em;
     margin-bottom: var(--space-2);
+  }
+  /* hairline rule trailing the label */
+  .nav-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
   }
 
   .nav-list {
@@ -223,40 +280,43 @@
   }
 
   .nav-item {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-3);
     width: 100%;
     min-height: 44px;
     padding: var(--space-2) var(--space-3);
     background: none;
     border: none;
-    border-left: 2px solid transparent;
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    border-radius: var(--radius-pill);
     color: var(--text-muted);
     font-size: var(--text-base);
     font-family: var(--font-body);
+    font-weight: var(--weight-semibold);
     cursor: pointer;
     text-align: left;
     text-decoration: none;
-    transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+    transition:
+      color var(--transition-fast),
+      background var(--transition-fast),
+      translate var(--transition-bounce);
   }
 
   .nav-item:hover {
     color: var(--text-primary);
     background: var(--bg-surface);
+    translate: 3px 0;
   }
 
   .nav-item.active {
     color: var(--accent);
-    background: var(--bg-surface);
-    border-left-color: var(--accent);
-    box-shadow: inset var(--shadow-glow);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
   }
 
   .nav-item :global(.nav-icon) {
     flex-shrink: 0;
-    color: var(--text-muted);
+    color: var(--text-dim);
     transition: color var(--transition-fast);
   }
 
@@ -268,11 +328,18 @@
   /* ── Mobile (<1024px) ────────────────────────────────── */
   @media (max-width: 1023px) {
     .close-btn { display: flex; }
-    .backdrop { display: block; }
+    .backdrop {
+      display: block;
+      /* sit above the fixed topbar so it dims too */
+      z-index: var(--z-drawer);
+    }
 
     .sidebar {
       transform: translateX(-100%);
       padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+      box-shadow: var(--shadow-raised);
+      /* above topbar + backdrop: keeps the brand row and close button reachable */
+      z-index: calc(var(--z-drawer) + 1);
     }
     .sidebar.open {
       transform: translateX(0);

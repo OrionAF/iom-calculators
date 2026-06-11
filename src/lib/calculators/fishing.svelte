@@ -5,6 +5,7 @@
   import { computeFishingStats } from './logic/fishing'
   import ResultCard from '$lib/components/ResultCard.svelte'
   import EmptyState from '$lib/components/EmptyState.svelte'
+  import PageHeader from '$lib/components/PageHeader.svelte'
   import { formatGold } from '$lib/format'
 
   const result = $derived(
@@ -13,13 +14,10 @@
 </script>
 
 <div class="calculator">
-  <header class="calc-header">
-    <h1 class="calc-title">Fishing Income</h1>
-    <p class="calc-description">
-      Estimates gold income per hour from fishing.
-      Paste your stat export in the sidebar to get started.
-    </p>
-  </header>
+  <PageHeader
+    title="Fishing Income"
+    description="Estimates gold income per hour from fishing. Paste your stat export in the sidebar to get started."
+  />
 
   {#if !$stats}
     <EmptyState />
@@ -47,25 +45,6 @@
 <style>
   .calculator {
     max-width: var(--content-max-width);
-  }
-
-  .calc-header {
-    margin-bottom: var(--space-6);
-  }
-
-  .calc-title {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-bold);
-    color: var(--accent);
-    letter-spacing: 0.04em;
-    margin-bottom: var(--space-2);
-  }
-
-  .calc-description {
-    font-size: var(--text-base);
-    color: var(--text-muted);
-    line-height: var(--leading-loose);
   }
 
   .results {
