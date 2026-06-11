@@ -34,7 +34,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: f.rodMultiT1, op: '×' },
       { source: f.rodMultiE1, op: '×' },
       { source: sk.motleySchoolRod, op: '×' },
-      { source: st.vpHalfWayFishingRod, op: '+' },
+      { source: st.vpHalfWayFishingRod, op: '×' },
       { source: card.cardFishingRod, op: '×' },
     ],
   },
@@ -81,7 +81,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: sk.fishingWithFriendsDronePower, op: '+' },
       { source: sk.completionistGatekeeperDronePower, op: '+' },
       { source: arch.idolTethysDronePower, op: '+' },
-      { source: ws.wsDronePowerW3, op: '+' },
+      { source: ws.wsDronePowerW3, op: '×' },
     ],
   },
 

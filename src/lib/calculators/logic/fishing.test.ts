@@ -10,8 +10,8 @@ describe('computeFishingStats', () => {
     expect(result.droneMultiplier).toBeCloseTo(1)
     expect(result.tier2DockMulti).toBe(0)
     expect(result.shinyChance).toBe(0)
-    expect(result.shinyMulti).toBeCloseTo(3)
-    expect(result.superShinyMulti).toBeCloseTo(2)
+    expect(result.shinyMulti).toBeCloseTo(5)
+    expect(result.superShinyMulti).toBeCloseTo(3)
   })
 
   it('super shiny chance: T2 level 20 + Gatekeeper level 3 + 30 legendary fish', () => {

@@ -107,26 +107,26 @@ describe('fishingFormulas — shiny_chance', () => {
 describe('fishingFormulas — shiny_multi', () => {
   const f = fishingFormulas['fishing_shiny_multi']
 
-  it('base = 3', () => {
-    expect(computeStat(f, {}, {})).toBeCloseTo(3)
+  it('base = 5', () => {
+    expect(computeStat(f, {}, {})).toBeCloseTo(5)
   })
 
-  it('T2 upgrade level 20 + T1 enhance level 20 → 3 + 1.00 + 1.00 = 5.00', () => {
+  it('T2 upgrade level 20 + T1 enhance level 20 → 5 + 1.00 + 1.00 = 7.00', () => {
     expect(
       computeStat(f, { 'fishing.shinyMultiT2': 20, 'fishing.shinyMultiE1': 20 }, {}),
-    ).toBeCloseTo(5.0)
+    ).toBeCloseTo(7.0)
   })
 })
 
 describe('fishingFormulas — super_shiny_multi', () => {
   const f = fishingFormulas['fishing_super_shiny_multi']
 
-  it('base = 2', () => {
-    expect(computeStat(f, {}, {})).toBeCloseTo(2)
+  it('base = 3', () => {
+    expect(computeStat(f, {}, {})).toBeCloseTo(3)
   })
 
-  it('T2 enhance level 20 → 2 + 3.00 = 5.00', () => {
-    expect(computeStat(f, { 'fishing.superShinyMultiE2': 20 }, {})).toBeCloseTo(5.0)
+  it('T2 enhance level 20 → 3 + 3.00 = 6.00', () => {
+    expect(computeStat(f, { 'fishing.superShinyMultiE2': 20 }, {})).toBeCloseTo(6.0)
   })
 })
 
@@ -148,8 +148,8 @@ describe('fishingFormulas — drone_capacity', () => {
 })
 
 describe('fishingFormulas — unknown contributions', () => {
-  it('rod_power has unknown contributions (store, card)', () => {
-    expect(hasUnknownContributions(fishingFormulas['fishing_rod_power'])).toBe(true)
+  it('rod_power has NO unknowns — Half Way Bundle and card resolved', () => {
+    expect(hasUnknownContributions(fishingFormulas['fishing_rod_power'])).toBe(false)
   })
 
   it('super_shiny_chance has NO unknowns — all sources defined', () => {
