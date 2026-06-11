@@ -136,10 +136,57 @@ describe('computeStat', () => {
     expect(computeStat(setterFormula, levels, {})).toBeCloseTo(0.03)
   })
 
-  it('mixed: additive then multiplicative applied in declaration order', () => {
-    // base=0, srcA level=10 → result=0.10, then srcC active ×1.5 → 0.15
+  it('mixed: (base + adds) × factors', () => {
+    // base=0, srcA level=10 → sum=0.10, srcC active ×1.5 → 0.15
     const levels = { 'test.srcA': 10, 'test.srcC': 1 }
     expect(computeStat(mixedFormula, levels, {})).toBeCloseTo(0.15)
+  })
+
+  it('grouped: declaration order does not change the result', () => {
+    // Same contributions as mixedFormula but '×' declared before '+'.
+    const reordered: StatFormula = {
+      base: 0,
+      contributions: [
+        { source: srcC, op: '×' },
+        { source: srcA, op: '+' },
+      ],
+    }
+    const levels = { 'test.srcA': 10, 'test.srcC': 1 }
+    expect(computeStat(reordered, levels, {}))
+      .toBeCloseTo(computeStat(mixedFormula, levels, {}))
+  })
+
+  it("'×1+': multiplies by (1 + bonus fraction)", () => {
+    // base=4, srcA(+) level=10 → +0.10, srcD('×1+') level=11 with fn l*2 → ×(1+22)
+    // Mirrors the in-game pattern: pets +2%/rank stored as decimal → ×(1+0.22).
+    const bonusFormula: StatFormula = {
+      base: 4,
+      contributions: [
+        { source: srcA, op: '+' },
+        { source: srcD, op: '×1+' },
+      ],
+    }
+    const levels = { 'test.srcA': 10, 'test.srcD': 11 }
+    expect(computeStat(bonusFormula, levels, {})).toBeCloseTo((4 + 0.10) * (1 + 22))
+  })
+
+  it("'×1+' at level 0 is neutral (×1)", () => {
+    const f: StatFormula = { base: 2, contributions: [{ source: srcD, op: '×1+' }] }
+    expect(computeStat(f, {}, {})).toBeCloseTo(2)
+  })
+
+  it("'=' replaces the base before adds and factors", () => {
+    // base=5 replaced by srcA → 0.03, then +srcB(0.10), then ×srcC(1.5)
+    const f: StatFormula = {
+      base: 5,
+      contributions: [
+        { source: srcA, op: '=' },
+        { source: srcB, op: '+' },
+        { source: srcC, op: '×' },
+      ],
+    }
+    const levels = { 'test.srcA': 3, 'test.srcB': 1, 'test.srcC': 1 }
+    expect(computeStat(f, levels, { fish: 10 })).toBeCloseTo((0.03 + 0.10) * 1.5)
   })
 
   it('unknown contributions are skipped', () => {

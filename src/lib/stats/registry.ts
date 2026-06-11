@@ -23,6 +23,7 @@ export type StatUnit =
   | 'flat'        // bare number (default when unit is omitted)
   | 'count'       // bare number
   | 'seconds'     // 's'  suffix
+  | 'minutes'     // ' minutes' suffix
   | 'perSecond'   // ' p/s' suffix
   | 'level'       // 'Level ' prefix
 
@@ -863,6 +864,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Bonus Gems From Freebie Pack',
     description: 'How many gems you receive from a Freebie Pack in addition to the base 5.',
     icon: 'Bonus_Gems_From_Freebie_Pack.png',
+    sign: '+',
     category: 'chests',
   },
   freebie_5x_chance: {
@@ -1812,7 +1814,8 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   founder_supply_drop_cd: {
     name: 'Supply Drop Cooldown',
     description: 'The amount of time until the Founder Supply Drop spawns.',
-    icon: 'Supply_Drop.png'
+    icon: 'Supply_Drop.png',
+    unit: 'minutes',
   },
   founder_double_supply_drop_chance: {
     name: 'Double Supply Drop Chance',

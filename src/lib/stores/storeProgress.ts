@@ -5,6 +5,7 @@ import {
   PERKS,
   PERK_BUNDLES,
   GEM_UPGRADES,
+  gemUpgradeMaxLevel,
 } from '$lib/store/catalog'
 
 // ─── Slug & key types (derived from catalog) ─────────────────────────────
@@ -228,7 +229,7 @@ export function setFounderTier(tier: number): void {
 
 export function setGemUpgradeRank(slug: GemUpgradeSlug, rank: number): void {
   const upgrade = GEM_UPGRADES.find(u => u.slug === slug)
-  const maxLevel = upgrade?.maxLevel ?? 0
+  const maxLevel = upgrade ? gemUpgradeMaxLevel(upgrade) : 0
   if (rank < 0) rank = 0
   if (rank > maxLevel) rank = maxLevel
   _store.update(s => ({ ...s, gemUpgrades: { ...s.gemUpgrades, [slug]: rank } }))

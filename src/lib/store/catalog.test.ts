@@ -6,9 +6,10 @@ import {
   GEM_UNLOCKS,
   GEM_UPGRADES,
   FOUNDER_TIERS,
-  vipEffectAt,
-  formatVipEffectValue,
+  gemUpgradeMaxLevel,
 } from './catalog'
+import { storeSources } from '$lib/sources/store'
+import { formatSourceValue } from '$lib/format'
 
 describe('VALUE_PACKS', () => {
   it('has unique slugs', () => {
@@ -88,8 +89,8 @@ describe('GEM_UNLOCKS', () => {
 
 describe('GEM_UPGRADES', () => {
   it('has 6 upgrades', () => { expect(GEM_UPGRADES.length).toBe(6) })
-  it('maxLevel > 0 for all entries', () => {
-    for (const u of GEM_UPGRADES) expect(u.maxLevel).toBeGreaterThan(0)
+  it('gemUpgradeMaxLevel > 0 for all entries (derived from sources)', () => {
+    for (const u of GEM_UPGRADES) expect(gemUpgradeMaxLevel(u)).toBeGreaterThan(0)
   })
   it('all entries have non-empty name and icon', () => {
     for (const u of GEM_UPGRADES) {
@@ -113,55 +114,64 @@ describe('FOUNDER_TIERS', () => {
       )
     }
   })
-  it('every tier has at least one effect with baseValue/increment/unit set', () => {
-    const validUnits = ['minutes', 'percent', 'multiplier', 'count']
+  it('every tier has at least one effect, each referencing a store.founder source', () => {
     for (const t of FOUNDER_TIERS) {
       expect(t.effects.length).toBeGreaterThan(0)
       for (const e of t.effects) {
-        expect(typeof e.baseValue).toBe('number')
-        expect(typeof e.increment).toBe('number')
-        expect(validUnits).toContain(e.unit)
+        expect(e.source.key).toBe('store.founder')
+        expect(typeof e.source.statKey).toBe('string')
       }
+    }
+  })
+
+  it('founder effect values come from source.fn(tier)', () => {
+    // Tier 5 Golden Lootbug Chance at tier 7: 0.06 + 2×0.03 = 0.12
+    const tier5 = FOUNDER_TIERS.find(t => t.tier === 5)!
+    expect(tier5.effects[0].source.fn(7, {})).toBeCloseTo(0.12, 10)
+    // Below unlock tier → 0
+    expect(tier5.effects[0].source.fn(4, {})).toBe(0)
+    // Tier 1 cooldown at tier 12: 60 - 11×2 = 38
+    const tier1 = FOUNDER_TIERS.find(t => t.tier === 1)!
+    expect(tier1.effects[0].source.fn(12, {})).toBe(38)
+  })
+})
+
+describe('catalog ↔ sources coverage', () => {
+  const knownSources = new Set(Object.values(storeSources))
+
+  it('every effect source in the catalog is a registered storeSources entry', () => {
+    const all = [
+      ...VALUE_PACKS.flatMap(p => p.effects),
+      ...PERKS.flatMap(p => p.effects),
+      ...GEM_UNLOCKS.flatMap(u => u.effects),
+      ...GEM_UPGRADES.flatMap(u => u.effects),
+      ...FOUNDER_TIERS.flatMap(t => t.effects),
+    ]
+    for (const e of all) {
+      if (e.source) expect(knownSources.has(e.source), `unregistered source: ${e.source.key}`).toBe(true)
+    }
+  })
+
+  it('every stat-affecting source declares both statKey and op', () => {
+    for (const [name, s] of Object.entries(storeSources)) {
+      expect(s.statKey, `${name} missing statKey`).toBeTruthy()
+      expect(s.op, `${name} missing op`).toBeTruthy()
     }
   })
 })
 
-describe('vipEffectAt', () => {
-  it('returns 0 when unlockedTier is below effectUnlockTier', () => {
-    expect(vipEffectAt(5, 6, 100, 5)).toBe(0)
-  })
-  it('returns baseValue at exact unlock tier', () => {
-    expect(vipEffectAt(5, 5, 12, 6)).toBe(12)
-  })
-  it('adds increment per tier above the unlock tier', () => {
-    expect(vipEffectAt(8, 5, 10, 2)).toBe(16)
-  })
-  it('handles negative increments (e.g. cooldown reduction)', () => {
-    expect(vipEffectAt(12, 1, 60, -2)).toBe(38)
-  })
-  it('works with decimal magnitudes (Golden Lootbug Chance at tier 7)', () => {
-    // Tier 5 effect, baseValue 0.06, +0.03 per tier above.
-    // At unlockedTier 7: 0.06 + 2*0.03 = 0.12
-    expect(vipEffectAt(7, 5, 0.06, 0.03)).toBeCloseTo(0.12, 10)
-  })
-})
-
-describe('formatVipEffectValue', () => {
+describe('formatSourceValue (decimal convention)', () => {
   it('formats percent values from decimals', () => {
-    expect(formatVipEffectValue(0.12, 'percent')).toBe('12%')
-    expect(formatVipEffectValue(0.005, 'percent')).toBe('0.5%')
-    expect(formatVipEffectValue(0.025, 'percent')).toBe('2.5%')
+    expect(formatSourceValue('lootbug_golden_chance', 0.12)).toBe('12%')
+    expect(formatSourceValue('gem_bomb_gem_chance', 0.005)).toBe('0.5%')
   })
   it('formats minutes', () => {
-    expect(formatVipEffectValue(60, 'minutes')).toBe('60 minutes')
-    expect(formatVipEffectValue(38, 'minutes')).toBe('38 minutes')
+    expect(formatSourceValue('founder_supply_drop_cd', 38)).toBe('38 minutes')
   })
   it('formats multipliers', () => {
-    expect(formatVipEffectValue(2, 'multiplier')).toBe('2x')
-    expect(formatVipEffectValue(13, 'multiplier')).toBe('13x')
+    expect(formatSourceValue('ore_income_multi', 2)).toBe('2×')
   })
-  it('formats counts as plain numbers', () => {
-    expect(formatVipEffectValue(4, 'count')).toBe('4')
-    expect(formatVipEffectValue(26, 'count')).toBe('26')
+  it('formats counts as plain numbers with sign where declared', () => {
+    expect(formatSourceValue('freebie_gems_bonus', 4)).toBe('+4')
   })
 })

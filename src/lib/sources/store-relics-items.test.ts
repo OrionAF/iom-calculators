@@ -163,24 +163,27 @@ describe('storeSources — gem upgrades', () => {
   })
 })
 
-describe('storeSources — founder tiers', () => {
+describe('storeSources — founder tiers (level = founder tier)', () => {
   it('founderCraft10x: tier below unlock (2) → 0', () => {
-    expect(storeSources.founderCraft10x.fn(1, { founderTier: 2 })).toBe(0)
+    expect(storeSources.founderCraft10x.fn(2, {})).toBe(0)
   })
   it('founderCraft10x: exactly at unlock tier 3 → base 0.02', () => {
-    expect(storeSources.founderCraft10x.fn(1, { founderTier: 3 })).toBeCloseTo(0.02)
+    expect(storeSources.founderCraft10x.fn(3, {})).toBeCloseTo(0.02)
   })
   it('founderCraft10x: tier 5 → 0.02 + 2×0.01 = 0.04', () => {
-    expect(storeSources.founderCraft10x.fn(1, { founderTier: 5 })).toBeCloseTo(0.04)
+    expect(storeSources.founderCraft10x.fn(5, {})).toBeCloseTo(0.04)
   })
   it('founderGameSpeed: tier 10 → 0.10', () => {
-    expect(storeSources.founderGameSpeed.fn(1, { founderTier: 10 })).toBeCloseTo(0.10)
+    expect(storeSources.founderGameSpeed.fn(10, {})).toBeCloseTo(0.10)
   })
   it('founderGameSpeed: tier 12 → 0.10 + 2×0.01 = 0.12', () => {
-    expect(storeSources.founderGameSpeed.fn(1, { founderTier: 12 })).toBeCloseTo(0.12)
+    expect(storeSources.founderGameSpeed.fn(12, {})).toBeCloseTo(0.12)
   })
-  it('founderGameSpeed: not purchased (owned=0) → 0', () => {
-    expect(storeSources.founderGameSpeed.fn(0, { founderTier: 12 })).toBe(0)
+  it('founderGameSpeed: tier 0 (not purchased) → 0', () => {
+    expect(storeSources.founderGameSpeed.fn(0, {})).toBe(0)
+  })
+  it('founderSupplyDropCd: tier 12 → 60 - 11×2 = 38 minutes', () => {
+    expect(storeSources.founderSupplyDropCd.fn(12, {})).toBe(38)
   })
 })
 

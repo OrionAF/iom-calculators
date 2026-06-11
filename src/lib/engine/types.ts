@@ -29,6 +29,15 @@ export interface Source {
   fn: (level: number, rt: Record<string, number>) => number
   /** Runtime inputs this source's fn depends on beyond its own level. */
   inputs: RuntimeInput[]
+  /**
+   * Effect metadata: which stat this source contributes to, and how.
+   * Lets data pages (Store, Skills) display per-effect values straight from
+   * the source — fn(level) formatted via the stat's registry unit — without
+   * duplicating numbers in catalog files. Formulas still declare op
+   * explicitly; a consistency test asserts they agree where both exist.
+   */
+  statKey?: string
+  op?: Op
 }
 
 export type SourceSystem =
@@ -53,13 +62,20 @@ export type SourceSystem =
   | 'worldquests'
 
 /**
- * How a source contribution is combined into the running stat total.
+ * How a source contribution is combined into the stat total.
  *
- * '+': result += source.fn(level, rt)          additive
- * '×': result *= source.fn(level, rt)          multiplicative
- * '=': result  = source.fn(level, rt)          setter / override
+ * Evaluation is GROUPED, not declaration-ordered (matches the in-game rule
+ * "additive within a group, multiplicative across groups"):
+ *
+ *   result = (base + Σ '+' terms) × Π '×' factors × Π (1 + '×1+' terms)
+ *
+ * '+'  : added to the base                       additive
+ * '×'  : multiplies the summed result            multiplicative factor
+ * '×1+': multiplies by (1 + fn) — for sources    multiplicative bonus
+ *        stored as a bonus fraction (e.g. +22% → fn returns 0.22)
+ * '='  : replaces the base value (applied before any '+'); last '=' wins
  */
-export type Op = '+' | '×' | '='
+export type Op = '+' | '×' | '×1+' | '='
 
 export interface Contribution {
   source: Source

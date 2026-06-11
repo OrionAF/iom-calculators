@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     VALUE_PACKS, PERKS, PERK_BUNDLES, GEM_UNLOCKS, GEM_UPGRADES, FOUNDER_TIERS,
-    vipEffectAt, formatVipEffectValue,
+    gemUpgradeMaxLevel, type StoreEffect,
   } from '$lib/store/catalog'
   import {
     storeProgress,
@@ -15,7 +15,7 @@
   import StatTooltip from '$lib/components/StatTooltip.svelte'
   import { Minus, Plus, Check, Info, X } from 'lucide-svelte'
   import { getStatMeta } from '$lib/stats/registry'
-  import { formatStatByKey } from '$lib/format'
+  import { formatSourceValue } from '$lib/format'
   import { settings } from '$lib/stores/settings'
 
   let activeTab = $state('value-packs')
@@ -29,15 +29,21 @@
     try { sessionStorage.setItem('iom-mirror-banner-dismissed', '1') } catch { /* noop */ }
   }
 
-  function resolveEffectLabel(e: { label?: string; derivedStatKey?: string; value?: number }): string {
+  // Effect display values come from the referenced source: fn(level)
+  // formatted via the stat's registry unit. The catalog holds no numbers.
+  function resolveEffectLabel(e: StoreEffect): string {
     if (e.label) return e.label
-    if (e.derivedStatKey) {
-      const meta = getStatMeta(e.derivedStatKey)
-      const name = meta?.name ?? e.derivedStatKey
-      const valueStr = e.value !== undefined ? formatStatByKey(e.derivedStatKey, e.value) : ''
-      return valueStr ? `${name}: ${valueStr}` : name
+    const statKey = e.source?.statKey
+    if (e.source && statKey) {
+      const name = getStatMeta(statKey)?.name ?? statKey
+      return `${name}: ${formatSourceValue(statKey, e.source.fn(1, {}))}`
     }
     return ''
+  }
+
+  /** Value of an effect at a given source level (owned=1, rank, founder tier). */
+  function effectValueAt(e: StoreEffect, level: number): number | undefined {
+    return e.source ? e.source.fn(level, {}) : undefined
   }
 
   // X5: remember per-tab scroll position so switching tabs and switching back
@@ -173,10 +179,10 @@
                 <div class="effect-list">
                   {#each pack.effects as e}
                     <div class="effect-item">
-                      {#if $settings.statTooltips && e.derivedStatKey}
+                      {#if $settings.statTooltips && e.source?.statKey}
                         <StatTooltip
-                          derivedStatKey={e.derivedStatKey}
-                          value={e.value}
+                          derivedStatKey={e.source?.statKey ?? ''}
+                          value={effectValueAt(e, 1)}
                           label={resolveEffectLabel(e)}
                         />
                       {:else}
@@ -255,20 +261,20 @@
             <ul class="founder-effects">
               {#each FOUNDER_TIERS.filter(t => t.tier <= currentTier) as t}
                 {#each t.effects as e}
-                  {@const value = vipEffectAt(currentTier, t.tier, e.baseValue, e.increment)}
+                  {@const value = e.source.fn(currentTier, {})}
                   <li>
                     <span class="effect-name">
-                      {#if $settings.statTooltips && e.derivedStatKey}
+                      {#if $settings.statTooltips && e.source?.statKey}
                         <StatTooltip
-                          derivedStatKey={e.derivedStatKey}
+                          derivedStatKey={e.source?.statKey ?? ''}
                           value={undefined}
-                          label={e.label ?? e.derivedStatKey}
+                          label={e.label ?? e.source.statKey ?? ''}
                         />
                       {:else}
                         {e.label}
                       {/if}
                     </span>
-                    <span class="effect-value">{formatVipEffectValue(value, e.unit)}</span>
+                    <span class="effect-value">{formatSourceValue(e.source.statKey ?? '', value)}</span>
                   </li>
                 {/each}
               {/each}
@@ -308,10 +314,10 @@
                   {#each bundlePerks as perk}
                     {#each perk!.effects as e}
                       <div class="effect-item">
-                        {#if $settings.statTooltips && e.derivedStatKey}
+                        {#if $settings.statTooltips && e.source?.statKey}
                           <StatTooltip
-                            derivedStatKey={e.derivedStatKey}
-                            value={e.value}
+                            derivedStatKey={e.source?.statKey ?? ''}
+                            value={effectValueAt(e, 1)}
                             label={resolveEffectLabel(e)}
                           />
                         {:else}
@@ -346,10 +352,10 @@
                 <div class="effect-list">
                   {#each perk.effects as e}
                     <div class="effect-item">
-                      {#if $settings.statTooltips && e.derivedStatKey}
+                      {#if $settings.statTooltips && e.source?.statKey}
                         <StatTooltip
-                          derivedStatKey={e.derivedStatKey}
-                          value={e.value}
+                          derivedStatKey={e.source?.statKey ?? ''}
+                          value={effectValueAt(e, 1)}
                           label={resolveEffectLabel(e)}
                         />
                       {:else}
@@ -388,10 +394,10 @@
                 <div class="effect-list">
                   {#each unlock.effects as e}
                     <div class="effect-item">
-                      {#if $settings.statTooltips && e.derivedStatKey}
+                      {#if $settings.statTooltips && e.source?.statKey}
                         <StatTooltip
-                          derivedStatKey={e.derivedStatKey}
-                          value={e.value}
+                          derivedStatKey={e.source?.statKey ?? ''}
+                          value={effectValueAt(e, 1)}
                           label={resolveEffectLabel(e)}
                         />
                       {:else}
@@ -414,7 +420,8 @@
       <div class="grid-gem-upgrades">
         {#each GEM_UPGRADES as upgrade (upgrade.slug)}
           {@const rank = gemUpgradeRank(upgrade.slug)}
-          {@const maxed = rank >= upgrade.maxLevel}
+          {@const maxLevel = gemUpgradeMaxLevel(upgrade)}
+          {@const maxed = rank >= maxLevel}
           <article class="upgrade-tile" class:active={rank > 0}>
             <WikiIcon filename={upgrade.icon} size={32} />
             <div class="upgrade-body">
@@ -424,19 +431,19 @@
               </div>
               {#each upgrade.effects as e}
                 <div class="upgrade-effect">
-                  {#if $settings.statTooltips && e.derivedStatKey}
+                  {#if $settings.statTooltips && e.source?.statKey}
                     <StatTooltip
-                      derivedStatKey={e.derivedStatKey}
-                      value={e.value}
+                      derivedStatKey={e.source?.statKey ?? ''}
+                      value={effectValueAt(e, 1)}
                       label={resolveEffectLabel(e)}
                     />
                   {:else}
                     {resolveEffectLabel(e)}
                   {/if}
                 </div>
-                {#if rank > 0 && e.derivedStatKey && e.value !== undefined}
+                {#if rank > 0 && e.source?.statKey}
                   <div class="upgrade-stat-total">
-                    {formatStatByKey(e.derivedStatKey, rank * e.value)}
+                    {formatSourceValue(e.source.statKey, e.source.fn(rank, {}))}
                     <span class="upgrade-stat-total-label">at rank {rank}</span>
                   </div>
                 {/if}
@@ -459,7 +466,7 @@
                   onclick={() => setGemUpgradeRank(upgrade.slug, rank - 1)}
                   disabled={rank <= 0}
                 ><Minus size={16} aria-hidden="true" /></button>
-                <span class="upgrade-rank">{rank} / {upgrade.maxLevel}</span>
+                <span class="upgrade-rank">{rank} / {maxLevel}</span>
                 <button
                   type="button"
                   class="stepper-btn-small"
@@ -471,7 +478,7 @@
                   type="button"
                   class="stepper-btn-small stepper-btn-minmax"
                   aria-label="Set to max rank"
-                  onclick={() => setGemUpgradeRank(upgrade.slug, upgrade.maxLevel)}
+                  onclick={() => setGemUpgradeRank(upgrade.slug, maxLevel)}
                   disabled={maxed}
                 >Max</button>
               </div>

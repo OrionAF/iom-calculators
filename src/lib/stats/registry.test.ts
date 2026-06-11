@@ -50,70 +50,27 @@ describe('STAT_CATALOG ↔ STAT_REGISTRY cross-resolution', () => {
 })
 
 describe('STORE_CATALOG ↔ STAT_REGISTRY cross-resolution (strict)', () => {
-  it('every derivedStatKey in VALUE_PACKS resolves to a registry entry', () => {
+  it('every effect source statKey in the store catalog resolves to a registry entry', () => {
+    const all = [
+      ...VALUE_PACKS.flatMap(p => p.effects),
+      ...PERKS.flatMap(p => p.effects),
+      ...GEM_UPGRADES.flatMap(u => u.effects),
+      ...FOUNDER_TIERS.flatMap(t => t.effects),
+    ]
     const missing: string[] = []
-    for (const pack of VALUE_PACKS) {
-      if (pack.effects) {
-        for (const effect of pack.effects) {
-          if (effect.derivedStatKey && !STAT_REGISTRY[effect.derivedStatKey]) {
-            missing.push(effect.derivedStatKey)
-          }
-        }
-      }
+    for (const effect of all) {
+      const key = effect.source?.statKey
+      if (key && !STAT_REGISTRY[key]) missing.push(key)
     }
     expect(missing, `unresolved keys: ${missing.join(', ')}`).toHaveLength(0)
   })
 
-  it('every derivedStatKey in PERKS resolves to a registry entry', () => {
-    const missing: string[] = []
-    for (const perk of PERKS) {
-      if (perk.effects) {
-        for (const effect of perk.effects) {
-          if (effect.derivedStatKey && !STAT_REGISTRY[effect.derivedStatKey]) {
-            missing.push(effect.derivedStatKey)
-          }
-        }
-      }
-    }
-    expect(missing, `unresolved keys: ${missing.join(', ')}`).toHaveLength(0)
-  })
-
-  it('PERK_BUNDLES reference valid PERKS (already tested above)', () => {
-    // PerkBundle has perkSlugs, not effects — the effects come from the
-    // referenced Perk entries, which we test separately.
+  it('PERK_BUNDLES reference valid PERKS', () => {
     const validSlugs = new Set(PERKS.map(p => p.slug))
     for (const bundle of PERK_BUNDLES) {
       for (const slug of bundle.perkSlugs) {
         expect(validSlugs.has(slug), `PerkBundle references unknown perk: ${slug}`).toBe(true)
       }
     }
-  })
-
-  it('every derivedStatKey in GEM_UPGRADES resolves to a registry entry', () => {
-    const missing: string[] = []
-    for (const upgrade of GEM_UPGRADES) {
-      if (upgrade.effects) {
-        for (const effect of upgrade.effects) {
-          if (effect.derivedStatKey && !STAT_REGISTRY[effect.derivedStatKey]) {
-            missing.push(effect.derivedStatKey)
-          }
-        }
-      }
-    }
-    expect(missing, `unresolved keys: ${missing.join(', ')}`).toHaveLength(0)
-  })
-
-  it('every derivedStatKey in FOUNDER_TIERS resolves to a registry entry', () => {
-    const missing: string[] = []
-    for (const tier of FOUNDER_TIERS) {
-      if (tier.effects) {
-        for (const effect of tier.effects) {
-          if (effect.derivedStatKey && !STAT_REGISTRY[effect.derivedStatKey]) {
-            missing.push(effect.derivedStatKey)
-          }
-        }
-      }
-    }
-    expect(missing, `unresolved keys: ${missing.join(', ')}`).toHaveLength(0)
   })
 })
