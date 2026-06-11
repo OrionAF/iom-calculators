@@ -176,7 +176,10 @@ export const bombsFormulas: FormulaMap = defineFormulas({
     ],
   },
   bomb_super_crit_damage: {
-    contributions: [{ source: U, op: '+', unknown: true }],
+    contributions: [
+      { source: U, op: '+', unknown: true },
+      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
+    ],
   },
   bomb_ultra_crit_chance: {
     contributions: [
@@ -187,21 +190,25 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: ch.chBombUltraCritExtreme, op: '+' },
       { source: up.upgrBombUltraCrit1, op: '+' },
       { source: up.upgrBombUltraCrit2, op: '+' },
-      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
     ],
   },
   bomb_ultra_crit_damage: {
-    contributions: [{ source: U, op: '+', unknown: true }],
+    contributions: [
+      { source: U, op: '+', unknown: true },
+      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
+    ],
   },
   bomb_omega_crit_chance: {
     contributions: [
       { source: ct.ctOmegaCritChance, op: '+' },
       { source: up.upgrBombOmegaCrit, op: '+' },
-      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
     ],
   },
   bomb_omega_crit_damage: {
-    contributions: [{ source: U, op: '+', unknown: true }],
+    contributions: [
+      { source: U, op: '+', unknown: true },
+      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
+    ],
   },
   bomb_cherry3x_chance: {
     contributions: [{ source: U, op: '+', unknown: true }],
@@ -213,7 +220,6 @@ export const bombsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: rel.mythicRelicBombMulti, op: '+' },
       { source: U, op: '+', unknown: true }, // Workshop
-      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
     ],
   },
   bomb_workshop_cap_increase: {

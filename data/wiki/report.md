@@ -1,6 +1,6 @@
 # Wiki ↔ formula cross-check
 
-Generated from data/wiki/*.json. Stats checked: 175; with findings: 88; unmatched: 0.
+Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatched: 0.
 
 ## Wiki stats with no matching registry name / formula
 
@@ -19,17 +19,8 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 88; unmatche
 ### Bomb Super Crit Chance (`bomb_super_crit_chance`)
 - missing system Items: Rock Cake (Requires the Cassandra Idol (formula has 1 unknown placeholder(s))
 
-### Bomb Super Crit Damage (`bomb_super_crit_damage`)
-- missing system Fishing: The Radioactive Slug Tier 1 Tribute (formula has 1 unknown placeholder(s))
-
 ### Bomb Ultra Crit Chance (`bomb_ultra_crit_chance`)
 - missing system Items: Rock Cake (Requires the Cassandra Idol
-
-### Bomb Ultra Crit Damage (`bomb_ultra_crit_damage`)
-- missing system Fishing: The Radioactive Slug Tier 1 Tribute (formula has 1 unknown placeholder(s))
-
-### Bomb Omega Crit Damage (`bomb_omega_crit_damage`)
-- missing system Fishing: The Radioactive Slug Tier 1 Tribute (formula has 1 unknown placeholder(s))
 
 ### Cherry Charge 3x Chance (`bomb_cherry3x_chance`)
 - missing system Workshop: The Cherry 3x Charge Chance Upgrade (formula has 1 unknown placeholder(s))
