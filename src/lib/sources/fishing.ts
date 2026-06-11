@@ -504,8 +504,15 @@ const noticeT2ContractChance10x: Source = {
   inputs: [],
 }
 
-// TODO no registry key: T2 Notice 'Veinseeker Grade Cap +1 per level, max 30'
-//   no drone_veinseeker_grade_cap_increase key; drone_chain/frogger/void exist
+/** T2 Notice: Veinseeker Grade Cap +1 per level. Max 30. → drone_veinseeker_grade_cap_increase */
+const noticeT2VeinseekerGradeCap: Source = {
+  key: 'fishing.notice.t2.veinseekerGradeCap',
+  name: 'T2 Notice – Veinseeker Grade Cap',
+  system: 'fishing',
+  maxLevel: 30,
+  fn: (l) => l,
+  inputs: [],
+}
 
 /** T2 Notice: 100× Craft Chance +0.1% per level. Max 20. → craft_100x_chance */
 const noticeT2CraftChance100x: Source = {
@@ -607,6 +614,7 @@ export const fishingSources = {
   noticeT1RemoveW3SpeedMod,
   // T2 Notice Upgrades
   noticeT2ContractChance10x,
+  noticeT2VeinseekerGradeCap,
   noticeT2CraftChance100x,
   noticeT2StarSupergiants,
   noticeT2FreebieJackpot,

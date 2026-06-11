@@ -1493,6 +1493,12 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     icon: 'Drone_Chain_Icon.png',
     affix: { prefix: '+' }
   },
+  drone_veinseeker_grade_cap_increase: {
+    name: 'Veinseeker Drone Grade Cap Increase',
+    description: 'Increases the Grade cap for the Veinseeker Drone',
+    icon: 'Drone_Veinseeker_Icon.png',
+    affix: { prefix: '+' }
+  },
   founder_supply_drop_cd: {
     name: 'Supply Drop Cooldown',
     description: 'The amount of time until the Founder Supply Drop spawns.',
