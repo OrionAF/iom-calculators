@@ -151,6 +151,15 @@
 /* >= 768px: full settings choice applies */
 
 /* ── Font scale ──────────────────────────────────────────────────── */
+.font-small {
+  --text-xs:   10px;
+  --text-sm:   11px;
+  --text-base: 14px;
+  --text-lg:   16px;
+  --text-xl:   18px;
+  --text-2xl:  24px;
+  --text-3xl:  34px;
+}
 .font-large {
   --text-xs:   13px;
   --text-sm:   14px;
@@ -282,6 +291,13 @@ body::after {
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: none; }
+}
+/* Opacity-only variant for wrappers that contain position:fixed children
+   (a filling transform animation turns the wrapper into a containing
+   block and breaks fixed positioning — e.g. StatTooltip bubbles). */
+@keyframes fade-soft {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 @keyframes float-y {
   0%, 100% { transform: translateY(0); }

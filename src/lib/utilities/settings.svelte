@@ -23,9 +23,9 @@
   })
 
   const fontScaleOptions: { value: FontScale; label: string; preview: Record<string, string> }[] = [
-    { value: 'small', label: 'Small', preview: { 'body': '16px', 'heading': '26px' } },
-    { value: 'normal',  label: 'Normal',  preview: { 'body': '18px', 'heading': '28px' } },
-    { value: 'large',  label: 'Large',  preview: { 'body': '20px', 'heading': '30px' } },
+    { value: 'small',  label: 'Small',  preview: { 'body': '14px', 'heading': '24px' } },
+    { value: 'normal', label: 'Normal', preview: { 'body': '16px', 'heading': '28px' } },
+    { value: 'large',  label: 'Large',  preview: { 'body': '18px', 'heading': '30px' } },
   ]
 
   const densityOptions = $derived([
@@ -342,7 +342,7 @@
   }
 
   .settings-section {
-    margin-bottom: var(--space-12);
+    margin-bottom: var(--space-6);
   }
 
   /* ── Backup zone ─────────────────────────────────────── */

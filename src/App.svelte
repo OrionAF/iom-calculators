@@ -9,6 +9,7 @@
   // globally without importing $settings in every page/component.
   $effect(() => {
     const root = document.documentElement
+    root.classList.toggle('font-small', $settings.fontScale === 'small')
     root.classList.toggle('font-large', $settings.fontScale === 'large')
     root.dataset.density = $settings.density
   })
@@ -86,7 +87,9 @@
   }
 
   .route-view {
-    animation: fade-up 0.3s var(--ease-out) both;
+    /* opacity-only: a transform animation here would become a containing
+       block for fixed-position descendants (StatTooltip bubbles). */
+    animation: fade-soft 0.3s var(--ease-out) both;
   }
 
   /* Desktop: offset main content by sidebar width */

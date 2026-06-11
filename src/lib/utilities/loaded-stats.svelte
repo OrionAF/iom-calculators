@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { onDestroy } from 'svelte'
   import { Search } from 'lucide-svelte'
+  import Button from '$lib/components/Button.svelte'
   import { stats } from '$lib/stores/stats'
   import { settings, setValueDisplayMode } from '$lib/stores/settings'
   import { formatStatByKey } from '$lib/format'
@@ -32,6 +34,11 @@
     collapsedCats = new Set(collapsedCats)   // trigger reactivity
     saveCollapsed(collapsedCats)
   }
+
+  function setAllCollapsed(ids: string[], collapsed: boolean): void {
+    collapsedCats = collapsed ? new Set(ids) : new Set()
+    saveCollapsed(collapsedCats)
+  }
   import {
     STAT_CATALOG,
     STATUE_STATE_LABELS,
@@ -53,6 +60,24 @@
   let filterText = $state('')
 
   const normalizedFilter = $derived(filterText.trim().toLowerCase())
+
+  // ── Click-to-copy raw values ─────────────────────────
+  let copiedKey = $state<string | null>(null)
+  let copyTimer: ReturnType<typeof setTimeout> | null = null
+
+  async function copyValue(key: string, raw: number | undefined): Promise<void> {
+    if (raw === undefined) return
+    try {
+      await navigator.clipboard.writeText(String(raw))
+    } catch {
+      return  // clipboard unavailable — silently skip
+    }
+    copiedKey = key
+    if (copyTimer !== null) clearTimeout(copyTimer)
+    copyTimer = setTimeout(() => { copiedKey = null; copyTimer = null }, 1200)
+  }
+
+  onDestroy(() => { if (copyTimer !== null) clearTimeout(copyTimer) })
 
   function prettyKey(key: string): string {
     const s = key.replace(/_/g, ' ')
@@ -191,6 +216,16 @@
           onclick={() => setValueDisplayMode('raw')}
         >Raw</button>
       </div>
+
+      {#if visibleCategories.length > 0}
+        {@const allCollapsed = visibleCategories.every(c => collapsedCats.has(c.id))}
+        <Button
+          variant="ghost"
+          onclick={() => setAllCollapsed(visibleCategories.map(c => c.id), !allCollapsed)}
+        >
+          {#if allCollapsed}Expand all{:else}Collapse all{/if}
+        </Button>
+      {/if}
     </div>
 
     {#if visibleCategories.length === 0}
@@ -244,7 +279,18 @@
                     {/if}
                   </dt>
                   <dd class="stat-value" class:missing={stat.displayValue === '—'}>
-                    {stat.displayValue}
+                    <button
+                      type="button"
+                      class="copy-value"
+                      class:copied={copiedKey === stat.key}
+                      disabled={stat.rawValue === undefined}
+                      onclick={() => copyValue(stat.key, stat.rawValue)}
+                      title="Copy raw value"
+                      aria-label="Copy raw value of {stat.prettyLabel}"
+                    >
+                      {stat.displayValue}
+                      <span class="copied-chip" aria-hidden="true">Copied!</span>
+                    </button>
                   </dd>
                 </div>
               {/each}
@@ -284,11 +330,27 @@
 
   /* ── Toolbar (search + mode toggle) ────────────────── */
   .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-raised);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-3);
-    margin-bottom: var(--space-6);
+    padding-block: var(--space-3);
+    margin-bottom: var(--space-4);
+    background: color-mix(in srgb, var(--bg-base) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Below 1024px the fixed mobile topbar (61px + safe area) owns the
+     viewport top — stick beneath it. */
+  @media (max-width: 1023px) {
+    .toolbar {
+      top: calc(61px + env(safe-area-inset-top));
+    }
   }
 
   .search-wrap {
@@ -482,6 +544,53 @@
 
   .stat-value.missing {
     color: var(--text-dim);
+  }
+
+  .copy-value {
+    position: relative;
+    background: none;
+    border: none;
+    padding: 2px var(--space-1);
+    margin: -2px calc(-1 * var(--space-1));
+    border-radius: var(--radius-sm);
+    font: inherit;
+    color: inherit;
+    cursor: copy;
+    transition: background var(--transition-fast), color var(--transition-fast);
+  }
+  @media (hover: hover) {
+    .copy-value:hover:not(:disabled) {
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      color: var(--accent);
+    }
+  }
+  .copy-value:disabled {
+    cursor: default;
+  }
+  .copy-value:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 1px;
+  }
+
+  .copied-chip {
+    position: absolute;
+    right: 0;
+    top: -24px;
+    background: var(--grad-molten);
+    color: var(--accent-text);
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: var(--weight-bold);
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    opacity: 0;
+    translate: 0 4px;
+    pointer-events: none;
+    transition: opacity var(--transition-fast), translate var(--transition-bounce);
+  }
+  .copy-value.copied .copied-chip {
+    opacity: 1;
+    translate: 0 0;
   }
 
   /* ── Statues: 3×3 grid variant ──────────────────────── */

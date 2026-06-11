@@ -80,24 +80,27 @@
   }
 
   .group-description {
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-3);
     font-size: var(--text-sm);
     color: var(--text-muted);
-    line-height: var(--leading-loose);
+    line-height: var(--leading-base);
   }
 
+  /* Cards size to their content and flow in a wrapping row —
+     wide enough to never clip, never stretched to fill the page. */
   .options {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: var(--space-2);
   }
 
   .option {
     position: relative;
     display: flex;
+    flex: 0 1 auto;
     align-items: center;
     gap: var(--space-3);
-    padding: var(--space-4);
+    padding: var(--space-3) var(--space-4);
     background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
@@ -181,7 +184,7 @@
 
   .preview {
     display: grid;
-    grid-template-columns: auto auto 1fr;
+    grid-template-columns: auto auto auto;
     column-gap: var(--space-2);
     row-gap: 2px;
     font-family: var(--font-mono);

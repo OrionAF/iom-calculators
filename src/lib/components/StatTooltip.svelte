@@ -24,25 +24,41 @@
   // position: fixed escapes overflow:hidden ancestors (e.g. loaded-stats .stat-field).
   let bubbleTop = $state(0)
   let bubbleLeft = $state(0)
+  let bubbleEl = $state<HTMLSpanElement | null>(null)
+  // When the trigger sits near the viewport top (e.g. after scrolling),
+  // there's no room above — flip the bubble below the trigger instead.
+  let placeBelow = $state(false)
+  let hovering = $state(false)
 
   $effect(() => { uid = ++_counter })
 
   const BUBBLE_WIDTH = 272
-  const GAP = 8  // px between trigger top and bubble bottom
+  const GAP = 8  // px between trigger edge and bubble
 
   function computePosition(): void {
     if (!triggerEl) return
     const rect = triggerEl.getBoundingClientRect()
-    // Top: bubble will translateY(-100%) so `top` is where the bubble bottom lands.
-    // We want it GAP px above the trigger's top edge.
-    bubbleTop = rect.top - GAP
+    // visibility:hidden keeps layout, so offsetHeight is measurable pre-show.
+    const bubbleHeight = bubbleEl?.offsetHeight ?? 140
+    placeBelow = rect.top - GAP - bubbleHeight < 8
+    // Above: bubble is translateY(-100%), so `top` is where its bottom lands.
+    // Below: no translate, `top` is where its top edge lands.
+    bubbleTop = placeBelow ? rect.bottom + GAP : rect.top - GAP
     // Left: left-align with trigger, clamped so bubble never bleeds off-screen.
     bubbleLeft = Math.min(
       Math.max(8, rect.left),
       window.innerWidth - BUBBLE_WIDTH - 8,
     )
   }
+
+  // Re-anchor while scrolling (capture catches nested scroll containers too) —
+  // a fixed-position bubble otherwise detaches from its trigger mid-scroll.
+  function handleScroll(): void {
+    if (hovering || active) computePosition()
+  }
 </script>
+
+<svelte:window onscrollcapture={handleScroll} />
 
 {#if meta}
   <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -54,7 +70,8 @@
     aria-label="{label} — tap for stat info"
     aria-describedby="stat-tip-{uid}"
     class:active
-    onmouseenter={computePosition}
+    onmouseenter={() => { hovering = true; computePosition() }}
+    onmouseleave={() => (hovering = false)}
     onfocus={computePosition}
     onclick={() => { computePosition(); active = !active }}
     onblur={() => (active = false)}
@@ -65,7 +82,9 @@
   >
     {label}
     <span
+      bind:this={bubbleEl}
       class="tip-bubble"
+      class:below={placeBelow}
       id="stat-tip-{uid}"
       role="tooltip"
       style="top: {bubbleTop}px; left: {bubbleLeft}px"
@@ -130,6 +149,11 @@
       visibility 150ms var(--ease-out);
   }
 
+  .tip-bubble.below {
+    transform: translateY(0) scale(0.94);
+    transform-origin: top left;
+  }
+
   /* Show on hover, keyboard focus, or touch-activated (.active) */
   .stat-tip:hover .tip-bubble,
   .stat-tip:focus-within .tip-bubble,
@@ -138,16 +162,29 @@
     opacity: 1;
     transform: translateY(-100%) scale(1);
   }
+  .stat-tip:hover .tip-bubble.below,
+  .stat-tip:focus-within .tip-bubble.below,
+  .stat-tip.active .tip-bubble.below {
+    transform: translateY(0) scale(1);
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .tip-bubble {
       transition: opacity 150ms ease-out, visibility 150ms ease-out;
       transform: translateY(-100%);
     }
+    .tip-bubble.below {
+      transform: translateY(0);
+    }
     .stat-tip:hover .tip-bubble,
     .stat-tip:focus-within .tip-bubble,
     .stat-tip.active .tip-bubble {
       transform: translateY(-100%);
+    }
+    .stat-tip:hover .tip-bubble.below,
+    .stat-tip:focus-within .tip-bubble.below,
+    .stat-tip.active .tip-bubble.below {
+      transform: translateY(0);
     }
   }
 
@@ -158,7 +195,7 @@
     top: 100%;
     left: 18px;
     border: 6px solid transparent;
-    border-top-color: var(--border);
+    border-top-color: var(--border-strong);
   }
   .tip-bubble::before {
     content: '';
@@ -167,6 +204,19 @@
     left: 18px;
     border: 6px solid transparent;
     border-top-color: var(--bg-raised);
+    z-index: 1;
+  }
+  .tip-bubble.below::after {
+    top: auto;
+    bottom: 100%;
+    border-top-color: transparent;
+    border-bottom-color: var(--border-strong);
+  }
+  .tip-bubble.below::before {
+    top: auto;
+    bottom: calc(100% - 1px);
+    border-top-color: transparent;
+    border-bottom-color: color-mix(in srgb, var(--accent) 7%, var(--bg-raised));
     z-index: 1;
   }
 
