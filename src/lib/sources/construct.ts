@@ -122,7 +122,14 @@ export const staCraftGemUpgradeCap: Source = {
   key: 'construct.staCraftGemUpgradeCap', name: 'Statue of Craftmanship (Gem Upgrade Cap)', system: 'construct',
   maxLevel: 3, fn: (n) => ([0, 1, 2, 3] as const)[Math.min(n, 3)], inputs: [],
 }
-// TODO no registry key: Craftmanship — Fish Income Multi ×1.25 (gilded) / ×1.40 (platinized)
+/**
+ * Statue of Craftmanship: Fish Income Multi ×1.25 (gilded) / ×1.40 (platinized).
+ * Multiplicative values stored as factors. → fishing_income_multi
+ */
+export const staCraftFishIncomeMul: Source = {
+  key: 'construct.staCraftFishIncomeMul', name: 'Statue of Craftmanship (Fish Income Multi)', system: 'construct',
+  maxLevel: 3, fn: (n) => ([1, 1, 1.25, 1.40] as const)[Math.min(n, 3)], inputs: [],
+}
 
 /** Statue of Propulsion: Bomb Damage ×4 / ×25 / ×125 */
 export const staPropBombDmg: Source = {
@@ -187,7 +194,11 @@ export const staWarmthSuperStarSupernova: Source = {
   key: 'construct.staWarmthSuperStarSupernova', name: 'Statue of Warmth (Super Star Supernova Multi)', system: 'construct',
   maxLevel: 3, fn: (n) => ([0, 2, 3, 5] as const)[Math.min(n, 3)], inputs: [],
 }
-// TODO no registry key: Warmth (platinized) — Midas Drone Cap +25
+/** Statue of Warmth (platinized): Midas Drone Grade Cap +25. → drone_midas_grade_cap_increase */
+export const staWarmthMidasCap: Source = {
+  key: 'construct.staWarmthMidasCap', name: 'Statue of Warmth (Midas Drone Cap)', system: 'construct',
+  maxLevel: 3, fn: (n) => ([0, 0, 0, 25] as const)[Math.min(n, 3)], inputs: [],
+}
 
 // ─── Statue of Affluence (Kohanu) ─────────────────────────────
 /** Statue of Affluence: Triple Contract Chance +10% / +15% / +25%. → contract_triple_points_chance */
@@ -247,8 +258,20 @@ export const staSopranoAllFloors: Source = {
   key: 'construct.staSopranoAllFloors', name: 'Statue of Soprano (All Floor Multi)', system: 'construct',
   maxLevel: 3, fn: (n) => ([0, 0.15, 0.25, 0.40] as const)[Math.min(n, 3)], inputs: [],
 }
-// TODO no registry key: Soprano — Freebie Gift Chance +0.5/+0.75/+1%
-// TODO no registry key: Soprano — 100× Freebie Gifts Chance 1/50k−1/25k
+/** Statue of Soprano: Freebie Gift Chance +0.5% / +0.75% / +1%. → freebie_gift_chance */
+export const staSopranoFreebieGiftChance: Source = {
+  key: 'construct.staSopranoFreebieGiftChance', name: 'Statue of Soprano (Freebie Gift Chance)', system: 'construct',
+  maxLevel: 3, fn: (n) => ([0, 0.005, 0.0075, 0.01] as const)[Math.min(n, 3)], inputs: [],
+}
+/**
+ * Statue of Soprano: 100× Freebie Gifts Chance (1/50k → 1/35k → 1/25k).
+ * Stored as probability: 1/50000=0.00002, 1/35000≈0.0000286, 1/25000=0.00004.
+ * → freebie_100x_gift_chance
+ */
+export const staSoprano100xGiftChance: Source = {
+  key: 'construct.staSoprano100xGiftChance', name: 'Statue of Soprano (100x Gift Chance)', system: 'construct',
+  maxLevel: 3, fn: (n) => ([0, 1/50000, 1/35000, 1/25000] as const)[Math.min(n, 3)], inputs: [],
+}
 
 // ─── World 4 Statues (scale per W4 statues owned) ────────────────────────────
 // Binary owned (maxLevel: 1). Contribution = owned × w4StatueCount × rate.
@@ -367,7 +390,11 @@ export const staSemblanceVoidCap: Source = {
   key: 'construct.staSemblanceVoidCap', name: 'Statue of Semblance (Void Drone Cap)', system: 'construct',
   maxLevel: 1, fn: (o) => o * 20, inputs: [],
 }
-// TODO no registry key: Semblance — Prism Drone Cap +5
+/** Statue of Semblance: Prism Drone Grade Cap +5 (flat). → drone_prism_grade_cap_increase */
+export const staSemblancePrismCap: Source = {
+  key: 'construct.staSemblancePrismCap', name: 'Statue of Semblance (Prism Drone Cap)', system: 'construct',
+  maxLevel: 1, fn: (o) => o * 5, inputs: [],
+}
 
 // ─── Statue of Crochet (Kripp) ─────────────────────────────
 /** Statue of Crochet: Golden Ore Chance +3% per W4 Statue. → golden_ore_chance */
@@ -396,8 +423,20 @@ export const staAntagonismFroggerCap: Source = {
   fn: (owned, rt) => owned === 0 ? 0 : (rt['w4StatueCount'] ?? 0) * 1,
   inputs: [{ key: 'w4StatueCount', label: 'W4 Statues Owned', type: 'integer', min: 0 }],
 }
-// TODO no registry key: Antagonism — Golden Frog Chance +0.25% per W4 Statue
-// TODO no registry key: Antagonism — Golden Frog Multi +5% per W4 Statue
+/** Statue of Antagonism: Golden (Loot)frog Chance +0.25% per W4 Statue. → lootfrog_golden_chance */
+export const staAntagonismGoldenFrogChance: Source = {
+  key: 'construct.staAntagonismGoldenFrogChance', name: 'Statue of Antagonism (Golden Frog Chance)', system: 'construct',
+  maxLevel: 1,
+  fn: (owned, rt) => owned === 0 ? 0 : (rt['w4StatueCount'] ?? 0) * 0.0025,
+  inputs: [{ key: 'w4StatueCount', label: 'W4 Statues Owned', type: 'integer', min: 0 }],
+}
+/** Statue of Antagonism: Golden (Loot)frog Multi +5% per W4 Statue. → lootfrog_golden_multi */
+export const staAntagonismGoldenFrogMul: Source = {
+  key: 'construct.staAntagonismGoldenFrogMul', name: 'Statue of Antagonism (Golden Frog Multi)', system: 'construct',
+  maxLevel: 1,
+  fn: (owned, rt) => owned === 0 ? 0 : (rt['w4StatueCount'] ?? 0) * 0.05,
+  inputs: [{ key: 'w4StatueCount', label: 'W4 Statues Owned', type: 'integer', min: 0 }],
+}
 
 // ─── Statue of Fallacy (Berty) ──────────────────────────────
 /** Statue of Fallacy: Prismatic Floor Multi +10% per W4 Statue. → prismatic_floor_multi */
@@ -434,24 +473,24 @@ export const constructSources = {
   staRandomnessVeinSpawn, staRandomnessGoldenVeinChance, staRandomnessRainbowVein,
   staChildhoodRainbowFloor, staChildhoodContractCap,
   // W3
-  staCraftPickaxeDmg, staCraftGemUpgradeCap,
+  staCraftPickaxeDmg, staCraftGemUpgradeCap, staCraftFishIncomeMul,
   staPropBombDmg, staPropGoldenVeinMul,
   staSafetyGoldenOreChance, staSafetyGoldenOreMul, staSafetyRainbowFloorChance,
   staIgnitionCraft100x, staIgnitionGalacticFloor,
   staWarmthStarSupergiants, staWarmthSuperStarSupergiants,
-  staWarmthStarSupernova, staWarmthSuperStarSupernova,
+  staWarmthStarSupernova, staWarmthSuperStarSupernova, staWarmthMidasCap,
   staFelinePetLevelup, staFelinePetLevelCap,
   staAffluenceTripleContract, staAffluence10xContract, staAffluenceContractCap,
   staEastwoodLootbugCap, staEastwoodFreebieBank, staEastwoodFreebieTimer, staEastwoodExpGain,
-  staSopranoAllFloors,
+  staSopranoAllFloors, staSopranoFreebieGiftChance, staSoprano100xGiftChance,
   // W4
   staComfortDmg, staComfortScorpioCap, staComfortCapricornCap,
   staTimekeepingRadiantChance, staTimekeepingStarRadiantMul, staTimekeepingSuperStarRadiantMul,
   staCombatStonksChance, staCombatStonksMul, staCombatUltraStonksMul, staCombatUltraStonksChance,
   staNatureGemBombGem, staNatureRainbowVein,
-  staSemblanceRainbowPortal, staSemblanceVoidCap,
+  staSemblanceRainbowPortal, staSemblanceVoidCap, staSemblancePrismCap,
   staCrochetGoldenOre, staCrochetGalacticFloor, staCrochetPrismaticFloor,
-  staAntagonismFroggerCap,
+  staAntagonismFroggerCap, staAntagonismGoldenFrogChance, staAntagonismGoldenFrogMul,
   staFallacyPrismaticMul, staFallacyFreebieGems, staFallacyVeinseekerCap,
   staRodentiaPickaxe, staRodentiaChainCap, staRodentiaRadiantChance,
 }

@@ -1307,6 +1307,18 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     icon: 'Skill_Shard.png',
     affix: { suffix: '%' }
   },
+  freebie_gift_chance: {
+    name: 'Freebie Gift Chance',
+    description: 'The chance of receiving a Gift from a Freebie.',
+    icon: 'Freebie_Gift.png',
+    affix: { suffix: '%' }
+  },
+  freebie_100x_gift_chance: {
+    name: '100x Freebie Gift Chance',
+    description: 'The chance of receiving a 100x Gift reward from a Freebie.',
+    icon: 'Freebie_Gift.png',
+    affix: { suffix: '%' }
+  },
   freebie_chance_for_bonus_relic: {
     name: 'Bonus Relic Chest From Freebies',
     description: 'The chance to receive a bonus Relic Chest from Freebies.',
@@ -1497,6 +1509,18 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Veinseeker Drone Grade Cap Increase',
     description: 'Increases the Grade cap for the Veinseeker Drone',
     icon: 'Drone_Veinseeker_Icon.png',
+    affix: { prefix: '+' }
+  },
+  drone_midas_grade_cap_increase: {
+    name: 'Midas Drone Grade Cap Increase',
+    description: 'Increases the Grade cap for the Midas Drone',
+    icon: 'Drone_Midas_Icon.png',
+    affix: { prefix: '+' }
+  },
+  drone_prism_grade_cap_increase: {
+    name: 'Prism Drone Grade Cap Increase',
+    description: 'Increases the Grade cap for the Prism Drone',
+    icon: 'Drone_Prism_Icon.png',
     affix: { prefix: '+' }
   },
   founder_supply_drop_cd: {
