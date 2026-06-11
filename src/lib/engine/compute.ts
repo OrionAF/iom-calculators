@@ -3,22 +3,29 @@ import type { FormulaMap, RuntimeInput, Source, StatFormula } from './types'
 /**
  * Compute a single stat value from a formula, levels, and runtime inputs.
  * Contributions marked unknown are skipped.
- * Operators are applied in declaration order.
+ *
+ * Evaluation is grouped (see Op in types.ts):
+ *   result = (base + Σ adds) × Π factors × Π (1 + bonuses)
+ * Declaration order never changes the result, so additive sources can be
+ * listed in any position relative to multiplicative ones.
  */
 export function computeStat(
   formula: StatFormula,
   levels: Record<string, number>,
   rt: Record<string, number>,
 ): number {
-  let result = formula.base
+  let base = formula.base
+  let sum = 0
+  let factor = 1
   for (const { source, op, unknown } of formula.contributions) {
     if (unknown) continue
     const contribution = source.fn(levels[source.key] ?? 0, rt)
-    if      (op === '+') result += contribution
-    else if (op === '×') result *= contribution
-    else if (op === '=') result  = contribution
+    if      (op === '+')   sum += contribution
+    else if (op === '×')   factor *= contribution
+    else if (op === '×1+') factor *= 1 + contribution
+    else if (op === '=')   base = contribution
   }
-  return result
+  return (base + sum) * factor
 }
 
 /**

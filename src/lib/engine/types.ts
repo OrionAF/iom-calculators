@@ -53,13 +53,20 @@ export type SourceSystem =
   | 'worldquests'
 
 /**
- * How a source contribution is combined into the running stat total.
+ * How a source contribution is combined into the stat total.
  *
- * '+': result += source.fn(level, rt)          additive
- * '×': result *= source.fn(level, rt)          multiplicative
- * '=': result  = source.fn(level, rt)          setter / override
+ * Evaluation is GROUPED, not declaration-ordered (matches the in-game rule
+ * "additive within a group, multiplicative across groups"):
+ *
+ *   result = (base + Σ '+' terms) × Π '×' factors × Π (1 + '×1+' terms)
+ *
+ * '+'  : added to the base                       additive
+ * '×'  : multiplies the summed result            multiplicative factor
+ * '×1+': multiplies by (1 + fn) — for sources    multiplicative bonus
+ *        stored as a bonus fraction (e.g. +22% → fn returns 0.22)
+ * '='  : replaces the base value (applied before any '+'); last '=' wins
  */
-export type Op = '+' | '×' | '='
+export type Op = '+' | '×' | '×1+' | '='
 
 export interface Contribution {
   source: Source
