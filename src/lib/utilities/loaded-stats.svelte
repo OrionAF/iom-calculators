@@ -9,11 +9,19 @@
   import EmptyState from '$lib/components/EmptyState.svelte'
   import WikiIcon from '$lib/components/WikiIcon.svelte'
   import PageHeader from '$lib/components/PageHeader.svelte'
-  import { ChevronDown } from 'lucide-svelte'
+  import { Info, X, ChevronDown } from 'lucide-svelte'
 
   // Collapsed categories — persisted in sessionStorage so a page reload
   // within the same session remembers which you closed.
   const COLLAPSE_KEY = 'iom-collapsed-cats'
+
+  let copyBannerDismissed = $state(
+    typeof window !== 'undefined' && sessionStorage.getItem('iom-copy-banner-dismissed') === '1'
+  )
+  function dismissCopyBanner() {
+    copyBannerDismissed = true
+    try { sessionStorage.setItem('iom-copy-banner-dismissed', '1') } catch { /* noop */ }
+  }
 
   function loadCollapsed(): Set<string> {
     try {
@@ -231,6 +239,20 @@
     {#if visibleCategories.length === 0}
       <p class="no-results">No stats match your filter.</p>
     {:else}
+      {#if !copyBannerDismissed}
+        <div class="info-banner" role="note">
+          <Info size={16} aria-hidden="true" />
+          <span>
+            Click/tap the <strong>values</strong> of any stat to <strong>copy</strong> the raw value.
+          </span>
+          <button
+            type="button"
+            class="banner-close"
+            onclick={dismissCopyBanner}
+            aria-label="Dismiss notice"
+          ><X size={14} aria-hidden="true" /></button>
+        </div>
+      {/if}
       {#each visibleCategories as category (category.id)}
         {@const collapsed = collapsedCats.has(category.id)}
         <article class="stat-card" class:collapsed>
@@ -421,6 +443,49 @@
     color: var(--text-muted);
     padding: var(--space-6) 0;
     text-align: center;
+  }
+
+  /* ── Info banner ────────────────────────────── */
+  .info-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-4);
+    background: color-mix(in srgb, var(--accent) 6%, var(--bg-surface));
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    line-height: var(--leading-base);
+  }
+  .info-banner :global(svg) {
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .info-banner strong { color: var(--accent); font-weight: var(--weight-medium); }
+  .info-banner span { flex: 1; }
+  .banner-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color var(--transition-fast), background var(--transition-fast);
+  }
+  @media (hover: hover) {
+    .banner-close:hover { color: var(--text-primary); background: color-mix(in srgb, var(--text-primary) 8%, transparent); }
+  }
+  .banner-close:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
   }
 
   /* ── Category card ─────────────────────────────────── */
