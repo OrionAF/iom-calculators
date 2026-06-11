@@ -1,4 +1,5 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
+import { defineFormulas } from './define'
 import { fishingSources as f } from '$lib/sources/fishing'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { storeSources as st } from '$lib/sources/store'
@@ -20,7 +21,7 @@ const UNKNOWN: Source = {
   inputs: [],
 }
 
-export const fishingFormulas = {
+export const fishingFormulas: FormulaMap = defineFormulas({
 
   /**
    * Fishing Rod Power
@@ -28,7 +29,6 @@ export const fishingFormulas = {
    * Fishing components multiply; Store and Card add a flat bonus.
    */
   fishing_rod_power: {
-    base: 1,
     contributions: [
       { source: f.rodBase,          op: '×' },
       { source: f.rodMultiT1,       op: '×' },
@@ -45,7 +45,6 @@ export const fishingFormulas = {
    * All additive sources are summed first, then multiplied by Drone Cloner.
    */
   fishing_drone_capacity: {
-    base: 0,
     contributions: [
       { source: f.droneCapT1,              op: '+' },
       { source: f.droneCapT1B,             op: '+' },
@@ -63,7 +62,6 @@ export const fishingFormulas = {
    * base = 3 (wiki: "Base: 3")
    */
   fishing_drone_power: {
-    base: 3,
     contributions: [
       { source: f.droneBaseT1, op: '+' },
       { source: arch.idolPoseidon,         op: '+' },
@@ -78,7 +76,6 @@ export const fishingFormulas = {
    * base = 1
    */
   fishing_drone_multiplier: {
-    base: 1,
     contributions: [
       { source: f.droneMultiT1,                       op: '+' },
       { source: f.droneMultiE1,                       op: '+' },
@@ -94,7 +91,6 @@ export const fishingFormulas = {
    * base = 0 (additive bonus on top of base dock power)
    */
   fishing_tier2_dock_multi: {
-    base: 0,
     contributions: [
       { source: f.tier2DockT2,                         op: '+' },
       { source: f.tier2DockE2,                         op: '+' },
@@ -110,7 +106,6 @@ export const fishingFormulas = {
    * base = 1
    */
   fishing_income_multi: {
-    base: 1,
     contributions: [
       { source: f.fishMultiT1,                     op: '+' },
       { source: f.fishMultiE1,                     op: '+' },
@@ -128,7 +123,6 @@ export const fishingFormulas = {
    * base = 0 — total seconds reduced from the 60s base tick timer
    */
   fishing_tick_reduction_seconds: {
-    base: 0,
     contributions: [
       { source: f.tickSpeedT1,            op: '+' },
       { source: f.tickSpeedE1,            op: '+' },
@@ -141,7 +135,6 @@ export const fishingFormulas = {
    * base = 0
    */
   fishing_double_tick_chance: {
-    base: 0,
     contributions: [
       { source: f.doubleTickT1,                  op: '+' },
       { source: f.doubleTickE1,                  op: '+' },
@@ -155,7 +148,6 @@ export const fishingFormulas = {
    * base = 0
    */
   fishing_triple_tick_chance: {
-    base: 0,
     contributions: [
       { source: f.tripleTickT1,                  op: '+' },
       { source: f.tripleTickE2,                  op: '+' },
@@ -171,7 +163,6 @@ export const fishingFormulas = {
    * base = 0 — all sources unknown
    */
   fishing_5x_tick_chance: {
-    base: 0,
     contributions: [
       { source: UNKNOWN, op: '+', unknown: true },  // Divine Relic
       { source: UNKNOWN, op: '+', unknown: true },  // Legendary Hauler Bundle
@@ -184,7 +175,6 @@ export const fishingFormulas = {
    * base = 1
    */
   fishing_token_multi: {
-    base: 1,
     contributions: [
       { source: f.tokenMultiE1, op: '+' },
     ],
@@ -195,7 +185,6 @@ export const fishingFormulas = {
    * base = 0 — total fraction by which the notice fish requirement is reduced
    */
   fishing_notice_requirement: {
-    base: 0,
     contributions: [
       { source: sk.friendshipEndedNoticeReq, op: '+' },
     ],
@@ -206,7 +195,6 @@ export const fishingFormulas = {
    * base = 0
    */
   fishing_tiny_notice_chance: {
-    base: 0,
     contributions: [
       { source: f.tinyNoticeE1, op: '+' },
       { source: UNKNOWN,        op: '+', unknown: true },  // Angler's Bundle (Store)
@@ -219,7 +207,6 @@ export const fishingFormulas = {
    * base = 0
    */
   fishing_shiny_chance: {
-    base: 0,
     contributions: [
       { source: f.shinyChanceT1,              op: '+' },
       { source: sk.withThisFishShinyChance,   op: '+' },
@@ -232,7 +219,6 @@ export const fishingFormulas = {
    * base = 3 (wiki: "Base: 3×")
    */
   fishing_shiny_multi: {
-    base: 3,
     contributions: [
       { source: f.shinyMultiT2,  op: '+' },
       { source: f.shinyMultiE1,  op: '+' },
@@ -246,7 +232,6 @@ export const fishingFormulas = {
    * base = 0 — all sources fully known, no unknowns
    */
   fishing_super_shiny_chance: {
-    base: 0,
     contributions: [
       { source: f.superShinyChanceT2,                   op: '+' },
       { source: sk.completionistGatekeeperSuperShiny,   op: '+' },
@@ -259,7 +244,6 @@ export const fishingFormulas = {
    * Enhancement adds to the base 2×.
    */
   fishing_super_shiny_multi: {
-    base: 2,
     contributions: [
       { source: f.superShinyMultiE2, op: '+' },
       { source: arch.idolTethysSuperShiny,     op: '+' },
@@ -273,14 +257,12 @@ export const fishingFormulas = {
    * Left as fully unknown pending further research.
    */
   fishing_tick_speed: {
-    base: 0,
     contributions: [
       { source: UNKNOWN, op: '+', unknown: true },
     ],
   },
 
   polychrome_card_bonus_fish: {
-    base: 0,
     contributions: [
       { source: f.polyCardMultiT2,  op: '+' },
       { source: f.polyCardMultiE2,  op: '+' },
@@ -288,4 +270,4 @@ export const fishingFormulas = {
     ],
   },
 
-} satisfies FormulaMap
+})

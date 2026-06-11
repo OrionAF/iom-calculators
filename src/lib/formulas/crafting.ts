@@ -1,4 +1,5 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
+import { defineFormulas } from './define'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { relicSources as rel } from '$lib/sources/relics'
 import { storeSources as st } from '$lib/sources/store'
@@ -13,9 +14,8 @@ import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
-export const craftingFormulas = {
+export const craftingFormulas: FormulaMap = defineFormulas({
   free_craft_chance: {
-    base: 0,
     contributions: [
       { source: art.artFreeCraftT1,              op: '+' },
       { source: st.vpCraftmasterFreeCraft,       op: '+' },
@@ -23,7 +23,6 @@ export const craftingFormulas = {
     ],
   },
   double_craft_chance: {
-    base: 0,
     contributions: [
       { source: sk.oreEfficiencyDoubleCraft,     op: '+' },
       { source: pet.petAxolotlDoubleCraft,       op: '+' },
@@ -33,7 +32,6 @@ export const craftingFormulas = {
     ],
   },
   triple_craft_chance: {
-    base: 0,
     contributions: [
       { source: sk.heftyHammersTripleCraft,      op: '+' },
       { source: art.artTripleCraftT1,            op: '+' },
@@ -43,13 +41,11 @@ export const craftingFormulas = {
     ],
   },
   craft_5x_chance: {
-    base: 0,
     contributions: [
       { source: rel.legendaryRelicCraft5x,       op: '+' },
     ],
   },
   craft_10x_chance: {
-    base: 0,
     contributions: [
       { source: sk.heftyHammers10xCraft,         op: '+' },
       { source: sk.imRunningOut10xCraft,          op: '+' },
@@ -62,14 +58,12 @@ export const craftingFormulas = {
     ],
   },
   craft_20x_chance: {
-    base: 0,
     contributions: [
       { source: rel.mythicRelicCraft20x,         op: '+' },
       { source: U, op: '+', unknown: true },     // Skill-Tree: Super Smither
     ],
   },
   craft_100x_chance: {
-    base: 0,
     contributions: [
       { source: con.staIgnitionCraft100x,        op: '+' },
       { source: st.vpCraftmaster100xCraft,       op: '+' },
@@ -80,7 +74,6 @@ export const craftingFormulas = {
     ],
   },
   bar_output_multi: {
-    base: 1,
     contributions: [
       { source: art.artBarOutputT4,              op: '+' },
       { source: st.perkBarOutput,                op: '×' },
@@ -89,7 +82,6 @@ export const craftingFormulas = {
     ],
   },
   bar_upgrade_cost_reduction: {
-    base: 0,
     contributions: [
       { source: ch.chBarUpgradeCosts,            op: '+' },
       { source: ct.ctBarCostReductionW1,         op: '+' },
@@ -97,7 +89,6 @@ export const craftingFormulas = {
     ],
   },
   bar_craft_cost_multi: {
-    base: 1,
     contributions: [
       { source: sk.imRunningOutBarCraft,             op: '+' },
       { source: sk.moreOreMoreProblemsBarCraft,      op: '+' },
@@ -108,4 +99,4 @@ export const craftingFormulas = {
       { source: U, op: '+', unknown: true },         // Store + Cards
     ],
   },
-} satisfies FormulaMap
+})

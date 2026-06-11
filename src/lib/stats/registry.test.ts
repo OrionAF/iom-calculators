@@ -32,24 +32,20 @@ describe('STAT_REGISTRY structure', () => {
   })
 })
 
-describe('STAT_CATALOG ↔ STAT_REGISTRY cross-resolution (strict)', () => {
-  // Every stat that appears in STAT_CATALOG must have a matching entry in
-  // STAT_REGISTRY. The catalog is structure-only (groupings of stat keys);
-  // the registry is the canonical home for identity (name, icon, description,
-  // affix). A catalog key without a registry entry would render with the
-  // fallback `prettyKey(key)` instead of the real name — visible to users.
-  //
-  // This was previously tolerated as a ratchet (107 known gaps). The gap was
-  // closed in commit 44f434a; this test now enforces the strict invariant.
-  // Add a new catalog stat → add the matching registry entry in the same PR.
-  it('every STAT_CATALOG.stats[].key resolves in STAT_REGISTRY', () => {
-    const missing: string[] = []
-    for (const cat of STAT_CATALOG) {
-      for (const stat of cat.stats) {
-        if (!STAT_REGISTRY[stat.key]) missing.push(`${cat.id}/${stat.key}`)
+describe('STAT_CATALOG ↔ STAT_REGISTRY cross-resolution', () => {
+  // STAT_CATALOG is now derived from StatMeta.category, so catalog keys
+  // resolve in the registry by construction. The remaining failure mode is
+  // the inverse: a registry entry declaring a category id that no catalog
+  // category defines — the stat would silently vanish from Loaded Stats.
+  it('every StatMeta.category maps to a defined STAT_CATALOG category id', () => {
+    const known = new Set(STAT_CATALOG.map(c => c.id))
+    const orphaned: string[] = []
+    for (const [key, meta] of Object.entries(STAT_REGISTRY)) {
+      if (meta.category !== undefined && !known.has(meta.category)) {
+        orphaned.push(`${key} → '${meta.category}'`)
       }
     }
-    expect(missing, `unresolved keys: ${missing.join(', ')}`).toHaveLength(0)
+    expect(orphaned, `orphaned categories: ${orphaned.join(', ')}`).toHaveLength(0)
   })
 })
 

@@ -1,4 +1,5 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
+import { defineFormulas } from './define'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { constructSources as con } from '$lib/sources/construct'
 import { petSources as pet } from '$lib/sources/pets'
@@ -9,22 +10,19 @@ import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
-export const contractsFormulas = {
+export const contractsFormulas: FormulaMap = defineFormulas({
   contract_cost_reduction: {
-    base: 0,
     contributions: [
       { source: U, op: '+', unknown: true },   // Relics: Rare Relic
     ],
   },
   contract_double_points_chance: {
-    base: 0,
     contributions: [
       { source: sg.starCancerDoubleContract,   op: '+' },
       { source: sg.ssDoubleContractPoints,     op: '+' },
     ],
   },
   contract_triple_points_chance: {
-    base: 0,
     contributions: [
       { source: sk.whosAskingTripleContract, op: '+' },
       { source: con.staAffluenceTripleContract, op: '+' },
@@ -34,14 +32,12 @@ export const contractsFormulas = {
     ],
   },
   contract_5x_points_chance: {
-    base: 0,
     contributions: [
       { source: pet.petRabbitQuest5xContract,  op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
   contract_10x_points_chance: {
-    base: 0,
     contributions: [
       { source: sk.pleaseSirContract10x,       op: '+' },
       { source: con.staAffluence10xContract,   op: '+' },
@@ -51,7 +47,6 @@ export const contractsFormulas = {
     ],
   },
   contract_points_rewarded: {
-    base: 10,
     contributions: [
       { source: sk.whosAskingContractPoints, op: '+' },
       { source: pet.petRabbitSkinContractPoints, op: '+' },
@@ -59,7 +54,6 @@ export const contractsFormulas = {
     ],
   },
   contract_cap_increase: {
-    base: 0,
     contributions: [
       { source: sk.idleObeliskMincerContractCap, op: '+' },
       { source: con.staChildhoodContractCap,   op: '+' },
@@ -71,7 +65,6 @@ export const contractsFormulas = {
     ],
   },
   contract_upgrade_cost_reduction: {
-    base: 1,
     contributions: [
       { source: pet.petRabbitContractCost,     op: '+' },
       { source: pet.petRabbitQuestContractCost, op: '+' },
@@ -79,4 +72,4 @@ export const contractsFormulas = {
       { source: U, op: '+', unknown: true },
     ],
   },
-} satisfies FormulaMap
+})

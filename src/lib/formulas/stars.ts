@@ -1,4 +1,5 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
+import { defineFormulas } from './define'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { relicSources as rel } from '$lib/sources/relics'
@@ -22,14 +23,13 @@ const UNKNOWN: Source = {
   inputs: [],
 }
 
-export const starsFormulas = {
+export const starsFormulas: FormulaMap = defineFormulas({
 
   /**
    * Star Spawn Rate Multiplier
    * base = 0 (additive bonus to the base 1/50 spawn rate)
    */
   star_spawn_rate: {
-    base: 0,
     contributions: [
       { source: sg.spawnRate,  op: '+' },
       { source: sg.starGemini, op: '+' },
@@ -47,7 +47,6 @@ export const starsFormulas = {
    * Note: Drone sources use op '=' (setter) — they override other additive sources.
    */
   star_auto_catch_chance: {
-    base: 0,
     contributions: [
       { source: sg.autoCatch,    op: '+' },
       { source: sg.starTaurus,   op: '+' },
@@ -61,7 +60,6 @@ export const starsFormulas = {
    * base = 0 — only stargazing upgrade known
    */
   star_double_spawn_chance: {
-    base: 0,
     contributions: [
       { source: sg.doubleChance, op: '+' },
     ],
@@ -72,7 +70,6 @@ export const starsFormulas = {
    * base = 0
    */
   star_triple_spawn_chance: {
-    base: 0,
     contributions: [
       { source: sg.starSagittarius, op: '+' },
       { source: drone.droneSuitStarburstPassive,  op: '+' },
@@ -87,7 +84,6 @@ export const starsFormulas = {
    * base = 0
    */
   super_star_spawn_multi: {
-    base: 0,
     contributions: [
       { source: sg.superStarSpawn,                   op: '+' },
       { source: sg.starVirgo,                        op: '+' },
@@ -107,7 +103,6 @@ export const starsFormulas = {
    * base = 0
    */
   super_star_triple_chance: {
-    base: 0,
     contributions: [
       { source: sg.starLeo, op: '+' },
       { source: UNKNOWN,    op: '+', unknown: true },  // Store: Stargazing Supernova Bundle
@@ -119,7 +114,6 @@ export const starsFormulas = {
    * base = 0
    */
   super_star_10x_chance: {
-    base: 0,
     contributions: [
       { source: sg.super10xChance,             op: '+' },
       { source: sk.ctrlCCtrlVStarsSuper10x,   op: '+' },
@@ -134,7 +128,6 @@ export const starsFormulas = {
    * base = 0
    */
   star_supernova_chance: {
-    base: 0,
     contributions: [
       { source: sg.novaChance,                    op: '+' },
       { source: sg.starHercules,                  op: '+' },
@@ -150,7 +143,6 @@ export const starsFormulas = {
    * base = 10 (wiki: "Base: 10×")
    */
   star_supernova_multi: {
-    base: 10,
     contributions: [
       { source: sk.ctrlFStarsSupernovaMul,      op: '+' },
       { source: sk.ctrlCCtrlVStarsSupernovaMul, op: '+' },
@@ -174,7 +166,6 @@ export const starsFormulas = {
    * base = 0
    */
   super_star_supernova_chance: {
-    base: 0,
     contributions: [
       { source: pet.petStarfishSupernovaChance,  op: '+' },
       { source: ct.ctSupernovaChanceW2,          op: '+' },
@@ -187,7 +178,6 @@ export const starsFormulas = {
    * base = 10 (wiki: "Base: 10×")
    */
   super_star_supernova_multi: {
-    base: 10,
     contributions: [
       { source: sk.ctrlFStarsSuperStarSupernovaMul, op: '+' },
       { source: rel.divineRelicSupernovaMul,        op: '+' },
@@ -204,7 +194,6 @@ export const starsFormulas = {
    * base = 0
    */
   star_supergiant_chance: {
-    base: 0,
     contributions: [
       { source: sg.supergiants,                 op: '+' },
       { source: sk.whyAreThereStarsSupergiant,  op: '+' },
@@ -222,7 +211,6 @@ export const starsFormulas = {
    * base = 3 (wiki: "Base: 3×")
    */
   star_supergiant_multi: {
-    base: 3,
     contributions: [
       { source: sg.supergigantsMulti, op: '+' },
       { source: con.staWarmthStarSupergiants,  op: '+' },
@@ -237,7 +225,6 @@ export const starsFormulas = {
    * base = 0
    */
   super_star_supergiant_chance: {
-    base: 0,
     contributions: [
       { source: sg.superSupergiants, op: '+' },
       { source: ch.chSuperStarSupergiants,     op: '+' },
@@ -251,7 +238,6 @@ export const starsFormulas = {
    * base = 3 (same pattern as star_supergiant_multi)
    */
   super_star_supergiant_multi: {
-    base: 3,
     contributions: [
       { source: con.staWarmthSuperStarSupergiants, op: '+' },
       { source: up.upgrSuperStarSupergiantMul, op: '+' },
@@ -264,7 +250,6 @@ export const starsFormulas = {
    * base = 0
    */
   star_radiant_chance: {
-    base: 0,
     contributions: [
       { source: sg.radiantChance, op: '+' },
       { source: con.staTimekeepingRadiantChance,        op: '+' },
@@ -278,7 +263,6 @@ export const starsFormulas = {
    * base = 10 (radiant gives 10× — same pattern as supernova)
    */
   star_radiant_multi: {
-    base: 10,
     contributions: [
       { source: con.staTimekeepingStarRadiantMul,  op: '+' },
       { source: arch.idolPrometheusStarRadiantMul, op: '+' },
@@ -290,7 +274,6 @@ export const starsFormulas = {
    * base = 0
    */
   super_star_radiant_chance: {
-    base: 0,
     contributions: [
       { source: sg.superRadiant, op: '+' },
       { source: con.staRodentiaRadiantChance,          op: '+' },
@@ -304,7 +287,6 @@ export const starsFormulas = {
    * base = 10 (estimated)
    */
   super_star_radiant_multi: {
-    base: 10,
     contributions: [
       { source: con.staTimekeepingSuperStarRadiantMul,  op: '+' },
       { source: arch.idolPrometheusSuperStarRadiantMul, op: '+' },
@@ -316,7 +298,6 @@ export const starsFormulas = {
    * base = 1 (starts at 1×)
    */
   all_star_multi: {
-    base: 1,
     contributions: [
       { source: sg.allStarMulti,                  op: '+' },
       { source: sg.starScorpio,                   op: '+' },
@@ -341,7 +322,6 @@ export const starsFormulas = {
    * All known sources defined — no unknowns.
    */
   novagiant_combo_multi: {
-    base: 1,
     contributions: [
       { source: sg.novagiant,                  op: '+' },
       { source: sk.whyAreThereStarsNovagiant,  op: '+' },
@@ -350,4 +330,4 @@ export const starsFormulas = {
     ],
   },
 
-} satisfies FormulaMap
+})

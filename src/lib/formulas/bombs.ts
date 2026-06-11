@@ -1,4 +1,5 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
+import { defineFormulas } from './define'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { relicSources as rel } from '$lib/sources/relics'
 import { itemSources as it } from '$lib/sources/items'
@@ -17,9 +18,8 @@ import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
-export const bombsFormulas = {
+export const bombsFormulas: FormulaMap = defineFormulas({
   bomb_damage: {
-    base: 0,
     contributions: [
       // ── Skill-Tree (additive) ──────────────────────────────────────────
       { source: sk.biggerBlastsDamage,         op: '+' },
@@ -71,7 +71,6 @@ export const bombsFormulas = {
     ],
   },
   bomb_crit_chance: {
-    base: 0,
     contributions: [
       { source: sk.allRoundBomberCritChance,   op: '+' },
       { source: rel.commonRelicBombCrit,       op: '+' },
@@ -79,7 +78,6 @@ export const bombsFormulas = {
     ],
   },
   bomb_crit_damage: {
-    base: 0,
     contributions: [
       { source: rel.commonRelicBombCritDamage, op: '+' },
       { source: art.artBombDmgT1,              op: '+' },
@@ -89,7 +87,6 @@ export const bombsFormulas = {
     ],
   },
   bomb_recharge_speed: {
-    base: 1,
     contributions: [
       { source: sk.allRoundBomberRecharge,           op: '+' },
       { source: sk.leprechaunsLegacyBombRecharge,    op: '×' },
@@ -108,7 +105,6 @@ export const bombsFormulas = {
     ],
   },
   bomb_free_chance: {
-    base: 0,
     contributions: [
       { source: sk.arsenalAdvancementFreeBomb, op: '+' },
       { source: sk.demolitionExpertFreeBomb,   op: '+' },
@@ -116,7 +112,6 @@ export const bombsFormulas = {
     ],
   },
   bomb_capacity: {
-    base: 0,
     contributions: [
       { source: sk.arsenalAdvancementCapacity, op: '+' },
       { source: sk.flamboyantBombsCapacity,    op: '+' },
@@ -131,14 +126,12 @@ export const bombsFormulas = {
     ],
   },
   bomb_cap_multiplier: {
-    base: 1,
     contributions: [
       { source: con.staAppetiteBombCap,        op: '×' },
       { source: U, op: '+', unknown: true },   // Workshop Bomb Battery Cap
     ],
   },
   bomb_super_crit_chance: {
-    base: 0,
     contributions: [
       { source: sk.demolitionExpertSuperCrit,  op: '+' },
       { source: art.artBombSuperCritT3,        op: '+' },
@@ -147,9 +140,8 @@ export const bombsFormulas = {
       { source: U, op: '+', unknown: true },   // Items (Rock Cake + Cassandra Idol)
     ],
   },
-  bomb_super_crit_damage:    { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_super_crit_damage:    { contributions: [{ source: U, op: '+', unknown: true }] },
   bomb_ultra_crit_chance: {
-    base: 0,
     contributions: [
       { source: sk.flamboyantBombsUltraCrit,       op: '+' },
       { source: con.staAwarenessUltraCrit,         op: '+' },
@@ -161,26 +153,23 @@ export const bombsFormulas = {
 
     ],
   },
-  bomb_ultra_crit_damage:    { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_ultra_crit_damage:    { contributions: [{ source: U, op: '+', unknown: true }] },
   bomb_omega_crit_chance: {
-    base: 0,
     contributions: [
       { source: ct.ctOmegaCritChance,           op: '+' },
       { source: up.upgrBombOmegaCrit,            op: '+' },
     ],
   },
-  bomb_omega_crit_damage:    { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
-  bomb_cherry3x_chance:      { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
-  bomb_battery_cap_increases:{ base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_omega_crit_damage:    { contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_cherry3x_chance:      { contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_battery_cap_increases:{ contributions: [{ source: U, op: '+', unknown: true }] },
   bomb_additional_multiplier: {
-    base: 0,
     contributions: [
       { source: rel.mythicRelicBombMulti,      op: '+' },
       { source: U, op: '+', unknown: true },   // Workshop
     ],
   },
   bomb_workshop_cap_increase: {
-    base: 0,
     contributions: [
       { source: sk.doTheseUpgradesWorkshopCap,    op: '+' },
       { source: sk.idleObeliskMincerWorkshopCap,  op: '+' },
@@ -189,21 +178,19 @@ export const bombsFormulas = {
       { source: U,  op: '+', unknown: true },   // Construct (no workshop_upgrade_cap key) + Fishing
     ],
   },
-  bomb_of_plenty_make_gold_chance: { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_of_plenty_make_gold_chance: { contributions: [{ source: U, op: '+', unknown: true }] },
   bomb_of_plenty_multi: {
-    base: 1,
     contributions: [
       { source: st.founderBomBofPlenty,        op: '+' },
       { source: st.vpBomberBopMulti,           op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
-  bomb_trans_apply_bop_chance:{ base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_trans_apply_bop_chance:{ contributions: [{ source: U, op: '+', unknown: true }] },
   bomb_transmuter_multi: {
-    base: 1,
     contributions: [
       { source: st.vpBomberTransmuterMulti,    op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
-} satisfies FormulaMap
+})

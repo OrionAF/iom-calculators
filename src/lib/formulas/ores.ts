@@ -1,4 +1,5 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
+import { defineFormulas } from './define'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { relicSources as rel } from '$lib/sources/relics'
 import { itemSources as it } from '$lib/sources/items'
@@ -16,9 +17,8 @@ import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
-export const oresFormulas = {
+export const oresFormulas: FormulaMap = defineFormulas({
   multi_rock_chance: {
-    base: 0,
     contributions: [
       { source: it.eyeOfNewtTripleRock,        op: '+' },
       { source: it.goldenEyeOfNewtTripleRock,  op: '+' },
@@ -33,7 +33,6 @@ export const oresFormulas = {
     ],
   },
   ore_sell_price_multi: {
-    base: 1,
     contributions: [
       { source: sk.easyProgressorOreSell,       op: '+' },
       { source: sk.iHaveWaresOreSell,           op: '×' },
@@ -52,14 +51,12 @@ export const oresFormulas = {
     ],
   },
   ore_income_multi: {
-    base: 1,
     contributions: [
       { source: st.perkOreIncome,              op: '×' },
       { source: U, op: '×', unknown: true },   // Drones Elixir
     ],
   },
   golden_ore_chance: {
-    base: 0,
     contributions: [
       { source: sk.iBuriedItHereGoldenOre,     op: '+' },
       { source: it.lasagnaGoldenOreChance,     op: '+' },
@@ -75,7 +72,6 @@ export const oresFormulas = {
     ],
   },
   golden_ore_multi: {
-    base: 3,
     contributions: [
       { source: it.lasagnaGoldenOreMul,        op: '×' },
       { source: it.goldFlakeSteakBuff,         op: '×' },
@@ -92,13 +88,11 @@ export const oresFormulas = {
     ],
   },
   golden_floor_chance: {
-    base: 0,
     contributions: [
       { source: rel.mythicRelicGoldenFloorChance, op: '+' },
     ],
   },
   golden_floor_multi: {
-    base: 5,
     contributions: [
       { source: sk.perfectGoldGoldenFloor,          op: '+' },
       { source: sk.iHaveWaresGoldenFloor,           op: '+' },
@@ -121,7 +115,6 @@ export const oresFormulas = {
     ],
   },
   rainbow_floor_chance: {
-    base: 0,
     contributions: [
       { source: sk.opticalPhenomenonRainbowFloor,   op: '+' },
       { source: sk.imRunningOutRainbowFloor,        op: '+' },
@@ -140,7 +133,6 @@ export const oresFormulas = {
     ],
   },
   rainbow_floor_multi: {
-    base: 50,
     contributions: [
       { source: it.rainbowLollipopMul,              op: '×' },
       { source: it.goldenRainbowLollipopMul,        op: '×' },
@@ -156,7 +148,6 @@ export const oresFormulas = {
     ],
   },
   galactic_floor_chance: {
-    base: 0,
     contributions: [
       { source: sk.iBuriedItHereGalacticFloor,      op: '+' },
       { source: card.cardNagini,      op: '+' },
@@ -171,7 +162,6 @@ export const oresFormulas = {
     ],
   },
   galactic_floor_multi: {
-    base: 10,
     contributions: [
       { source: card.cardWorld3,               op: '×' },
       { source: pet.petLeprechaunQuestGalacticMul, op: '+' },
@@ -183,7 +173,6 @@ export const oresFormulas = {
 
 
   prismatic_floor_chance: {
-    base: 0,
     contributions: [
       { source: con.staCrochetPrismaticFloor,  op: '+' },
       { source: up.upgrPrismaticFloorChance,    op: '+' },
@@ -191,7 +180,6 @@ export const oresFormulas = {
     ],
   },
   prismatic_floor_multi: {
-    base: 1,
     contributions: [
       { source: pet.petButterflyQuestPrismaticMul,  op: '+' },
       { source: con.staFallacyPrismaticMul,         op: '+' },
@@ -201,10 +189,9 @@ export const oresFormulas = {
       { source: U, op: '+', unknown: true },   // Fueled Prism (temp)
     ],
   },
-  pizzas_eaten:          { base: 0, contributions: [] },
-  steak_eaten:           { base: 0, contributions: [] },
+  pizzas_eaten:          { contributions: [] },
+  steak_eaten:           { contributions: [] },
   all_floor_multipliers: {
-    base: 0,
     contributions: [
       { source: con.staSopranoAllFloors,  op: '+' },
       { source: card.cardWorld4,          op: '×' },
@@ -214,7 +201,6 @@ export const oresFormulas = {
   },
 
   polychrome_card_bonus_ore: {
-    base: 0,
     contributions: [
       { source: up.upgrPolychromeOreCardMulti, op: '×' },
       { source: pet.petHappyBotQuestPolyOre,   op: '+' },
@@ -222,17 +208,15 @@ export const oresFormulas = {
     ],
   },
   polychrome_card_bonus_star: {
-    base: 0,
     contributions: [
       { source: pet.petHappyBotQuestPolyStar,  op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
   polychrome_card_bonus_vein: {
-    base: 0,
     contributions: [
       { source: pet.petHappyBotQuestPolyVein,  op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
-} satisfies FormulaMap
+})

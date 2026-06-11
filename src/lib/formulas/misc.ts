@@ -1,4 +1,5 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
+import { defineFormulas } from './define'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { relicSources as rel } from '$lib/sources/relics'
 import { itemSources as it } from '$lib/sources/items'
@@ -15,9 +16,8 @@ import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'store', fn: () => 0, inputs: [] }
 
-export const miscFormulas = {
+export const miscFormulas: FormulaMap = defineFormulas({
   game_speed_multi: {
-    base: 1,
     contributions: [
       { source: it.bananaCoffee,                  op: '×' },
       { source: it.blueCow,                       op: '×' },
@@ -32,7 +32,6 @@ export const miscFormulas = {
     ],
   },
   item_duration_multi: {
-    base: 1,
     contributions: [
       { source: art.artItemDurationT1,            op: '+' },
       { source: card.cardCode,                    op: '×' },
@@ -43,7 +42,6 @@ export const miscFormulas = {
     ],
   },
   gem_upgrade_cap_increase: {
-    base: 0,
     contributions: [
       { source: con.staHygieneGemUpgradeCap,      op: '+' },
       { source: con.staCraftGemUpgradeCap,        op: '+' },
@@ -51,7 +49,6 @@ export const miscFormulas = {
     ],
   },
   pet_levelup_chance_multi: {
-    base: 0,
     contributions: [
       { source: sk.haveYouTriedGettingLuckierPetLevelup, op: '+' },
       { source: rel.mythicRelicPetLevelup,               op: '+' },
@@ -62,4 +59,4 @@ export const miscFormulas = {
       { source: U, op: '+', unknown: true },      // Store + Skins
     ],
   },
-} satisfies FormulaMap
+})

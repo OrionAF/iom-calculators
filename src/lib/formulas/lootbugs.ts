@@ -1,4 +1,5 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
+import { defineFormulas } from './define'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { storeSources as st } from '$lib/sources/store'
 import { itemSources as it } from '$lib/sources/items'
@@ -12,9 +13,8 @@ import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'store', fn: () => 0, inputs: [] }
 
-export const lootbugsFormulas = {
+export const lootbugsFormulas: FormulaMap = defineFormulas({
   lootbug_spawn_rate: {
-    base: 0,
     contributions: [
       { source: it.lootbugLanternSpawn,            op: '×' },
       { source: it.goldenLootbugLanternSpawn,      op: '×' },
@@ -27,7 +27,6 @@ export const lootbugsFormulas = {
     ],
   },
   lootbug_triple_chance: {
-    base: 0,
     contributions: [
       { source: pet.petWhaleLootbugTriple,     op: '+' },
       { source: sg.starLibraTripleLootbug,     op: '+' },
@@ -35,7 +34,6 @@ export const lootbugsFormulas = {
     ],
   },
   lootbug_golden_chance: {
-    base: 0,
     contributions: [
       { source: card.cardGoldenLootbug,           op: '+' },
       { source: st.founderGoldenLootbug,          op: '+' },
@@ -44,7 +42,6 @@ export const lootbugsFormulas = {
     ],
   },
   lootbug_bank_cap: {
-    base: 0,
     contributions: [
       { source: sk.savingForARainyDayLootbugCap,  op: '+' },
       { source: sk.anyoneUpLootinBankCap,         op: '+' },
@@ -62,14 +59,12 @@ export const lootbugsFormulas = {
     ],
   },
   lootbug_gem_cost_reduction: {
-    base: 0,
     contributions: [
       { source: sk.savingForARainyDayLootbugGem, op: '+' },
       { source: U, op: '+', unknown: true },     // Pets + Skins
     ],
   },
   lootbug_loot_multi: {
-    base: 1,
     contributions: [
       { source: sk.anyoneUpLootinLootMulti,       op: '+' },
       { source: card.cardLootbug,                 op: '×' },
@@ -79,5 +74,5 @@ export const lootbugsFormulas = {
       { source: U, op: '+', unknown: true },      // Store + Cards + Fishing
     ],
   },
-  lootfrog_lanterns_used: { base: 0, contributions: [] },
-} satisfies FormulaMap
+  lootfrog_lanterns_used: { contributions: [] },
+})
