@@ -1,31 +1,54 @@
-import type { FormulaMap, RuntimeInput, Source, StatFormula } from './types'
+import type { Contribution, FormulaMap, FormulaTerm, RuntimeInput, Source, StatFormula } from './types'
+import { isGroup } from './types'
+
+/**
+ * Grouped fold shared by whole formulas and group terms:
+ *   result = (base + Σ adds) × Π factors × Π (1 + bonuses)
+ * '=' replaces the base (last one wins). Unknown contributions are skipped.
+ * Declaration order never changes the result.
+ */
+function evalTerms(
+  base: number,
+  terms: readonly FormulaTerm[],
+  levels: Record<string, number>,
+  rt: Record<string, number>,
+): number {
+  let b = base
+  let sum = 0
+  let factor = 1
+  for (const term of terms) {
+    let value: number
+    const op = term.op
+    if (isGroup(term)) {
+      value = evalTerms(term.base, term.contributions, levels, rt)
+    } else {
+      if (term.unknown) continue
+      value = term.source.fn(levels[term.source.key] ?? 0, rt)
+    }
+    if (op === '+') sum += value
+    else if (op === '×') factor *= value
+    else if (op === '×1+') factor *= 1 + value
+    else if (op === '=') b = value
+  }
+  return (b + sum) * factor
+}
 
 /**
  * Compute a single stat value from a formula, levels, and runtime inputs.
- * Contributions marked unknown are skipped.
- *
- * Evaluation is grouped (see Op in types.ts):
- *   result = (base + Σ adds) × Π factors × Π (1 + bonuses)
- * Declaration order never changes the result, so additive sources can be
- * listed in any position relative to multiplicative ones.
+ * Group terms — the wiki's "(A + B) × C" sub-formulas — are folded with the
+ * same grouped semantics, then joined by their op.
  */
 export function computeStat(
   formula: StatFormula,
   levels: Record<string, number>,
   rt: Record<string, number>,
 ): number {
-  let base = formula.base
-  let sum = 0
-  let factor = 1
-  for (const { source, op, unknown } of formula.contributions) {
-    if (unknown) continue
-    const contribution = source.fn(levels[source.key] ?? 0, rt)
-    if (op === '+') sum += contribution
-    else if (op === '×') factor *= contribution
-    else if (op === '×1+') factor *= 1 + contribution
-    else if (op === '=') base = contribution
-  }
-  return (base + sum) * factor
+  return evalTerms(formula.base, formula.contributions, levels, rt)
+}
+
+/** Flatten a formula's terms to plain contributions (group members included). */
+export function flattenContributions(formula: StatFormula): Contribution[] {
+  return formula.contributions.flatMap((t) => (isGroup(t) ? t.contributions : [t]))
 }
 
 /**
@@ -34,7 +57,7 @@ export function computeStat(
  */
 export function getRequiredSources(formula: StatFormula): Source[] {
   const seen = new Set<string>()
-  return formula.contributions
+  return flattenContributions(formula)
     .filter((c) => !c.unknown)
     .map((c) => c.source)
     .filter((s) => (seen.has(s.key) ? false : (seen.add(s.key), true)))
@@ -46,7 +69,7 @@ export function getRequiredSources(formula: StatFormula): Source[] {
  */
 export function getRequiredRuntimeInputs(formula: StatFormula): RuntimeInput[] {
   const seen = new Set<string>()
-  return formula.contributions
+  return flattenContributions(formula)
     .filter((c) => !c.unknown)
     .flatMap((c) => c.source.inputs)
     .filter((i) => (seen.has(i.key) ? false : (seen.add(i.key), true)))
@@ -57,7 +80,7 @@ export function getRequiredRuntimeInputs(formula: StatFormula): RuntimeInput[] {
  * Used by the UI to display a "some sources may be missing" warning.
  */
 export function hasUnknownContributions(formula: StatFormula): boolean {
-  return formula.contributions.some((c) => c.unknown)
+  return flattenContributions(formula).some((c) => c.unknown)
 }
 
 /**

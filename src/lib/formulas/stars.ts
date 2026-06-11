@@ -85,10 +85,10 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: sg.superStarSpawn, op: '+' },
       { source: sg.starVirgo, op: '+' },
       { source: it.goldenPrimalMeatSuperStar, op: '×' },
-      { source: it.iceCreamSuperStarSpawn, op: '+' },
+      // Wiki: Items group is Primal Meat × Ice Cream (multiplied, not added)
+      { source: it.iceCreamSuperStarSpawn, op: '×' },
       { source: UNKNOWN, op: '+', unknown: true }, // Drones: Elixir Drone (temp)
       { source: UNKNOWN, op: '×', unknown: true }, // Items: Primal Meat (×)
-      { source: UNKNOWN, op: '+', unknown: true }, // Items: Ice Cream
       { source: ct.ctSuperStarSpawn, op: '+' },
       { source: ch.chSuperStarSpawn, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Fishing: Tier 1 Notice Upgrade
