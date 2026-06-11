@@ -1,4 +1,5 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
+import { defineFormulas } from './define'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { storeSources as st } from '$lib/sources/store'
 import { workshopSources as ws } from '$lib/sources/workshop'
@@ -13,11 +14,10 @@ import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'store', fn: () => 0, inputs: [] }
 
-export const lootfrogsFormulas = {
-  lootfrogs_caught:        { base: 0, contributions: [] },
-  golden_lootfrogs_caught: { base: 0, contributions: [] },
+export const lootfrogsFormulas: FormulaMap = defineFormulas({
+  lootfrogs_caught:        { contributions: [] },
+  golden_lootfrogs_caught: { contributions: [] },
   lootfrog_capacity: {
-    base: 5,
     contributions: [
       { source: sk.frogFrenzyLootfrogCap,         op: '+' },
       { source: card.cardLootfrog,                op: '+' },
@@ -26,7 +26,6 @@ export const lootfrogsFormulas = {
     ],
   },
   lootfrog_loot_multi: {
-    base: 1,
     contributions: [
       { source: ws.wsLootfrogLootW4,              op: '+' },
       { source: st.vpFrogFrenzyLootfrogMul,       op: '×' },
@@ -35,7 +34,6 @@ export const lootfrogsFormulas = {
     ],
   },
   lootfrog_golden_chance: {
-    base: 0,
     contributions: [
       { source: ch.chGoldenFrogChance,         op: '+' },
       { source: con.staAntagonismGoldenFrogChance, op: '+' },
@@ -43,14 +41,12 @@ export const lootfrogsFormulas = {
     ],
   },
   lootfrog_golden_multi: {
-    base: 2,
     contributions: [
       { source: con.staAntagonismGoldenFrogMul, op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
   lootfrog_triple_spawn_chance: {
-    base: 0,
     contributions: [
       { source: sk.frogFrenzyTripleLootfrog,      op: '+' },
       { source: pet.petButterflyLootfrogTriple,   op: '+' },
@@ -60,14 +56,12 @@ export const lootfrogsFormulas = {
     ],
   },
   lootfrog_10x_spawn_chance: {
-    base: 0,
     contributions: [
       { source: drone.coalLootfrog10x,         op: '+' },
       { source: U, op: '+', unknown: true },   // Floors WQ11
     ],
   },
   lootfrog_big_chance: {
-    base: 0,
     contributions: [
       { source: ch.chBigLootfrogChance,        op: '+' },
       { source: pet.petButterflyQuestBigFrog,  op: '+' },
@@ -76,10 +70,9 @@ export const lootfrogsFormulas = {
     ],
   },
   lootfrog_big_multi: {
-    base: 5,
     contributions: [
       { source: arch.idolSisyphusBigFrogMul,   op: '+' },
       { source: U, op: '+', unknown: true },   // Cards: Big Frog, Floors WQ18
     ],
   },
-} satisfies FormulaMap
+})

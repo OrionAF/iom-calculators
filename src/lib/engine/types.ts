@@ -78,6 +78,13 @@ export interface StatFormula {
 }
 
 /**
+ * A formula as declared in formulas/*.ts: contributions only.
+ * The base value lives in stats/registry.ts (StatMeta.base) and is attached
+ * by formulas/define.ts → defineFormulas().
+ */
+export type StatContributions = Pick<StatFormula, 'contributions'>
+
+/**
  * Map of stat registry key → formula.
  * Keys must match entries in src/lib/stats/registry.ts exactly.
  */

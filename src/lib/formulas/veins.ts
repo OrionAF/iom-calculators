@@ -1,4 +1,5 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
+import { defineFormulas } from './define'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { relicSources as rel } from '$lib/sources/relics'
 import { itemSources as it } from '$lib/sources/items'
@@ -17,9 +18,8 @@ import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
-export const veinsFormulas = {
+export const veinsFormulas: FormulaMap = defineFormulas({
   vein_spawn_rate_multi: {
-    base: 1,
     contributions: [
       { source: con.staRandomnessVeinSpawn,        op: '+' },
       { source: art.artVeinSpawnT4,                op: '+' },
@@ -32,7 +32,6 @@ export const veinsFormulas = {
     ],
   },
   vein_income_multi: {
-    base: 1,
     contributions: [
       { source: sk.leprechaunsLegacyVeinIncome,    op: '×' },
       { source: it.iceCreamSuperStarSpawn,         op: '×' },  // also affects super star spawn
@@ -47,7 +46,6 @@ export const veinsFormulas = {
     ],
   },
   golden_vein_chance: {
-    base: 0,
     contributions: [
       { source: con.staRandomnessGoldenVeinChance, op: '+' },
       { source: pet.petTotemGoldenVeinChance,      op: '+' },
@@ -58,7 +56,6 @@ export const veinsFormulas = {
     ],
   },
   golden_vein_multi: {
-    base: 5,
     contributions: [
       { source: it.goldenStrawberriesGoldenVein,   op: '+' },
       { source: rel.legendaryRelicVeinIncome,      op: '+' },
@@ -75,7 +72,6 @@ export const veinsFormulas = {
     ],
   },
   rainbow_vein_chance: {
-    base: 0,
     contributions: [
       { source: ct.ctRainbowVeinMul,               op: '+' },  // note: W4 contract is +multi but wiki labels as chance
       { source: st.vpVeinExtractorRainbowVeinChance, op: '+' },
@@ -88,7 +84,6 @@ export const veinsFormulas = {
     ],
   },
   rainbow_vein_multi: {
-    base: 20,
     contributions: [
       { source: sk.insaneInTheVeinGainRainbowVein, op: '+' },
       { source: card.cardRainbowVein,              op: '×' },
@@ -98,18 +93,16 @@ export const veinsFormulas = {
     ],
   },
   gleaming_vein_chance: {
-    base: 0,
     contributions: [
       { source: arch.archGleamingChance,       op: '+' },
       { source: U, op: '+', unknown: true },   // Cards: Infernal Dino, Stargazing BH14, Fishing Shellstealer T1
     ],
   },
   gleaming_vein_multi: {
-    base: 5,
     contributions: [
       { source: drone.coalGleamingVein,        op: '+' },
       { source: arch.archGleamingMul,          op: '+' },
       { source: U, op: '+', unknown: true },   // Cards: Gleaming Vein, Fishing Shellstealer T2
     ],
   },
-} satisfies FormulaMap
+})

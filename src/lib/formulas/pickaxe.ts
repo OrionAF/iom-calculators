@@ -1,4 +1,5 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
+import { defineFormulas } from './define'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { relicSources as rel } from '$lib/sources/relics'
 import { itemSources as it } from '$lib/sources/items'
@@ -16,9 +17,8 @@ import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
-export const pickaxeFormulas = {
+export const pickaxeFormulas: FormulaMap = defineFormulas({
   pickaxe_damage: {
-    base: 0,
     contributions: [
       // ── Skill-Tree (additive) ─────────────────────────────────────────
       { source: sk.swingHarderDamage,                op: '+' },
@@ -93,7 +93,6 @@ export const pickaxeFormulas = {
     ],
   },
   pickaxe_attack_speed_per_second: {
-    base: 0,
     contributions: [
       { source: it.bananaCoffee,  op: '×' },
       { source: up.upgrAttackSpeed1,               op: '+' },
@@ -102,7 +101,6 @@ export const pickaxeFormulas = {
     ],
   },
   pickaxe_radius_percent: {
-    base: 0,
     contributions: [
       { source: sk.superDamageRadius,     op: '+' },
       { source: it.bread,                 op: '×' },
@@ -112,7 +110,6 @@ export const pickaxeFormulas = {
     ],
   },
   pickaxe_crit_chance: {
-    base: 0,
     contributions: [
       { source: sk.luckyStrikesCritChance,   op: '+' },
       { source: it.apple,                    op: '+' },
@@ -124,7 +121,6 @@ export const pickaxeFormulas = {
     ],
   },
   pickaxe_crit_damage: {
-    base: 0,
     contributions: [
       { source: sk.luckyStrikesCritDamage,   op: '+' },
       { source: sk.superDamageCritDamage,    op: '+' },
@@ -137,7 +133,6 @@ export const pickaxeFormulas = {
     ],
   },
   pickaxe_super_crit_chance: {
-    base: 0,
     contributions: [
       { source: sk.waitMyCritsCanCrit,           op: '+' },
       { source: art.artPickaxeSuperCritT2,       op: '+' },
@@ -150,14 +145,12 @@ export const pickaxeFormulas = {
     ],
   },
     pickaxe_super_crit_damage: {
-    base: 0,
     contributions: [
       { source: ct.ctPickaxeDmgPerContract,        op: '+' },
       { source: up.upgrSuperCritDmg,               op: '+' },
     ],
   },
   pickaxe_ultra_crit_chance: {
-    base: 0,
     contributions: [
       { source: sk.waitMySuperCritsCanCrit,    op: '+' },
       { source: sk.tonsOfDamageUltraCrit,      op: '+' },
@@ -168,9 +161,8 @@ export const pickaxeFormulas = {
 
     ],
   },
-  pickaxe_ultra_crit_damage: { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+  pickaxe_ultra_crit_damage: { contributions: [{ source: U, op: '+', unknown: true }] },
   pickaxe_omega_crit_chance: {
-    base: 0,
     contributions: [
       { source: sk.waitMyUltraCritsCanCritOmega, op: '+' },
       { source: art.artOmegaCritT4,              op: '+' },
@@ -179,5 +171,5 @@ export const pickaxeFormulas = {
 
     ],
   },
-  pickaxe_omega_crit_damage: { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
-} satisfies FormulaMap
+  pickaxe_omega_crit_damage: { contributions: [{ source: U, op: '+', unknown: true }] },
+})

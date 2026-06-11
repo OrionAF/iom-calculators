@@ -1,4 +1,5 @@
 import type { FormulaMap, Source } from '$lib/engine/types'
+import { defineFormulas } from './define'
 import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { relicSources as rel } from '$lib/sources/relics'
 import { itemSources as it } from '$lib/sources/items'
@@ -16,10 +17,9 @@ import { upgradeSources as up } from '$lib/sources/upgrades'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'artifacts', fn: () => 0, inputs: [] }
 
-export const prestigeFormulas = {
-  xp_level_cap:           { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+export const prestigeFormulas: FormulaMap = defineFormulas({
+  xp_level_cap:           { contributions: [{ source: U, op: '+', unknown: true }] },
   prestige_point_multi: {
-    base: 1,
     contributions: [
       { source: sk.easyProgressorPrestigePts,     op: '+' },
       { source: sk.ppGoUpPrestigePts,             op: '+' },
@@ -35,7 +35,6 @@ export const prestigeFormulas = {
     ],
   },
   experience_multi: {
-    base: 1,
     contributions: [
       { source: sk.ppGoUpExp,                     op: '+' },
       { source: sk.tonsOfDamageExp,               op: '+' },
@@ -60,7 +59,6 @@ export const prestigeFormulas = {
     ],
   },
   floor_clear_requirement_multi: {
-    base: 1,
     contributions: [
       { source: sk.easyProgressorFloorClear,      op: '+' },
       { source: art.artFloorClearT2,              op: '+' },
@@ -71,7 +69,6 @@ export const prestigeFormulas = {
     ],
   },
   artifact_cap_increase: {
-    base: 0,
     contributions: [
       { source: sk.doTheseUpgradesArtifactCap,    op: '+' },
       { source: con.staSlayingArtifactCap,        op: '+' },
@@ -79,11 +76,10 @@ export const prestigeFormulas = {
     ],
   },
   artifact_tier4_cap_increase: {
-    base: 0,
     contributions: [
       { source: pet.petHappyBotArtifactT4Cap,  op: '+' },
       { source: ch.chDivineRelicCaps,          op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
-} satisfies FormulaMap
+})

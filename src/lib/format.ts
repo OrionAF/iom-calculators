@@ -96,55 +96,77 @@ export function formatMultiplier(n: number): string {
 }
 
 // ─── formatStatByKey ───────────────────────────────────────
-// Adds a prefix or suffix to a formatted stat based on the stat's key.
-// Only the affixes are added here; the numeric portion is delegated to formatStat.
-// Order of resolution:
-//   1. StatEntry.affix in stats/catalog.ts (per-stat override)
-//   2. Suffix-pattern match against the key (fallback for uncatalogued keys)
+// Renders a stat value with its semantic unit ('%', '×', 's', …) and sign.
+// The numeric portion is delegated to formatStat; the unit/sign come from
+// the registry. Order of resolution:
+//   1. StatMeta.unit / StatMeta.sign in stats/registry.ts
+//   2. Suffix-pattern match against the key (fallback for unregistered keys)
 //   3. Fallback: bare formatStat output
 
-import { getStatAffix, type StatAffix } from './stats/registry'
+import { getStatMeta, type StatUnit } from './stats/registry'
 
-type Affix = StatAffix
+interface UnitSign {
+  unit?: StatUnit
+  sign?: '+' | '-'
+}
 
-// Kept for keys not catalogued yet. Order matters:
-// longer/more-specific suffixes first to avoid partial matches.
-const KEY_SUFFIX_RULES: ReadonlyArray<{ suffix: string; affix: Affix }> = [
-  // Order matters: longer/more-specific suffixes first to avoid partial matches.
-  { suffix: '_crit_damage', affix: { suffix: '×' } },
-  { suffix: '_multiplier',  affix: { suffix: '×' } },
-  { suffix: '_multipliers',  affix: { suffix: '×' } },
-  { suffix: '_reduction',   affix: { suffix: '×' } },
-  { suffix: '_increases',   affix: { prefix: '+' } },
-  { suffix: '_increase',    affix: { prefix: '+' } },
-  { suffix: '_capacity',    affix: { prefix: '+' } },
-  { suffix: '_percent',     affix: { suffix: '%' } },
-  { suffix: '_chance',      affix: { suffix: '%' } },
-  { suffix: '_bonus',       affix: { prefix: '+' } },
-  { suffix: '_multi',       affix: { suffix: '×' } },
-  { suffix: '_cap',         affix: { prefix: '+' } },
-  { suffix: '_rate',        affix: { suffix: '×' } },
-  { suffix: 'recharge_speed', affix: { suffix: '×' } },
+const UNIT_AFFIX: Record<StatUnit, { prefix?: string; suffix?: string }> = {
+  percent:    { suffix: '%' },
+  multiplier: { suffix: '×' },
+  flat:       {},
+  count:      {},
+  seconds:    { suffix: 's' },
+  perSecond:  { suffix: ' p/s' },
+  level:      { prefix: 'Level ' },
+}
+
+// Kept for keys not in the registry yet (e.g. unrecognized export keys).
+// Order matters: longer/more-specific suffixes first to avoid partial matches.
+const KEY_SUFFIX_RULES: ReadonlyArray<{ suffix: string; us: UnitSign }> = [
+  { suffix: '_crit_damage',   us: { unit: 'multiplier' } },
+  { suffix: '_multipliers',   us: { unit: 'multiplier' } },
+  { suffix: '_multiplier',    us: { unit: 'multiplier' } },
+  { suffix: '_reduction',     us: { unit: 'multiplier' } },
+  { suffix: '_increases',     us: { sign: '+' } },
+  { suffix: '_increase',      us: { sign: '+' } },
+  { suffix: '_capacity',      us: { sign: '+' } },
+  { suffix: '_percent',       us: { unit: 'percent' } },
+  { suffix: '_chance',        us: { unit: 'percent' } },
+  { suffix: '_bonus',         us: { sign: '+' } },
+  { suffix: '_multi',         us: { unit: 'multiplier' } },
+  { suffix: '_cap',           us: { sign: '+' } },
+  { suffix: '_rate',          us: { unit: 'multiplier' } },
+  { suffix: 'recharge_speed', us: { unit: 'multiplier' } },
 ]
 
-function resolveAffix(key: string): Affix {
-  const exact = getStatAffix(key)
-  if (exact) return exact
+function resolveUnitSign(key: string): UnitSign {
+  // A registry entry is authoritative even when it declares no unit/sign:
+  // that means "render bare", not "fall through to the suffix heuristics".
+  const meta = getStatMeta(key)
+  if (meta) return { unit: meta.unit, sign: meta.sign }
   for (const rule of KEY_SUFFIX_RULES) {
-    if (key.endsWith(rule.suffix)) return rule.affix
+    if (key.endsWith(rule.suffix)) return rule.us
   }
   return {}
+}
+
+export interface FormatStatOptions {
+  /** true → bare number, no unit suffix or sign prefix (e.g. '0.10' not '+10%'). */
+  raw?: boolean
 }
 
 export function formatStatByKey(
   key: string,
   value: number | undefined,
-  notation: Notation = 'standard'
+  notation: Notation = 'standard',
+  opts: FormatStatOptions = {},
 ): string {
   if (value === undefined) return '—'
   const body = formatStat(value, notation)
-  const { prefix = '', suffix = '' } = resolveAffix(key)
-  return prefix + body + suffix
+  if (opts.raw) return body
+  const { unit, sign } = resolveUnitSign(key)
+  const { prefix = '', suffix = '' } = unit ? UNIT_AFFIX[unit] : {}
+  return (sign ?? prefix) + body + suffix
 }
 
 /**

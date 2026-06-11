@@ -117,7 +117,9 @@ describe('parseStat — accepted inputs', () => {
   it('parses suffix forms case-insensitively', () => {
     expect(parseStat('2.34no')).toBeCloseTo(2.34e30, 25)
     expect(parseStat('2.34 NO')).toBeCloseTo(2.34e30, 25)
-    expect(parseStat('2.34udc')).toBeCloseTo(2.34e36, 31)
+    // Relative comparison: 2.34 * 10^36 accumulates float error beyond
+    // what toBeCloseTo's digit-based check tolerates at this magnitude.
+    expect(parseStat('2.34udc')! / 2.34e36).toBeCloseTo(1, 12)
     expect(parseStat('123m')).toBeCloseTo(1.23e8, -6)
   })
 
