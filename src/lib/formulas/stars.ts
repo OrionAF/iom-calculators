@@ -1,27 +1,27 @@
-import type { FormulaMap, Source } from '$lib/engine/types'
-import { defineFormulas } from './define'
-import { stargazingSources as sg } from '$lib/sources/stargazing'
-import { skillTreeSources as sk } from '$lib/sources/skillTree'
-import { relicSources as rel } from '$lib/sources/relics'
-import { itemSources as it } from '$lib/sources/items'
-import { storeSources as st } from '$lib/sources/store'
-import { contractSources as ct } from '$lib/sources/contracts'
-import { petSources as pet } from '$lib/sources/pets'
-import { cardSources as card } from '$lib/sources/cards'
-import { challengeSources as ch } from '$lib/sources/challenges'
-import { droneSources as drone } from '$lib/sources/drones'
-import { fishingSources as f } from '$lib/sources/fishing'
-import { archaeologySources as arch } from '$lib/sources/archaeology'
-import { constructSources as con } from '$lib/sources/construct'
-import { upgradeSources as up } from '$lib/sources/upgrades'
+import type { FormulaMap, Source } from "$lib/engine/types";
+import { defineFormulas } from "./define";
+import { stargazingSources as sg } from "$lib/sources/stargazing";
+import { skillTreeSources as sk } from "$lib/sources/skillTree";
+import { relicSources as rel } from "$lib/sources/relics";
+import { itemSources as it } from "$lib/sources/items";
+import { storeSources as st } from "$lib/sources/store";
+import { contractSources as ct } from "$lib/sources/contracts";
+import { petSources as pet } from "$lib/sources/pets";
+import { cardSources as card } from "$lib/sources/cards";
+import { challengeSources as ch } from "$lib/sources/challenges";
+import { droneSources as drone } from "$lib/sources/drones";
+import { fishingSources as f } from "$lib/sources/fishing";
+import { archaeologySources as arch } from "$lib/sources/archaeology";
+import { constructSources as con } from "$lib/sources/construct";
+import { upgradeSources as up } from "$lib/sources/upgrades";
 
 const UNKNOWN: Source = {
-  key: '_unknown',
-  name: 'Unknown source',
-  system: 'stargazing',
+  key: "_unknown",
+  name: "Unknown source",
+  system: "stargazing",
   fn: () => 0,
   inputs: [],
-}
+};
 
 export const starsFormulas: FormulaMap = defineFormulas({
   /**
@@ -30,13 +30,13 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   star_spawn_rate: {
     contributions: [
-      { source: sg.spawnRate, op: '+' },
-      { source: sg.starGemini, op: '+' },
-      { source: UNKNOWN, op: '×', unknown: true }, // Drones: Fueled Starburst Suit (×)
-      { source: UNKNOWN, op: '×', unknown: true }, // Drones: Elixir Drone (×)
-      { source: pet.petStarfishSkinStarSpawn, op: '+' },
-      { source: ch.chStarSpawnRate, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Relics: Legendary Relic
+      { source: sg.spawnRate, op: "+" },
+      { source: sg.starGemini, op: "+" },
+      { source: UNKNOWN, op: "×", unknown: true }, // Drones: Fueled Starburst Suit (×)
+      { source: UNKNOWN, op: "×", unknown: true }, // Drones: Elixir Drone (×)
+      { source: pet.petStarfishSkinStarSpawn, op: "+" },
+      { source: ch.chStarSpawnRate, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Relics: Legendary Relic
     ],
   },
 
@@ -47,10 +47,10 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   star_auto_catch_chance: {
     contributions: [
-      { source: sg.autoCatch, op: '+' },
-      { source: sg.starTaurus, op: '+' },
-      { source: UNKNOWN, op: '=', unknown: true }, // Drones: Fueled Starburst Suit (=)
-      { source: UNKNOWN, op: '=', unknown: true }, // Drones: Elixir Drone (=)
+      { source: sg.autoCatch, op: "+" },
+      { source: sg.starTaurus, op: "+" },
+      { source: UNKNOWN, op: "=", unknown: true }, // Drones: Fueled Starburst Suit (=)
+      { source: UNKNOWN, op: "=", unknown: true }, // Drones: Elixir Drone (=)
     ],
   },
 
@@ -59,7 +59,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
    * base = 0 — only stargazing upgrade known
    */
   star_double_spawn_chance: {
-    contributions: [{ source: sg.doubleChance, op: '+' }],
+    contributions: [{ source: sg.doubleChance, op: "+" }],
   },
 
   /**
@@ -68,11 +68,11 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   star_triple_spawn_chance: {
     contributions: [
-      { source: sg.starSagittarius, op: '+' },
-      { source: drone.droneSuitStarburstPassive, op: '+' },
-      { source: drone.droneSuitStarburstUpgrade, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store: 3 value packs
-      { source: UNKNOWN, op: '+', unknown: true }, // Fishing: Megalodon Tier 1 Tribute
+      { source: sg.starSagittarius, op: "+" },
+      { source: drone.droneSuitStarburstPassive, op: "+" },
+      { source: drone.droneSuitStarburstUpgrade, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Store: 3 value packs
+      { source: UNKNOWN, op: "+", unknown: true }, // Fishing: Megalodon Tier 1 Tribute
     ],
   },
 
@@ -82,16 +82,16 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   super_star_spawn_multi: {
     contributions: [
-      { source: sg.superStarSpawn, op: '+' },
-      { source: sg.starVirgo, op: '+' },
-      { source: it.goldenPrimalMeatSuperStar, op: '×' },
+      { source: sg.superStarSpawn, op: "+" },
+      { source: sg.starVirgo, op: "+" },
+      { source: it.goldenPrimalMeatSuperStar, op: "×" },
       // Wiki: Items group is Primal Meat × Ice Cream (multiplied, not added)
-      { source: it.iceCreamSuperStarSpawn, op: '×' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Drones: Elixir Drone (temp)
-      { source: UNKNOWN, op: '×', unknown: true }, // Items: Primal Meat (×)
-      { source: ct.ctSuperStarSpawn, op: '+' },
-      { source: ch.chSuperStarSpawn, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Fishing: Tier 1 Notice Upgrade
+      { source: it.iceCreamSuperStarSpawn, op: "×" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Drones: Elixir Drone (temp)
+      { source: UNKNOWN, op: "×", unknown: true }, // Items: Primal Meat (×)
+      { source: ct.ctSuperStarSpawn, op: "+" },
+      { source: ch.chSuperStarSpawn, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Fishing: Tier 1 Notice Upgrade
     ],
   },
 
@@ -101,8 +101,8 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   super_star_triple_chance: {
     contributions: [
-      { source: sg.starLeo, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store: Stargazing Supernova Bundle
+      { source: sg.starLeo, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Store: Stargazing Supernova Bundle
     ],
   },
 
@@ -112,11 +112,11 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   super_star_10x_chance: {
     contributions: [
-      { source: sg.super10xChance, op: '+' },
-      { source: sk.ctrlCCtrlVStarsSuper10x, op: '+' },
-      { source: pet.petStarfishSuper10xChance, op: '+' },
-      { source: up.upgrSuperStar10xChance, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store + Fishing
+      { source: sg.super10xChance, op: "+" },
+      { source: sk.ctrlCCtrlVStarsSuper10x, op: "+" },
+      { source: pet.petStarfishSuper10xChance, op: "+" },
+      { source: up.upgrSuperStar10xChance, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Store + Fishing
     ],
   },
 
@@ -126,12 +126,12 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   star_supernova_chance: {
     contributions: [
-      { source: sg.novaChance, op: '+' },
-      { source: sg.starHercules, op: '+' },
-      { source: it.starfruitSupernovaChance, op: '+' },
-      { source: it.goldenStarfruitSupernovaChance, op: '+' },
-      { source: rel.mythicRelicNovaChance, op: '+' },
-      { source: st.vpSupernovaStarNova, op: '+' },
+      { source: sg.novaChance, op: "+" },
+      { source: sg.starHercules, op: "+" },
+      { source: it.starfruitSupernovaChance, op: "+" },
+      { source: it.goldenStarfruitSupernovaChance, op: "+" },
+      { source: rel.mythicRelicNovaChance, op: "+" },
+      { source: st.vpSupernovaStarNova, op: "+" },
     ],
   },
 
@@ -141,20 +141,20 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   star_supernova_multi: {
     contributions: [
-      { source: sk.ctrlFStarsSupernovaMul, op: '+' },
-      { source: sk.ctrlCCtrlVStarsSupernovaMul, op: '+' },
-      { source: rel.divineRelicSupernovaMul, op: '+' },
-      { source: arch.idolAstraeusSupernovaMul, op: '+' },
-      { source: arch.idolPandora, op: '+' },
-      { source: con.staWarmthStarSupernova, op: '+' },
-      { source: f.noticeT1StarSupernovaMul, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store: Stargazing Supernova Bundle
-      { source: UNKNOWN, op: '+', unknown: true }, // Cards: Megalodon Fish Card
-      { source: UNKNOWN, op: '+', unknown: true }, // Pets: Axolotl Pet Quest
-      { source: UNKNOWN, op: '+', unknown: true }, // Construct: Statue of Warmth (adds)
-      { source: UNKNOWN, op: '+', unknown: true }, // Archaeology: Astraeus Idol
-      { source: UNKNOWN, op: '×', unknown: true }, // Fishing: Megalodon Tier 2 (×)
-      { source: UNKNOWN, op: '+', unknown: true }, // Fishing: Tier 1 Notice (adds)
+      { source: sk.ctrlFStarsSupernovaMul, op: "+" },
+      { source: sk.ctrlCCtrlVStarsSupernovaMul, op: "+" },
+      { source: rel.divineRelicSupernovaMul, op: "+" },
+      { source: arch.idolAstraeusSupernovaMul, op: "+" },
+      { source: arch.idolPandora, op: "+" },
+      { source: con.staWarmthStarSupernova, op: "+" },
+      { source: f.noticeT1StarSupernovaMul, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Store: Stargazing Supernova Bundle
+      { source: UNKNOWN, op: "+", unknown: true }, // Cards: Megalodon Fish Card
+      { source: UNKNOWN, op: "+", unknown: true }, // Pets: Axolotl Pet Quest
+      { source: UNKNOWN, op: "+", unknown: true }, // Construct: Statue of Warmth (adds)
+      { source: UNKNOWN, op: "+", unknown: true }, // Archaeology: Astraeus Idol
+      { source: UNKNOWN, op: "×", unknown: true }, // Fishing: Megalodon Tier 2 (×)
+      { source: UNKNOWN, op: "+", unknown: true }, // Fishing: Tier 1 Notice (adds)
     ],
   },
 
@@ -164,9 +164,9 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   super_star_supernova_chance: {
     contributions: [
-      { source: pet.petStarfishSupernovaChance, op: '+' },
-      { source: ct.ctSupernovaChanceW2, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store: Stargazing Supernova Bundle
+      { source: pet.petStarfishSupernovaChance, op: "+" },
+      { source: ct.ctSupernovaChanceW2, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Store: Stargazing Supernova Bundle
     ],
   },
 
@@ -176,13 +176,13 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   super_star_supernova_multi: {
     contributions: [
-      { source: sk.ctrlFStarsSuperStarSupernovaMul, op: '+' },
-      { source: rel.divineRelicSupernovaMul, op: '+' },
-      { source: con.staWarmthSuperStarSupernova, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store: Stargazing Supernova Bundle
-      { source: UNKNOWN, op: '+', unknown: true }, // Construct: Statue of Warmth
-      { source: UNKNOWN, op: '×', unknown: true }, // Fishing: Megalodon Tier 2 (×)
-      { source: UNKNOWN, op: '×', unknown: true }, // Fishing: Tier 1 Notice (×)
+      { source: sk.ctrlFStarsSuperStarSupernovaMul, op: "+" },
+      { source: rel.divineRelicSupernovaMul, op: "+" },
+      { source: con.staWarmthSuperStarSupernova, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Store: Stargazing Supernova Bundle
+      { source: UNKNOWN, op: "+", unknown: true }, // Construct: Statue of Warmth
+      { source: UNKNOWN, op: "×", unknown: true }, // Fishing: Megalodon Tier 2 (×)
+      { source: UNKNOWN, op: "×", unknown: true }, // Fishing: Tier 1 Notice (×)
     ],
   },
 
@@ -192,14 +192,14 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   star_supergiant_chance: {
     contributions: [
-      { source: sg.supergiants, op: '+' },
-      { source: sk.whyAreThereStarsSupergiant, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store: Stargazing Supergiant Bundle
-      { source: ch.chStarSupergiants, op: '+' },
-      { source: ct.ctStarSupergiants, op: '+' },
-      { source: f.noticeT2StarSupergiants, op: '+' },
-      { source: up.upgrStarSupergiantChance, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store
+      { source: sg.supergiants, op: "+" },
+      { source: sk.whyAreThereStarsSupergiant, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Store: Stargazing Supergiant Bundle
+      { source: ch.chStarSupergiants, op: "+" },
+      { source: ct.ctStarSupergiants, op: "+" },
+      { source: f.noticeT2StarSupergiants, op: "+" },
+      { source: up.upgrStarSupergiantChance, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Store
     ],
   },
 
@@ -209,11 +209,11 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   star_supergiant_multi: {
     contributions: [
-      { source: sg.supergigantsMulti, op: '+' },
-      { source: con.staWarmthStarSupergiants, op: '+' },
-      { source: arch.idolHyperion, op: '+' },
-      { source: up.upgrStarSupergiantMul, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store + Cards
+      { source: sg.supergigantsMulti, op: "+" },
+      { source: con.staWarmthStarSupergiants, op: "+" },
+      { source: arch.idolHyperion, op: "+" },
+      { source: up.upgrStarSupergiantMul, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Store + Cards
     ],
   },
 
@@ -223,10 +223,10 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   super_star_supergiant_chance: {
     contributions: [
-      { source: sg.superSupergiants, op: '+' },
-      { source: ch.chSuperStarSupergiants, op: '+' },
-      { source: ct.ctSuperStarSupergiants, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store
+      { source: sg.superSupergiants, op: "+" },
+      { source: ch.chSuperStarSupergiants, op: "+" },
+      { source: ct.ctSuperStarSupergiants, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Store
     ],
   },
 
@@ -236,9 +236,9 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   super_star_supergiant_multi: {
     contributions: [
-      { source: con.staWarmthSuperStarSupergiants, op: '+' },
-      { source: up.upgrSuperStarSupergiantMul, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true },
+      { source: con.staWarmthSuperStarSupergiants, op: "+" },
+      { source: up.upgrSuperStarSupergiantMul, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true },
     ],
   },
 
@@ -248,10 +248,10 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   star_radiant_chance: {
     contributions: [
-      { source: sg.radiantChance, op: '+' },
-      { source: con.staTimekeepingRadiantChance, op: '+' },
-      { source: arch.idolPrometheusRadiantChanceUnlock, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Fishing Blackened Basker T2
+      { source: sg.radiantChance, op: "+" },
+      { source: con.staTimekeepingRadiantChance, op: "+" },
+      { source: arch.idolPrometheusRadiantChanceUnlock, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Fishing Blackened Basker T2
     ],
   },
 
@@ -261,8 +261,8 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   star_radiant_multi: {
     contributions: [
-      { source: con.staTimekeepingStarRadiantMul, op: '+' },
-      { source: arch.idolPrometheusStarRadiantMul, op: '+' },
+      { source: con.staTimekeepingStarRadiantMul, op: "+" },
+      { source: arch.idolPrometheusStarRadiantMul, op: "+" },
     ],
   },
 
@@ -272,10 +272,10 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   super_star_radiant_chance: {
     contributions: [
-      { source: sg.superRadiant, op: '+' },
-      { source: con.staRodentiaRadiantChance, op: '+' },
-      { source: arch.idolPrometheus_SSRadiantChanceUnlock, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Fishing Blackened Basker T1
+      { source: sg.superRadiant, op: "+" },
+      { source: con.staRodentiaRadiantChance, op: "+" },
+      { source: arch.idolPrometheus_SSRadiantChanceUnlock, op: "+" },
+      { source: UNKNOWN, op: "+", unknown: true }, // Fishing Blackened Basker T1
     ],
   },
 
@@ -285,8 +285,8 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   super_star_radiant_multi: {
     contributions: [
-      { source: con.staTimekeepingSuperStarRadiantMul, op: '+' },
-      { source: arch.idolPrometheusSuperStarRadiantMul, op: '+' },
+      { source: con.staTimekeepingSuperStarRadiantMul, op: "+" },
+      { source: arch.idolPrometheusSuperStarRadiantMul, op: "+" },
     ],
   },
 
@@ -296,20 +296,20 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   all_star_multi: {
     contributions: [
-      { source: sg.allStarMulti, op: '+' },
-      { source: sg.starScorpio, op: '+' },
-      { source: sk.leprechaunsLegacyAllStar, op: '×' },
-      { source: it.starfruitAllStarMulti, op: '+' },
-      { source: it.goldenStarfruitAllStarMulti, op: '+' },
-      { source: it.cosmicCandyBuff, op: '×' },
-      { source: it.cosmicCandyPerm, op: '+' },
-      { source: it.goldenCosmicCandyBuff, op: '×' },
-      { source: it.goldenCosmicCandyPerm, op: '+' },
-      { source: ct.ctAllStarMul, op: '+' },
-      { source: card.cardSuperStar, op: '×' },
-      { source: st.vpSingularityAllStar, op: '×' },
-      { source: f.noticeT1AllStarMul, op: '+' },
-      { source: drone.droneMidasEnhancementAllStar, op: '+' },
+      { source: sg.allStarMulti, op: "+" },
+      { source: sg.starScorpio, op: "+" },
+      { source: sk.leprechaunsLegacyAllStar, op: "×" },
+      { source: it.starfruitAllStarMulti, op: "+" },
+      { source: it.goldenStarfruitAllStarMulti, op: "+" },
+      { source: it.cosmicCandyBuff, op: "×" },
+      { source: it.cosmicCandyPerm, op: "+" },
+      { source: it.goldenCosmicCandyBuff, op: "×" },
+      { source: it.goldenCosmicCandyPerm, op: "+" },
+      { source: ct.ctAllStarMul, op: "+" },
+      { source: card.cardSuperStar, op: "×" },
+      { source: st.vpSingularityAllStar, op: "×" },
+      { source: f.noticeT1AllStarMul, op: "+" },
+      { source: drone.droneMidasEnhancementAllStar, op: "+" },
     ],
   },
 
@@ -320,10 +320,10 @@ export const starsFormulas: FormulaMap = defineFormulas({
    */
   novagiant_combo_multi: {
     contributions: [
-      { source: sg.novagiant, op: '+' },
-      { source: sk.whyAreThereStarsNovagiant, op: '+' },
-      { source: ch.chNovagiantComboMul, op: '+' },
-      { source: pet.petStarfishQuestNovagiant, op: '+' },
+      { source: sg.novagiant, op: "+" },
+      { source: sk.whyAreThereStarsNovagiant, op: "+" },
+      { source: ch.chNovagiantComboMul, op: "+" },
+      { source: pet.petStarfishQuestNovagiant, op: "+" },
     ],
   },
-})
+});

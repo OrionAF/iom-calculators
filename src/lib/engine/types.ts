@@ -1,34 +1,34 @@
 /** A runtime value the engine needs that cannot be derived from upgrade levels alone. */
 export interface RuntimeInput {
-  key: string
-  label: string
-  type: 'integer' | 'number' | 'boolean'
-  min?: number
-  max?: number
+  key: string;
+  label: string;
+  type: "integer" | "number" | "boolean";
+  min?: number;
+  max?: number;
 }
 
 /** One game upgrade, skill, item buff, or other contribution source. */
 export interface Source {
   /** Globally unique dot-namespaced key, e.g. 'skillTree.completionistGatekeeper'. */
-  key: string
+  key: string;
   /** Human-readable display name for UI labels. */
-  name: string
+  name: string;
   /** Which game menu/system this source belongs to. */
-  system: SourceSystem
+  system: SourceSystem;
   /** Maximum level. undefined = no cap. */
-  maxLevel?: number
+  maxLevel?: number;
   /**
    * 'buff' marks binary item buffs: level 0 = inactive, level 1 = active.
    * Rendered as a checkbox in calculator UIs instead of a number input.
    */
-  type?: 'buff'
+  type?: "buff";
   /**
    * Returns the numeric contribution for the given level and runtime inputs.
    * Must be a pure function — no side effects, no external state.
    */
-  fn: (level: number, rt: Record<string, number>) => number
+  fn: (level: number, rt: Record<string, number>) => number;
   /** Runtime inputs this source's fn depends on beyond its own level. */
-  inputs: RuntimeInput[]
+  inputs: RuntimeInput[];
   /**
    * Effect metadata: which stat this source contributes to, and how.
    * Lets data pages (Store, Skills) display per-effect values straight from
@@ -36,30 +36,30 @@ export interface Source {
    * duplicating numbers in catalog files. Formulas still declare op
    * explicitly; a consistency test asserts they agree where both exist.
    */
-  statKey?: string
-  op?: Op
+  statKey?: string;
+  op?: Op;
 }
 
 export type SourceSystem =
-  | 'archaeology'
-  | 'artifacts'
-  | 'cards'
-  | 'challenges'
-  | 'construct'
-  | 'contracts'
-  | 'drones'
-  | 'fishing'
-  | 'items'
-  | 'pets'
-  | 'relics'
-  | 'skillTree'
-  | 'skins'
-  | 'stargazing'
-  | 'store'
-  | 'tributes'
-  | 'upgrades'
-  | 'workshop'
-  | 'worldquests'
+  | "archaeology"
+  | "artifacts"
+  | "cards"
+  | "challenges"
+  | "construct"
+  | "contracts"
+  | "drones"
+  | "fishing"
+  | "items"
+  | "pets"
+  | "relics"
+  | "skillTree"
+  | "skins"
+  | "stargazing"
+  | "store"
+  | "tributes"
+  | "upgrades"
+  | "workshop"
+  | "worldquests";
 
 /**
  * How a source contribution is combined into the stat total.
@@ -75,16 +75,16 @@ export type SourceSystem =
  *        stored as a bonus fraction (e.g. +22% → fn returns 0.22)
  * '='  : replaces the base value (applied before any '+'); last '=' wins
  */
-export type Op = '+' | '×' | '×1+' | '='
+export type Op = "+" | "×" | "×1+" | "=";
 
 export interface Contribution {
-  source: Source
-  op: Op
+  source: Source;
+  op: Op;
   /**
    * true when the wiki marks this source with a '?' — formula partially unknown.
    * The engine skips unknown contributions. The UI shows a warning.
    */
-  unknown?: boolean
+  unknown?: boolean;
 }
 
 /**
@@ -103,23 +103,23 @@ export interface Contribution {
  */
 export interface GroupContribution {
   /** Optional origin label for UI/debugging, e.g. 'Store', 'Skill-Tree'. */
-  label?: string
-  base: number
-  op: Op
-  contributions: Contribution[]
+  label?: string;
+  base: number;
+  op: Op;
+  contributions: Contribution[];
 }
 
-export type FormulaTerm = Contribution | GroupContribution
+export type FormulaTerm = Contribution | GroupContribution;
 
 /** Discriminates group terms from plain contributions. */
 export function isGroup(term: FormulaTerm): term is GroupContribution {
-  return 'contributions' in term
+  return "contributions" in term;
 }
 
 export interface StatFormula {
   /** Starting value before any contributions are applied. */
-  base: number
-  contributions: FormulaTerm[]
+  base: number;
+  contributions: FormulaTerm[];
 }
 
 /**
@@ -127,10 +127,10 @@ export interface StatFormula {
  * The base value lives in stats/registry.ts (StatMeta.base) and is attached
  * by formulas/define.ts → defineFormulas().
  */
-export type StatContributions = Pick<StatFormula, 'contributions'>
+export type StatContributions = Pick<StatFormula, "contributions">;
 
 /**
  * Map of stat registry key → formula.
  * Keys must match entries in src/lib/stats/registry.ts exactly.
  */
-export type FormulaMap = Record<string, StatFormula>
+export type FormulaMap = Record<string, StatFormula>;

@@ -1,0 +1,27 @@
+{
+  "title": "Stats/Misc",
+  "pageid": 6699,
+  "url": "https://shminer.miraheze.org/wiki/Stats/Misc",
+  "categories": [
+    "Pages using Tabber parser tag"
+  ],
+  "links": [
+    "Archaeology",
+    "Bombs",
+    "Cards",
+    "Chests",
+    "Construct",
+    "Contracts",
+    "Drones",
+    "Fishing",
+    "Floors",
+    "Items",
+    "Lootbugs",
+    "Pets",
+    "Prestige",
+    "Skill-Tree",
+    "Skins",
+    "Stargazing"
+  ],
+  "wikitext": "<tabber>\nGame Speed Multiplier=\n{{Stat|Game Speed Multiplier|Modifies the speed at which the game runs.\n| '''Items''' |[[Items#BananaCoffee|Banana Coffee]] (Requires the [[Archaeology#tabber-Epic_Idols|Cephalus]] Idol)<math>\\times</math><br>[[Items#BlueCow|Blue Cow]] (Also from the [[Drones#Elixir Drone Buffs|Elixir Drone]], [[Lootbugs#Buffs|Lootbugs]], the [[Store#Founder_Supply_Drop|Founder Supply Drop]], [[Store#Gifts|Gifts]], and the [[Bombs#tabber-Founders_Bomb|Founders Bomb]])<br>| '''Store''' |The \"[[Store#Value Packs|Gotta Go Fast Bundle!]]\" Value Pack<math>\\times</math><br>A [[Store#VIP Lounge|Founder Perk]] (Tier 10)<br>| '''Pets''' |The [[Pets#tabber-Leprechaun|Leprechaun Pet]]<br>| '''Stargazing''' |A [[Stargazing#Super Stars|Super Star Upgrade]]<br>| '''Upgrades''' |The {{Sprite|Equinine Bar|Upgrades#World 3 Upgrades||Equinine Bar Upgrade}}<br>| '''Contracts''' |A [[Contracts#tabber-World_2_Upgrades|World 2 Contract Upgrade]]<br>| '''Skins''' |Two [[Skins#Skin Rewards|Skin Rewards]]| '''Misc''' |Floors with {{Sprite|Pinnaclite Ore}}<br>Floors with {{Sprite|Equinine Ore}}<br>Floors with {{Sprite|Dynamite Ore}}<br>Floors with {{Sprite|Vaporium Ore}}<br>Floors with {{Sprite|Turbanite Ore}}<br>World 3 (Without the last [[Fishing#tabber-Tier_1_Notice_Upgrades|Tier 1 Notice Upgrade]])<br>World 4 (Partially mitigated with [[Floors#World_Quests|World Quests]])}}\n|-|\nItem Duration Multiplier=\n{{Stat|Item Duration Multiplier|Increases Item duration.\n| '''Prestige''' |A [[Prestige#Tier_1_Artifacts|Tier 1 Artifact]]<br>| '''Skill-Tree''' |The \"[[Skill-Tree#Skills|Friendship Ended With Tier 1 Items]]\" Skill<br>| '''Cards''' |The [[Cards#Misc Cards|Code Misc Card]]<math>\\times</math><br>The [[Cards#tabber-Pets|Infernal Rabbit Pet Card]]| '''Stargazing''' |[[Stargazing#Stars|Capricorn]]<math>+</math><br>A [[Stargazing#Super Stars|Super Star Upgrade]]<br>| '''Skins''' |The [[Skins#Bag Skins|Per Item Bag]] Bonus<br>}}\n|-|\nGem Upgrade Cap Increase=\n{{Stat|Gem Upgrade Cap Increase|Increases the cap of Gem Upgrades in the Store.\n| '''Construct'''<math>+</math> |The [[Construct#World_1_Bonuses|Statue of Hygiene]]<math>+</math><br>The [[Construct#World_3_Bonuses|Statue of Craftmanship]]| '''Archaeology'''<math>+</math> |The [[Archaeology#tabber-Rare_Idols|Minos]] Idol}}\n|-|\nPet Level Up Chance=\n{{Stat|Pet Level Up Chance|Increases the chance for a Pet to level up when completing the leveling action.\n| '''Relics''' |A [[Chests#List of relics|Mythic Relic]]<br>| '''Store''' |The \"[[Store#Value Packs|Pet Trainer Bundle!]]\" Value Pack<br>| '''Skill-Tree''' |The \"[[Skill-Tree#Skills|Have You Tried Getting Luckier?]]\" Skill<br>| '''Construct''' |The [[Construct#World_3_Bonuses|Statue of Feline]]<br>| '''Fishing''' |A [[Fishing#tabber-Tier_1_Notice_Upgrades|Tier 1 Notice Upgrade]]<br>| '''Upgrades''' |The {{Sprite|Tricerastone Bar|Upgrades#World_3_Upgrades||Tricerastone Bar Upgrade}}<br>| '''Skins''' |A [[Skins#Skin Rewards|Skin Reward]]<br>| '''Misc''' |Individual [[Pets#Pet_Skins|Pet Skins]] (Not displayed in total)<br>}}\n</tabber>"
+}

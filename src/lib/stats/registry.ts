@@ -133,6 +133,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Bomb Damage',
     description: 'Bomb damage before factoring in Additional Bomb Multiplier',
     icon: 'Bomb_Damage.png',
+    base: 1,
     category: 'bombs',
   },
   bomb_crit_chance: {

@@ -1,139 +1,152 @@
-import type { FormulaMap, Source } from '$lib/engine/types'
-import { defineFormulas } from './define'
-import { skillTreeSources as sk } from '$lib/sources/skillTree'
-import { storeSources as st } from '$lib/sources/store'
-import { constructSources as con } from '$lib/sources/construct'
-import { cardSources as card } from '$lib/sources/cards'
-import { challengeSources as ch } from '$lib/sources/challenges'
-import { fishingSources as f } from '$lib/sources/fishing'
-import { archaeologySources as arch } from '$lib/sources/archaeology'
-import { stargazingSources as sg } from '$lib/sources/stargazing'
-import { petSources as pet } from '$lib/sources/pets'
-import { upgradeSources as up } from '$lib/sources/upgrades'
+import type { FormulaMap, Source } from "$lib/engine/types";
+import { defineFormulas } from "./define";
+import { skillTreeSources as sk } from "$lib/sources/skillTree";
+import { storeSources as st } from "$lib/sources/store";
+import { constructSources as con } from "$lib/sources/construct";
+import { cardSources as card } from "$lib/sources/cards";
+import { challengeSources as ch } from "$lib/sources/challenges";
+import { fishingSources as f } from "$lib/sources/fishing";
+import { archaeologySources as arch } from "$lib/sources/archaeology";
+import { stargazingSources as sg } from "$lib/sources/stargazing";
+import { petSources as pet } from "$lib/sources/pets";
+import { upgradeSources as up } from "$lib/sources/upgrades";
 
 const U: Source = {
-  key: '_unknown',
-  name: 'Unknown source',
-  system: 'store',
+  key: "_unknown",
+  name: "Unknown source",
+  system: "store",
   fn: () => 0,
   inputs: [],
-}
+};
 
 export const chestsFormulas: FormulaMap = defineFormulas({
-  chest_double_chance: { contributions: [{ source: U, op: '+', unknown: true }] },
+  chest_double_chance: {
+    contributions: [{ source: U, op: "+", unknown: true }],
+  },
   chest_meter_multi: {
     contributions: [
-      { source: sk.haveYouTriedGettingLuckierChestMeter, op: '×' },
-      { source: st.gemChestMeter, op: '×' },
-      { source: sg.starEridanusSuperStonks, op: '+' },
-      { source: up.upgrMeterFillRate, op: '+' },
+      { source: sk.haveYouTriedGettingLuckierChestMeter, op: "×" },
+      { source: st.gemChestMeter, op: "×" },
+      { source: sg.starEridanusSuperStonks, op: "+" },
+      { source: up.upgrMeterFillRate, op: "+" },
     ],
   },
   chest_items_bonus: {
-    contributions: [{ source: st.gemItemsInChests, op: '+' }],
+    contributions: [{ source: st.gemItemsInChests, op: "+" }],
   },
   freebie_gems_bonus: {
     contributions: [
-      { source: sk.gemsAndChestsFreebie, op: '+' },
-      { source: con.staFriendshipFreebieGems, op: '+' },
-      { source: card.cardFreebie, op: '+' },
-      { source: ch.chFreebieGemsBonus, op: '+' },
-      { source: st.founderFreebieGems, op: '+' },
-      { source: st.vpBankersFreebieGems, op: '+' },
-      { source: st.vpBiggerBankersFreebieGems, op: '+' },
-      { source: st.vpCapitalistFreebieGems, op: '+' },
-      { source: st.vpArchFreebieGems, op: '+' },
-      { source: st.vpChiefExecFreebieGems, op: '+' },
-      { source: st.vpHalfWayFreebieGems, op: '+' },
-      { source: con.staFallacyFreebieGems, op: '+' },
-      { source: U, op: '+', unknown: true },
+      { source: sk.gemsAndChestsFreebie, op: "+" },
+      { source: con.staFriendshipFreebieGems, op: "+" },
+      { source: card.cardFreebie, op: "+" },
+      { source: ch.chFreebieGemsBonus, op: "+" },
+      { source: st.founderFreebieGems, op: "+" },
+      { source: st.vpBankersFreebieGems, op: "+" },
+      { source: st.vpBiggerBankersFreebieGems, op: "+" },
+      { source: st.vpCapitalistFreebieGems, op: "+" },
+      { source: st.vpArchFreebieGems, op: "+" },
+      { source: st.vpChiefExecFreebieGems, op: "+" },
+      { source: st.vpHalfWayFreebieGems, op: "+" },
+      { source: con.staFallacyFreebieGems, op: "+" },
+      { source: U, op: "+", unknown: true },
     ],
   },
   freebie_5x_chance: {
     contributions: [
-      { source: con.staArtistryFreebie5x, op: '+' },
-      { source: st.vpFreebie5xChance, op: '+' },
-      { source: st.vpBankersFreebie5x, op: '+' },
-      { source: f.noticeT2FreebieJackpot, op: '+' },
+      { source: con.staArtistryFreebie5x, op: "+" },
+      { source: st.vpFreebie5xChance, op: "+" },
+      { source: st.vpBankersFreebie5x, op: "+" },
+      { source: f.noticeT2FreebieJackpot, op: "+" },
     ],
   },
   freebie_refresh_chance: {
     contributions: [
-      { source: sk.freeThatsGreatRefresh, op: '+' },
-      { source: st.vpBiggerBankersRefresh, op: '+' },
-      { source: con.staArtistryFreebieRefresh, op: '+' },
+      { source: sk.freeThatsGreatRefresh, op: "+" },
+      { source: st.vpBiggerBankersRefresh, op: "+" },
+      { source: con.staArtistryFreebieRefresh, op: "+" },
     ],
   },
   freebie_bank_cap: {
     contributions: [
-      { source: sk.chronokeeperFrebieCap, op: '+' },
-      { source: sk.savingForARainyDayFrebieCap, op: '+' },
-      { source: con.staEastwoodFreebieBank, op: '+' },
-      { source: ch.chFreebieBank, op: '+' },
-      { source: st.gemFreebieBank, op: '+' },
-      { source: st.founderFreebieBank, op: '+' },
-      { source: st.vpBankersFreebieBank, op: '+' },
-      { source: st.vpBiggerBankersFreebieBank, op: '+' },
-      { source: st.vpInsiderFreebieBank, op: '+' },
-      { source: st.vpChiefExecFreebieBank, op: '×' },
-      { source: pet.petHappyBotQuestFreebieBank, op: '+' },
-      { source: sg.starOphiuchusFreebie, op: '+' },
-      { source: sg.ssBankedFreebieLootbugFreebie, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards + Skins
+      // Wiki Store group: (Gem Upgrade + bundles + Founder T6) × Chief
+      // Executive, and that PRODUCT joins additively — Chief Exec's ×1.10
+      // scales only the Store sum, not the other menus.
+      {
+        label: "Store",
+        base: 0,
+        op: "+",
+        contributions: [
+          { source: st.gemFreebieBank, op: "+" },
+          { source: st.founderFreebieBank, op: "+" },
+          { source: st.vpBankersFreebieBank, op: "+" },
+          { source: st.vpBiggerBankersFreebieBank, op: "+" },
+          { source: st.vpInsiderFreebieBank, op: "+" },
+          { source: st.vpChiefExecFreebieBank, op: "×" },
+        ],
+      },
+      { source: sk.chronokeeperFrebieCap, op: "+" },
+      { source: sk.savingForARainyDayFrebieCap, op: "+" },
+      { source: con.staEastwoodFreebieBank, op: "+" },
+      { source: ch.chFreebieBank, op: "+" },
+      { source: pet.petHappyBotQuestFreebieBank, op: "+" },
+      { source: sg.starOphiuchusFreebie, op: "+" },
+      { source: sg.ssBankedFreebieLootbugFreebie, op: "+" },
+      { source: U, op: "+", unknown: true }, // Cards: Glimmering Geoduck; Skins: 14th Reward
+      { source: U, op: "×", unknown: true }, // Skins: 21st Reward (multiplies ALL Freebie Cap)
     ],
   },
   freebie_cooldown_seconds: {
     contributions: [
-      { source: sk.justWaitFasterCooldown, op: '+' },
-      { source: sk.freeThatsGreatCooldown, op: '+' },
-      { source: con.staEastwoodFreebieTimer, op: '+' },
-      { source: up.upgrFreebieCooldown, op: '+' },
-      { source: U, op: '+', unknown: true }, // Store Founder + Cards
+      { source: sk.justWaitFasterCooldown, op: "+" },
+      { source: sk.freeThatsGreatCooldown, op: "+" },
+      { source: con.staEastwoodFreebieTimer, op: "+" },
+      { source: up.upgrFreebieCooldown, op: "+" },
+      { source: U, op: "+", unknown: true }, // Store Founder + Cards
     ],
   },
   stonks_chance: {
     contributions: [
-      { source: con.staCombatStonksChance, op: '+' },
-      { source: U, op: '+', unknown: true },
+      { source: con.staCombatStonksChance, op: "+" },
+      { source: U, op: "+", unknown: true },
     ],
   },
   stonks_multi: {
     contributions: [
-      { source: card.cardStonks, op: '×' },
-      { source: st.vpInsiderStonksMul, op: '+' },
-      { source: con.staCombatStonksMul, op: '+' },
-      { source: sg.starEridanusStonksMul, op: '+' },
-      { source: ch.chAllStonksMulStonks, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards + Skins
+      { source: card.cardStonks, op: "×" },
+      { source: st.vpInsiderStonksMul, op: "+" },
+      { source: con.staCombatStonksMul, op: "+" },
+      { source: sg.starEridanusStonksMul, op: "+" },
+      { source: ch.chAllStonksMulStonks, op: "+" },
+      { source: U, op: "+", unknown: true }, // Cards + Skins
     ],
   },
   super_stonks_chance: {
     contributions: [
-      { source: card.cardSuperStonks, op: '+' },
-      { source: ch.chSuperStonksChance, op: '+' },
-      { source: st.vpChiefExecSuperStonksChance, op: '+' },
-      { source: up.upgrSuperStonksChance, op: '+' },
+      { source: card.cardSuperStonks, op: "+" },
+      { source: ch.chSuperStonksChance, op: "+" },
+      { source: st.vpChiefExecSuperStonksChance, op: "+" },
+      { source: up.upgrSuperStonksChance, op: "+" },
     ],
   },
   super_stonks_multi: {
     contributions: [
-      { source: st.vpChiefExecSuperStonksMul, op: '×' },
-      { source: arch.idolCharon, op: '+' },
-      { source: U, op: '+', unknown: true },
+      { source: st.vpChiefExecSuperStonksMul, op: "×" },
+      { source: arch.idolCharon, op: "+" },
+      { source: U, op: "+", unknown: true },
     ],
   },
   ultra_stonks_chance: {
     contributions: [
-      { source: con.staCombatUltraStonksChance, op: '+' },
-      { source: arch.idolCharonUltraStonksUnlock, op: '+' },
-      { source: arch.idolSisyphusUltraStonks, op: '+' },
-      { source: U, op: '+', unknown: true },
+      { source: con.staCombatUltraStonksChance, op: "+" },
+      { source: arch.idolCharonUltraStonksUnlock, op: "+" },
+      { source: arch.idolSisyphusUltraStonks, op: "+" },
+      { source: U, op: "+", unknown: true },
     ],
   },
   ultra_stonks_multi: {
     contributions: [
-      { source: con.staCombatUltraStonksMul, op: '+' },
-      { source: ch.chAllStonksMulUltra, op: '+' },
+      { source: con.staCombatUltraStonksMul, op: "+" },
+      { source: ch.chAllStonksMulUltra, op: "+" },
     ],
   },
-})
+});

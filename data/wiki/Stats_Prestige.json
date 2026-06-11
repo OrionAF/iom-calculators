@@ -1,0 +1,29 @@
+{
+  "title": "Stats/Prestige",
+  "pageid": 6691,
+  "url": "https://shminer.miraheze.org/wiki/Stats/Prestige",
+  "categories": [
+    "Pages using Tabber parser tag"
+  ],
+  "links": [
+    "Archaeology",
+    "Cards",
+    "Challenges",
+    "Chests",
+    "Construct",
+    "Contracts",
+    "Drones",
+    "Fishing",
+    "Items",
+    "Obelisk",
+    "Pets",
+    "Prestige",
+    "Relics",
+    "Skill-Tree",
+    "Skins",
+    "Stargazing",
+    "Store",
+    "Upgrades"
+  ],
+  "wikitext": "<tabber>\nXp Level Cap=\n{{Stat|Xp Level Cap|The maximum level you can reach with EXP.\n| '''Obelisk''' |Defeating [[Obelisk|Obelisks]]}}\n|-|\nPrestige Point Gain Multiplier=\n{{Stat|Prestige Point Gain Multiplier|The multiplier on the number of Prestige Points gained.\n| '''Prestige''' |A [[Prestige#Tier_2_Artifacts|Tier 2 Artifact]]<br>| '''Relics''' |A [[Chests#List of relics|Legendary Relic]]<br>| '''Store''' |A [[Store#Perks|Perk]]<br>| '''Skill-Tree''' |The \"[[Skill-Tree#Skills|PP Go Up]]\" Skill<math>+</math><br>The \"[[Skill-Tree#Skills|Easy Progressor]]\" Skill<br>| '''Challenges''' |A [[Challenges#tabber-Regular_2|Regular Challenge Upgrade]]<br>| '''Cards''' |The [[Cards#Misc Cards|Celio's Hat Misc Card]]<br>| '''Pets''' |The [[Pets#tabber-Dwarf_Quest_Skin|Dwarf Pet Quest]]<br>| '''Construct''' |The [[Construct#World_1_Bonuses|Statue of Slaying]]<br>| '''Stargazing''' |[[Stargazing#Stars|Libra]]<br>| '''Contracts''' |A [[Contracts#tabber-World_1_Upgrades|World 1 Contract Upgrade]]<br>| '''Skins''' |A [[Skins#Skin Rewards|Skin Reward]]}}\n|-|\nExperience Gain Multiplier=\n{{Stat|Experience Gain Multiplier|The multiplier on Experience gained.\n| '''Prestige''' |A [[Prestige#Tier_1_Artifacts|Tier 1 Artifact]]<br>| '''Drones''' |An [[Drones#Elixir_Drone_Buffs|Elixir Drone Buff]] (Also from the [[Store#Founder Supply Drop|Founder Supply Drop]])<br>| '''Items''' |[[Items#Apple|Apple]] (Requires the [[Archaeology#tabber-Common_Idols|Athena]] Idol)<math>\\times</math><br>[[Items#Strawberries|Strawberries]]<br>| '''Relics''' |A [[Chests#List of relics|Common Relic]]<math>+</math><br>A [[Relics#List of relics|Rare Relic]]<br>| '''Store''' |The [[Store#Founders Bundle|Founders Bundle]]<br>| '''Skill-Tree''' |(The \"[[Skill-Tree#Skills|PP Go Up]]\" Skill<math>+</math><br>The \"[[Skill-Tree#Skills|Tons Of Damage]]\" Skill)<math>\\times</math><br>The \"[[Skill-Tree#Skills|Polychrome Power]]\" Skill<br>| '''Challenges''' |A [[Challenges#tabber-Regular_2|Regular Challenge Upgrade]]<br>| '''Cards''' |The [[Cards#Misc Cards|Miner Name Misc Card]]<math>\\times</math><br>The [[Cards#Card Effects|Dino Pet Card]]<math>\\times</math><br>The [[Cards#Card Effects|Radioactive Slug Legendary Fish Card]]<br>| '''Pets''' |The [[Pets#tabber-Duck_2|Duck Pet]]<br>| '''Construct''' |The [[Construct#tabber-World_3_Gilded_Statues|Gilded and Platinized Statue of Eastwood]]<br>| '''Stargazing''' |[[Stargazing#Stars|Capricorn]]<math>+</math><br>A [[Stargazing#Super Stars|Super Star Upgrade]]| '''Fishing''' |A [[Fishing#tabber-Tier_1_Notice_Upgrades|Tier 1 Notice Upgrade]]<br>| '''Upgrades''' |The {{Sprite|Sandcasium Bar|Upgrades#World_2_Upgrades||Sandcasium Bar Upgrade}}<br>| '''Contracts''' |A [[Contracts#tabber-World_1_Upgrades|World 1 Contract Upgrade]]<br>| '''Skins''' |A [[Skins#Skin Rewards|Skin Reward]]}}\n|-|\nFloor Clear Requirement=\n{{Stat|Floor Clear Requirement|The multiplier on the number of times a floor must be cleared to move on to the next floor.\n| '''Prestige''' |A [[Prestige#Tier_2_Artifacts|Tier 2 Artifact]]<br>| '''Skill-Tree''' |The \"[[Skill-Tree#Skills|Easy Progressor]]\" Skill<br>| '''Cards''' |The [[Cards#Misc Cards|Prestige Misc Card]]<br>| '''Pets''' |The [[Pets#tabber-Dwarf_Quest_Skin|Dwarf Pet Quest]]<br>| '''Construct''' |The [[Construct#tabber-World_1_Platinized_Statues|Platinized Statue of Rhythm]]<br>| '''Skins''' |A [[Skins#Skin_Rewards|Skin Reward]]}}\n|-|\nArtifact Upgrade Cap Increase=\n{{Stat|Artifact Upgrade Cap Increase|The increase to the max upgrade level of Artifacts.\n| '''Skill-Tree'''<math>+</math> |The \"[[Skill-Tree#Skills|Do These Upgrades Ever End?]]\" Skill<br>| '''Cards'''<math>+</math> |The [[Cards#Card Effects|Happy Bot Pet Card]]<br>| '''Construct'''<math>+</math> |The [[Construct#World_1_Bonuses|Statue of Slaying]]\n}}\n|-|\nArtifact Tier 4 Cap Increase=\n{{Stat|Artifact Tier 4 Cap Increase|The increase to the max upgrade level of Tier 4 Artifacts.\n| '''Pets'''<math>+</math> |The [[Pets#tabber-Happy-Bot_2|Happy Bot Pet]]}}\n</tabber>"
+}
