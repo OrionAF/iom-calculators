@@ -111,22 +111,22 @@
     position: fixed;
     /* top + left set via inline style from computePosition() */
     /* translateY(-100%) lifts the bubble above the `top` coordinate */
-    transform: translateY(-100%) scale(0.98);
+    transform: translateY(-100%) scale(0.94);
     transform-origin: bottom left;
 
     z-index: var(--z-toast);
     width: 272px;
 
     background: var(--bg-raised);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-lg);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-raised), var(--shadow-glow);
     /* Reset inherited white-space (e.g. from overflow:hidden+nowrap ancestors) */
     white-space: normal;
 
     transition:
       opacity 150ms var(--ease-out),
-      transform 150ms var(--ease-out),
+      transform 220ms var(--ease-bounce),
       visibility 150ms var(--ease-out);
   }
 
@@ -156,7 +156,7 @@
     content: '';
     position: absolute;
     top: 100%;
-    left: 14px;
+    left: 18px;
     border: 6px solid transparent;
     border-top-color: var(--border);
   }
@@ -164,7 +164,7 @@
     content: '';
     position: absolute;
     top: calc(100% - 1px);
-    left: 14px;
+    left: 18px;
     border: 6px solid transparent;
     border-top-color: var(--bg-raised);
     z-index: 1;
@@ -183,8 +183,8 @@
   }
 
   .tip-icon {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     border-radius: var(--radius-md);
     background: color-mix(in srgb, var(--accent) 12%, var(--bg-raised));
     border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
@@ -196,9 +196,9 @@
   }
 
   .tip-name {
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 600;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: var(--weight-bold);
     color: var(--text-primary);
     line-height: 1.2;
     flex: 1;
@@ -218,6 +218,6 @@
     font-size: var(--text-sm);
     color: var(--text-muted);
     line-height: 1.55;
-    margin: 0 0 var(--space-2) 0;
+    margin: 0;
   }
 </style>
