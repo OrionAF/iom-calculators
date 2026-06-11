@@ -31,6 +31,11 @@ export const ctPickaxeDmgW1: Source = {
   key: 'contracts.pickaxeDmgW1', name: 'Contracts: Pickaxe Damage (W1)', system: 'contracts',
   maxLevel: 3, fn: (n) => n * 0.15, inputs: [],
 }
+/** Upgrade Bar Cost -5% per level. Max 3. Positive fn per reduction convention. → pickaxe_bar_cost_reduction */
+export const ctBarCostReductionW1: Source = {
+  key: 'contracts.barCostW1', name: 'Contracts: Bar Cost Reduction (W1)', system: 'contracts',
+  maxLevel: 3, fn: (n) => n * 0.05, inputs: [],
+}
 export const ctPrestigePtsW1: Source = {
   key: 'contracts.prestigePtsW1', name: 'Contracts: Prestige Points (W1)', system: 'contracts',
   maxLevel: 3, fn: (n) => n * 0.10, inputs: [],
@@ -124,7 +129,7 @@ export const ctGoldenVoidChance: Source = {
 
 export const contractSources = {
   ctPickaxeDmgPerContract, ctTripleCraft, ctPickaxeSuperCrit, ctBombRechargeW1,
-  ctExpGainW1, ctPickaxeCritDmg, ctPickaxeDmgW1, ctPrestigePtsW1, ct10xCraft,
+  ctExpGainW1, ctPickaxeCritDmg, ctPickaxeDmgW1, ctBarCostReductionW1, ctPrestigePtsW1, ct10xCraft,
   ctBombDmgPerContract, ctOreSellPriceW2, ctVeinIncomeW2, ctUltraCritChance,
   ctGoldenFloorMulW2, ctGoldenVeinChance, ctSuperStarSpawn, ctGameSpeedW2,
   ctRainbowFloorMul, ctSupernovaChanceW2,
