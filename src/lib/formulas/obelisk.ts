@@ -5,7 +5,7 @@ import { challengeSources as ch } from '$lib/sources/challenges'
 import { petSources as pet } from '$lib/sources/pets'
 import { upgradeSources as up } from '$lib/sources/upgrades'
 
-const U: Source = { key: '_unknown', name: 'Unknown source', system: 'prestige', fn: () => 0, inputs: [] }
+const U: Source = { key: '_unknown', name: 'Unknown source', system: 'artifacts', fn: () => 0, inputs: [] }
 
 export const obeliskFormulas = {
   obelisk_timer_add: {

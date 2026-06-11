@@ -14,7 +14,7 @@ import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { upgradeSources as up } from '$lib/sources/upgrades'
 
-const U: Source = { key: '_unknown', name: 'Unknown source', system: 'prestige', fn: () => 0, inputs: [] }
+const U: Source = { key: '_unknown', name: 'Unknown source', system: 'artifacts', fn: () => 0, inputs: [] }
 
 export const prestigeFormulas = {
   xp_level_cap:           { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },

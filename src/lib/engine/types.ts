@@ -32,22 +32,25 @@ export interface Source {
 }
 
 export type SourceSystem =
-  | 'fishing'
-  | 'skillTree'
-  | 'store'
-  | 'items'
-  | 'workshop'
-  | 'upgrades'
-  | 'prestige'
-  | 'cards'
-  | 'pets'
-  | 'construct'
-  | 'stargazing'
   | 'archaeology'
-  | 'contracts'
+  | 'artifacts'
+  | 'cards'
   | 'challenges'
-  | 'relics'
+  | 'construct'
+  | 'contracts'
   | 'drones'
+  | 'fishing'
+  | 'items'
+  | 'pets'
+  | 'relics'
+  | 'skillTree'
+  | 'skins'
+  | 'stargazing'
+  | 'store'
+  | 'tributes'
+  | 'upgrades'
+  | 'workshop'
+  | 'worldquests'
 
 /**
  * How a source contribution is combined into the running stat total.
