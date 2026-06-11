@@ -126,6 +126,18 @@ export const ctGoldenVoidChance: Source = {
   key: 'contracts.goldenVoidChance', name: 'Contracts: Golden Void Portal Chance (W4)', system: 'contracts',
   maxLevel: 5, fn: (n) => n * 0.001, inputs: [],
 }
+export const ctPrismaticFloorMul: Source = {
+  key: 'contracts.prismaticFloorMul', name: 'Contracts: Prismatic Floor Multi (W4)', system: 'contracts',
+  maxLevel: 5, fn: (n) => n * 0.005, inputs: [],
+}
+export const ctStarSupergiants: Source = {
+  key: 'contracts.starSupergiants', name: 'Contracts: Star Supergiant Chance (W3)', system: 'contracts',
+  maxLevel: 5, fn: (n) => n * 0.002, inputs: [],
+}
+export const ctSuperStarSupergiants: Source = {
+  key: 'contracts.superStarSupergiants', name: 'Contracts: Super Star Supergiant Chance (W3)', system: 'contracts',
+  maxLevel: 5, fn: (n) => n * 0.001, inputs: [],
+}
 
 export const contractSources = {
   ctPickaxeDmgPerContract, ctTripleCraft, ctPickaxeSuperCrit, ctBombRechargeW1,
@@ -134,5 +146,6 @@ export const contractSources = {
   ctGoldenFloorMulW2, ctGoldenVeinChance, ctSuperStarSpawn, ctGameSpeedW2,
   ctRainbowFloorMul, ctSupernovaChanceW2,
   ctRainbowFloorChance, ctGoldenOreChanceW3, ctOmegaCritChance, ctPickaxeBombDmgW3,
-  ctRainbowVeinMul, ctAllStarMul, ctLootfrogTriple, ctGoldenVoidChance,
+  ctStarSupergiants, ctSuperStarSupergiants,
+  ctRainbowVeinMul, ctPrismaticFloorMul, ctAllStarMul, ctLootfrogTriple, ctGoldenVoidChance,
 }

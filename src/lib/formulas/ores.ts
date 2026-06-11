@@ -9,6 +9,9 @@ import { constructSources as con } from '$lib/sources/construct'
 import { petSources as pet } from '$lib/sources/pets'
 import { cardSources as card } from '$lib/sources/cards'
 import { challengeSources as ch } from '$lib/sources/challenges'
+import { fishingSources as f } from '$lib/sources/fishing'
+import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { archaeologySources as arch } from '$lib/sources/archaeology'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
@@ -19,6 +22,11 @@ export const oresFormulas = {
       { source: it.eyeOfNewtTripleRock,        op: '+' },
       { source: it.goldenEyeOfNewtTripleRock,  op: '+' },
       { source: rel.rareRelicTripleRock,        op: '+' },
+      { source: it.yummyPizzaAllFloorPerm,         op: '+' },
+      { source: it.goldenYummyPizzaAllFloorPerm,   op: '+' },
+      { source: pet.petNaginiAllFloorMul,          op: '+' },
+      { source: sg.starEridanusAllFloor,           op: '+' },
+      { source: f.noticeT1AllFloorMul,             op: '+' },
       { source: U, op: '+', unknown: true },    // Upgrades: Mithril Bar
     ],
   },
@@ -54,7 +62,11 @@ export const oresFormulas = {
       { source: ct.ctGoldenOreChanceW3,        op: '+' },
       { source: ch.chGoldenOreChance,          op: '+' },
       { source: st.vpGoldenOreChance,          op: '+' },
-      { source: U, op: '+', unknown: true },   // Store: Golden Ore Bundle + Challenges + Pets + Construct (Safety W3) + Stargazing + Contracts
+      { source: sg.starOrionGoldenOre,         op: '+' },
+      { source: sg.ssGoldenOreChance,          op: '+' },
+      { source: pet.petNaginiSkinGoldenOre,    op: '+' },
+      { source: con.staCrochetGoldenOre,       op: '+' },
+      { source: U, op: '+', unknown: true },   // Store: Golden Ore Bundle + Upgrades
     ],
   },
   golden_ore_multi: {
@@ -68,7 +80,9 @@ export const oresFormulas = {
       { source: pet.petNaginiGoldenOreMul,     op: '+' },
       { source: card.cardGoldenOre,            op: '×' },
       { source: st.vpGoldenOreMul,             op: '×' },
-      { source: U, op: '+', unknown: true },   // Store + Cards + Pets + Construct + Stargazing + Upgrades
+      { source: sg.starHerculesGoldenOreMul,   op: '+' },
+      { source: sg.ssGoldenOreMul,             op: '+' },
+      { source: U, op: '+', unknown: true },   // Store + Upgrades
     ],
   },
   golden_floor_chance: {
@@ -94,7 +108,9 @@ export const oresFormulas = {
       { source: ch.chGoldenFloorMul,                op: '+' },
       { source: card.cardWorld1,                    op: '×' },
       { source: st.vpProgressionGoldenFloor,        op: '×' },
-      { source: U, op: '+', unknown: true },        // Drones + Items (Eye of Newt+Iris) + Cards + Stargazing + Fishing + Upgrades + Contracts
+      { source: sg.starGeminiGoldenFloor,      op: '×' },
+      { source: f.noticeT1GoldenFloor,         op: '+' },
+      { source: U, op: '+', unknown: true },        // Drones (fueled Chain) + Items (Eye of Newt+Iris) + Upgrades
     ],
   },
   rainbow_floor_chance: {
@@ -111,7 +127,9 @@ export const oresFormulas = {
       { source: pet.petPenguinQuestRainbowFloor,    op: '+' },
       { source: st.founderRainbowFloor,             op: '+' },
       { source: st.vpPetTrainerRainbowFloor,        op: '+' },
-      { source: U, op: '+', unknown: true },        // Items + Store + Pets + Construct + Fishing + Contracts + Floors
+      { source: pet.petLeprechaunSkinRainbowFloor,  op: '+' },
+      { source: f.noticeT1RainbowFloorChance,       op: '+' },
+      { source: U, op: '+', unknown: true },        // Store + Floors WQ
     ],
   },
   rainbow_floor_multi: {
@@ -125,7 +143,8 @@ export const oresFormulas = {
       { source: ch.chRainbowFloorMulExtreme,        op: '+' },
       { source: card.cardWorld2,                    op: '×' },
       { source: st.vpHalfWayRainbowFloorMul,        op: '×' },
-      { source: U, op: '+', unknown: true },        // Items + Relics + Store + Cards + Pets + Stargazing + Fishing + Upgrades + Contracts
+      { source: sg.starPiscesRainbowFloor,          op: '+' },
+      { source: U, op: '+', unknown: true },        // Relics + Upgrades
     ],
   },
   galactic_floor_chance: {
@@ -133,18 +152,45 @@ export const oresFormulas = {
     contributions: [
       { source: sk.iBuriedItHereGalacticFloor,      op: '+' },
       { source: card.cardNagini,      op: '+' },
+      { source: ch.chGalacticFloor,                 op: '+' },
+      { source: pet.petButterflyGalacticChance,     op: '+' },
+      { source: con.staIgnitionGalacticFloor,       op: '+' },
+      { source: con.staCrochetGalacticFloor,        op: '+' },
+      { source: sg.starDracoGalacticChance,         op: '+' },
+      { source: sg.ssGalacticFloorChance,           op: '+' },
+      { source: arch.idolSisyphusGalactic,          op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
-  galactic_floor_multi:  {
+  galactic_floor_multi: {
     base: 10,
     contributions: [
-      { source: U, op: '+', unknown: true }] },
+      { source: card.cardWorld3,               op: '×' },
+      { source: pet.petLeprechaunQuestGalacticMul, op: '+' },
+      { source: sg.starDracoGalacticMul,       op: '+' },
+      { source: U, op: '+', unknown: true },   // Fishing: Megalodon T1
+    ],
+  },
 
 
 
-  prismatic_floor_chance:{ base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
-  prismatic_floor_multi: { base: 1, contributions: [{ source: U, op: '+', unknown: true }] },
+  prismatic_floor_chance: {
+    base: 0,
+    contributions: [
+      { source: con.staCrochetPrismaticFloor,  op: '+' },
+      { source: U, op: '+', unknown: true },   // Fueled Prism (temp), Cards, Upgrades, WQ8
+    ],
+  },
+  prismatic_floor_multi: {
+    base: 1,
+    contributions: [
+      { source: pet.petButterflyQuestPrismaticMul,  op: '+' },
+      { source: con.staFallacyPrismaticMul,         op: '+' },
+      { source: arch.idolMnemosyne,                 op: '+' },
+      { source: ct.ctPrismaticFloorMul,             op: '+' },
+      { source: U, op: '+', unknown: true },   // Fueled Prism (temp), Upgrades
+    ],
+  },
   pizzas_eaten:          { base: 0, contributions: [] },
   steak_eaten:           { base: 0, contributions: [] },
   all_floor_multipliers: {

@@ -9,6 +9,10 @@ import { artifactSources as art } from '$lib/sources/artifacts'
 import { constructSources as con } from '$lib/sources/construct'
 import { petSources as pet } from '$lib/sources/pets'
 import { cardSources as card } from '$lib/sources/cards'
+import { droneSources as drone } from '$lib/sources/drones'
+import { fishingSources as f } from '$lib/sources/fishing'
+import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { challengeSources as ch } from '$lib/sources/challenges'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
@@ -50,7 +54,11 @@ export const bombsFormulas = {
       // ── Store ────────────────────────────────────────────────────────
       { source: st.perkBombDamage,             op: '×' },
       { source: st.gemBombDamage,              op: '+' },
-      { source: U, op: '+', unknown: true },   // Pets + Upgrades
+      // ── Drones ────────────────────────────────────────────────────────
+      { source: drone.droneSuitBearUpgrade,    op: '+' },
+      // ── Fishing ──────────────────────────────────────────────────────────
+      { source: f.noticeT1BombDmg,             op: '+' },
+      { source: U, op: '+', unknown: true },   // Upgrades
     ],
   },
   bomb_crit_chance: {
@@ -82,7 +90,9 @@ export const bombsFormulas = {
       { source: rel.epicRelicBombRecharge,           op: '+' },
       { source: st.vpProgressionBombRecharge,        op: '×' },
       { source: st.vpBomberBombRecharge,             op: '×' },
-      { source: U, op: '+', unknown: true },         // Drones + Stargazing + Fishing + Upgrades + Lootbugs
+      { source: sg.starVirgoRecharge,               op: '+' },
+      { source: f.noticeT1BombRecharge,              op: '+' },
+      { source: U, op: '+', unknown: true },         // Drones Elixir + Lootbugs + Upgrades
     ],
   },
   bomb_free_chance: {
@@ -104,7 +114,8 @@ export const bombsFormulas = {
       { source: pet.petCrabBombCap,            op: '+' },
       { source: st.gemBombCapacity,            op: '+' },
       { source: st.vpBomberBombCapacity,       op: '×' },
-      { source: U, op: '+', unknown: true },   // Bombs: Battery + Store Founder + Challenges + Challenges (chBombCap)
+      { source: ch.chBombCap,                  op: '+' },
+      { source: U, op: '+', unknown: true },   // Bombs: Battery + Store Founder
     ],
   },
   bomb_cap_multiplier: {
@@ -119,7 +130,9 @@ export const bombsFormulas = {
     contributions: [
       { source: sk.demolitionExpertSuperCrit,  op: '+' },
       { source: art.artBombSuperCritT3,        op: '+' },
-      { source: U, op: '+', unknown: true },   // Items (Cassandra Idol) + Challenges
+      { source: ch.chBombSuperCrit,             op: '+' },
+      { source: ch.chPickaxeBombSuperCrit,     op: '+' },
+      { source: U, op: '+', unknown: true },   // Items (Rock Cake + Cassandra Idol)
     ],
   },
   bomb_super_crit_damage:    { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
@@ -129,7 +142,9 @@ export const bombsFormulas = {
       { source: sk.flamboyantBombsUltraCrit,       op: '+' },
       { source: con.staAwarenessUltraCrit,         op: '+' },
       { source: ct.ctUltraCritChance,              op: '+' },
-      { source: U, op: '+', unknown: true },   // Challenges + Upgrades + Contracts (W3 omega)
+      { source: ch.chBombUltraCritRegular,      op: '+' },
+      { source: ch.chBombUltraCritExtreme,     op: '+' },
+      { source: U, op: '+', unknown: true },   // Upgrades
     ],
   },
   bomb_ultra_crit_damage:    { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
@@ -144,7 +159,16 @@ export const bombsFormulas = {
       { source: U, op: '+', unknown: true },   // Workshop
     ],
   },
-  bomb_workshop_cap_increase:{ base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_workshop_cap_increase: {
+    base: 0,
+    contributions: [
+      { source: sk.doTheseUpgradesWorkshopCap,    op: '+' },
+      { source: sk.idleObeliskMincerWorkshopCap,  op: '+' },
+      { source: pet.petCrabSkinWorkshopCap,       op: '+' },
+      { source: sg.starLeo,                       op: '+' },
+      { source: U,  op: '+', unknown: true },   // Construct (no workshop_upgrade_cap key) + Fishing
+    ],
+  },
   bomb_of_plenty_make_gold_chance: { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
   bomb_of_plenty_multi: {
     base: 1,

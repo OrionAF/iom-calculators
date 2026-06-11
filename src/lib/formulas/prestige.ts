@@ -9,6 +9,9 @@ import { constructSources as con } from '$lib/sources/construct'
 import { petSources as pet } from '$lib/sources/pets'
 import { cardSources as card } from '$lib/sources/cards'
 import { challengeSources as ch } from '$lib/sources/challenges'
+import { fishingSources as f } from '$lib/sources/fishing'
+import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { archaeologySources as arch } from '$lib/sources/archaeology'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'prestige', fn: () => 0, inputs: [] }
 
@@ -26,7 +29,8 @@ export const prestigeFormulas = {
       { source: ch.chExpPrestigePts,              op: '+' },
       { source: card.cardCeliosHat,              op: '×' },
       { source: st.perkPrestigePts,               op: '×' },
-      { source: U, op: '+', unknown: true },      // Prestige + Store + Cards + Pets + Construct + Stargazing + Contracts + Skins
+      { source: sg.starLibraPrestige,          op: '+' },
+      { source: U, op: '+', unknown: true },      // Prestige + Store + Cards + Construct + Skins
     ],
   },
   experience_multi: {
@@ -46,7 +50,11 @@ export const prestigeFormulas = {
       { source: ch.chExpPrestigePts,              op: '+' },
       { source: card.cardMinerName,               op: '×' },
       { source: st.vpPetTrainerExp,               op: '×' },
-      { source: U, op: '+', unknown: true },      // Prestige + Drones + Items + Store + Cards + Pets + Construct + Stargazing + Fishing + Upgrades + Contracts + Skins
+      { source: sg.starCapricornExp,           op: '+' },
+      { source: sg.ssExpGain,                  op: '+' },
+      { source: f.noticeT1ExpGain,             op: '+' },
+      { source: arch.idolAthenaExp,            op: '+' },
+      { source: U, op: '+', unknown: true },      // Prestige + Drones Elixir + Store + Upgrades + Skins
     ],
   },
   floor_clear_requirement_multi: {
@@ -56,7 +64,8 @@ export const prestigeFormulas = {
       { source: art.artFloorClearT2,              op: '+' },
       { source: pet.petDwarfQuestFloorClear,      op: '+' },
       { source: card.cardPrestige,                op: '×' },
-      { source: U, op: '+', unknown: true },      // Pets + Construct + Skins
+      { source: con.staRhythmFloorClear,       op: '+' },
+      { source: U, op: '+', unknown: true },      // Skins
     ],
   },
   artifact_cap_increase: {
@@ -70,7 +79,9 @@ export const prestigeFormulas = {
   artifact_tier4_cap_increase: {
     base: 0,
     contributions: [
-      { source: U, op: '+', unknown: true },      // Pets: Happy Bot
+      { source: pet.petHappyBotArtifactT4Cap,  op: '+' },
+      { source: ch.chDivineRelicCaps,          op: '+' },
+      { source: U, op: '+', unknown: true },
     ],
   },
 } satisfies FormulaMap

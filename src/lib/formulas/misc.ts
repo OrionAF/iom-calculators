@@ -8,6 +8,9 @@ import { artifactSources as art } from '$lib/sources/artifacts'
 import { constructSources as con } from '$lib/sources/construct'
 import { petSources as pet } from '$lib/sources/pets'
 import { cardSources as card } from '$lib/sources/cards'
+import { fishingSources as f } from '$lib/sources/fishing'
+import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { archaeologySources as arch } from '$lib/sources/archaeology'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'store', fn: () => 0, inputs: [] }
 
@@ -21,7 +24,9 @@ export const miscFormulas = {
       { source: ct.ctGameSpeedW2,                 op: '+' },
       { source: st.founderGameSpeed,              op: '+' },
       { source: st.vpGottaGoFastGameSpeed,        op: '+' },
-      { source: U, op: '+', unknown: true },      // Pets + Stargazing + Upgrades + Contracts + Skins + Floors
+      { source: sg.ssGameSpeed,                op: '+' },
+      { source: f.noticeT1RemoveW3SpeedMod,    op: '+' },
+      { source: U, op: '+', unknown: true },      // Upgrades + Skins + Floors (ores)
     ],
   },
   item_duration_multi: {
@@ -29,7 +34,10 @@ export const miscFormulas = {
     contributions: [
       { source: art.artItemDurationT1,            op: '+' },
       { source: card.cardCode,                    op: '×' },
-      { source: U, op: '+', unknown: true },      // Prestige + SkillTree + Cards + Stargazing + Skins
+      { source: sk.friendshipEndedItemDuration, op: '+' },
+      { source: sg.starCapricornItemDuration,   op: '+' },
+      { source: sg.ssItemDuration,              op: '+' },
+      { source: U, op: '+', unknown: true },      // Prestige + Skins
     ],
   },
   gem_upgrade_cap_increase: {
@@ -37,7 +45,7 @@ export const miscFormulas = {
     contributions: [
       { source: con.staHygieneGemUpgradeCap,      op: '+' },
       { source: con.staCraftGemUpgradeCap,        op: '+' },
-      { source: U, op: '+', unknown: true },      // Archaeology: Minos Idol
+      { source: arch.idolMinos,                op: '+' },
     ],
   },
   pet_levelup_chance_multi: {
@@ -47,7 +55,8 @@ export const miscFormulas = {
       { source: rel.mythicRelicPetLevelup,               op: '+' },
       { source: con.staFelinePetLevelup,                 op: '+' },
       { source: st.vpPetTrainerPetLevel,                 op: '×' },
-      { source: U, op: '+', unknown: true },      // Store + Fishing + Upgrades + Skins
+      { source: f.noticeT1PetLevelUp,          op: '+' },
+      { source: U, op: '+', unknown: true },      // Store + Upgrades + Skins
     ],
   },
 } satisfies FormulaMap

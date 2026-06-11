@@ -9,6 +9,9 @@ import { artifactSources as art } from '$lib/sources/artifacts'
 import { constructSources as con } from '$lib/sources/construct'
 import { petSources as pet } from '$lib/sources/pets'
 import { cardSources as card } from '$lib/sources/cards'
+import { challengeSources as ch } from '$lib/sources/challenges'
+import { fishingSources as f } from '$lib/sources/fishing'
+import { stargazingSources as sg } from '$lib/sources/stargazing'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
@@ -60,8 +63,15 @@ export const pickaxeFormulas = {
       { source: sk.idleObeliskMincerDamage,           op: '×' },
       // ── Store ──────────────────────────────────────────────────────────
       { source: st.gemPickaxeDamage,                 op: '×' },
-      { source: U, op: '+', unknown: true },  // Stargazing: Taurus + Scorpio
-      { source: U, op: '+', unknown: true },  // Fishing: Tier 1 Notice upgrade
+      // ── Challenges ──────────────────────────────────────────────────────────
+      { source: ch.chPickaxeDmgPerChallenge,         op: '+' },
+      { source: ch.chPickaxeDmgPerSkillNode,          op: '+' },
+      { source: ch.chPickaxeDmgPerObelisk,            op: '+' },
+      // ── Stargazing ───────────────────────────────────────────────────────────
+      { source: sg.starTaurusPickaxeDmg,              op: '+' },
+      { source: sg.starScorpioPickaxeDmg,             op: '+' },
+      // ── Fishing ──────────────────────────────────────────────────────────────
+      { source: f.noticeT1PickaxeDmg,                op: '+' },
       { source: U, op: '+', unknown: true },  // Upgrades: base + many bars
     ],
   },
@@ -107,7 +117,9 @@ export const pickaxeFormulas = {
       { source: sk.waitMyCritsCanCrit,           op: '+' },
       { source: art.artPickaxeSuperCritT2,       op: '+' },
       { source: ct.ctPickaxeSuperCrit,           op: '+' },
-      { source: U, op: '+', unknown: true },  // Prestige + Items (Rock Cake + Cassandra)
+      { source: ch.chPickaxeSuperCritChance,     op: '+' },
+      { source: ch.chPickaxeBombSuperCrit,       op: '+' },
+      { source: U, op: '+', unknown: true },  // Items (Rock Cake + Cassandra Idol)
     ],
   },
   pickaxe_super_crit_damage: {

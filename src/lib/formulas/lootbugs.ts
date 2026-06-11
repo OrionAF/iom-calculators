@@ -5,6 +5,9 @@ import { itemSources as it } from '$lib/sources/items'
 import { constructSources as con } from '$lib/sources/construct'
 import { petSources as pet } from '$lib/sources/pets'
 import { cardSources as card } from '$lib/sources/cards'
+import { challengeSources as ch } from '$lib/sources/challenges'
+import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { archaeologySources as arch } from '$lib/sources/archaeology'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'store', fn: () => 0, inputs: [] }
 
@@ -15,10 +18,20 @@ export const lootbugsFormulas = {
       { source: it.lootbugLanternSpawn,            op: '×' },
       { source: it.goldenLootbugLanternSpawn,      op: '×' },
       { source: pet.petDuckLootbugSpawn,           op: '+' },
-      { source: U, op: '+', unknown: true }, // Drones + Items (Bread+Eros) + Challenges + Cards + Pets + Stargazing + Upgrades
+      { source: ch.chLootbugSpawn,             op: '+' },
+      { source: sg.starSagittariusLootbugSpawn, op: '+' },
+      { source: arch.idolEros,                 op: '+' },
+      { source: U, op: '+', unknown: true }, // Drones fueled Bear (temp) + Cards + Upgrades
     ],
   },
-  lootbug_triple_chance:     { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+  lootbug_triple_chance: {
+    base: 0,
+    contributions: [
+      { source: pet.petWhaleLootbugTriple,     op: '+' },
+      { source: sg.starLibraTripleLootbug,     op: '+' },
+      { source: U, op: '+', unknown: true },   // Cards + Skins
+    ],
+  },
   lootbug_golden_chance: {
     base: 0,
     contributions: [
@@ -40,7 +53,10 @@ export const lootbugsFormulas = {
       { source: st.vpBankersLootbugBank,          op: '+' },
       { source: st.vpBiggerBankersLootbugBank,    op: '+' },
       { source: st.vpLootbugBonanzaBankCap,       op: '+' },
-      { source: U, op: '+', unknown: true },      // Pets + Stargazing + Construct + Archaeology + Fishing + Skins
+      { source: sg.starOphiuchusFreebie,       op: '+' },
+      { source: sg.ssBankedFreebieLootbugLootbug, op: '+' },
+      { source: arch.idolTheseusBankUnlock,    op: '+' },
+      { source: U, op: '+', unknown: true },      // Fishing + Skins
     ],
   },
   lootbug_gem_cost_reduction: {
@@ -56,7 +72,9 @@ export const lootbugsFormulas = {
       { source: sk.anyoneUpLootinLootMulti,       op: '+' },
       { source: card.cardLootbug,                 op: '×' },
       { source: st.vpLootbugBonanzaLootMul,       op: '×' },
-      { source: U, op: '+', unknown: true },      // Store + Cards + Stargazing + Archaeology + Fishing
+      { source: sg.ssLootbugLootMul,           op: '+' },
+      { source: arch.idolTheseus,              op: '+' },
+      { source: U, op: '+', unknown: true },      // Store + Cards + Fishing
     ],
   },
   lootfrog_lanterns_used: { base: 0, contributions: [] },

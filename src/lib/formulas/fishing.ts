@@ -4,6 +4,10 @@ import { skillTreeSources as sk } from '$lib/sources/skillTree'
 import { storeSources as st } from '$lib/sources/store'
 import { cardSources as card } from '$lib/sources/cards'
 import { petSources as pet } from '$lib/sources/pets'
+import { archaeologySources as arch } from '$lib/sources/archaeology'
+import { constructSources as con } from '$lib/sources/construct'
+import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { challengeSources as ch } from '$lib/sources/challenges'
 
 // Placeholder for contributions whose per-level values are not yet known.
 // Marked unknown: true so the engine skips them and the UI flags them.
@@ -48,7 +52,7 @@ export const fishingFormulas = {
       { source: f.droneCapE1C,             op: '+' },
       { source: sk.fishingWithFriendsDrones, op: '+' },
       { source: sk.motleySchoolDrones,     op: '+' },
-      { source: UNKNOWN,                   op: '+', unknown: true },  // Archaeology Ares Idol
+      { source: arch.idolAres,             op: '+' },
       { source: f.droneCloner,             op: '×' },
     ],
   },
@@ -61,9 +65,9 @@ export const fishingFormulas = {
     base: 3,
     contributions: [
       { source: f.droneBaseT1, op: '+' },
-      { source: UNKNOWN,       op: '+', unknown: true },  // Dynamite Bar Upgrade
-      { source: UNKNOWN,       op: '×', unknown: true },  // Archaeology Ares Idol (×)
-      { source: UNKNOWN,       op: '+', unknown: true },  // Items: Pike (requires Poseidon Idol)
+      { source: arch.idolPoseidon,         op: '+' },
+      { source: arch.idolAres,             op: '+' },
+      { source: UNKNOWN, op: '+', unknown: true },  // Dynamite Bar Upgrade
     ],
   },
 
@@ -78,8 +82,8 @@ export const fishingFormulas = {
       { source: f.droneMultiE1,                       op: '+' },
       { source: sk.fishingWithFriendsDronePower,       op: '+' },
       { source: sk.completionistGatekeeperDronePower,  op: '+' },
+      { source: arch.idolTethysDronePower,    op: '+' },
       { source: UNKNOWN,                              op: '+', unknown: true },  // Workshop World 3 Upgrade
-      { source: UNKNOWN,                              op: '+', unknown: true },  // Archaeology Tethys Idol
     ],
   },
 
@@ -93,11 +97,9 @@ export const fishingFormulas = {
       { source: f.tier2DockT2,                         op: '+' },
       { source: f.tier2DockE2,                         op: '+' },
       { source: sk.completionistGatekeeperTier2Dock,   op: '+' },
-      { source: UNKNOWN,                               op: '+', unknown: true },  // Legendary Hauler Bundle
-      { source: UNKNOWN,                               op: '+', unknown: true },  // Infernal Angler Drone Card
-      { source: UNKNOWN,                               op: '+', unknown: true },  // Mr Nibbles Pet Quest
-      { source: UNKNOWN,                               op: '+', unknown: true },  // Stargazing 10th Black Hole
-      { source: UNKNOWN,                               op: '+', unknown: true },  // Archaeology Tethys Idol
+      { source: pet.petNibblesQuestTier2Dock,  op: '+' },
+      { source: arch.idolTethysTier2Dock,      op: '+' },
+      { source: UNKNOWN,                               op: '+', unknown: true },  // Legendary Hauler + BH10 + Card
     ],
   },
 
@@ -112,9 +114,10 @@ export const fishingFormulas = {
       { source: f.fishMultiE1,                     op: '+' },
       { source: sk.fishingWithFriendsFishMulti,    op: '+' },
       { source: sk.withThisFishFishMulti,          op: '+' },
+      { source: con.staCraftFishIncomeMul,     op: '×' },
+      { source: sg.starCetusFishIncome,        op: '+' },
+      { source: sg.ssFishIncomeMul,            op: '+' },
       { source: UNKNOWN,                           op: '+', unknown: true },  // Legendary Hauler Bundle
-      { source: UNKNOWN,                           op: '+', unknown: true },  // Statue of Craftmanship
-      { source: UNKNOWN,                           op: '+', unknown: true },  // Stargazing: Cetus + Super Star
     ],
   },
 
@@ -141,7 +144,7 @@ export const fishingFormulas = {
       { source: f.doubleTickT1,                  op: '+' },
       { source: f.doubleTickE1,                  op: '+' },
       { source: sk.letsPickUpThePaceDouble,      op: '+' },
-      { source: UNKNOWN,                         op: '+', unknown: true },  // Archaeology Astraeus Idol
+      { source: arch.idolAstraeusDblTick,     op: '+' },
     ],
   },
 
@@ -218,7 +221,7 @@ export const fishingFormulas = {
     contributions: [
       { source: f.shinyChanceT1,              op: '+' },
       { source: sk.withThisFishShinyChance,   op: '+' },
-      { source: UNKNOWN,                      op: '+', unknown: true },  // Mr Nibbles Pet Skin
+      { source: pet.petNibblesSkinShinyChance, op: '+' },
     ],
   },
 
@@ -231,8 +234,8 @@ export const fishingFormulas = {
     contributions: [
       { source: f.shinyMultiT2,  op: '+' },
       { source: f.shinyMultiE1,  op: '+' },
-      { source: UNKNOWN,         op: '+', unknown: true },  // Divine Challenge Upgrade
-      { source: UNKNOWN,         op: '+', unknown: true },  // Mr Nibbles Pet
+      { source: ch.chShinyFishMul,             op: '+' },
+      { source: pet.petNibblesShinyFishMul,    op: '+' },
     ],
   },
 
@@ -257,7 +260,7 @@ export const fishingFormulas = {
     base: 2,
     contributions: [
       { source: f.superShinyMultiE2, op: '+' },
-      { source: UNKNOWN,             op: '+', unknown: true },  // Archaeology Tethys Idol
+      { source: arch.idolTethysSuperShiny,     op: '+' },
       { source: UNKNOWN,             op: '+', unknown: true },  // Tier 1 Cthulhu Tribute
     ],
   },
@@ -271,6 +274,15 @@ export const fishingFormulas = {
     base: 0,
     contributions: [
       { source: UNKNOWN, op: '+', unknown: true },
+    ],
+  },
+
+  polychrome_card_bonus_fish: {
+    base: 0,
+    contributions: [
+      { source: f.polyCardMultiT2,  op: '+' },
+      { source: f.polyCardMultiE2,  op: '+' },
+      { source: UNKNOWN, op: '+', unknown: true },  // Archaeology star card
     ],
   },
 

@@ -7,6 +7,8 @@ import { artifactSources as art } from '$lib/sources/artifacts'
 import { constructSources as con } from '$lib/sources/construct'
 import { petSources as pet } from '$lib/sources/pets'
 import { challengeSources as ch } from '$lib/sources/challenges'
+import { fishingSources as f } from '$lib/sources/fishing'
+import { stargazingSources as sg } from '$lib/sources/stargazing'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
@@ -51,7 +53,8 @@ export const craftingFormulas = {
       { source: ct.ct10xCraft,                   op: '+' },
       { source: st.founderCraft10x,              op: '+' },
       { source: st.vpCraftmaster10xCraft,        op: '+' },
-      { source: U, op: '+', unknown: true },     // Fishing + Upgrades + Contracts
+      { source: f.noticeT1CraftChance10x,        op: '+' },
+      { source: U, op: '+', unknown: true },     // Upgrades
     ],
   },
   craft_20x_chance: {
@@ -66,7 +69,9 @@ export const craftingFormulas = {
     contributions: [
       { source: con.staIgnitionCraft100x,        op: '+' },
       { source: st.vpCraftmaster100xCraft,       op: '+' },
-      { source: U, op: '+', unknown: true },     // Construct + Stargazing + Fishing + Upgrades
+      { source: sg.starOrionCraft100x,           op: '+' },
+      { source: f.noticeT2CraftChance100x,       op: '+' },
+      { source: U, op: '+', unknown: true },     // Upgrades
     ],
   },
   bar_output_multi: {
@@ -77,7 +82,14 @@ export const craftingFormulas = {
       { source: U, op: '×', unknown: true },     // Cards
     ],
   },
-  bar_upgrade_cost_reduction: { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+  bar_upgrade_cost_reduction: {
+    base: 0,
+    contributions: [
+      { source: ch.chBarUpgradeCosts,            op: '+' },
+      { source: ct.ctBarCostReductionW1,         op: '+' },
+      { source: U, op: '+', unknown: true },
+    ],
+  },
   bar_craft_cost_multi: {
     base: 1,
     contributions: [
@@ -85,7 +97,9 @@ export const craftingFormulas = {
       { source: sk.moreOreMoreProblemsBarCraft,      op: '+' },
       { source: pet.petAxolotlBarCraft,              op: '+' },
       { source: st.vpCraftmasterBarCraft,            op: '+' },
-      { source: U, op: '+', unknown: true },         // Store + Cards + Pets + Stargazing
+      { source: sg.starAquariusBarCraft,         op: '+' },
+      { source: ch.chBarCraftCosts,              op: '+' },
+      { source: U, op: '+', unknown: true },         // Store + Cards
     ],
   },
 } satisfies FormulaMap

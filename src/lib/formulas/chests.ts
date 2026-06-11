@@ -4,6 +4,10 @@ import { storeSources as st } from '$lib/sources/store'
 import { constructSources as con } from '$lib/sources/construct'
 import { cardSources as card } from '$lib/sources/cards'
 import { challengeSources as ch } from '$lib/sources/challenges'
+import { fishingSources as f } from '$lib/sources/fishing'
+import { archaeologySources as arch } from '$lib/sources/archaeology'
+import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { petSources as pet } from '$lib/sources/pets'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'store', fn: () => 0, inputs: [] }
 
@@ -14,6 +18,7 @@ export const chestsFormulas = {
     contributions: [
       { source: sk.haveYouTriedGettingLuckierChestMeter, op: '×' },
       { source: st.gemChestMeter,                        op: '×' },
+      { source: sg.starEridanusSuperStonks,      op: '+' },
       { source: U, op: '+', unknown: true },             // Upgrades
     ],
   },
@@ -37,7 +42,8 @@ export const chestsFormulas = {
       { source: st.vpArchFreebieGems,            op: '+' },
       { source: st.vpChiefExecFreebieGems,       op: '+' },
       { source: st.vpHalfWayFreebieGems,         op: '+' },
-      { source: U, op: '+', unknown: true },     // Cards + Construct
+      { source: con.staFallacyFreebieGems,       op: '+' },
+      { source: U, op: '+', unknown: true },
     ],
   },
   freebie_5x_chance: {
@@ -46,7 +52,7 @@ export const chestsFormulas = {
       { source: con.staArtistryFreebie5x,        op: '+' },
       { source: st.vpFreebie5xChance,            op: '+' },
       { source: st.vpBankersFreebie5x,           op: '+' },
-      { source: U, op: '+', unknown: true },     // Fishing
+      { source: f.noticeT2FreebieJackpot,        op: '+' },
     ],
   },
   freebie_refresh_chance: {
@@ -54,7 +60,7 @@ export const chestsFormulas = {
     contributions: [
       { source: sk.freeThatsGreatRefresh,        op: '+' },
       { source: st.vpBiggerBankersRefresh,       op: '+' },
-      { source: U, op: '+', unknown: true },     // Construct (platinized Artistry)
+      { source: con.staArtistryFreebieRefresh,   op: '+' },
     ],
   },
   freebie_bank_cap: {
@@ -70,7 +76,10 @@ export const chestsFormulas = {
       { source: st.vpBiggerBankersFreebieBank,       op: '+' },
       { source: st.vpInsiderFreebieBank,             op: '+' },
       { source: st.vpChiefExecFreebieBank,           op: '×' },
-      { source: U, op: '+', unknown: true },         // Cards + Pets + Stargazing + Skins
+      { source: pet.petHappyBotQuestFreebieBank, op: '+' },
+      { source: sg.starOphiuchusFreebie,         op: '+' },
+      { source: sg.ssBankedFreebieLootbugFreebie, op: '+' },
+      { source: U, op: '+', unknown: true },         // Cards + Skins
     ],
   },
   freebie_cooldown_seconds: {
@@ -78,16 +87,26 @@ export const chestsFormulas = {
     contributions: [
       { source: sk.justWaitFasterCooldown,   op: '+' },
       { source: sk.freeThatsGreatCooldown,   op: '+' },
-      { source: U, op: '+', unknown: true }, // Store Founder + Cards + Construct + Upgrades
+      { source: con.staEastwoodFreebieTimer,     op: '+' },
+      { source: U, op: '+', unknown: true }, // Store Founder + Cards + Upgrades
     ],
   },
-  stonks_chance:        { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
+  stonks_chance: {
+    base: 0,
+    contributions: [
+      { source: con.staCombatStonksChance,       op: '+' },
+      { source: U, op: '+', unknown: true },
+    ],
+  },
   stonks_multi: {
     base: 1,
     contributions: [
       { source: card.cardStonks,             op: '×' },
       { source: st.vpInsiderStonksMul,       op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards + Skins + Stargazing
+      { source: con.staCombatStonksMul,          op: '+' },
+      { source: sg.starEridanusStonksMul,        op: '+' },
+      { source: ch.chAllStonksMulStonks,         op: '+' },
+      { source: U, op: '+', unknown: true }, // Cards + Skins
     ],
   },
   super_stonks_chance: {
@@ -103,9 +122,24 @@ export const chestsFormulas = {
     base: 2,
     contributions: [
       { source: st.vpChiefExecSuperStonksMul, op: '×' },
+      { source: arch.idolCharon,               op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
-  ultra_stonks_chance: { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
-  ultra_stonks_multi:  { base: 25, contributions: [] },
+  ultra_stonks_chance: {
+    base: 0,
+    contributions: [
+      { source: con.staCombatUltraStonksChance,  op: '+' },
+      { source: arch.idolCharonUltraStonksUnlock, op: '+' },
+      { source: arch.idolSisyphusUltraStonks,    op: '+' },
+      { source: U, op: '+', unknown: true },
+    ],
+  },
+  ultra_stonks_multi: {
+    base: 25,
+    contributions: [
+      { source: con.staCombatUltraStonksMul,     op: '+' },
+      { source: ch.chAllStonksMulUltra,          op: '+' },
+    ],
+  },
 } satisfies FormulaMap

@@ -9,6 +9,10 @@ import { constructSources as con } from '$lib/sources/construct'
 import { petSources as pet } from '$lib/sources/pets'
 import { cardSources as card } from '$lib/sources/cards'
 import { challengeSources as ch } from '$lib/sources/challenges'
+import { fishingSources as f } from '$lib/sources/fishing'
+import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { droneSources as drone } from '$lib/sources/drones'
+import { archaeologySources as arch } from '$lib/sources/archaeology'
 
 const U: Source = { key: '_unknown', name: 'Unknown source', system: 'upgrades', fn: () => 0, inputs: [] }
 
@@ -20,7 +24,10 @@ export const veinsFormulas = {
       { source: art.artVeinSpawnT4,                op: '+' },
       { source: pet.petTotemVeinSpawn,             op: '+' },
       { source: st.vpPetTrainerVeinSpawn,          op: '×' },
-      { source: U, op: '+', unknown: true },  // Prestige + Drones + Store + Cards + Pets + Stargazing
+      { source: drone.droneSuitVeinseekerPassive,   op: '+' },
+      { source: drone.droneSuitVeinseekerUpgrade,   op: '+' },
+      { source: sg.starAriesVeinSpawn,              op: '+' },
+      { source: U, op: '+', unknown: true },  // Prestige + Elixir drone (temp) + Store + Cards
     ],
   },
   vein_income_multi: {
@@ -33,7 +40,8 @@ export const veinsFormulas = {
       { source: ct.ctVeinIncomeW2,                 op: '+' },
       { source: st.vpVeinExtractorVeinIncome,      op: '×' },
       { source: st.vpProgressionVeinIncome,        op: '×' },
-      { source: U, op: '+', unknown: true },  // Items (Strawberries+Demeter Idol) + Cards + Pets + Upgrades + Contracts + Floors
+      { source: arch.idolChione,               op: '+' },
+      { source: U, op: '+', unknown: true },  // Cards + Upgrades + Floors
     ],
   },
   golden_vein_chance: {
@@ -57,7 +65,9 @@ export const veinsFormulas = {
       { source: ch.chGoldenVeinMul,                op: '+' },
       { source: card.cardGoldenVein,               op: '×' },
       { source: st.vpVeinExtractorGoldenVeinMul,   op: '×' },
-      { source: U, op: '+', unknown: true },   // Drones + Items + Store + Cards + Fishing + Upgrades
+      { source: sg.starAriesGoldenVein,         op: '+' },
+      { source: f.noticeT1GoldenVeinMul,        op: '+' },
+      { source: U, op: '+', unknown: true },   // Drones fueled Veinseeker (temp) + Upgrades
     ],
   },
   rainbow_vein_chance: {
@@ -65,7 +75,11 @@ export const veinsFormulas = {
     contributions: [
       { source: ct.ctRainbowVeinMul,               op: '+' },  // note: W4 contract is +multi but wiki labels as chance
       { source: st.vpVeinExtractorRainbowVeinChance, op: '+' },
-      { source: U, op: '+', unknown: true },   // Store + Pets + Construct + Stargazing + Upgrades + Contracts + Floors
+      { source: pet.petTotemSkinRainbowVein,   op: '+' },
+      { source: con.staRandomnessRainbowVein,  op: '+' },
+      { source: con.staNatureRainbowVein,      op: '+' },
+      { source: sg.ssRainbowVeinChance,        op: '+' },
+      { source: U, op: '+', unknown: true },   // Store + Upgrades + Floors WQ16
     ],
   },
   rainbow_vein_multi: {
@@ -73,9 +87,23 @@ export const veinsFormulas = {
     contributions: [
       { source: sk.insaneInTheVeinGainRainbowVein, op: '+' },
       { source: card.cardRainbowVein,              op: '×' },
-      { source: U, op: '+', unknown: true },   // Cards + Fishing + Upgrades
+      { source: f.noticeT1RainbowVeinMul,      op: '+' },
+      { source: U, op: '+', unknown: true },   // Cards + Upgrades
     ],
   },
-  gleaming_vein_chance:  { base: 0, contributions: [{ source: U, op: '+', unknown: true }] },
-  gleaming_vein_multi:   { base: 5, contributions: [{ source: U, op: '+', unknown: true }] },
+  gleaming_vein_chance: {
+    base: 0,
+    contributions: [
+      { source: arch.archGleamingChance,       op: '+' },
+      { source: U, op: '+', unknown: true },   // Cards: Infernal Dino, Stargazing BH14, Fishing Shellstealer T1
+    ],
+  },
+  gleaming_vein_multi: {
+    base: 5,
+    contributions: [
+      { source: drone.coalGleamingVein,        op: '+' },
+      { source: arch.archGleamingMul,          op: '+' },
+      { source: U, op: '+', unknown: true },   // Cards: Gleaming Vein, Fishing Shellstealer T2
+    ],
+  },
 } satisfies FormulaMap

@@ -8,6 +8,10 @@ import { contractSources as ct } from '$lib/sources/contracts'
 import { petSources as pet } from '$lib/sources/pets'
 import { cardSources as card } from '$lib/sources/cards'
 import { challengeSources as ch } from '$lib/sources/challenges'
+import { droneSources as drone } from '$lib/sources/drones'
+import { fishingSources as f } from '$lib/sources/fishing'
+import { archaeologySources as arch } from '$lib/sources/archaeology'
+import { constructSources as con } from '$lib/sources/construct'
 
 const UNKNOWN: Source = {
   key: '_unknown',
@@ -30,8 +34,9 @@ export const starsFormulas = {
       { source: sg.starGemini, op: '+' },
       { source: UNKNOWN,       op: '×', unknown: true },  // Drones: Fueled Starburst Suit (×)
       { source: UNKNOWN,       op: '×', unknown: true },  // Drones: Elixir Drone (×)
+      { source: pet.petStarfishSkinStarSpawn,  op: '+' },
+      { source: ch.chStarSpawnRate,            op: '+' },
       { source: UNKNOWN,       op: '+', unknown: true },  // Relics: Legendary Relic
-      { source: UNKNOWN,       op: '+', unknown: true },  // Pets: Starfish Pet Skin
     ],
   },
 
@@ -69,7 +74,8 @@ export const starsFormulas = {
     base: 0,
     contributions: [
       { source: sg.starSagittarius, op: '+' },
-      { source: UNKNOWN,            op: '+', unknown: true },  // Drones: Starburst Suit
+      { source: drone.droneSuitStarburstPassive,  op: '+' },
+    { source: drone.droneSuitStarburstUpgrade,  op: '+' },
       { source: UNKNOWN,            op: '+', unknown: true },  // Store: 3 value packs
       { source: UNKNOWN,            op: '+', unknown: true },  // Fishing: Megalodon Tier 1 Tribute
     ],
@@ -85,7 +91,8 @@ export const starsFormulas = {
       { source: sg.superStarSpawn,                   op: '+' },
       { source: sg.starVirgo,                        op: '+' },
       { source: it.goldenPrimalMeatSuperStar,        op: '×' },
-      { source: UNKNOWN,           op: '+', unknown: true },  // Drones: Elixir Drone
+      { source: it.iceCreamSuperStarSpawn,         op: '+' },
+    { source: UNKNOWN,           op: '+', unknown: true },  // Drones: Elixir Drone (temp)
       { source: UNKNOWN,           op: '×', unknown: true },  // Items: Primal Meat (×)
       { source: UNKNOWN,           op: '+', unknown: true },  // Items: Ice Cream
       { source: ct.ctSuperStarSpawn,           op: '+' },
@@ -115,10 +122,8 @@ export const starsFormulas = {
     contributions: [
       { source: sg.super10xChance,             op: '+' },
       { source: sk.ctrlCCtrlVStarsSuper10x,   op: '+' },
-      { source: UNKNOWN,                       op: '+', unknown: true },  // Store: 2 value packs
-      { source: UNKNOWN,                       op: '+', unknown: true },  // Pets: Starfish Pet
-      { source: UNKNOWN,                       op: '+', unknown: true },  // Fishing: Megalodon Tier 2
-      { source: UNKNOWN,                       op: '+', unknown: true },  // Upgrades: Carnivorian Bar
+      { source: pet.petStarfishSuper10xChance, op: '+' },
+      { source: UNKNOWN,                       op: '+', unknown: true },  // Store + Fishing + Upgrades
     ],
   },
 
@@ -147,7 +152,11 @@ export const starsFormulas = {
     contributions: [
       { source: sk.ctrlFStarsSupernovaMul,      op: '+' },
       { source: sk.ctrlCCtrlVStarsSupernovaMul, op: '+' },
-      { source: UNKNOWN,                        op: '+', unknown: true },  // Relics: Divine Relic (adds)
+      { source: rel.divineRelicSupernovaMul,    op: '+' },
+    { source: arch.idolAstraeusSupernovaMul,  op: '+' },
+    { source: arch.idolPandora,               op: '+' },
+    { source: con.staWarmthStarSupernova,     op: '+' },
+    { source: f.noticeT1StarSupernovaMul,     op: '+' },
       { source: UNKNOWN,                        op: '+', unknown: true },  // Store: Stargazing Supernova Bundle
       { source: UNKNOWN,                        op: '+', unknown: true },  // Cards: Megalodon Fish Card
       { source: UNKNOWN,                        op: '+', unknown: true },  // Pets: Axolotl Pet Quest
@@ -179,7 +188,8 @@ export const starsFormulas = {
     base: 10,
     contributions: [
       { source: sk.ctrlFStarsSuperStarSupernovaMul, op: '+' },
-      { source: UNKNOWN,                            op: '+', unknown: true },  // Relics: Divine Relic
+      { source: rel.divineRelicSupernovaMul,        op: '+' },
+    { source: con.staWarmthSuperStarSupernova,    op: '+' },
       { source: UNKNOWN,                            op: '+', unknown: true },  // Store: Stargazing Supernova Bundle
       { source: UNKNOWN,                            op: '+', unknown: true },  // Construct: Statue of Warmth
       { source: UNKNOWN,                            op: '×', unknown: true },  // Fishing: Megalodon Tier 2 (×)
@@ -197,10 +207,10 @@ export const starsFormulas = {
       { source: sg.supergiants,                 op: '+' },
       { source: sk.whyAreThereStarsSupergiant,  op: '+' },
       { source: UNKNOWN,                        op: '+', unknown: true },  // Store: Stargazing Supergiant Bundle
-      { source: UNKNOWN,                        op: '+', unknown: true },  // Challenges: Divine Challenge
-      { source: UNKNOWN,                        op: '+', unknown: true },  // Fishing: Tier 2 Notice Upgrade
-      { source: UNKNOWN,                        op: '+', unknown: true },  // Upgrades: Steamstone Bar
-      { source: UNKNOWN,                        op: '+', unknown: true },  // Contracts: World 3 Upgrade
+      { source: ch.chStarSupergiants,          op: '+' },
+      { source: ct.ctStarSupergiants,          op: '+' },
+      { source: f.noticeT2StarSupergiants,     op: '+' },
+      { source: UNKNOWN,                        op: '+', unknown: true },  // Store + Upgrades
     ],
   },
 
@@ -212,11 +222,9 @@ export const starsFormulas = {
     base: 3,
     contributions: [
       { source: sg.supergigantsMulti, op: '+' },
-      { source: UNKNOWN,              op: '+', unknown: true },  // Store: Stargazing Supergiant Bundle
-      { source: UNKNOWN,              op: '+', unknown: true },  // Cards: Infernal Starburst Drone Card
-      { source: UNKNOWN,              op: '+', unknown: true },  // Construct: Statue of Warmth
-      { source: UNKNOWN,              op: '+', unknown: true },  // Archaeology: Hyperion Idol
-      { source: UNKNOWN,              op: '+', unknown: true },  // Upgrades: Rumium Bar
+      { source: con.staWarmthStarSupergiants,  op: '+' },
+      { source: arch.idolHyperion,             op: '+' },
+      { source: UNKNOWN,              op: '+', unknown: true },  // Store + Cards + Upgrades
     ],
   },
 
@@ -228,7 +236,9 @@ export const starsFormulas = {
     base: 0,
     contributions: [
       { source: sg.superSupergiants, op: '+' },
-      { source: UNKNOWN,             op: '+', unknown: true },  // Store: 2 value packs
+      { source: ch.chSuperStarSupergiants,     op: '+' },
+    { source: ct.ctSuperStarSupergiants,     op: '+' },
+    { source: UNKNOWN,             op: '+', unknown: true },  // Store
     ],
   },
 
@@ -239,6 +249,7 @@ export const starsFormulas = {
   super_star_supergiant_multi: {
     base: 3,
     contributions: [
+      { source: con.staWarmthSuperStarSupergiants, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true },
     ],
   },
@@ -251,8 +262,9 @@ export const starsFormulas = {
     base: 0,
     contributions: [
       { source: sg.radiantChance, op: '+' },
-      { source: UNKNOWN,          op: '+', unknown: true },  // Drones: Prism Drone
-      { source: UNKNOWN,          op: '+', unknown: true },  // Challenges: Extreme Challenge
+      { source: con.staTimekeepingRadiantChance,        op: '+' },
+      { source: arch.idolPrometheusRadiantChanceUnlock, op: '+' },
+      { source: UNKNOWN,          op: '+', unknown: true },  // Fishing Blackened Basker T2
     ],
   },
 
@@ -263,7 +275,8 @@ export const starsFormulas = {
   star_radiant_multi: {
     base: 10,
     contributions: [
-      { source: UNKNOWN, op: '+', unknown: true },
+      { source: con.staTimekeepingStarRadiantMul,  op: '+' },
+      { source: arch.idolPrometheusStarRadiantMul, op: '+' },
     ],
   },
 
@@ -275,7 +288,9 @@ export const starsFormulas = {
     base: 0,
     contributions: [
       { source: sg.superRadiant, op: '+' },
-      { source: UNKNOWN,         op: '+', unknown: true },
+      { source: con.staRodentiaRadiantChance,          op: '+' },
+      { source: arch.idolPrometheus_SSRadiantChanceUnlock, op: '+' },
+      { source: UNKNOWN,         op: '+', unknown: true },  // Fishing Blackened Basker T1
     ],
   },
 
@@ -286,7 +301,8 @@ export const starsFormulas = {
   super_star_radiant_multi: {
     base: 10,
     contributions: [
-      { source: UNKNOWN, op: '+', unknown: true },
+      { source: con.staTimekeepingSuperStarRadiantMul,  op: '+' },
+      { source: arch.idolPrometheusSuperStarRadiantMul, op: '+' },
     ],
   },
 
@@ -309,7 +325,8 @@ export const starsFormulas = {
       { source: ct.ctAllStarMul,                  op: '+' },
       { source: card.cardSuperStar,               op: '×' },
       { source: st.vpSingularityAllStar,          op: '×' },
-      { source: UNKNOWN,                          op: '+', unknown: true },  // Fishing: Tier 1 Notice Upgrade
+      { source: f.noticeT1AllStarMul,             op: '+' },
+    { source: drone.droneMidasEnhancementAllStar, op: '+' },
     ],
   },
 
@@ -323,6 +340,8 @@ export const starsFormulas = {
     contributions: [
       { source: sg.novagiant,                  op: '+' },
       { source: sk.whyAreThereStarsNovagiant,  op: '+' },
+    { source: ch.chNovagiantComboMul,        op: '+' },
+    { source: pet.petStarfishQuestNovagiant, op: '+' },
     ],
   },
 
