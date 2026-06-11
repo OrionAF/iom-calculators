@@ -29,6 +29,15 @@ export interface Source {
   fn: (level: number, rt: Record<string, number>) => number
   /** Runtime inputs this source's fn depends on beyond its own level. */
   inputs: RuntimeInput[]
+  /**
+   * Effect metadata: which stat this source contributes to, and how.
+   * Lets data pages (Store, Skills) display per-effect values straight from
+   * the source — fn(level) formatted via the stat's registry unit — without
+   * duplicating numbers in catalog files. Formulas still declare op
+   * explicitly; a consistency test asserts they agree where both exist.
+   */
+  statKey?: string
+  op?: Op
 }
 
 export type SourceSystem =

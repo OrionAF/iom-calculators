@@ -116,6 +116,7 @@ const UNIT_AFFIX: Record<StatUnit, { prefix?: string; suffix?: string }> = {
   flat:       {},
   count:      {},
   seconds:    { suffix: 's' },
+  minutes:    { suffix: ' minutes' },
   perSecond:  { suffix: ' p/s' },
   level:      { prefix: 'Level ' },
 }
@@ -167,6 +168,31 @@ export function formatStatByKey(
   const { unit, sign } = resolveUnitSign(key)
   const { prefix = '', suffix = '' } = unit ? UNIT_AFFIX[unit] : {}
   return (sign ?? prefix) + body + suffix
+}
+
+// ─── formatSourceValue ─────────────────────────────────────
+// Formats a SOURCE contribution value (decimal convention: percents are
+// stored as fractions, 0.12 → '12%'). Game exports store percents as points
+// (12 → '12%' via formatStatByKey); source fns and catalog effects store
+// decimals, so they need the ×100 scaling that formatStatByKey must not do.
+
+/** Trim a number to ≤2 decimals without trailing zeros ('1.10' → '1.1', '2.00' → '2'). */
+function trimNumber(n: number): string {
+  return Number.isInteger(n) ? String(n) : String(Math.round(n * 100) / 100)
+}
+
+export function formatSourceValue(statKey: string, value: number): string {
+  const { unit, sign } = resolveUnitSign(statKey)
+  const prefix = sign ?? ''
+  switch (unit) {
+    case 'percent':    return prefix + trimNumber(value * 100) + '%'
+    case 'multiplier': return prefix + trimNumber(value) + '×'
+    case 'minutes':    return prefix + trimNumber(value) + ' minutes'
+    case 'seconds':    return prefix + trimNumber(value) + 's'
+    case 'perSecond':  return prefix + trimNumber(value) + ' p/s'
+    case 'level':      return 'Level ' + trimNumber(value)
+    default:           return prefix + formatStat(value)
+  }
 }
 
 /**

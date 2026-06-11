@@ -1,10 +1,24 @@
+import type { Source } from '$lib/engine/types'
+import { storeSources as st } from '$lib/sources/store'
+
 // ─── Type definitions ───────────────────────────────────────────────────────
+//
+// This catalog is presentation-only: slugs, names, icons, costs, unlock
+// requirements and display labels. All effect NUMBERS (per-level values,
+// max levels, target stat, operator) live on the referenced Source in
+// src/lib/sources/store.ts — single source of truth. Display values are
+// computed as source.fn(level) and formatted via the stat registry unit
+// (formatSourceValue in format.ts).
 
 export interface StoreEffect {
-  label?: string  // when absent, derive from registry: `${getStatMeta(derivedStatKey)?.name}: ${formatStatByKey(value)}`
-  derivedStatKey?: string
-  value?: number
-  /** Context-specific tooltip addition. Base description comes from STAT_REGISTRY via derivedStatKey. */
+  /** Display text. When absent, derive from the source's registry stat name + fn(1). */
+  label?: string
+  /**
+   * The source this effect references. Absent for flavor-only effects with
+   * no stat contribution (e.g. "Unlocks MEGABOMB").
+   */
+  source?: Source
+  /** Context-specific tooltip addition. Base description comes from STAT_REGISTRY via source.statKey. */
   tooltipAddition?: string
 }
 
@@ -52,49 +66,20 @@ export interface GemUpgrade {
   slug: string
   name: string
   icon: string
-  maxLevel: number
   gemCost: number
   effects: StoreEffect[]
 }
 
-// Display unit for founder-tier effects. All numeric values are stored as
-// decimals (e.g. 0.12 not 12 for percent). The unit drives the formatter.
-export type FounderEffectUnit = 'minutes' | 'percent' | 'multiplier' | 'count'
-
-export interface FounderEffect extends StoreEffect {
-  baseValue: number
-  increment: number
-  unit: FounderEffectUnit
+/** Max rank of a gem upgrade — taken from its sources (they own maxLevel). */
+export function gemUpgradeMaxLevel(upgrade: GemUpgrade): number {
+  return Math.max(0, ...upgrade.effects.map(e => e.source?.maxLevel ?? 0))
 }
 
 export interface FounderTier {
   tier: number
   vipPointsRequired: number
-  effects: FounderEffect[]
-}
-
-export function vipEffectAt(
-  unlockedTier: number,
-  effectUnlockTier: number,
-  baseValue: number,
-  increment: number,
-): number {
-  if (unlockedTier < effectUnlockTier) return 0
-  return baseValue + (unlockedTier - effectUnlockTier) * increment
-}
-
-export function formatVipEffectValue(value: number, unit: FounderEffectUnit): string {
-  switch (unit) {
-    case 'minutes': return `${value} minutes`
-    case 'percent': {
-      const pct = value * 100
-      // Avoid trailing .0 on whole numbers; keep up to 2 decimals for 0.5%, 2.5% etc.
-      const text = Number.isInteger(pct) ? String(pct) : pct.toFixed(2).replace(/\.?0+$/, '')
-      return `${text}%`
-    }
-    case 'multiplier': return `${value}x`
-    case 'count': return String(value)
-  }
+  /** Founder effects always reference a 'store.founder' source; fn(tier) gives the active value. */
+  effects: Array<StoreEffect & { source: Source }>
 }
 
 // ─── Perks ──────────────────────────────────────────────────────────────────
@@ -105,11 +90,7 @@ export const PERKS: readonly Perk[] = [
     name: '2x Ore Income',
     icon: '2x Ore Income.png',
     effects: [
-      {
-        label: '2x Ore Income',
-        derivedStatKey: 'ore_income_multi',
-        value: 2,
-      }
+      { label: '2x Ore Income', source: st.perkOreIncome }
     ],
   },
   {
@@ -117,11 +98,7 @@ export const PERKS: readonly Perk[] = [
     name: '2x Prestige Point Income',
     icon: '2x Prestige Point Income.png',
     effects: [
-      {
-        label: '2x Prestige Point Income',
-        derivedStatKey: 'prestige_point_multi',
-        value: 2,
-      }
+      { label: '2x Prestige Point Income', source: st.perkPrestigePts }
     ],
   },
   {
@@ -129,11 +106,7 @@ export const PERKS: readonly Perk[] = [
     name: '2x Bar Income',
     icon: '2x Bar Income.png',
     effects: [
-      {
-        label: '2x Bar Income',
-        derivedStatKey: 'bar_output_multi',
-        value: 2,
-      }
+      { label: '2x Bar Income', source: st.perkBarOutput }
     ],
   },
   {
@@ -141,11 +114,7 @@ export const PERKS: readonly Perk[] = [
     name: '3x Bomb Damage',
     icon: '3x Bomb Damage.png',
     effects: [
-      {
-        label: '3x Bomb Damage',
-        derivedStatKey: 'bomb_damage',
-        value: 3,
-      }
+      { label: '3x Bomb Damage', source: st.perkBombDamage }
     ],
   },
 ]
@@ -177,11 +146,7 @@ export const GEM_UNLOCKS: readonly GemUnlock[] = [
     gemCost: 200,
     mirrorUnlockKey: 'unlocked_permanent_drone',
     effects: [
-      {
-        label: 'Give an additional Drone that will automatic mine your ore even when you are offline.',
-        derivedStatKey: 'drone_count',
-        value: 1,
-      }
+      { label: 'Give an additional Drone that will automatic mine your ore even when you are offline.', source: st.vpDroneCount }
     ],
   },
   {
@@ -231,89 +196,55 @@ export const GEM_UPGRADES: readonly GemUpgrade[] = [
     slug: 'pickaxe_damage',
     name: 'Pickaxe Damage',
     icon: 'Pickaxe Damage.png',
-    maxLevel: 22,
     gemCost: 200,
     effects: [
-      {
-        label: '+0.20x per level',
-        derivedStatKey: 'pickaxe_damage',
-        value: 0.20
-      }
+      { label: '+0.20x per level', source: st.gemPickaxeDamage }
     ],
   },
   {
     slug: 'bomb_damage_capacity',
     name: 'Bomb Damage & Bomb Capacity',
     icon: 'Bomb Capacity.png',
-    maxLevel: 22,
     gemCost: 225,
     effects: [
-      {
-        label: '+20% damage per level',
-        derivedStatKey: 'bomb_damage',
-        value: 0.20
-      },
-      {
-        label: '+2 capacity per level',
-        derivedStatKey: 'bomb_capacity',
-        value: 2
-      }
+      { label: '+20% damage per level', source: st.gemBombDamage },
+      { label: '+2 capacity per level', source: st.gemBombCapacity }
     ],
   },
   {
     slug: 'banked_freebie_cap',
     name: 'Banked Freebie Cap',
     icon: 'Banked_Freebie_Cap.png',
-    maxLevel: 14,
     gemCost: 250,
     effects: [
-      {
-        label: '+1 Freebie per level',
-        derivedStatKey: 'freebie_bank_cap',
-        value: 1
-      }
+      { label: '+1 Freebie per level', source: st.gemFreebieBank }
     ],
   },
   {
     slug: 'chest_meter_fill_rate',
     name: 'Chest Meter Fill Rate',
     icon: 'Chest_Meter_Gain_Multiplier.png',
-    maxLevel: 17,
     gemCost: 300,
     effects: [
-      {
-        label: '5x per level (multiplicative)',
-        derivedStatKey: 'chest_meter_multi',
-        value: 5
-      }
+      { label: '5x per level (multiplicative)', source: st.gemChestMeter }
     ],
   },
   {
     slug: 'items_contained_in_chests',
     name: 'Items Contained In Chests',
     icon: 'Items Contained In Chests.png',
-    maxLevel: 17,
     gemCost: 650,
     effects: [
-      {
-        label: '+1 item per level',
-        derivedStatKey: 'chest_items_bonus',
-        value: 1
-      }
+      { label: '+1 item per level', source: st.gemItemsInChests }
     ],
   },
   {
     slug: 'ore_sell_price',
     name: 'Ore Sell Price',
     icon: 'Ore_Sell_Price_Multiplier.png',
-    maxLevel: 14,
     gemCost: 850,
     effects: [
-      {
-        label: '+100% per level',
-        derivedStatKey: 'ore_sell_price_multi',
-        value: 1.0
-      }
+      { label: '+100% per level', source: st.gemOreSellPrice }
     ],
   },
 ]
@@ -325,84 +256,84 @@ export const FOUNDER_TIERS: readonly FounderTier[] = [
     tier: 1,
     vipPointsRequired: 960,
     effects: [
-      { label: 'Founder Supply Drop Cooldown', derivedStatKey:'founder_supply_drop_cd', baseValue: 60, increment: -2, unit: 'minutes' },
+      { label: 'Founder Supply Drop Cooldown', source: st.founderSupplyDropCd },
     ],
   },
   {
     tier: 2,
     vipPointsRequired: 1440,
     effects: [
-      { label: 'Double Supply Drop Chance', derivedStatKey:'founder_double_supply_drop_chance', baseValue: 0.12, increment: 0.06, unit: 'percent' },
+      { label: 'Double Supply Drop Chance', source: st.founderDoubleSupplyDrop },
     ],
   },
   {
     tier: 3,
     vipPointsRequired: 2080,
     effects: [
-      { label: '10x Craft Chance', derivedStatKey: 'craft_10x_chance', baseValue: 0.02, increment: 0.01, unit: 'percent' },
+      { label: '10x Craft Chance', source: st.founderCraft10x },
     ],
   },
   {
     tier: 4,
     vipPointsRequired: 2880,
     effects: [
-      { label: 'Bomb Of Plenty Multiplier', derivedStatKey: 'bomb_of_plenty_multi', baseValue: 2, increment: 1, unit: 'multiplier' },
+      { label: 'Bomb Of Plenty Multiplier', source: st.founderBomBofPlenty },
     ],
   },
   {
     tier: 5,
     vipPointsRequired: 3920,
     effects: [
-      { label: 'Golden Lootbug Chance', derivedStatKey: 'lootbug_golden_chance', baseValue: 0.06, increment: 0.03, unit: 'percent' },
+      { label: 'Golden Lootbug Chance', source: st.founderGoldenLootbug },
     ],
   },
   {
     tier: 6,
     vipPointsRequired: 5360,
     effects: [
-      { label: 'Banked Freebies', derivedStatKey: 'freebie_bank_cap', baseValue: 4, increment: 2, unit: 'count' },
+      { label: 'Banked Freebies', source: st.founderFreebieBank },
     ],
   },
   {
     tier: 7,
     vipPointsRequired: 7440,
     effects: [
-      { label: 'Triple Supply Drop Chance', derivedStatKey:'founder_triple_supply_drop_chance', baseValue: 0.16, increment: 0.08, unit: 'percent' },
+      { label: 'Triple Supply Drop Chance', source: st.founderTripleSupplyDrop },
     ],
   },
   {
     tier: 8,
     vipPointsRequired: 9920,
     effects: [
-      { label: 'Gems From Freebie', derivedStatKey: 'freebie_gems_bonus', baseValue: 2, increment: 1, unit: 'count' },
+      { label: 'Gems From Freebie', source: st.founderFreebieGems },
     ],
   },
   {
     tier: 9,
     vipPointsRequired: 12480,
     effects: [
-      { label: 'Rainbow Floor Chance', derivedStatKey: 'rainbow_floor_chance', baseValue: 0.01, increment: 0.01, unit: 'percent' },
+      { label: 'Rainbow Floor Chance', source: st.founderRainbowFloor },
     ],
   },
   {
     tier: 10,
     vipPointsRequired: 16000,
     effects: [
-      { label: 'Game Speed', derivedStatKey: 'game_speed_multi', baseValue: 0.10, increment: 0.01, unit: 'percent' },
+      { label: 'Game Speed', source: st.founderGameSpeed },
     ],
   },
   {
     tier: 11,
     vipPointsRequired: 21600,
     effects: [
-      { label: 'Golden Supply Drop Chance', derivedStatKey:'founder_golden_supply_drop_chance', baseValue: 0.10, increment: 0.02, unit: 'percent' },
+      { label: 'Golden Supply Drop Chance', source: st.founderGoldenSupplyDrop },
     ],
   },
   {
     tier: 12,
     vipPointsRequired: 28800,
     effects: [
-      { label: 'Gem Bomb Gem Chance', derivedStatKey: 'gem_bomb_gem_chance', baseValue: 0.005, increment: 0.005, unit: 'percent' },
+      { label: 'Gem Bomb Gem Chance', source: st.founderGemBombGemChance },
     ],
   },
 ]
@@ -417,11 +348,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     unlockRequirement: 'Disappears if bought with gems',
     mirrorUnlockKey: 'unlocked_permanent_drone',
     effects: [
-      {
-        label: 'Additional automatic mining drone',
-        derivedStatKey: 'drone_count',
-        value: 1 
-      },
+      { label: 'Additional automatic mining drone', source: st.vpDroneCount },
     ],
   },
   {
@@ -466,11 +393,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'skillsurgebundle vp.png',
     unlockRequirement: 'Requirement: N/A',
     effects: [
-      {
-        label: '+1% Freebie Pack Skill Shard Chance',
-        derivedStatKey: 'freebie_chance_for_skill_shard',
-        value: 0.01
-      },
+      { label: '+1% Freebie Pack Skill Shard Chance', source: st.vpSkillSurgeSkillShard },
     ],
   },
   {
@@ -479,11 +402,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'investment vp.png',
     unlockRequirement: 'Requirement: N/A',
     effects: [
-      {
-        label: '5% Chance to hit a Freebie Pack Jackpot',
-        derivedStatKey: 'freebie_5x_chance',
-        value: 0.05
-      },
+      { label: '5% Chance to hit a Freebie Pack Jackpot', source: st.vpFreebie5xChance },
     ],
   },
   {
@@ -492,26 +411,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'bankersbundle vp.png',
     unlockRequirement: 'Requirement: N/A',
     effects: [
-      {
-        label: 'Banked Freebie Cap +3',
-        derivedStatKey: 'freebie_bank_cap',
-        value: 3
-      },
-      {
-        label: 'Banked Lootbug Cap +3',
-        derivedStatKey: 'lootbug_bank_cap',
-        value: 3
-      },
-      {
-        label: 'Gems from Freebie +1',
-        derivedStatKey: 'freebie_gems_bonus',
-        value: 1
-      },
-      {
-        label: 'Freebie Jackpot Chance +1%',
-        derivedStatKey: 'freebie_5x_chance',
-        value: 0.01
-      },
+      { label: 'Banked Freebie Cap +3', source: st.vpBankersFreebieBank },
+      { label: 'Banked Lootbug Cap +3', source: st.vpBankersLootbugBank },
+      { label: 'Gems from Freebie +1', source: st.vpBankersFreebieGems },
+      { label: 'Freebie Jackpot Chance +1%', source: st.vpBankersFreebie5x },
     ],
   },
   {
@@ -520,11 +423,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'gofast vp.png',
     unlockRequirement: 'Requirement: N/A',
     effects: [
-      {
-        label: '+10% Game Speed',
-        derivedStatKey: 'game_speed_multi',
-        value: 0.10
-      },
+      { label: '+10% Game Speed', source: st.vpGottaGoFastGameSpeed },
     ],
   },
   {
@@ -533,11 +432,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'goldenlootbug vp.png',
     unlockRequirement: 'Requirement: N/A',
     effects: [
-      {
-        label: '20% to spawn a Golden Lootbug',
-        derivedStatKey: 'lootbug_golden_chance',
-        value: 0.20
-      },
+      { label: '20% to spawn a Golden Lootbug', source: st.vpGoldenLootbug },
     ],
   },
   {
@@ -546,26 +441,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'biggerbanksbundle vp.png',
     unlockRequirement: 'Requirement: N/A',
     effects: [
-      {
-        label: 'Banked Freebie Cap +5',
-        derivedStatKey: 'freebie_bank_cap',
-        value: 5
-      },
-      {
-        label: 'Banked Lootbug Cap +5',
-        derivedStatKey: 'lootbug_bank_cap',
-        value: 5
-      },
-      {
-        label: 'Gems from Freebie +1',
-        derivedStatKey: 'freebie_gems_bonus',
-        value: 1
-      },
-      {
-        label: 'Freebie Instant Refresh +1%',
-        derivedStatKey: 'freebie_refresh_chance',
-        value: 0.01
-      },
+      { label: 'Banked Freebie Cap +5', source: st.vpBiggerBankersFreebieBank },
+      { label: 'Banked Lootbug Cap +5', source: st.vpBiggerBankersLootbugBank },
+      { label: 'Gems from Freebie +1', source: st.vpBiggerBankersFreebieGems },
+      { label: 'Freebie Instant Refresh +1%', source: st.vpBiggerBankersRefresh },
     ],
   },
   {
@@ -574,11 +453,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'baller vp.png',
     unlockRequirement: 'Requirement: N/A',
     effects: [
-      {
-        label: '2.00x Ore Sell Price',
-        derivedStatKey: 'ore_sell_price_multi',
-        value: 2
-      },
+      { label: '2.00x Ore Sell Price', source: st.vpBallerOreSell },
     ],
   },
   {
@@ -587,26 +462,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'petbooster vp.png',
     unlockRequirement: 'Obelisk Level 17',
     effects: [
-      {
-        label: 'Pet Level Up Chance 1.20x',
-        derivedStatKey: 'pet_levelup_chance_multi',
-        value: 1.20
-      },
-      {
-        label: 'Vein Spawn Rate 1.10x',
-        derivedStatKey: 'vein_spawn_rate_multi',
-        value: 1.10
-      },
-      {
-        label: 'Experience Gain 2.00x',
-        derivedStatKey: 'experience_multi',
-        value: 2.00
-      },
-      {
-        label: 'Rainbow Floor Chance +1%',
-        derivedStatKey: 'rainbow_floor_chance',
-        value: 0.01
-      },
+      { label: 'Pet Level Up Chance 1.20x', source: st.vpPetTrainerPetLevel },
+      { label: 'Vein Spawn Rate 1.10x', source: st.vpPetTrainerVeinSpawn },
+      { label: 'Experience Gain 2.00x', source: st.vpPetTrainerExp },
+      { label: 'Rainbow Floor Chance +1%', source: st.vpPetTrainerRainbowFloor },
     ],
   },
   {
@@ -615,26 +474,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'veinextractor vp.png',
     unlockRequirement: 'Obelisk Level 19',
     effects: [
-      {
-        label: '1.15x Vein Income Multi',
-        derivedStatKey: 'vein_income_multi',
-        value: 1.15
-      },
-      {
-        label: '+5% Golden Vein Chance',
-        derivedStatKey: 'golden_vein_chance',
-        value: 0.05
-      },
-      {
-        label: '+2% Rainbow Vein Chance',
-        derivedStatKey: 'rainbow_vein_chance',
-        value: 0.02
-      },
-      {
-        label: '1.25x Golden Vein Multi',
-        derivedStatKey: 'golden_vein_multi',
-        value: 1.25
-      },
+      { label: '1.15x Vein Income Multi', source: st.vpVeinExtractorVeinIncome },
+      { label: '+5% Golden Vein Chance', source: st.vpVeinExtractorGoldenVeinChance },
+      { label: '+2% Rainbow Vein Chance', source: st.vpVeinExtractorRainbowVeinChance },
+      { label: '1.25x Golden Vein Multi', source: st.vpVeinExtractorGoldenVeinMul },
     ],
   },
   {
@@ -643,36 +486,12 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'stargazingbundle vp.png',
     unlockRequirement: 'Obelisk Level 23',
     effects: [
-      {
-        label: '+3% Star Supernova Chance',
-        derivedStatKey: 'star_supernova_chance',
-        value: 0.03
-      },
-      {
-        label: '+3% Super Star Supernova Chance',
-        derivedStatKey: 'super_star_supernova_chance',
-        value: 0.03
-      },
-      {
-        label: '1.10x Star Supernova Multiplier',
-        derivedStatKey: 'star_supernova_multi',
-        value: 1.10
-      },
-      {
-        label: '1.10x Super Star Supernova Multiplier',
-        derivedStatKey: 'super_star_supernova_multi',
-        value: 1.10
-      },
-      {
-        label: '+3% Triple Star Chance',
-        derivedStatKey: 'star_triple_spawn_chance',
-        value: 0.03
-      },
-      {
-        label: '+3% Triple Super Star Chance',
-        derivedStatKey: 'super_star_triple_chance',
-        value: 0.03
-      },
+      { label: '+3% Star Supernova Chance', source: st.vpSupernovaStarNova },
+      { label: '+3% Super Star Supernova Chance', source: st.vpSupernovaSuperStarNova },
+      { label: '1.10x Star Supernova Multiplier', source: st.vpSupernovaStarNovaMul },
+      { label: '1.10x Super Star Supernova Multiplier', source: st.vpSupernovaSuperStarNovaMul },
+      { label: '+3% Triple Star Chance', source: st.vpSupernovaTripleStar },
+      { label: '+3% Triple Super Star Chance', source: st.vpSupernovaTripleSuperStar },
     ],
   },
   {
@@ -681,16 +500,8 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'capitalistbundle vp.png',
     unlockRequirement: 'Obelisk Level 25',
     effects: [
-      {
-        label: '+2 Gems from Freebie Pack',
-        derivedStatKey: 'freebie_gems_bonus',
-        value: 2
-      },
-      {
-        label: '+15% Bonus Relic from Freebie',
-        derivedStatKey: 'freebie_chance_for_bonus_relic',
-        value: 0.15
-      },
+      { label: '+2 Gems from Freebie Pack', source: st.vpCapitalistFreebieGems },
+      { label: '+15% Bonus Relic from Freebie', source: st.vpCapitalistRelicChance },
     ],
   },
   {
@@ -699,16 +510,8 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'archbundle vp.png',
     unlockRequirement: 'Obelisk Level 30',
     effects: [
-      {
-        label: '1.25x Fragment Gain',
-        derivedStatKey: 'archaeology_fragment_gain_multi',
-        value: 1.25
-      },
-      {
-        label: '+1 Gem from Freebie Pack',
-        derivedStatKey: 'freebie_gems_bonus',
-        value: 1
-      },
+      { label: '1.25x Fragment Gain', source: st.vpArchFragmentGain },
+      { label: '+1 Gem from Freebie Pack', source: st.vpArchFreebieGems },
     ],
   },
   {
@@ -717,26 +520,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'progressionbundle vp.png',
     unlockRequirement: 'Obelisk Level 30',
     effects: [
-      {
-        label: '1.20x Golden Floor Multi',
-        derivedStatKey: 'golden_floor_multi',
-        value: 1.20
-      },
-      {
-        label: '1.15x Vein Income Multi',
-        derivedStatKey: 'vein_income_multi',
-        value: 1.15
-      },
-      {
-        label: '1.10x Bomb Recharge',
-        derivedStatKey: 'bomb_recharge_speed',
-        value: 1.10
-      },
-      {
-        label: '5% Triple Star Chance',
-        derivedStatKey: 'star_triple_spawn_chance',
-        value: 0.05
-      },
+      { label: '1.20x Golden Floor Multi', source: st.vpProgressionGoldenFloor },
+      { label: '1.15x Vein Income Multi', source: st.vpProgressionVeinIncome },
+      { label: '1.10x Bomb Recharge', source: st.vpProgressionBombRecharge },
+      { label: '5% Triple Star Chance', source: st.vpProgressionTripleStar },
     ],
   },
   {
@@ -745,26 +532,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'bomberextraordinaire vp.png',
     unlockRequirement: 'Obelisk Level 30',
     effects: [
-      {
-        label: '1.10x Bomb Recharge Rate',
-        derivedStatKey: 'bomb_recharge_speed',
-        value: 1.10
-      },
-      {
-        label: '1.10x Bomb Capacity',
-        derivedStatKey: 'bomb_capacity',
-        value: 1.10
-      },
-      {
-        label: '+5x Plenty Bomb Multi',
-        derivedStatKey: 'bomb_of_plenty_multi',
-        value: 5
-      },
-      {
-        label: '+10x Transmuter Multi',
-        derivedStatKey: 'bomb_transmuter_multi',
-        value: 10
-      },
+      { label: '1.10x Bomb Recharge Rate', source: st.vpBomberBombRecharge },
+      { label: '1.10x Bomb Capacity', source: st.vpBomberBombCapacity },
+      { label: '+5x Plenty Bomb Multi', source: st.vpBomberBopMulti },
+      { label: '+10x Transmuter Multi', source: st.vpBomberTransmuterMulti },
     ],
   },
   {
@@ -773,16 +544,8 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'Lootbugbonanza vp.png',
     unlockRequirement: 'Obelisk Level 32',
     effects: [
-      {
-        label: '1.20x Lootbug Loot Multiplier',
-        derivedStatKey: 'lootbug_loot_multi',
-        value: 1.20
-      },
-      {
-        label: '+10 Banked Lootbug Capacity',
-        derivedStatKey: 'lootbug_bank_cap',
-        value: 10
-      },
+      { label: '1.20x Lootbug Loot Multiplier', source: st.vpLootbugBonanzaLootMul },
+      { label: '+10 Banked Lootbug Capacity', source: st.vpLootbugBonanzaBankCap },
     ],
   },
   {
@@ -791,16 +554,8 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'superstonks vp.png',
     unlockRequirement: 'Obelisk Level 34, Unlocked Stonks skill',
     effects: [
-      {
-        label: 'Freebie Stonks Procs Give 2x Loot',
-        derivedStatKey: 'stonks_multi',
-        value: 2
-      },
-      {
-        label: '+2 Banked Freebie Cap',
-        derivedStatKey: 'freebie_bank_cap',
-        value: 2
-      },
+      { label: 'Freebie Stonks Procs Give 2x Loot', source: st.vpInsiderStonksMul },
+      { label: '+2 Banked Freebie Cap', source: st.vpInsiderFreebieBank },
     ],
   },
   {
@@ -809,26 +564,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'craftmasterbundle vp.png',
     unlockRequirement: 'Obelisk Level 35',
     effects: [
-      {
-        label: '+1% 100x Craft Chance',
-        derivedStatKey: 'craft_100x_chance',
-        value: 0.01
-      },
-      {
-        label: '+2% 10x Craft Chance',
-        derivedStatKey: 'craft_10x_chance',
-        value: 2
-      },
-      {
-        label: '+2% Free Craft Chance',
-        derivedStatKey: 'free_craft_chance',
-        value: 0.02
-      },
-      {
-        label: '-5% Bar Craft Cost',
-        derivedStatKey: 'bar_craft_cost_multi',
-        value: 0.05
-      },
+      { label: '+1% 100x Craft Chance', source: st.vpCraftmaster100xCraft },
+      { label: '+2% 10x Craft Chance', source: st.vpCraftmaster10xCraft },
+      { label: '+2% Free Craft Chance', source: st.vpCraftmasterFreeCraft },
+      { label: '-5% Bar Craft Cost', source: st.vpCraftmasterBarCraft },
     ],
   },
   {
@@ -837,16 +576,8 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'dronecatalyst vp.png',
     unlockRequirement: 'Obelisk Level 35',
     effects: [
-      {
-        label: '1.35x Drone Exp Gain',
-        derivedStatKey: 'coal_drone_exp_multi',
-        value: 1.35
-      },
-      {
-        label: '1.10x Fuel Duration',
-        derivedStatKey: 'coal_fuel_duration_multi',
-        value: 1.10
-      },
+      { label: '1.35x Drone Exp Gain', source: st.vpDroneCatalystExp },
+      { label: '1.10x Fuel Duration', source: st.vpDroneCatalystFuel },
     ],
   },
   {
@@ -855,26 +586,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'polychromepotency vp.png',
     unlockRequirement: 'Obelisk Level 37, Unlocked "This Is Gonna Take A While.." skill',
     effects: [
-      {
-        label: '1.15x Poly Ore Multi',
-        derivedStatKey: 'polychrome_card_bonus_ore',
-        value: 1.15
-      },
-      {
-        label: '1.15x Poly Vein Multi',
-        derivedStatKey: 'polychrome_card_bonus_vein',
-        value: 1.15
-      },
-      {
-        label: '1.15x Poly Star Multi',
-        derivedStatKey: 'polychrome_card_bonus_star',
-        value: 1.15
-      },
-      {
-        label: '1.15x Poly Fish Multi',
-        derivedStatKey: 'polychrome_card_bonus_fish',
-        value: 1.15
-      },
+      { label: '1.15x Poly Ore Multi', source: st.vpPolyPotencyOre },
+      { label: '1.15x Poly Vein Multi', source: st.vpPolyPotencyVein },
+      { label: '1.15x Poly Star Multi', source: st.vpPolyPotencyStar },
+      { label: '1.15x Poly Fish Multi', source: st.vpPolyPotencyFish },
     ],
   },
   {
@@ -883,11 +598,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'fishingbundle vp.png',
     unlockRequirement: 'Obelisk Level 37',
     effects: [
-      {
-        label: '+10% Triple Fishing Tick Chance',
-        derivedStatKey: 'fishing_triple_tick_chance',
-        value: 0.10
-      },
+      { label: '+10% Triple Fishing Tick Chance', source: st.vpFishersTripleTick },
     ],
   },
   {
@@ -896,11 +607,7 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'anglerbundle vp.png',
     unlockRequirement: 'Obelisk Level 39',
     effects: [
-      {
-        label: '+6% Tiny Notice Chance',
-        derivedStatKey: 'fishing_tiny_notice_chance',
-        value: 0.06
-      },
+      { label: '+6% Tiny Notice Chance', source: st.vpAnglersNotice },
     ],
   },
   {
@@ -909,26 +616,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'singularity vp.png',
     unlockRequirement: 'Obelisk Level 60',
     effects: [
-      {
-        label: 'All Star Multi 1.10x',
-        derivedStatKey: 'all_star_multi',
-        value: 1.10
-      },
-      {
-        label: 'Star Supergiant Chance +3%',
-        derivedStatKey: 'star_supergiant_chance',
-        value: 0.03
-      },
-      {
-        label: 'Novagiant Multi 1.10x',
-        derivedStatKey: 'novagiant_combo_multi',
-        value: 1.10
-      },
-      {
-        label: 'Super Star 10x Chance +3%',
-        derivedStatKey: 'super_star_10x_chance',
-        value: 0.03
-      },
+      { label: 'All Star Multi 1.10x', source: st.vpSingularityAllStar },
+      { label: 'Star Supergiant Chance +3%', source: st.vpSingularitySupergiantChance },
+      { label: 'Novagiant Multi 1.10x', source: st.vpSingularityNovagiant },
+      { label: 'Super Star 10x Chance +3%', source: st.vpSingularity10xSuperStar },
     ],
   },
   {
@@ -937,26 +628,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'ascension vp.png',
     unlockRequirement: 'Obelisk Level 66',
     effects: [
-      {
-        label: 'Archaeology Exp 1.15x',
-        derivedStatKey: 'archaeology_exp_gain_multi',
-        value: 1.15
-      },
-      {
-        label: 'Crosshair Auto-Tap +5%',
-        derivedStatKey: 'archaeology_crosshair_auto_tap',
-        value: 0.05
-      },
-      {
-        label: 'Loot Mod Chance +2%',
-        derivedStatKey: 'archaeology_lood_mod_chance',
-        value: 0.02
-      },
-      {
-        label: 'Golden Crosshair Chance +2%',
-        derivedStatKey: 'archaeology_golden_crosshair_chance',
-        value: 0.02
-      },
+      { label: 'Archaeology Exp 1.15x', source: st.vpAscensionArchExp },
+      { label: 'Crosshair Auto-Tap +5%', source: st.vpAscensionAutoTap },
+      { label: 'Loot Mod Chance +2%', source: st.vpAscensionLootMod },
+      { label: 'Golden Crosshair Chance +2%', source: st.vpAscensionGoldenCrosshair },
     ],
   },
   {
@@ -965,26 +640,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'voidoverdrive vp.png',
     unlockRequirement: 'Golden Void Portal Chance >= 1%',
     effects: [
-      {
-        label: 'Void Base Multi 1.10x',
-        derivedStatKey: 'void_portal_base_multi',
-        value: 1.10
-      },
-      {
-        label: 'Golden Portal Multi 1.10x',
-        derivedStatKey: 'golden_void_portal_multi',
-        value: 1.10
-      },
-      {
-        label: 'Golden Portal Chance +2%',
-        derivedStatKey: 'golden_void_portal_chance',
-        value: 0.02
-      },
-      {
-        label: 'Fuel Duration 1.10x',
-        derivedStatKey: 'coal_fuel_duration_multi',
-        value: 1.10
-      },
+      { label: 'Void Base Multi 1.10x', source: st.vpVoidOverdriveVoidMul },
+      { label: 'Golden Portal Multi 1.10x', source: st.vpVoidOverdriveGoldenPortalMul },
+      { label: 'Golden Portal Chance +2%', source: st.vpVoidOverdriveGoldenPortalChance },
+      { label: 'Fuel Duration 1.10x', source: st.vpVoidOverdriveFuel },
     ],
   },
   {
@@ -993,21 +652,9 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'frogfrenzy vp.png',
     unlockRequirement: 'Black Hole 1',
     effects: [
-      {
-        label: 'Lootfrog Loot Multi x1.20',
-        derivedStatKey: 'lootfrog_loot_multi',
-        value: 1.20
-      },
-      {
-        label: 'Triple Frog Chance +3%',
-        derivedStatKey: 'lootfrog_triple_spawn_chance',
-        value: 0.03
-      },
-      {
-        label: 'Frog Capacity +2',
-        derivedStatKey: 'lootfrog_capacity',
-        value: 2
-      },
+      { label: 'Lootfrog Loot Multi x1.20', source: st.vpFrogFrenzyLootfrogMul },
+      { label: 'Triple Frog Chance +3%', source: st.vpFrogFrenzyTriple },
+      { label: 'Frog Capacity +2', source: st.vpFrogFrenzyCapacity },
     ],
   },
   {
@@ -1016,21 +663,9 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'legendaryhauler vp.png',
     unlockRequirement: 'Tier 2 Fishing Docks Unlocked',
     effects: [
-      {
-        label: '5x Fishing Tick Chance +3%',
-        derivedStatKey: 'fishing_5x_tick_chance',
-        value: 0.03
-      },
-      {
-        label: 'Fish Income Multi 1.10x',
-        derivedStatKey: 'fishing_income_multi',
-        value: 1.10
-      },
-      {
-        label: 'Tier 2 Dock Power 1.10x',
-        derivedStatKey: 'fishing_tier2_dock_multi',
-        value: 1.10
-      },
+      { label: '5x Fishing Tick Chance +3%', source: st.vpLegendaryHauler5xTick },
+      { label: 'Fish Income Multi 1.10x', source: st.vpLegendaryHaulerFishIncome },
+      { label: 'Tier 2 Dock Power 1.10x', source: st.vpLegendaryHaulerTier2Dock },
     ],
   },
   {
@@ -1039,26 +674,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'chiefexecutive vp.png',
     unlockRequirement: 'Super Stonks Chance >= 1%',
     effects: [
-      {
-        label: 'Super Stonks Chance +2%',
-        derivedStatKey: 'super_stonks_chance',
-        value: 0.02
-      },
-      {
-        label: 'Super Stonks Multi 1.15x',
-        derivedStatKey: 'super_stonks_multi',
-        value: 1.15
-      },
-      {
-        label: 'Gems from Freebie +4',
-        derivedStatKey: 'freebie_gems_bonus',
-        value: 4
-      },
-      {
-        label: 'Banked Freebie Cap 1.10x',
-        derivedStatKey: 'freebie_bank_cap',
-        value: 1.10
-      },
+      { label: 'Super Stonks Chance +2%', source: st.vpChiefExecSuperStonksChance },
+      { label: 'Super Stonks Multi 1.15x', source: st.vpChiefExecSuperStonksMul },
+      { label: 'Gems from Freebie +4', source: st.vpChiefExecFreebieGems },
+      { label: 'Banked Freebie Cap 1.10x', source: st.vpChiefExecFreebieBank },
     ],
   },
   {
@@ -1067,16 +686,8 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'goldenorebundle vp.png',
     unlockRequirement: 'Requires Golden Ore Chance',
     effects: [
-      {
-        label: '+3% Golden Ore Chance',
-        derivedStatKey: 'golden_ore_chance',
-        value: 0.03
-      },
-      {
-        label: '1.25x Golden Ore Multiplier',
-        derivedStatKey: 'golden_ore_multi',
-        value: 1.25
-      },
+      { label: '+3% Golden Ore Chance', source: st.vpGoldenOreChance },
+      { label: '1.25x Golden Ore Multiplier', source: st.vpGoldenOreMul },
     ],
   },
   {
@@ -1085,31 +696,11 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'supergiantbundle vp.png',
     unlockRequirement: 'Requires Star Supergiant Chance',
     effects: [
-      {
-        label: '+3% Star Supergiant Chance',
-        derivedStatKey: 'star_supergiant_chance',
-        value: 0.03
-      },
-      {
-        label: '+3% Super Star Supergiant Chance',
-        derivedStatKey: 'super_star_supergiant_chance',
-        value: 0.03
-      },
-      {
-        label: '1.10x Supergiant Multis',
-        derivedStatKey: 'star_supergiant_multi',
-        value: 1.10
-      },
-      {
-        label: '+3% Triple Star Chance',
-        derivedStatKey: 'star_triple_spawn_chance',
-        value: 0.03
-      },
-      {
-        label: '+1% 10x Super Star Chance',
-        derivedStatKey: 'super_star_10x_chance',
-        value: 0.01
-      },
+      { label: '+3% Star Supergiant Chance', source: st.vpSupergiants3StarsChance },
+      { label: '+3% Super Star Supergiant Chance', source: st.vpSupergiants3SuperStarsChance },
+      { label: '1.10x Supergiant Multis', source: st.vpSupergiants3StarMul },
+      { label: '+3% Triple Star Chance', source: st.vpSupergiants3TripleStar },
+      { label: '+1% 10x Super Star Chance', source: st.vpSupergiants10xSuperStar },
     ],
   },
   {
@@ -1118,26 +709,10 @@ export const VALUE_PACKS: readonly ValuePack[] = [
     icon: 'halfway vp.png',
     unlockRequirement: '50% completion',
     effects: [
-      {
-        label: 'Rainbow Floor Multi 1.10x',
-        derivedStatKey: 'rainbow_floor_multi',
-        value: 1.10
-      },
-      {
-        label: 'Novagiant Combo Multi 1.10x',
-        derivedStatKey: 'novagiant_combo_multi',
-        value: 1.10
-      },
-      {
-        label: 'Fishing Rod Multi 1.10x',
-        derivedStatKey: 'fishing_rod_power',
-        value: 1.10
-      },
-      {
-        label: 'Gems From Freebie +2',
-        derivedStatKey: 'freebie_gems_bonus',
-        value: 2
-      },
+      { label: 'Rainbow Floor Multi 1.10x', source: st.vpHalfWayRainbowFloorMul },
+      { label: 'Novagiant Combo Multi 1.10x', source: st.vpHalfWayNovagiant },
+      { label: 'Fishing Rod Multi 1.10x', source: st.vpHalfWayFishingRod },
+      { label: 'Gems From Freebie +2', source: st.vpHalfWayFreebieGems },
     ],
   },
 ]
