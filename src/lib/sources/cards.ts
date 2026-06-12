@@ -396,6 +396,14 @@ const card = (key: string, name: string, fn: Source['fn'], maxLevel = 4): Source
   inputs: [],
 })
 
+// ─── Resource card sets ──────────────────────────────────────────────────────
+// NOTE: the Polychrome value in these fns (4.0) is the BASE. The real poly
+// multiplier is the upgradeable polychrome_card_bonus_* stat (Cetus, Palmite
+// upgrade, pets, bundle, tribute stack on top). Calculators must compute the
+// actual per-card multiplier from the poly/infernal bonus STATS via
+// combinedCardMultiplier() in formulas/cardMath.ts — these fns are baseline
+// display values only.
+
 // ─── Ore Cards ──────────────
 export const dynamicOres = generateCardGroup('ore', ORE_DATA, oreMul(1.5, 2.0, 4.0))
 
