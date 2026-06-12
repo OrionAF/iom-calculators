@@ -32,7 +32,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: con.staRandomnessVeinSpawn, op: '+' },
       { source: art.artVeinSpawnT4, op: '+' },
       { source: pet.petTotemVeinSpawn, op: '+' },
-      { source: st.vpPetTrainerVeinSpawn, op: '×' },
+      { source: st.storeVpPetTrainerVeinSpawn, op: '×' },
       { source: drone.droneSuitVeinseekerPassive, op: '+' },
       { source: drone.droneSuitVeinseekerUpgrade, op: '+' },
       { source: sg.starAriesVeinSpawn, op: '+' },
@@ -47,8 +47,8 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: rel.legendaryRelicVeinIncome, op: '+' },
       { source: pet.petDuckQuestVeinIncome, op: '+' },
       { source: ct.ctVeinIncomeW2, op: '+' },
-      { source: st.vpVeinExtractorVeinIncome, op: '×' },
-      { source: st.vpProgressionVeinIncome, op: '×' },
+      { source: st.storeVpVeinExtractorVeinIncome, op: '×' },
+      { source: st.storeVpProgressionVeinIncome, op: '×' },
       { source: arch.idolChione, op: '+' },
       { source: up.upgrVeinIncomeMul, op: '+' },
       { source: card.cardPetDuckInf, op: '×1+' },
@@ -61,7 +61,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: con.staRandomnessGoldenVeinChance, op: '+' },
       { source: pet.petTotemGoldenVeinChance, op: '+' },
       { source: ct.ctGoldenVeinChance, op: '+' },
-      { source: st.vpVeinExtractorGoldenVeinChance, op: '+' },
+      { source: st.storeVpVeinExtractorGoldenVeinChance, op: '+' },
       { source: up.upgrGoldenVeinChance, op: '+' },
       { source: U, op: '+', unknown: true }, // Pets + Stargazing
     ],
@@ -75,7 +75,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: pet.petDuckQuestGoldenVeinMul, op: '+' },
       { source: ch.chGoldenVeinMul, op: '+' },
       { source: card.cardMiscGoldenVein, op: '×' },
-      { source: st.vpVeinExtractorGoldenVeinMul, op: '×' },
+      { source: st.storeVpVeinExtractorGoldenVeinMul, op: '×' },
       { source: sg.starAriesGoldenVein, op: '+' },
       { source: f.noticeT1GoldenVeinMul, op: '+' },
       { source: up.upgrGoldenVeinMul, op: '+' },
@@ -85,7 +85,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
   rainbow_vein_chance: {
     contributions: [
       { source: ct.ctRainbowVeinMul, op: '+' }, // note: W4 contract is +multi but wiki labels as chance
-      { source: st.vpVeinExtractorRainbowVeinChance, op: '+' },
+      { source: st.storeVpVeinExtractorRainbowVeinChance, op: '+' },
       { source: pet.petTotemSkinRainbowVein, op: '+' },
       { source: con.staRandomnessRainbowVein, op: '+' },
       { source: con.staNatureRainbowVein, op: '+' },

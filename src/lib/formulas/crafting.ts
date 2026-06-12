@@ -25,7 +25,7 @@ export const craftingFormulas: FormulaMap = defineFormulas({
   free_craft_chance: {
     contributions: [
       { source: art.artFreeCraftT1, op: '+' },
-      { source: st.vpCraftmasterFreeCraft, op: '+' },
+      { source: st.storeVpCraftmasterFreeCraft, op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
@@ -53,8 +53,8 @@ export const craftingFormulas: FormulaMap = defineFormulas({
       { source: sk.heftyHammers10xCraft, op: '+' },
       { source: sk.imRunningOut10xCraft, op: '+' },
       { source: ct.ct10xCraft, op: '+' },
-      { source: st.founderCraft10x, op: '+' },
-      { source: st.vpCraftmaster10xCraft, op: '+' },
+      { source: st.storeFounderCraft10x, op: '+' },
+      { source: st.storeVpCraftmaster10xCraft, op: '+' },
       { source: f.noticeT1CraftChance10x, op: '+' },
       { source: up.upgrCraft10xChance, op: '+' },
     ],
@@ -68,7 +68,7 @@ export const craftingFormulas: FormulaMap = defineFormulas({
   craft_100x_chance: {
     contributions: [
       { source: con.staIgnitionCraft100x, op: '+' },
-      { source: st.vpCraftmaster100xCraft, op: '+' },
+      { source: st.storeVpCraftmaster100xCraft, op: '+' },
       { source: sg.starOrionCraft100x, op: '+' },
       { source: f.noticeT2CraftChance100x, op: '+' },
       { source: up.upgrCraft100xChance, op: '+' },
@@ -77,7 +77,7 @@ export const craftingFormulas: FormulaMap = defineFormulas({
   bar_output_multi: {
     contributions: [
       { source: art.artBarOutputT4, op: '+' },
-      { source: st.perkBarOutput, op: '×' },
+      { source: st.storePerkBarOutput, op: '×' },
       { source: up.upgrBarOutputMul, op: '+' },
       { source: card.cardLegLaviathan, op: '×1+' },
       { source: card.cardPetAxolotlInf, op: '×1+' },
@@ -95,7 +95,7 @@ export const craftingFormulas: FormulaMap = defineFormulas({
       { source: sk.imRunningOutBarCraft, op: '+' },
       { source: sk.moreOreMoreProblemsBarCraft, op: '+' },
       { source: pet.petAxolotlBarCraft, op: '+' },
-      { source: st.vpCraftmasterBarCraft, op: '+' },
+      { source: st.storeVpCraftmasterBarCraft, op: '+' },
       { source: sg.starAquariusBarCraft, op: '+' },
       { source: ch.chBarCraftCosts, op: '+' },
       { source: U, op: '+', unknown: true }, // Store + Cards

@@ -129,85 +129,81 @@ describe('itemSources — golden variants', () => {
   })
   it('all golden variants share distinct keys from base items', () => {
     expect(itemSources.goldenHamburgerPickaxe.key).not.toBe(itemSources.hamburgerPickaxe.key)
-    expect(itemSources.goldenStarfruitAllStarMulti.key).not.toBe(
-      itemSources.starfruitAllStarMulti.key,
-    )
-    expect(itemSources.goldenChaosTotemBombDamage.key).not.toBe(
-      itemSources.chaosTotemBombDamage.key,
-    )
+    expect(itemSources.goldenStarfruitAllStarMulti.key).not.toBe(itemSources.starfruitAllStarMulti.key)
+    expect(itemSources.goldenChaosTotemBombDamage.key).not.toBe(itemSources.chaosTotemBombDamage.key)
   })
 })
 
 // ── storeSources ─────────────────────────────────────────────────────────────
 
 describe('storeSources — perks', () => {
-  it('perkOreIncome not owned → factor 1', () => {
-    expect(storeSources.perkOreIncome.fn(0, {})).toBeCloseTo(1)
+  it('storePerkOreIncome not owned → factor 1', () => {
+    expect(storeSources.storePerkOreIncome.fn(0, {})).toBeCloseTo(1)
   })
-  it('perkOreIncome owned → factor 2', () => {
-    expect(storeSources.perkOreIncome.fn(1, {})).toBeCloseTo(2)
+  it('storePerkOreIncome owned → factor 2', () => {
+    expect(storeSources.storePerkOreIncome.fn(1, {})).toBeCloseTo(2)
   })
-  it('perkBombDamage owned → factor 3', () => {
-    expect(storeSources.perkBombDamage.fn(1, {})).toBeCloseTo(3)
+  it('storePerkBombDamage owned → factor 3', () => {
+    expect(storeSources.storePerkBombDamage.fn(1, {})).toBeCloseTo(3)
   })
 })
 
 describe('storeSources — gem upgrades', () => {
-  it('gemPickaxeDamage level 0 → factor 1', () => {
-    expect(storeSources.gemPickaxeDamage.fn(0, {})).toBeCloseTo(1)
+  it('storeGemPickaxeDamage level 0 → factor 1', () => {
+    expect(storeSources.storeGemPickaxeDamage.fn(0, {})).toBeCloseTo(1)
   })
-  it('gemPickaxeDamage level 5 → factor 2.00', () => {
-    expect(storeSources.gemPickaxeDamage.fn(5, {})).toBeCloseTo(2.0)
+  it('storeGemPickaxeDamage level 5 → factor 2.00', () => {
+    expect(storeSources.storeGemPickaxeDamage.fn(5, {})).toBeCloseTo(2.0)
   })
   it('gemOreSellPrice level 1 → factor 2.00', () => {
-    expect(storeSources.gemOreSellPrice.fn(1, {})).toBeCloseTo(2.0)
+    expect(storeSources.storeGemOreSellPrice.fn(1, {})).toBeCloseTo(2.0)
   })
   it('gemFreebieBank level 3 → +3', () => {
-    expect(storeSources.gemFreebieBank.fn(3, {})).toBe(3)
+    expect(storeSources.storeGemFreebieBank.fn(3, {})).toBe(3)
   })
 })
 
 describe('storeSources — founder tiers (level = founder tier)', () => {
   it('founderCraft10x: tier below unlock (2) → 0', () => {
-    expect(storeSources.founderCraft10x.fn(2, {})).toBe(0)
+    expect(storeSources.storeFounderCraft10x.fn(2, {})).toBe(0)
   })
   it('founderCraft10x: exactly at unlock tier 3 → base 0.02', () => {
-    expect(storeSources.founderCraft10x.fn(3, {})).toBeCloseTo(0.02)
+    expect(storeSources.storeFounderCraft10x.fn(3, {})).toBeCloseTo(0.02)
   })
   it('founderCraft10x: tier 5 → 0.02 + 2×0.01 = 0.04', () => {
-    expect(storeSources.founderCraft10x.fn(5, {})).toBeCloseTo(0.04)
+    expect(storeSources.storeFounderCraft10x.fn(5, {})).toBeCloseTo(0.04)
   })
   it('founderGameSpeed: tier 10 → 0.10', () => {
-    expect(storeSources.founderGameSpeed.fn(10, {})).toBeCloseTo(0.1)
+    expect(storeSources.storeFounderGameSpeed.fn(10, {})).toBeCloseTo(0.1)
   })
   it('founderGameSpeed: tier 12 → 0.10 + 2×0.01 = 0.12', () => {
-    expect(storeSources.founderGameSpeed.fn(12, {})).toBeCloseTo(0.12)
+    expect(storeSources.storeFounderGameSpeed.fn(12, {})).toBeCloseTo(0.12)
   })
   it('founderGameSpeed: tier 0 (not purchased) → 0', () => {
-    expect(storeSources.founderGameSpeed.fn(0, {})).toBe(0)
+    expect(storeSources.storeFounderGameSpeed.fn(0, {})).toBe(0)
   })
   it('founderSupplyDropCd: tier 12 → 60 - 11×2 = 38 minutes', () => {
-    expect(storeSources.founderSupplyDropCd.fn(12, {})).toBe(38)
+    expect(storeSources.storeFounderSupplyDropCd.fn(12, {})).toBe(38)
   })
 })
 
 describe('storeSources — value packs', () => {
   it('vpGottaGoFastGameSpeed not owned → 0', () => {
-    expect(storeSources.vpGottaGoFastGameSpeed.fn(0, {})).toBe(0)
+    expect(storeSources.storeVpGottaGoFastGameSpeed.fn(0, {})).toBe(0)
   })
   it('vpGottaGoFastGameSpeed owned → +0.10 game speed', () => {
-    expect(storeSources.vpGottaGoFastGameSpeed.fn(1, {})).toBeCloseTo(0.1)
+    expect(storeSources.storeVpGottaGoFastGameSpeed.fn(1, {})).toBeCloseTo(0.1)
   })
   it('vpBallerOreSell owned → factor 2.00', () => {
-    expect(storeSources.vpBallerOreSell.fn(1, {})).toBeCloseTo(2.0)
+    expect(storeSources.storeVpBallerOreSell.fn(1, {})).toBeCloseTo(2.0)
   })
   it('vpBallerOreSell not owned → factor 1', () => {
-    expect(storeSources.vpBallerOreSell.fn(0, {})).toBeCloseTo(1)
+    expect(storeSources.storeVpBallerOreSell.fn(0, {})).toBeCloseTo(1)
   })
   it('vpBankersFreebieBank owned → +3', () => {
-    expect(storeSources.vpBankersFreebieBank.fn(1, {})).toBe(3)
+    expect(storeSources.storeVpBankersFreebieBank.fn(1, {})).toBe(3)
   })
   it('vpProgressionGoldenFloor owned → factor 1.20', () => {
-    expect(storeSources.vpProgressionGoldenFloor.fn(1, {})).toBeCloseTo(1.2)
+    expect(storeSources.storeVpProgressionGoldenFloor.fn(1, {})).toBeCloseTo(1.2)
   })
 })

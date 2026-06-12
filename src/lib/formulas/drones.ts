@@ -25,7 +25,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
   drone_count: {
     contributions: [
       { source: drone.droneUpgradeUnlockDrone, op: '+' },
-      { source: st.vpDroneCount, op: '+' },
+      { source: st.storeVpDroneCount, op: '+' },
       { source: sk.threesACrowdDrone, op: '+' },
       { source: tr.trCthulhuT2U1MD, op: '+' },
       { source: tr.trBlackenedBaskerT2UMD, op: '+' },
@@ -67,8 +67,8 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: sk.gasolineGuzzlerFuelDuration, op: '+' },
       { source: rel.rareRelicFuelDuration, op: '+' },
       { source: card.cardMiscFuel, op: '×' },
-      { source: st.vpDroneCatalystFuel, op: '×' },
-      { source: st.vpVoidOverdriveFuel, op: '×' },
+      { source: st.storeVpDroneCatalystFuel, op: '×' },
+      { source: st.storeVpVoidOverdriveFuel, op: '×' },
       { source: drone.coalFuelDuration, op: '+' },
       { source: pet.petAxolotlSkinFuelDuration, op: '+' },
       { source: con.staAppetiteFuelDuration, op: '+' },
@@ -92,7 +92,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
   },
   coal_drone_exp_multi: {
     contributions: [
-      { source: st.vpDroneCatalystExp, op: '×' },
+      { source: st.storeVpDroneCatalystExp, op: '×' },
       { source: drone.coalDroneExp, op: '+' },
       { source: pet.petTotemQuestDroneExp, op: '+' },
       { source: arch.idolTalosDroneExp, op: '+' },
@@ -112,7 +112,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sk.callOfTheVoidPortalMulti, op: '+' },
       { source: card.cardMiscVoidPortal, op: '×' },
-      { source: st.vpVoidOverdriveVoidMul, op: '×' },
+      { source: st.storeVpVoidOverdriveVoidMul, op: '×' },
       { source: drone.coalVoidPortalMul, op: '+' },
       { source: card.cardDroneVoidInf, op: '×1+' },
     ],
@@ -122,7 +122,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: sk.iBuriedItHereGoldenVoidChance, op: '+' },
       { source: pet.petNaginiQuestGoldenVoidChance, op: '+' },
       { source: ct.ctGoldenVoidChance, op: '+' },
-      { source: st.vpVoidOverdriveGoldenPortalChance, op: '+' },
+      { source: st.storeVpVoidOverdriveGoldenPortalChance, op: '+' },
       { source: U, op: '+', unknown: true }, // Pets + Fishing + Upgrades + Contracts
       { source: tr.trDuneEelwormT1GVPC, op: '+' },
     ],
@@ -131,7 +131,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: card.cardMiscGoldenVoidPortal, op: '×' },
       { source: pet.petNaginiQuestGoldenVoidMul, op: '+' },
-      { source: st.vpVoidOverdriveGoldenPortalMul, op: '×' },
+      { source: st.storeVpVoidOverdriveGoldenPortalMul, op: '×' },
       { source: arch.idolThemis, op: '+' },
       { source: up.upgrGoldenVoidChance, op: '+' },
       { source: tr.trDuneEelwormT2EBCC, op: '+' },

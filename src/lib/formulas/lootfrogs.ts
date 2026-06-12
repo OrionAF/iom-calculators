@@ -29,14 +29,14 @@ export const lootfrogsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sk.frogFrenzyLootfrogCap, op: '+' },
       { source: card.cardMiscLootfrog, op: '+' },
-      { source: st.vpFrogFrenzyCapacity, op: '+' },
+      { source: st.storeVpFrogFrenzyCapacity, op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
   lootfrog_loot_multi: {
     contributions: [
       { source: ws.wsLootfrogLootW4, op: '+' },
-      { source: st.vpFrogFrenzyLootfrogMul, op: '×' },
+      { source: st.storeVpFrogFrenzyLootfrogMul, op: '×' },
       { source: up.upgrLootfrogLootMul, op: '+' },
       { source: U, op: '+', unknown: true }, // Workshop + Cards
       { source: card.cardPetButterflyInf, op: '×1+' },
@@ -64,7 +64,7 @@ export const lootfrogsFormulas: FormulaMap = defineFormulas({
       { source: sk.frogFrenzyTripleLootfrog, op: '+' },
       { source: pet.petButterflyLootfrogTriple, op: '+' },
       { source: ct.ctLootfrogTriple, op: '+' },
-      { source: st.vpFrogFrenzyTriple, op: '+' },
+      { source: st.storeVpFrogFrenzyTriple, op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },

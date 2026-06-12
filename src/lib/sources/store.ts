@@ -7,16 +7,9 @@ import type { Op, Source } from '$lib/engine/types'
 // Gem upgrades are leveled (fn scales with level).
 // Founder tier effects are leveled: level = current founder tier (0–12).
 
-const store = (
-  key: string,
-  name: string,
-  maxLevel: number,
-  statKey: string,
-  op: Op,
-  fn: Source['fn'],
-): Source => ({
+const store = (key: string, name: string, maxLevel: number, statKey: string, op: Op, fn: Source['fn']): Source => ({
   key: `store.${key}`,
-  name: `Store: ${name}`,
+  name: `${name}`,
   system: 'store',
   maxLevel,
   statKey,
@@ -28,127 +21,30 @@ const store = (
 // ─── Perks (binary owned/not) ─────────────────────────────────────────────────
 
 /** Perk: 2x Ore Income. op='×' → fn(1)=2 */
-export const perkOreIncome = store(
-  'perk.oreIncome',
-  '2x Ore Income (Perk)',
-  1,
-  'ore_income_multi',
-  '×',
-  (o) => 1 + o * 1,
-)
+export const storePerkOreIncome = store('perk.oreIncome', '2x Ore Income (Perk)', 1, 'ore_income_multi', '×', (o) => 1 + o * 1)
 /** Perk: 2x Prestige Point Income. op='×' */
-export const perkPrestigePts: Source = {
-  key: 'store.perk.prestigePts',
-  name: '2x Prestige Point Income (Perk)',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'prestige_point_multi',
-  op: '×',
-  fn: (o) => 1 + o * 1,
-  inputs: [],
-}
+export const storePerkPrestigePts = store('perk.prestigePts', '2x Prestige Point Income (Perk)', 1, 'prestige_point_multi', '×', (o) => 1 + o * 1)
 /** Perk: 2x Bar Income. op='×' */
-export const perkBarOutput: Source = {
-  key: 'store.perk.barOutput',
-  name: '2x Bar Income (Perk)',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'bar_output_multi',
-  op: '×',
-  fn: (o) => 1 + o * 1,
-  inputs: [],
-}
+export const storePerkBarOutput = store('perk.barOutput', '2x Bar Income (Perk)', 1, 'bar_output_multi', '×', (o) => 1 + o * 1)
 /** Perk: 3x Bomb Damage. op='×' */
-export const perkBombDamage: Source = {
-  key: 'store.perk.bombDamage',
-  name: '3x Bomb Damage (Perk)',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'bomb_damage',
-  op: '×',
-  fn: (o) => 1 + o * 2,
-  inputs: [],
-}
+export const storePerkBombDamage = store('perk.bombDamage', '3x Bomb Damage (Perk)', 1, 'bomb_damage', '×', (o) => 1 + o * 2)
 
 // ─── Gem Upgrades (leveled) ───────────────────────────────────────────────────
 
 /** Gem Upgrade: Pickaxe Damage +0.20× per level (×1.20 at lvl 1). op='×' max 22. */
-export const gemPickaxeDamage: Source = {
-  key: 'store.gem.pickaxeDamage',
-  name: 'Gem Upgrade – Pickaxe Damage',
-  system: 'store',
-  maxLevel: 22,
-  statKey: 'pickaxe_damage',
-  op: '×',
-  fn: (l) => 1 + l * 0.2,
-  inputs: [],
-}
+export const storeGemPickaxeDamage = store('gem.pickaxeDamage', 'Gem Upgrade – Pickaxe Damage', 22, 'pickaxe_damage', '×', (l) => 1 + l * 0.2)
 /** Gem Upgrade: Bomb Damage +20% per level. op='+' max 22. */
-export const gemBombDamage: Source = {
-  key: 'store.gem.bombDamage',
-  name: 'Gem Upgrade – Bomb Damage',
-  system: 'store',
-  maxLevel: 22,
-  statKey: 'bomb_damage',
-  op: '×1+',
-  fn: (l) => l * 0.2,
-  inputs: [],
-}
+export const storeGemBombDamage = store('gem.bombDamage', 'Gem Upgrade – Bomb Damage', 22, 'bomb_damage', '×1+', (l) => l * 0.2)
 /** Gem Upgrade: Bomb Capacity +2 per level. op='+' max 22. */
-export const gemBombCapacity: Source = {
-  key: 'store.gem.bombCapacity',
-  name: 'Gem Upgrade – Bomb Capacity',
-  system: 'store',
-  maxLevel: 22,
-  statKey: 'bomb_capacity',
-  op: '+',
-  fn: (l) => l * 2,
-  inputs: [],
-}
+export const storeGemBombCapacity = store('gem.bombCapacity', 'Gem Upgrade – Bomb Capacity', 22, 'bomb_capacity', '+', (l) => l * 2)
 /** Gem Upgrade: Banked Freebie Cap +1 per level. op='+' max 14. */
-export const gemFreebieBank: Source = {
-  key: 'store.gem.freebieBank',
-  name: 'Gem Upgrade – Banked Freebie Cap',
-  system: 'store',
-  maxLevel: 14,
-  statKey: 'freebie_bank_cap',
-  op: '+',
-  fn: (l) => l,
-  inputs: [],
-}
+export const storeGemFreebieBank = store('gem.freebieBank', 'Gem Upgrade – Banked Freebie Cap', 14, 'freebie_bank_cap', '+', (l) => l)
 /** Gem Upgrade: Chest Meter Fill Rate ×5 per level (compounding). op='×' max 17. */
-export const gemChestMeter: Source = {
-  key: 'store.gem.chestMeter',
-  name: 'Gem Upgrade – Chest Meter Fill Rate',
-  system: 'store',
-  maxLevel: 17,
-  statKey: 'chest_meter_multi',
-  op: '×',
-  fn: (l) => Math.pow(5, l),
-  inputs: [],
-}
+export const storeGemChestMeter = store('gem.chestMeter', 'Gem Upgrade – Chest Meter Fill Rate', 17, 'chest_meter_multi', '×', (l) => Math.pow(5, l))
 /** Gem Upgrade: Items Contained In Chests +1 per level. op='+' max 17. */
-export const gemItemsInChests: Source = {
-  key: 'store.gem.itemsInChests',
-  name: 'Gem Upgrade – Items In Chests',
-  system: 'store',
-  maxLevel: 17,
-  statKey: 'chest_items_bonus',
-  op: '+',
-  fn: (l) => l,
-  inputs: [],
-}
+export const storeGemItemsInChests = store('gem.itemsInChests', 'Gem Upgrade – Items In Chests', 17, 'chest_items_bonus', '+', (l) => l)
 /** Gem Upgrade: Ore Sell Price ×2 per level (stacking multiply). op='×' max 14. */
-export const gemOreSellPrice: Source = {
-  key: 'store.gem.oreSellPrice',
-  name: 'Gem Upgrade – Ore Sell Price',
-  system: 'store',
-  maxLevel: 14,
-  statKey: 'ore_sell_price_multi',
-  op: '×',
-  fn: (l) => 1 + l * 1.0,
-  inputs: [],
-}
+export const storeGemOreSellPrice = store('gem.oreSellPrice', 'Gem Upgrade – Ore Sell Price', 14, 'ore_sell_price_multi', '×', (l) => 1 + l * 1.0)
 
 // ─── Founder Tier Effects (level = current founder tier 0–12) ───────────────
 // All founder effects share key 'store.founder', so one progress value (the
@@ -161,137 +57,29 @@ const founderFn = (unlockTier: number, base: number, incr: number) => (tier: num
 }
 
 /** Founder Tier 1: Supply Drop Cooldown. Base 60s, -2s per tier. op='+'. */
-export const founderSupplyDropCd: Source = {
-  key: 'store.founder',
-  name: 'Founder Bundle (Supply Drop Cooldown)',
-  system: 'store',
-  maxLevel: 12,
-  statKey: 'founder_supply_drop_cd',
-  op: '+',
-  fn: founderFn(1, 60, -2),
-  inputs: [],
-}
+export const storeFounderSupplyDropCd = store('founder', 'Founder Bundle (Supply Drop Cooldown)', 12, 'founder_supply_drop_cd', '+', founderFn(1, 60, -2))
 /** Founder Tier 2: Double Supply Drop Chance. Base 12% (0.12), +6% per tier. op='+'. */
-export const founderDoubleSupplyDrop: Source = {
-  key: 'store.founder',
-  name: 'Founder Bundle (Double Supply Drop Chance)',
-  system: 'store',
-  maxLevel: 12,
-  statKey: 'founder_double_supply_drop_chance',
-  op: '+',
-  fn: founderFn(2, 0.12, 0.06),
-  inputs: [],
-}
+export const storeFounderDoubleSupplyDrop = store('founder', 'Founder Bundle (Double Supply Drop Chance)', 12, 'founder_double_supply_drop_chance', '+', founderFn(2, 0.12, 0.06))
 /** Founder Tier 3: 10x Craft Chance. Base 2% (0.02), +1% per tier. op='+'. */
-export const founderCraft10x: Source = {
-  key: 'store.founder',
-  name: 'Founder Bundle (10x Craft Chance)',
-  system: 'store',
-  maxLevel: 12,
-  statKey: 'craft_10x_chance',
-  op: '+',
-  fn: founderFn(3, 0.02, 0.01),
-  inputs: [],
-}
+export const storeFounderCraft10x = store('founder', 'Founder Bundle (10x Craft Chance)', 12, 'craft_10x_chance', '+', founderFn(3, 0.02, 0.01))
 /** Founder Tier 4: Bomb of Plenty Multi. Base 2, +1 per tier. op='+'. */
-export const founderBomBofPlenty: Source = {
-  key: 'store.founder',
-  name: 'Founder Bundle (Bomb of Plenty Multi)',
-  system: 'store',
-  maxLevel: 12,
-  statKey: 'bomb_of_plenty_multi',
-  op: '+',
-  fn: founderFn(4, 2, 1),
-  inputs: [],
-}
+export const storeFounderBomBofPlenty = store('founder', 'Founder Bundle (Bomb of Plenty Multi)', 12, 'bomb_of_plenty_multi', '+', founderFn(4, 2, 1))
 /** Founder Tier 5: Golden Lootbug Chance. Base 6% (0.06), +3% per tier. op='+'. */
-export const founderGoldenLootbug: Source = {
-  key: 'store.founder',
-  name: 'Founder Bundle (Golden Lootbug Chance)',
-  system: 'store',
-  maxLevel: 12,
-  statKey: 'lootbug_golden_chance',
-  op: '+',
-  fn: founderFn(5, 0.06, 0.03),
-  inputs: [],
-}
+export const storeFounderGoldenLootbug = store('founder', 'Founder Bundle (Golden Lootbug Chance)', 12, 'lootbug_golden_chance', '+', founderFn(5, 0.06, 0.03))
 /** Founder Tier 6: Banked Freebie Cap. Base 4, +2 per tier. op='+'. */
-export const founderFreebieBank: Source = {
-  key: 'store.founder',
-  name: 'Founder Bundle (Banked Freebie Cap)',
-  system: 'store',
-  maxLevel: 12,
-  statKey: 'freebie_bank_cap',
-  op: '+',
-  fn: founderFn(6, 4, 2),
-  inputs: [],
-}
-/** Founder Tier 8: Gems From Freebie. Base 2, +1 per tier. op='+'. */
-export const founderFreebieGems: Source = {
-  key: 'store.founder',
-  name: 'Founder Bundle (Gems From Freebie)',
-  system: 'store',
-  maxLevel: 12,
-  statKey: 'freebie_gems_bonus',
-  op: '+',
-  fn: founderFn(8, 2, 1),
-  inputs: [],
-}
-/** Founder Tier 9: Rainbow Floor Chance. Base 1% (0.01), +1% per tier. op='+'. */
-export const founderRainbowFloor: Source = {
-  key: 'store.founder',
-  name: 'Founder Bundle (Rainbow Floor Chance)',
-  system: 'store',
-  maxLevel: 12,
-  statKey: 'rainbow_floor_chance',
-  op: '+',
-  fn: founderFn(9, 0.01, 0.01),
-  inputs: [],
-}
-/** Founder Tier 10: Game Speed. Base 10% (0.10), +1% per tier. op='+'. */
-export const founderGameSpeed: Source = {
-  key: 'store.founder',
-  name: 'Founder Bundle (Game Speed)',
-  system: 'store',
-  maxLevel: 12,
-  statKey: 'game_speed_multi',
-  op: '+',
-  fn: founderFn(10, 0.1, 0.01),
-  inputs: [],
-}
+export const storeFounderFreebieBank = store('founder', 'Founder Bundle (Banked Freebie Cap)', 12, 'freebie_bank_cap', '+', founderFn(6, 4, 2))
 /** Founder Tier 7: Triple Supply Drop Chance. Base 16% (0.16), +8% per tier. op='+'. */
-export const founderTripleSupplyDrop: Source = {
-  key: 'store.founder',
-  name: 'Founder Bundle (Triple Supply Drop Chance)',
-  system: 'store',
-  maxLevel: 12,
-  statKey: 'founder_triple_supply_drop_chance',
-  op: '+',
-  fn: founderFn(7, 0.16, 0.08),
-  inputs: [],
-}
+export const storeFounderTripleSupplyDrop = store('founder', 'Founder Bundle (Triple Supply Drop Chance)', 12, 'founder_triple_supply_drop_chance', '+', founderFn(7, 0.16, 0.08))
+/** Founder Tier 8: Gems From Freebie. Base 2, +1 per tier. op='+'. */
+export const storeFounderFreebieGems = store('founder', 'Founder Bundle (Gems From Freebie)', 12, 'freebie_gems_bonus', '+', founderFn(8, 2, 1))
+/** Founder Tier 9: Rainbow Floor Chance. Base 1% (0.01), +1% per tier. op='+'. */
+export const storeFounderRainbowFloor = store('founder', 'Founder Bundle (Rainbow Floor Chance)', 12, 'rainbow_floor_chance', '+', founderFn(9, 0.01, 0.01))
+/** Founder Tier 10: Game Speed. Base 10% (0.10), +1% per tier. op='+'. */
+export const storeFounderGameSpeed = store('founder', 'Founder Bundle (Game Speed)', 12, 'game_speed_multi', '+', founderFn(10, 0.1, 0.01))
 /** Founder Tier 11: Golden Supply Drop Chance. Base 10% (0.10), +2% per tier. op='+'. */
-export const founderGoldenSupplyDrop: Source = {
-  key: 'store.founder',
-  name: 'Founder Bundle (Golden Supply Drop Chance)',
-  system: 'store',
-  maxLevel: 12,
-  statKey: 'founder_golden_supply_drop_chance',
-  op: '+',
-  fn: founderFn(11, 0.1, 0.02),
-  inputs: [],
-}
+export const storeFounderGoldenSupplyDrop = store('founder', 'Founder Bundle (Golden Supply Drop Chance)', 12, 'founder_golden_supply_drop_chance', '+', founderFn(11, 0.1, 0.02))
 /** Founder Tier 12: Gem Bomb Gem Chance. Base 0.5% (0.005), +0.5% per tier. op='+'. */
-export const founderGemBombGemChance: Source = {
-  key: 'store.founder',
-  name: 'Founder Bundle (Gem Bomb Gem Chance)',
-  system: 'store',
-  maxLevel: 12,
-  statKey: 'gem_bomb_gem_chance',
-  op: '+',
-  fn: founderFn(12, 0.005, 0.005),
-  inputs: [],
-}
+export const storeFounderGemBombGemChance = store('founder', 'Founder Bundle (Gem Bomb Gem Chance)', 12, 'gem_bomb_gem_chance', '+', founderFn(12, 0.005, 0.005))
 
 // ─── Value Packs (binary owned) ───────────────────────────────────────────────
 
@@ -300,1021 +88,220 @@ const add = (v: number) => (o: number) => o * v
 // Multiplicative helper: fn(1) = factor, fn(0) = 1
 const mul = (v: number) => (o: number) => 1 + o * (v - 1)
 
-export const vpDroneCount: Source = {
-  key: 'store.vp.permanentDronePack',
-  name: 'Permanent Drone Pack',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'drone_count',
-  op: '+',
-  fn: add(1),
-  inputs: [],
-}
-export const vpFreebie5xChance: Source = {
-  key: 'store.vp.investmentPackage',
-  name: 'Investment Package!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_5x_chance',
-  op: '+',
-  fn: add(0.05),
-  inputs: [],
-}
-export const vpBankersFreebieBank: Source = {
-  key: 'store.vp.bankersBundle',
-  name: "Banker's Bundle!",
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_bank_cap',
-  op: '+',
-  fn: add(3),
-  inputs: [],
-}
-export const vpBankersLootbugBank: Source = {
-  key: 'store.vp.bankersBundle',
-  name: "Banker's Bundle!",
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'lootbug_bank_cap',
-  op: '+',
-  fn: add(3),
-  inputs: [],
-}
-export const vpBankersFreebieGems: Source = {
-  key: 'store.vp.bankersBundle',
-  name: "Banker's Bundle!",
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_gems_bonus',
-  op: '+',
-  fn: add(1),
-  inputs: [],
-}
-export const vpBankersFreebie5x: Source = {
-  key: 'store.vp.bankersBundle',
-  name: "Banker's Bundle!",
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_5x_chance',
-  op: '+',
-  fn: add(0.01),
-  inputs: [],
-}
-export const vpGottaGoFastGameSpeed: Source = {
-  key: 'store.vp.gottaGoFast',
-  name: 'Gotta Go Fast Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'game_speed_multi',
-  op: '+',
-  fn: add(0.1),
-  inputs: [],
-}
-export const vpGoldenLootbug: Source = {
-  key: 'store.vp.goldenLootbugBundle',
-  name: 'Golden Lootbug Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'lootbug_golden_chance',
-  op: '+',
-  fn: add(0.2),
-  inputs: [],
-}
-export const vpBiggerBankersFreebieBank: Source = {
-  key: 'store.vp.biggerBankersBundle',
-  name: "Bigger Banker's Bundle!",
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_bank_cap',
-  op: '+',
-  fn: add(5),
-  inputs: [],
-}
-export const vpBiggerBankersLootbugBank: Source = {
-  key: 'store.vp.biggerBankersBundle',
-  name: "Bigger Banker's Bundle!",
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'lootbug_bank_cap',
-  op: '+',
-  fn: add(5),
-  inputs: [],
-}
-export const vpBiggerBankersFreebieGems: Source = {
-  key: 'store.vp.biggerBankersBundle',
-  name: "Bigger Banker's Bundle!",
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_gems_bonus',
-  op: '+',
-  fn: add(1),
-  inputs: [],
-}
-export const vpBiggerBankersRefresh: Source = {
-  key: 'store.vp.biggerBankersBundle',
-  name: "Bigger Banker's Bundle!",
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_refresh_chance',
-  op: '+',
-  fn: add(0.01),
-  inputs: [],
-}
-export const vpBallerOreSell: Source = {
-  key: 'store.vp.ballerSkinBundle',
-  name: 'Baller Skin Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'ore_sell_price_multi',
-  op: '×',
-  fn: mul(2),
-  inputs: [],
-}
-export const vpPetTrainerPetLevel: Source = {
-  key: 'store.vp.petTrainerBundle',
-  name: 'Pet Trainer Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'pet_levelup_chance_multi',
-  op: '×',
-  fn: mul(1.2),
-  inputs: [],
-}
-export const vpPetTrainerVeinSpawn: Source = {
-  key: 'store.vp.petTrainerBundle',
-  name: 'Pet Trainer Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'vein_spawn_rate_multi',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpPetTrainerExp: Source = {
-  key: 'store.vp.petTrainerBundle',
-  name: 'Pet Trainer Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'experience_multi',
-  op: '×',
-  fn: mul(2.0),
-  inputs: [],
-}
-export const vpPetTrainerRainbowFloor: Source = {
-  key: 'store.vp.petTrainerBundle',
-  name: 'Pet Trainer Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'rainbow_floor_chance',
-  op: '+',
-  fn: add(0.01),
-  inputs: [],
-}
-export const vpVeinExtractorVeinIncome: Source = {
-  key: 'store.vp.veinExtractorBundle',
-  name: 'Vein Extractor Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'vein_income_multi',
-  op: '×',
-  fn: mul(1.15),
-  inputs: [],
-}
-export const vpVeinExtractorGoldenVeinChance: Source = {
-  key: 'store.vp.veinExtractorBundle',
-  name: 'Vein Extractor Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'golden_vein_chance',
-  op: '+',
-  fn: add(0.05),
-  inputs: [],
-}
-export const vpVeinExtractorRainbowVeinChance: Source = {
-  key: 'store.vp.veinExtractorBundle',
-  name: 'Vein Extractor Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'rainbow_vein_chance',
-  op: '+',
-  fn: add(0.02),
-  inputs: [],
-}
-export const vpVeinExtractorGoldenVeinMul: Source = {
-  key: 'store.vp.veinExtractorBundle',
-  name: 'Vein Extractor Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'golden_vein_multi',
-  op: '×',
-  fn: mul(1.25),
-  inputs: [],
-}
-export const vpSupernovaStarNova: Source = {
-  key: 'store.vp.stargazingSupernovaBundle',
-  name: 'Stargazing Supernova Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'star_supernova_chance',
-  op: '+',
-  fn: add(0.03),
-  inputs: [],
-}
-export const vpSupernovaSuperStarNova: Source = {
-  key: 'store.vp.stargazingSupernovaBundle',
-  name: 'Stargazing Supernova Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'super_star_supernova_chance',
-  op: '+',
-  fn: add(0.03),
-  inputs: [],
-}
-export const vpSupernovaStarNovaMul: Source = {
-  key: 'store.vp.stargazingSupernovaBundle',
-  name: 'Stargazing Supernova Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'star_supernova_multi',
-  op: '+',
-  fn: add(1.1),
-  inputs: [],
-}
-export const vpSupernovaSuperStarNovaMul: Source = {
-  key: 'store.vp.stargazingSupernovaBundle',
-  name: 'Stargazing Supernova Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'super_star_supernova_multi',
-  op: '+',
-  fn: add(1.1),
-  inputs: [],
-}
-export const vpSupernovaTripleStar: Source = {
-  key: 'store.vp.stargazingSupernovaBundle',
-  name: 'Stargazing Supernova Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'star_triple_spawn_chance',
-  op: '+',
-  fn: add(0.03),
-  inputs: [],
-}
-export const vpSupernovaTripleSuperStar: Source = {
-  key: 'store.vp.stargazingSupernovaBundle',
-  name: 'Stargazing Supernova Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'super_star_triple_chance',
-  op: '+',
-  fn: add(0.03),
-  inputs: [],
-}
-export const vpCapitalistFreebieGems: Source = {
-  key: 'store.vp.capitalistBundle',
-  name: 'Capitalist Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_gems_bonus',
-  op: '+',
-  fn: add(2),
-  inputs: [],
-}
-export const vpArchFreebieGems: Source = {
-  key: 'store.vp.archaeologyBundle',
-  name: 'Archaeology Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_gems_bonus',
-  op: '+',
-  fn: add(1),
-  inputs: [],
-}
-export const vpArchFragmentGain: Source = {
-  key: 'store.vp.archaeologyBundle',
-  name: 'Archaeology Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'archaeology_fragment_gain_multi',
-  op: '×',
-  fn: mul(1.25),
-  inputs: [],
-}
-export const vpProgressionGoldenFloor: Source = {
-  key: 'store.vp.progressionBoosterBundle',
-  name: 'Progression Booster Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'golden_floor_multi',
-  op: '×',
-  fn: mul(1.2),
-  inputs: [],
-}
-export const vpProgressionVeinIncome: Source = {
-  key: 'store.vp.progressionBoosterBundle',
-  name: 'Progression Booster Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'vein_income_multi',
-  op: '×',
-  fn: mul(1.15),
-  inputs: [],
-}
-export const vpProgressionBombRecharge: Source = {
-  key: 'store.vp.progressionBoosterBundle',
-  name: 'Progression Booster Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'bomb_recharge_speed',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpProgressionTripleStar: Source = {
-  key: 'store.vp.progressionBoosterBundle',
-  name: 'Progression Booster Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'star_triple_spawn_chance',
-  op: '+',
-  fn: add(0.05),
-  inputs: [],
-}
-export const vpBomberBombRecharge: Source = {
-  key: 'store.vp.bomberExtraordinaireBundle',
-  name: 'Bomber Extraordinaire Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'bomb_recharge_speed',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpBomberBombCapacity: Source = {
-  key: 'store.vp.bomberExtraordinaireBundle',
-  name: 'Bomber Extraordinaire Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'bomb_capacity',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpBomberBopMulti: Source = {
-  key: 'store.vp.bomberExtraordinaireBundle',
-  name: 'Bomber Extraordinaire Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'bomb_of_plenty_multi',
-  op: '+',
-  fn: add(5),
-  inputs: [],
-}
-export const vpBomberTransmuterMulti: Source = {
-  key: 'store.vp.bomberExtraordinaireBundle',
-  name: 'Bomber Extraordinaire Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'bomb_transmuter_multi',
-  op: '+',
-  fn: add(10),
-  inputs: [],
-}
-export const vpLootbugBonanzaLootMul: Source = {
-  key: 'store.vp.lootbugBonanzaBundle',
-  name: 'Lootbug Bonanza Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'lootbug_loot_multi',
-  op: '×',
-  fn: mul(1.2),
-  inputs: [],
-}
-export const vpLootbugBonanzaBankCap: Source = {
-  key: 'store.vp.lootbugBonanzaBundle',
-  name: 'Lootbug Bonanza Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'lootbug_bank_cap',
-  op: '+',
-  fn: add(10),
-  inputs: [],
-}
-export const vpInsiderStonksMul: Source = {
-  key: 'store.vp.insiderTradingBundle',
-  name: 'Insider Trading Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'stonks_multi',
-  op: '+',
-  fn: add(2),
-  inputs: [],
-}
-export const vpInsiderFreebieBank: Source = {
-  key: 'store.vp.insiderTradingBundle',
-  name: 'Insider Trading Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_bank_cap',
-  op: '+',
-  fn: add(2),
-  inputs: [],
-}
-export const vpCraftmaster100xCraft: Source = {
-  key: 'store.vp.craftmasterBundle',
-  name: 'Craftmaster Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'craft_100x_chance',
-  op: '+',
-  fn: add(0.01),
-  inputs: [],
-}
-export const vpCraftmaster10xCraft: Source = {
-  key: 'store.vp.craftmasterBundle',
-  name: 'Craftmaster Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'craft_10x_chance',
-  op: '+',
-  fn: add(0.02),
-  inputs: [],
-}
-export const vpCraftmasterFreeCraft: Source = {
-  key: 'store.vp.craftmasterBundle',
-  name: 'Craftmaster Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'free_craft_chance',
-  op: '+',
-  fn: add(0.02),
-  inputs: [],
-}
-export const vpCraftmasterBarCraft: Source = {
-  key: 'store.vp.craftmasterBundle',
-  name: 'Craftmaster Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'bar_craft_cost_multi',
-  op: '+',
-  fn: add(0.05),
-  inputs: [],
-}
-export const vpDroneCatalystExp: Source = {
-  key: 'store.vp.droneCatalystBundle',
-  name: 'Drone Catalyst Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'coal_drone_exp_multi',
-  op: '×',
-  fn: mul(1.35),
-  inputs: [],
-}
-export const vpDroneCatalystFuel: Source = {
-  key: 'store.vp.droneCatalystBundle',
-  name: 'Drone Catalyst Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'coal_fuel_duration_multi',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpFishersTripleTick: Source = {
-  key: 'store.vp.fishersBundle',
-  name: "Fisher's Bundle!",
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'fishing_triple_tick_chance',
-  op: '+',
-  fn: add(0.1),
-  inputs: [],
-}
-export const vpAnglersNotice: Source = {
-  key: 'store.vp.anglersBundle',
-  name: "Angler's Bundle!",
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'fishing_tiny_notice_chance',
-  op: '+',
-  fn: add(0.06),
-  inputs: [],
-}
-export const vpSingularityAllStar: Source = {
-  key: 'store.vp.singularityBundle',
-  name: 'Singularity Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'all_star_multi',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpSingularitySupergiantChance: Source = {
-  key: 'store.vp.singularityBundle',
-  name: 'Singularity Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'star_supergiant_chance',
-  op: '+',
-  fn: add(0.03),
-  inputs: [],
-}
-export const vpSingularityNovagiant: Source = {
-  key: 'store.vp.singularityBundle',
-  name: 'Singularity Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'novagiant_combo_multi',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpSingularity10xSuperStar: Source = {
-  key: 'store.vp.singularityBundle',
-  name: 'Singularity Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'super_star_10x_chance',
-  op: '+',
-  fn: add(0.03),
-  inputs: [],
-}
-export const vpVoidOverdriveVoidMul: Source = {
-  key: 'store.vp.voidOverdriveBundle',
-  name: 'Void Overdrive Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'void_portal_base_multi',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpVoidOverdriveGoldenPortalMul: Source = {
-  key: 'store.vp.voidOverdriveBundle',
-  name: 'Void Overdrive Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'golden_void_portal_multi',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpVoidOverdriveGoldenPortalChance: Source = {
-  key: 'store.vp.voidOverdriveBundle',
-  name: 'Void Overdrive Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'golden_void_portal_chance',
-  op: '+',
-  fn: add(0.02),
-  inputs: [],
-}
-export const vpVoidOverdriveFuel: Source = {
-  key: 'store.vp.voidOverdriveBundle',
-  name: 'Void Overdrive Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'coal_fuel_duration_multi',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpFrogFrenzyLootfrogMul: Source = {
-  key: 'store.vp.frogFrenzyBundle',
-  name: 'Frog Frenzy Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'lootfrog_loot_multi',
-  op: '×',
-  fn: mul(1.2),
-  inputs: [],
-}
-export const vpFrogFrenzyTriple: Source = {
-  key: 'store.vp.frogFrenzyBundle',
-  name: 'Frog Frenzy Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'lootfrog_triple_spawn_chance',
-  op: '+',
-  fn: add(0.03),
-  inputs: [],
-}
-export const vpFrogFrenzyCapacity: Source = {
-  key: 'store.vp.frogFrenzyBundle',
-  name: 'Frog Frenzy Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'lootfrog_capacity',
-  op: '+',
-  fn: add(2),
-  inputs: [],
-}
-export const vpLegendaryHauler5xTick: Source = {
-  key: 'store.vp.legendaryHaulerBundle',
-  name: 'Legendary Hauler Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'fishing_5x_tick_chance',
-  op: '+',
-  fn: add(0.03),
-  inputs: [],
-}
-export const vpLegendaryHaulerFishIncome: Source = {
-  key: 'store.vp.legendaryHaulerBundle',
-  name: 'Legendary Hauler Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'fishing_income_multi',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpLegendaryHaulerTier2Dock: Source = {
-  key: 'store.vp.legendaryHaulerBundle',
-  name: 'Legendary Hauler Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'fishing_tier2_dock_multi',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpChiefExecSuperStonksChance: Source = {
-  key: 'store.vp.chiefExecutiveBundle',
-  name: 'Chief Executive Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'super_stonks_chance',
-  op: '+',
-  fn: add(0.02),
-  inputs: [],
-}
-export const vpChiefExecSuperStonksMul: Source = {
-  key: 'store.vp.chiefExecutiveBundle',
-  name: 'Chief Executive Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'super_stonks_multi',
-  op: '×',
-  fn: mul(1.15),
-  inputs: [],
-}
-export const vpChiefExecFreebieGems: Source = {
-  key: 'store.vp.chiefExecutiveBundle',
-  name: 'Chief Executive Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_gems_bonus',
-  op: '+',
-  fn: add(4),
-  inputs: [],
-}
-export const vpChiefExecFreebieBank: Source = {
-  key: 'store.vp.chiefExecutiveBundle',
-  name: 'Chief Executive Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_bank_cap',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpGoldenOreChance: Source = {
-  key: 'store.vp.goldenOreBundle',
-  name: 'Golden Ore Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'golden_ore_chance',
-  op: '+',
-  fn: add(0.03),
-  inputs: [],
-}
-export const vpGoldenOreMul: Source = {
-  key: 'store.vp.goldenOreBundle',
-  name: 'Golden Ore Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'golden_ore_multi',
-  op: '×',
-  fn: mul(1.25),
-  inputs: [],
-}
-export const vpSupergiants3StarsChance: Source = {
-  key: 'store.vp.stargazingSupergiantBundle',
-  name: 'Stargazing Supergiant Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'star_supergiant_chance',
-  op: '+',
-  fn: add(0.03),
-  inputs: [],
-}
-export const vpSupergiants3SuperStarsChance: Source = {
-  key: 'store.vp.stargazingSupergiantBundle',
-  name: 'Stargazing Supergiant Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'super_star_supergiant_chance',
-  op: '+',
-  fn: add(0.03),
-  inputs: [],
-}
-export const vpSupergiants3StarMul: Source = {
-  key: 'store.vp.stargazingSupergiantBundle',
-  name: 'Stargazing Supergiant Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'star_supergiant_multi',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpSupergiants3TripleStar: Source = {
-  key: 'store.vp.stargazingSupergiantBundle',
-  name: 'Stargazing Supergiant Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'star_triple_spawn_chance',
-  op: '+',
-  fn: add(0.03),
-  inputs: [],
-}
-export const vpSupergiants10xSuperStar: Source = {
-  key: 'store.vp.stargazingSupergiantBundle',
-  name: 'Stargazing Supergiant Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'super_star_10x_chance',
-  op: '+',
-  fn: add(0.01),
-  inputs: [],
-}
+export const storeVpDroneCount = store('vp.permanentDronePack', 'Permanent Drone Pack', 1, 'drone_count', '+', add(1))
+export const storeVpFreebie5xChance = store('vp.investmentPackage', 'Investment Package!', 1, 'freebie_5x_chance', '+', add(0.05))
+export const storeVpBankersFreebieBank = store('vp.bankersBundle', "Banker's Bundle!", 1, 'freebie_bank_cap', '+', add(3))
+export const storeVpBankersLootbugBank = store('vp.bankersBundle', "Banker's Bundle!", 1, 'lootbug_bank_cap', '+', add(3))
+export const storeVpBankersFreebieGems = store('vp.bankersBundle', "Banker's Bundle!", 1, 'freebie_gems_bonus', '+', add(1))
+export const storeVpBankersFreebie5x = store('vp.bankersBundle', "Banker's Bundle!", 1, 'freebie_5x_chance', '+', add(0.01))
+export const storeVpGottaGoFastGameSpeed = store('vp.gottaGoFast', 'Gotta Go Fast Bundle!', 1, 'game_speed_multi', '+', add(0.1))
+export const storeVpGoldenLootbug = store('vp.goldenLootbugBundle', 'Golden Lootbug Bundle!', 1, 'lootbug_golden_chance', '+', add(0.2))
+export const storeVpBiggerBankersFreebieBank = store('vp.biggerBankersBundle', "Bigger Banker's Bundle!", 1, 'freebie_bank_cap', '+', add(5))
+export const storeVpBiggerBankersLootbugBank = store('vp.biggerBankersBundle', "Bigger Banker's Bundle!", 1, 'lootbug_bank_cap', '+', add(5))
+export const storeVpBiggerBankersFreebieGems = store('vp.biggerBankersBundle', "Bigger Banker's Bundle!", 1, 'freebie_gems_bonus', '+', add(1))
+export const storeVpBiggerBankersRefresh = store('vp.biggerBankersBundle', "Bigger Banker's Bundle!", 1, 'freebie_refresh_chance', '+', add(0.01))
+export const storeVpBallerOreSell = store('vp.ballerSkinBundle', 'Baller Skin Bundle!', 1, 'ore_sell_price_multi', '×', mul(2))
+export const storeVpPetTrainerPetLevel = store('vp.petTrainerBundle', 'Pet Trainer Bundle!', 1, 'pet_levelup_chance_multi', '×', mul(1.2))
+export const storeVpPetTrainerVeinSpawn = store('vp.petTrainerBundle', 'Pet Trainer Bundle!', 1, 'vein_spawn_rate_multi', '×', mul(1.1))
+export const storeVpPetTrainerExp = store('vp.petTrainerBundle', 'Pet Trainer Bundle!', 1, 'experience_multi', '×', mul(2.0))
+export const storeVpPetTrainerRainbowFloor = store('vp.petTrainerBundle', 'Pet Trainer Bundle!', 1, 'rainbow_floor_chance', '+', add(0.01))
+export const storeVpVeinExtractorVeinIncome = store('vp.veinExtractorBundle', 'Vein Extractor Bundle!', 1, 'vein_income_multi', '×', mul(1.15))
+export const storeVpVeinExtractorGoldenVeinChance = store('vp.veinExtractorBundle', 'Vein Extractor Bundle!', 1, 'golden_vein_chance', '+', add(0.05))
+export const storeVpVeinExtractorRainbowVeinChance = store('vp.veinExtractorBundle', 'Vein Extractor Bundle!', 1, 'rainbow_vein_chance', '+', add(0.02))
+export const storeVpVeinExtractorGoldenVeinMul = store('vp.veinExtractorBundle', 'Vein Extractor Bundle!', 1, 'golden_vein_multi', '×', mul(1.25))
+export const storeVpSupernovaStarNova = store('vp.stargazingSupernovaBundle', 'Stargazing Supernova Bundle!', 1, 'star_supernova_chance', '+', add(0.03))
+export const storeVpSupernovaSuperStarNova = store('vp.stargazingSupernovaBundle', 'Stargazing Supernova Bundle!', 1, 'super_star_supernova_chance', '+', add(0.03))
+export const storeVpSupernovaStarNovaMul = store('vp.stargazingSupernovaBundle', 'Stargazing Supernova Bundle!', 1, 'star_supernova_multi', '+', add(1.1))
+export const storeVpSupernovaSuperStarNovaMul = store('vp.stargazingSupernovaBundle', 'Stargazing Supernova Bundle!', 1, 'super_star_supernova_multi', '+', add(1.1))
+export const storeVpSupernovaTripleStar = store('vp.stargazingSupernovaBundle', 'Stargazing Supernova Bundle!', 1, 'star_triple_spawn_chance', '+', add(0.03))
+export const storeVpSupernovaTripleSuperStar = store('vp.stargazingSupernovaBundle', 'Stargazing Supernova Bundle!', 1, 'super_star_triple_chance', '+', add(0.03))
+export const storeVpCapitalistFreebieGems = store('vp.capitalistBundle', 'Capitalist Bundle!', 1, 'freebie_gems_bonus', '+', add(2))
+export const storeVpArchFreebieGems = store('vp.archaeologyBundle', 'Archaeology Bundle!', 1, 'freebie_gems_bonus', '+', add(1))
+export const storeVpArchFragmentGain = store('vp.archaeologyBundle', 'Archaeology Bundle!', 1, 'archaeology_fragment_gain_multi', '×', mul(1.25))
+export const storeVpProgressionGoldenFloor = store('vp.progressionBoosterBundle', 'Progression Booster Bundle!', 1, 'golden_floor_multi', '×', mul(1.2))
+export const storeVpProgressionVeinIncome = store('vp.progressionBoosterBundle', 'Progression Booster Bundle!', 1, 'vein_income_multi', '×', mul(1.15))
+export const storeVpProgressionBombRecharge = store('vp.progressionBoosterBundle', 'Progression Booster Bundle!', 1, 'bomb_recharge_speed', '×', mul(1.1))
+export const storeVpProgressionTripleStar = store('vp.progressionBoosterBundle', 'Progression Booster Bundle!', 1, 'star_triple_spawn_chance', '+', add(0.05))
+export const storeVpBomberBombRecharge = store('vp.bomberExtraordinaireBundle', 'Bomber Extraordinaire Bundle!', 1, 'bomb_recharge_speed', '×', mul(1.1))
+export const storeVpBomberBombCapacity = store('vp.bomberExtraordinaireBundle', 'Bomber Extraordinaire Bundle!', 1, 'bomb_capacity', '×', mul(1.1))
+export const storeVpBomberBopMulti = store('vp.bomberExtraordinaireBundle', 'Bomber Extraordinaire Bundle!', 1, 'bomb_of_plenty_multi', '+', add(5))
+export const storeVpBomberTransmuterMulti = store('vp.bomberExtraordinaireBundle', 'Bomber Extraordinaire Bundle!', 1, 'bomb_transmuter_multi', '+', add(10))
+export const storeVpLootbugBonanzaLootMul = store('vp.lootbugBonanzaBundle', 'Lootbug Bonanza Bundle!', 1, 'lootbug_loot_multi', '×', mul(1.2))
+export const storeVpLootbugBonanzaBankCap = store('vp.lootbugBonanzaBundle', 'Lootbug Bonanza Bundle!', 1, 'lootbug_bank_cap', '+', add(10))
+export const storeVpInsiderStonksMul = store('vp.insiderTradingBundle', 'Insider Trading Bundle!', 1, 'stonks_multi', '+', add(2))
+export const storeVpInsiderFreebieBank = store('vp.insiderTradingBundle', 'Insider Trading Bundle!', 1, 'freebie_bank_cap', '+', add(2))
+export const storeVpCraftmaster100xCraft = store('vp.craftmasterBundle', 'Craftmaster Bundle!', 1, 'craft_100x_chance', '+', add(0.01))
+export const storeVpCraftmaster10xCraft = store('vp.craftmasterBundle', 'Craftmaster Bundle!', 1, 'craft_10x_chance', '+', add(0.02))
+export const storeVpCraftmasterFreeCraft = store('vp.craftmasterBundle', 'Craftmaster Bundle!', 1, 'free_craft_chance', '+', add(0.02))
+export const storeVpCraftmasterBarCraft = store('vp.craftmasterBundle', 'Craftmaster Bundle!', 1, 'bar_craft_cost_multi', '+', add(0.05))
+export const storeVpDroneCatalystExp = store('vp.droneCatalystBundle', 'Drone Catalyst Bundle!', 1, 'coal_drone_exp_multi', '×', mul(1.35))
+export const storeVpDroneCatalystFuel = store('vp.droneCatalystBundle', 'Drone Catalyst Bundle!', 1, 'coal_fuel_duration_multi', '×', mul(1.1))
+export const storeVpFishersTripleTick = store('vp.fishersBundle', "Fisher's Bundle!", 1, 'fishing_triple_tick_chance', '+', add(0.1))
+export const storeVpAnglersNotice = store('vp.anglersBundle', "Angler's Bundle!", 1, 'fishing_tiny_notice_chance', '+', add(0.06))
+export const storeVpSingularityAllStar = store('vp.singularityBundle', 'Singularity Bundle!', 1, 'all_star_multi', '×', mul(1.1))
+export const storeVpSingularitySupergiantChance = store('vp.singularityBundle', 'Singularity Bundle!', 1, 'star_supergiant_chance', '+', add(0.03))
+export const storeVpSingularityNovagiant = store('vp.singularityBundle', 'Singularity Bundle!', 1, 'novagiant_combo_multi', '×', mul(1.1))
+export const storeVpSingularity10xSuperStar = store('vp.singularityBundle', 'Singularity Bundle!', 1, 'super_star_10x_chance', '+', add(0.03))
+export const storeVpVoidOverdriveVoidMul = store('vp.voidOverdriveBundle', 'Void Overdrive Bundle!', 1, 'void_portal_base_multi', '×', mul(1.1))
+export const storeVpVoidOverdriveGoldenPortalMul = store('vp.voidOverdriveBundle', 'Void Overdrive Bundle!', 1, 'golden_void_portal_multi', '×', mul(1.1))
+export const storeVpVoidOverdriveGoldenPortalChance = store('vp.voidOverdriveBundle', 'Void Overdrive Bundle!', 1, 'golden_void_portal_chance', '+', add(0.02))
+export const storeVpVoidOverdriveFuel = store('vp.voidOverdriveBundle', 'Void Overdrive Bundle!', 1, 'coal_fuel_duration_multi', '×', mul(1.1))
+export const storeVpFrogFrenzyLootfrogMul = store('vp.frogFrenzyBundle', 'Frog Frenzy Bundle!', 1, 'lootfrog_loot_multi', '×', mul(1.2))
+export const storeVpFrogFrenzyTriple = store('vp.frogFrenzyBundle', 'Frog Frenzy Bundle!', 1, 'lootfrog_triple_spawn_chance', '+', add(0.03))
+export const storeVpFrogFrenzyCapacity = store('vp.frogFrenzyBundle', 'Frog Frenzy Bundle!', 1, 'lootfrog_capacity', '+', add(2))
+export const storeVpLegendaryHauler5xTick = store('vp.legendaryHaulerBundle', 'Legendary Hauler Bundle!', 1, 'fishing_5x_tick_chance', '+', add(0.03))
+export const storeVpLegendaryHaulerFishIncome = store('vp.legendaryHaulerBundle', 'Legendary Hauler Bundle!', 1, 'fishing_income_multi', '×', mul(1.1))
+export const storeVpLegendaryHaulerTier2Dock = store('vp.legendaryHaulerBundle', 'Legendary Hauler Bundle!', 1, 'fishing_tier2_dock_multi', '×', mul(1.1))
+export const storeVpChiefExecSuperStonksChance = store('vp.chiefExecutiveBundle', 'Chief Executive Bundle!', 1, 'super_stonks_chance', '+', add(0.02))
+export const storeVpChiefExecSuperStonksMul = store('vp.chiefExecutiveBundle', 'Chief Executive Bundle!', 1, 'super_stonks_multi', '×', mul(1.15))
+export const storeVpChiefExecFreebieGems = store('vp.chiefExecutiveBundle', 'Chief Executive Bundle!', 1, 'freebie_gems_bonus', '+', add(4))
+export const storeVpChiefExecFreebieBank = store('vp.chiefExecutiveBundle', 'Chief Executive Bundle!', 1, 'freebie_bank_cap', '×', mul(1.1))
+export const storeVpGoldenOreChance = store('vp.goldenOreBundle', 'Golden Ore Bundle!', 1, 'golden_ore_chance', '+', add(0.03))
+export const storeVpGoldenOreMul = store('vp.goldenOreBundle', 'Golden Ore Bundle!', 1, 'golden_ore_multi', '×', mul(1.25))
+export const storeVpSupergiants3StarsChance = store('vp.stargazingSupergiantBundle', 'Stargazing Supergiant Bundle!', 1, 'star_supergiant_chance', '+', add(0.03))
+export const storeVpSupergiants3SuperStarsChance = store('vp.stargazingSupergiantBundle', 'Stargazing Supergiant Bundle!', 1, 'super_star_supergiant_chance', '+', add(0.03))
+export const storeVpSupergiants3StarMul = store('vp.stargazingSupergiantBundle', 'Stargazing Supergiant Bundle!', 1, 'star_supergiant_multi', '×', mul(1.1))
+export const storeVpSupergiants3TripleStar = store('vp.stargazingSupergiantBundle', 'Stargazing Supergiant Bundle!', 1, 'star_triple_spawn_chance', '+', add(0.03))
+export const storeVpSupergiants10xSuperStar = store('vp.stargazingSupergiantBundle', 'Stargazing Supergiant Bundle!', 1, 'super_star_10x_chance', '+', add(0.01))
+
 // ─── Ascension Bundle (new in V2.1.1) ───────────────────────────────────────
-export const vpAscensionArchExp: Source = {
-  key: 'store.vp.ascensionBundle',
-  name: 'Ascension Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'archaeology_exp_gain_multi',
-  op: '×',
-  fn: mul(1.15),
-  inputs: [],
-}
-export const vpAscensionAutoTap: Source = {
-  key: 'store.vp.ascensionBundle',
-  name: 'Ascension Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'archaeology_crosshair_auto_tap',
-  op: '+',
-  fn: add(0.05),
-  inputs: [],
-}
-export const vpAscensionLootMod: Source = {
-  key: 'store.vp.ascensionBundle',
-  name: 'Ascension Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'archaeology_lood_mod_chance',
-  op: '+',
-  fn: add(0.02),
-  inputs: [],
-}
-export const vpAscensionGoldenCrosshair: Source = {
-  key: 'store.vp.ascensionBundle',
-  name: 'Ascension Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'archaeology_golden_crosshair_chance',
-  op: '+',
-  fn: add(0.02),
-  inputs: [],
-}
+export const storeVpAscensionArchExp = store('vp.ascensionBundle', 'Ascension Bundle!', 1, 'archaeology_exp_gain_multi', '×', mul(1.15))
+export const storeVpAscensionAutoTap = store('vp.ascensionBundle', 'Ascension Bundle!', 1, 'archaeology_crosshair_auto_tap', '+', add(0.05))
+export const storeVpAscensionLootMod = store('vp.ascensionBundle', 'Ascension Bundle!', 1, 'archaeology_lood_mod_chance', '+', add(0.02))
+export const storeVpAscensionGoldenCrosshair = store('vp.ascensionBundle', 'Ascension Bundle!', 1, 'archaeology_golden_crosshair_chance', '+', add(0.02))
 
 // ─── Polychrome Potency Bundle ───────────────────────────────────────────────
-export const vpPolyPotencyOre: Source = {
-  key: 'store.vp.polychromePotencyBundle',
-  name: 'Polychrome Potency Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'polychrome_card_bonus_ore',
-  op: '×',
-  fn: mul(1.15),
-  inputs: [],
-}
-export const vpPolyPotencyVein: Source = {
-  key: 'store.vp.polychromePotencyBundle',
-  name: 'Polychrome Potency Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'polychrome_card_bonus_vein',
-  op: '×',
-  fn: mul(1.15),
-  inputs: [],
-}
-export const vpPolyPotencyStar: Source = {
-  key: 'store.vp.polychromePotencyBundle',
-  name: 'Polychrome Potency Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'polychrome_card_bonus_star',
-  op: '×',
-  fn: mul(1.15),
-  inputs: [],
-}
-export const vpPolyPotencyFish: Source = {
-  key: 'store.vp.polychromePotencyBundle',
-  name: 'Polychrome Potency Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'polychrome_card_bonus_fish',
-  op: '×',
-  fn: mul(1.15),
-  inputs: [],
-}
+export const storeVpPolyPotencyOre = store('vp.polychromePotencyBundle', 'Polychrome Potency Bundle!', 1, 'polychrome_card_bonus_ore', '×', mul(1.15))
+export const storeVpPolyPotencyVein = store('vp.polychromePotencyBundle', 'Polychrome Potency Bundle!', 1, 'polychrome_card_bonus_vein', '×', mul(1.15))
+export const storeVpPolyPotencyStar = store('vp.polychromePotencyBundle', 'Polychrome Potency Bundle!', 1, 'polychrome_card_bonus_star', '×', mul(1.15))
+export const storeVpPolyPotencyFish = store('vp.polychromePotencyBundle', 'Polychrome Potency Bundle!', 1, 'polychrome_card_bonus_fish', '×', mul(1.15))
 
 // ─── Capitalist Bundle (second effect) ───────────────────────────────────────
-export const vpCapitalistRelicChance: Source = {
-  key: 'store.vp.capitalistBundle',
-  name: 'Capitalist Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_chance_for_bonus_relic',
-  op: '+',
-  fn: add(0.15),
-  inputs: [],
-}
+export const storeVpCapitalistRelicChance = store('vp.capitalistBundle', 'Capitalist Bundle!', 1, 'freebie_chance_for_bonus_relic', '+', add(0.15))
 
 // ─── Skill Surge Bundle ───────────────────────────────────────────────────────
-export const vpSkillSurgeSkillShard: Source = {
-  key: 'store.vp.skillSurgeBundle',
-  name: 'Skill Surge Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_chance_for_skill_shard',
-  op: '+',
-  fn: add(0.01),
-  inputs: [],
-}
-
-export const vpHalfWayRainbowFloorMul: Source = {
-  key: 'store.vp.halfWayBundle',
-  name: 'Half Way Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'rainbow_floor_multi',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpHalfWayNovagiant: Source = {
-  key: 'store.vp.halfWayBundle',
-  name: 'Half Way Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'novagiant_combo_multi',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpHalfWayFishingRod: Source = {
-  key: 'store.vp.halfWayBundle',
-  name: 'Half Way Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'fishing_rod_power',
-  op: '×',
-  fn: mul(1.1),
-  inputs: [],
-}
-export const vpHalfWayFreebieGems: Source = {
-  key: 'store.vp.halfWayBundle',
-  name: 'Half Way Bundle!',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'freebie_gems_bonus',
-  op: '+',
-  fn: add(2),
-  inputs: [],
-}
+export const storeVpSkillSurgeSkillShard = store('vp.skillSurgeBundle', 'Skill Surge Bundle!', 1, 'freebie_chance_for_skill_shard', '+', add(0.01))
+export const storeVpHalfWayRainbowFloorMul = store('vp.halfWayBundle', 'Half Way Bundle!', 1, 'rainbow_floor_multi', '×', mul(1.1))
+export const storeVpHalfWayNovagiant = store('vp.halfWayBundle', 'Half Way Bundle!', 1, 'novagiant_combo_multi', '×', mul(1.1))
+export const storeVpHalfWayFishingRod = store('vp.halfWayBundle', 'Half Way Bundle!', 1, 'fishing_rod_power', '×', mul(1.1))
+export const storeVpHalfWayFreebieGems = store('vp.halfWayBundle', 'Half Way Bundle!', 1, 'freebie_gems_bonus', '+', add(2))
 
 export const storeSources = {
   // Perks
-  perkOreIncome,
-  perkPrestigePts,
-  perkBarOutput,
-  perkBombDamage,
+  storePerkOreIncome,
+  storePerkPrestigePts,
+  storePerkBarOutput,
+  storePerkBombDamage,
   // Gem upgrades
-  gemPickaxeDamage,
-  gemBombDamage,
-  gemBombCapacity,
-  gemFreebieBank,
-  gemChestMeter,
-  gemItemsInChests,
-  gemOreSellPrice,
+  storeGemPickaxeDamage,
+  storeGemBombDamage,
+  storeGemBombCapacity,
+  storeGemFreebieBank,
+  storeGemChestMeter,
+  storeGemItemsInChests,
+  storeGemOreSellPrice,
   // Founder
-  founderSupplyDropCd,
-  founderDoubleSupplyDrop,
-  founderCraft10x,
-  founderBomBofPlenty,
-  founderGoldenLootbug,
-  founderFreebieBank,
-  founderTripleSupplyDrop,
-  founderFreebieGems,
-  founderRainbowFloor,
-  founderGameSpeed,
-  founderGoldenSupplyDrop,
-  founderGemBombGemChance,
+  storeFounderSupplyDropCd,
+  storeFounderDoubleSupplyDrop,
+  storeFounderCraft10x,
+  storeFounderBomBofPlenty,
+  storeFounderGoldenLootbug,
+  storeFounderFreebieBank,
+  storeFounderTripleSupplyDrop,
+  storeFounderFreebieGems,
+  storeFounderRainbowFloor,
+  storeFounderGameSpeed,
+  storeFounderGoldenSupplyDrop,
+  storeFounderGemBombGemChance,
   // Value packs
-  vpDroneCount,
-  vpFreebie5xChance,
-  vpBankersFreebieBank,
-  vpBankersLootbugBank,
-  vpBankersFreebieGems,
-  vpBankersFreebie5x,
-  vpGottaGoFastGameSpeed,
-  vpGoldenLootbug,
-  vpBiggerBankersFreebieBank,
-  vpBiggerBankersLootbugBank,
-  vpBiggerBankersFreebieGems,
-  vpBiggerBankersRefresh,
-  vpBallerOreSell,
-  vpPetTrainerPetLevel,
-  vpPetTrainerVeinSpawn,
-  vpPetTrainerExp,
-  vpPetTrainerRainbowFloor,
-  vpVeinExtractorVeinIncome,
-  vpVeinExtractorGoldenVeinChance,
-  vpVeinExtractorRainbowVeinChance,
-  vpVeinExtractorGoldenVeinMul,
-  vpSupernovaStarNova,
-  vpSupernovaSuperStarNova,
-  vpSupernovaStarNovaMul,
-  vpSupernovaSuperStarNovaMul,
-  vpSupernovaTripleStar,
-  vpSupernovaTripleSuperStar,
-  vpCapitalistFreebieGems,
-  vpArchFreebieGems,
-  vpArchFragmentGain,
-  vpProgressionGoldenFloor,
-  vpProgressionVeinIncome,
-  vpProgressionBombRecharge,
-  vpProgressionTripleStar,
-  vpBomberBombRecharge,
-  vpBomberBombCapacity,
-  vpBomberBopMulti,
-  vpBomberTransmuterMulti,
-  vpLootbugBonanzaLootMul,
-  vpLootbugBonanzaBankCap,
-  vpInsiderStonksMul,
-  vpInsiderFreebieBank,
-  vpCraftmaster100xCraft,
-  vpCraftmaster10xCraft,
-  vpCraftmasterFreeCraft,
-  vpCraftmasterBarCraft,
-  vpDroneCatalystExp,
-  vpDroneCatalystFuel,
-  vpFishersTripleTick,
-  vpAnglersNotice,
-  vpSingularityAllStar,
-  vpSingularitySupergiantChance,
-  vpSingularityNovagiant,
-  vpSingularity10xSuperStar,
-  vpVoidOverdriveVoidMul,
-  vpVoidOverdriveGoldenPortalMul,
-  vpVoidOverdriveGoldenPortalChance,
-  vpVoidOverdriveFuel,
-  vpFrogFrenzyLootfrogMul,
-  vpFrogFrenzyTriple,
-  vpFrogFrenzyCapacity,
-  vpLegendaryHauler5xTick,
-  vpLegendaryHaulerFishIncome,
-  vpLegendaryHaulerTier2Dock,
-  vpChiefExecSuperStonksChance,
-  vpChiefExecSuperStonksMul,
-  vpChiefExecFreebieGems,
-  vpChiefExecFreebieBank,
-  vpGoldenOreChance,
-  vpGoldenOreMul,
-  vpSupergiants3StarsChance,
-  vpSupergiants3SuperStarsChance,
-  vpSupergiants3StarMul,
-  vpSupergiants3TripleStar,
-  vpSupergiants10xSuperStar,
-  vpHalfWayRainbowFloorMul,
-  vpHalfWayNovagiant,
-  vpHalfWayFishingRod,
-  vpHalfWayFreebieGems,
+  storeVpDroneCount,
+  storeVpFreebie5xChance,
+  storeVpBankersFreebieBank,
+  storeVpBankersLootbugBank,
+  storeVpBankersFreebieGems,
+  storeVpBankersFreebie5x,
+  storeVpGottaGoFastGameSpeed,
+  storeVpGoldenLootbug,
+  storeVpBiggerBankersFreebieBank,
+  storeVpBiggerBankersLootbugBank,
+  storeVpBiggerBankersFreebieGems,
+  storeVpBiggerBankersRefresh,
+  storeVpBallerOreSell,
+  storeVpPetTrainerPetLevel,
+  storeVpPetTrainerVeinSpawn,
+  storeVpPetTrainerExp,
+  storeVpPetTrainerRainbowFloor,
+  storeVpVeinExtractorVeinIncome,
+  storeVpVeinExtractorGoldenVeinChance,
+  storeVpVeinExtractorRainbowVeinChance,
+  storeVpVeinExtractorGoldenVeinMul,
+  storeVpSupernovaStarNova,
+  storeVpSupernovaSuperStarNova,
+  storeVpSupernovaStarNovaMul,
+  storeVpSupernovaSuperStarNovaMul,
+  storeVpSupernovaTripleStar,
+  storeVpSupernovaTripleSuperStar,
+  storeVpCapitalistFreebieGems,
+  storeVpArchFreebieGems,
+  storeVpArchFragmentGain,
+  storeVpProgressionGoldenFloor,
+  storeVpProgressionVeinIncome,
+  storeVpProgressionBombRecharge,
+  storeVpProgressionTripleStar,
+  storeVpBomberBombRecharge,
+  storeVpBomberBombCapacity,
+  storeVpBomberBopMulti,
+  storeVpBomberTransmuterMulti,
+  storeVpLootbugBonanzaLootMul,
+  storeVpLootbugBonanzaBankCap,
+  storeVpInsiderStonksMul,
+  storeVpInsiderFreebieBank,
+  storeVpCraftmaster100xCraft,
+  storeVpCraftmaster10xCraft,
+  storeVpCraftmasterFreeCraft,
+  storeVpCraftmasterBarCraft,
+  storeVpDroneCatalystExp,
+  storeVpDroneCatalystFuel,
+  storeVpFishersTripleTick,
+  storeVpAnglersNotice,
+  storeVpSingularityAllStar,
+  storeVpSingularitySupergiantChance,
+  storeVpSingularityNovagiant,
+  storeVpSingularity10xSuperStar,
+  storeVpVoidOverdriveVoidMul,
+  storeVpVoidOverdriveGoldenPortalMul,
+  storeVpVoidOverdriveGoldenPortalChance,
+  storeVpVoidOverdriveFuel,
+  storeVpFrogFrenzyLootfrogMul,
+  storeVpFrogFrenzyTriple,
+  storeVpFrogFrenzyCapacity,
+  storeVpLegendaryHauler5xTick,
+  storeVpLegendaryHaulerFishIncome,
+  storeVpLegendaryHaulerTier2Dock,
+  storeVpChiefExecSuperStonksChance,
+  storeVpChiefExecSuperStonksMul,
+  storeVpChiefExecFreebieGems,
+  storeVpChiefExecFreebieBank,
+  storeVpGoldenOreChance,
+  storeVpGoldenOreMul,
+  storeVpSupergiants3StarsChance,
+  storeVpSupergiants3SuperStarsChance,
+  storeVpSupergiants3StarMul,
+  storeVpSupergiants3TripleStar,
+  storeVpSupergiants10xSuperStar,
+  storeVpHalfWayRainbowFloorMul,
+  storeVpHalfWayNovagiant,
+  storeVpHalfWayFishingRod,
+  storeVpHalfWayFreebieGems,
   // New bundles
-  vpAscensionArchExp,
-  vpAscensionAutoTap,
-  vpAscensionLootMod,
-  vpAscensionGoldenCrosshair,
-  vpPolyPotencyOre,
-  vpPolyPotencyVein,
-  vpPolyPotencyStar,
-  vpPolyPotencyFish,
-  vpCapitalistRelicChance,
-  vpSkillSurgeSkillShard,
+  storeVpAscensionArchExp,
+  storeVpAscensionAutoTap,
+  storeVpAscensionLootMod,
+  storeVpAscensionGoldenCrosshair,
+  storeVpPolyPotencyOre,
+  storeVpPolyPotencyVein,
+  storeVpPolyPotencyStar,
+  storeVpPolyPotencyFish,
+  storeVpCapitalistRelicChance,
+  storeVpSkillSurgeSkillShard,
 }

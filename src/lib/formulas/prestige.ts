@@ -36,7 +36,7 @@ export const prestigeFormulas: FormulaMap = defineFormulas({
       { source: pet.petDwarfQuestPrestigePts, op: '+' },
       { source: ch.chExpPrestigePts, op: '+' },
       { source: card.cardMiscCeliosHat, op: '×' },
-      { source: st.perkPrestigePts, op: '×' },
+      { source: st.storePerkPrestigePts, op: '×' },
       { source: sg.starLibraPrestige, op: '+' },
       { source: U, op: '+', unknown: true }, // Prestige + Store + Cards + Construct + Skins
       { source: sn.snPrestigePointGain, op: '×1+' },
@@ -65,7 +65,7 @@ export const prestigeFormulas: FormulaMap = defineFormulas({
       { source: ct.ctExpGainW1, op: '+' },
       { source: ch.chExpPrestigePts, op: '+' },
       { source: card.cardMiscMinerName, op: '×' },
-      { source: st.vpPetTrainerExp, op: '×' },
+      { source: st.storeVpPetTrainerExp, op: '×' },
       { source: sg.starCapricornExp, op: '+' },
       { source: sg.ssExpGain, op: '+' },
       { source: f.noticeT1ExpGain, op: '+' },

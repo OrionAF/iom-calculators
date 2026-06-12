@@ -103,7 +103,7 @@ export const pickaxeFormulas: FormulaMap = defineFormulas({
         ],
       },
       // ── Store: Gem Upgrade × Founders Bundle ──
-      { source: st.gemPickaxeDamage, op: '×' },
+      { source: st.storeGemPickaxeDamage, op: '×' },
       { source: U, op: '×', unknown: true }, // Store: Founders Bundle (×)
       // ── Workshop: W1 × W3 × W4 (wiki: all multiplicative) ──
       { source: ws.wsPickaxeDmgW1, op: '×1+' },

@@ -27,13 +27,13 @@ export const chestsFormulas: FormulaMap = defineFormulas({
   chest_meter_multi: {
     contributions: [
       { source: sk.haveYouTriedGettingLuckierChestMeter, op: '×' },
-      { source: st.gemChestMeter, op: '×' },
+      { source: st.storeGemChestMeter, op: '×' },
       { source: sg.starEridanusSuperStonks, op: '+' },
       { source: up.upgrMeterFillRate, op: '+' },
     ],
   },
   chest_items_bonus: {
-    contributions: [{ source: st.gemItemsInChests, op: '+' }],
+    contributions: [{ source: st.storeGemItemsInChests, op: '+' }],
   },
   freebie_gems_bonus: {
     contributions: [
@@ -41,13 +41,13 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: con.staFriendshipFreebieGems, op: '+' },
       { source: card.cardMiscFreebie, op: '+' },
       { source: ch.chFreebieGemsBonus, op: '+' },
-      { source: st.founderFreebieGems, op: '+' },
-      { source: st.vpBankersFreebieGems, op: '+' },
-      { source: st.vpBiggerBankersFreebieGems, op: '+' },
-      { source: st.vpCapitalistFreebieGems, op: '+' },
-      { source: st.vpArchFreebieGems, op: '+' },
-      { source: st.vpChiefExecFreebieGems, op: '+' },
-      { source: st.vpHalfWayFreebieGems, op: '+' },
+      { source: st.storeFounderFreebieGems, op: '+' },
+      { source: st.storeVpBankersFreebieGems, op: '+' },
+      { source: st.storeVpBiggerBankersFreebieGems, op: '+' },
+      { source: st.storeVpCapitalistFreebieGems, op: '+' },
+      { source: st.storeVpArchFreebieGems, op: '+' },
+      { source: st.storeVpChiefExecFreebieGems, op: '+' },
+      { source: st.storeVpHalfWayFreebieGems, op: '+' },
       { source: con.staFallacyFreebieGems, op: '+' },
       { source: U, op: '+', unknown: true },
       { source: card.cardLegMeltingGibbous, op: '×1+' },
@@ -56,15 +56,15 @@ export const chestsFormulas: FormulaMap = defineFormulas({
   freebie_5x_chance: {
     contributions: [
       { source: con.staArtistryFreebie5x, op: '+' },
-      { source: st.vpFreebie5xChance, op: '+' },
-      { source: st.vpBankersFreebie5x, op: '+' },
+      { source: st.storeVpFreebie5xChance, op: '+' },
+      { source: st.storeVpBankersFreebie5x, op: '+' },
       { source: f.noticeT2FreebieJackpot, op: '+' },
     ],
   },
   freebie_refresh_chance: {
     contributions: [
       { source: sk.freeThatsGreatRefresh, op: '+' },
-      { source: st.vpBiggerBankersRefresh, op: '+' },
+      { source: st.storeVpBiggerBankersRefresh, op: '+' },
       { source: con.staArtistryFreebieRefresh, op: '+' },
     ],
   },
@@ -78,12 +78,12 @@ export const chestsFormulas: FormulaMap = defineFormulas({
         base: 0,
         op: '+',
         contributions: [
-          { source: st.gemFreebieBank, op: '+' },
-          { source: st.founderFreebieBank, op: '+' },
-          { source: st.vpBankersFreebieBank, op: '+' },
-          { source: st.vpBiggerBankersFreebieBank, op: '+' },
-          { source: st.vpInsiderFreebieBank, op: '+' },
-          { source: st.vpChiefExecFreebieBank, op: '×' },
+          { source: st.storeGemFreebieBank, op: '+' },
+          { source: st.storeFounderFreebieBank, op: '+' },
+          { source: st.storeVpBankersFreebieBank, op: '+' },
+          { source: st.storeVpBiggerBankersFreebieBank, op: '+' },
+          { source: st.storeVpInsiderFreebieBank, op: '+' },
+          { source: st.storeVpChiefExecFreebieBank, op: '×' },
         ],
       },
       { source: sk.chronokeeperFrebieCap, op: '+' },
@@ -119,7 +119,7 @@ export const chestsFormulas: FormulaMap = defineFormulas({
   stonks_multi: {
     contributions: [
       { source: card.cardMiscStonks, op: '×' },
-      { source: st.vpInsiderStonksMul, op: '+' },
+      { source: st.storeVpInsiderStonksMul, op: '+' },
       { source: con.staCombatStonksMul, op: '+' },
       { source: sg.starEridanusStonksMul, op: '+' },
       { source: ch.chAllStonksMulStonks, op: '+' },
@@ -131,7 +131,7 @@ export const chestsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: card.cardMiscSuperStonks, op: '+' },
       { source: ch.chSuperStonksChance, op: '+' },
-      { source: st.vpChiefExecSuperStonksChance, op: '+' },
+      { source: st.storeVpChiefExecSuperStonksChance, op: '+' },
       { source: up.upgrSuperStonksChance, op: '+' },
       { source: card.cardLegBlackenedBasker, op: '+' },
       { source: card.cardLegBlackenedBasker, op: '+' },
@@ -139,7 +139,7 @@ export const chestsFormulas: FormulaMap = defineFormulas({
   },
   super_stonks_multi: {
     contributions: [
-      { source: st.vpChiefExecSuperStonksMul, op: '×' },
+      { source: st.storeVpChiefExecSuperStonksMul, op: '×' },
       { source: arch.idolCharon, op: '+' },
       { source: U, op: '+', unknown: true },
       { source: card.cardLegStormSerpent, op: '×1+' },

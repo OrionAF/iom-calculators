@@ -5,18 +5,18 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 51; unmatche
 ## Wiki stats with no matching registry name / formula
 
 ## Annotated sources missing from their stat's formula
-- founderSupplyDropCd (store.founder) → statKey 'founder_supply_drop_cd' has no formula
-- founderDoubleSupplyDrop (store.founder) → statKey 'founder_double_supply_drop_chance' has no formula
-- founderTripleSupplyDrop (store.founder) → statKey 'founder_triple_supply_drop_chance' has no formula
-- founderGoldenSupplyDrop (store.founder) → statKey 'founder_golden_supply_drop_chance' has no formula
-- founderGemBombGemChance (store.founder) → statKey 'gem_bomb_gem_chance' has no formula
-- vpArchFragmentGain (store.vp.archaeologyBundle) → statKey 'archaeology_fragment_gain_multi' has no formula
-- vpAscensionArchExp (store.vp.ascensionBundle) → statKey 'archaeology_exp_gain_multi' has no formula
-- vpAscensionAutoTap (store.vp.ascensionBundle) → statKey 'archaeology_crosshair_auto_tap' has no formula
-- vpAscensionLootMod (store.vp.ascensionBundle) → statKey 'archaeology_lood_mod_chance' has no formula
-- vpAscensionGoldenCrosshair (store.vp.ascensionBundle) → statKey 'archaeology_golden_crosshair_chance' has no formula
-- vpCapitalistRelicChance (store.vp.capitalistBundle) → statKey 'freebie_chance_for_bonus_relic' has no formula
-- vpSkillSurgeSkillShard (store.vp.skillSurgeBundle) → statKey 'freebie_chance_for_skill_shard' has no formula
+- storeFounderSupplyDropCd (store.founder) → statKey 'founder_supply_drop_cd' has no formula
+- storeFounderDoubleSupplyDrop (store.founder) → statKey 'founder_double_supply_drop_chance' has no formula
+- storeFounderTripleSupplyDrop (store.founder) → statKey 'founder_triple_supply_drop_chance' has no formula
+- storeFounderGoldenSupplyDrop (store.founder) → statKey 'founder_golden_supply_drop_chance' has no formula
+- storeFounderGemBombGemChance (store.founder) → statKey 'gem_bomb_gem_chance' has no formula
+- storeVpArchFragmentGain (store.vp.archaeologyBundle) → statKey 'archaeology_fragment_gain_multi' has no formula
+- storeVpAscensionArchExp (store.vp.ascensionBundle) → statKey 'archaeology_exp_gain_multi' has no formula
+- storeVpAscensionAutoTap (store.vp.ascensionBundle) → statKey 'archaeology_crosshair_auto_tap' has no formula
+- storeVpAscensionLootMod (store.vp.ascensionBundle) → statKey 'archaeology_lood_mod_chance' has no formula
+- storeVpAscensionGoldenCrosshair (store.vp.ascensionBundle) → statKey 'archaeology_golden_crosshair_chance' has no formula
+- storeVpCapitalistRelicChance (store.vp.capitalistBundle) → statKey 'freebie_chance_for_bonus_relic' has no formula
+- storeVpSkillSurgeSkillShard (store.vp.skillSurgeBundle) → statKey 'freebie_chance_for_skill_shard' has no formula
 
 ## Per-stat findings
 

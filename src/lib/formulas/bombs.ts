@@ -78,8 +78,8 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: card.cardMiscBone, op: '×' },
       { source: card.cardLegRadioactiveSlugBomb, op: '×1+' },
       // ── Store: Perk × Founders Bundle × Gem Upgrade ──
-      { source: st.perkBombDamage, op: '×' },
-      { source: st.gemBombDamage, op: '×1+' },
+      { source: st.storePerkBombDamage, op: '×' },
+      { source: st.storeGemBombDamage, op: '×1+' },
       { source: U, op: '×', unknown: true }, // Store: Founders Bundle (×)
       // ── Drones ──
       { source: drone.droneSuitBearUpgrade, op: '×1+' },
@@ -130,8 +130,8 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: ct.ctBombRechargeW1, op: '+' },
       { source: pet.petCrabBombRecharge, op: '+' },
       { source: rel.epicRelicBombRecharge, op: '+' },
-      { source: st.vpProgressionBombRecharge, op: '×' },
-      { source: st.vpBomberBombRecharge, op: '×' },
+      { source: st.storeVpProgressionBombRecharge, op: '×' },
+      { source: st.storeVpBomberBombRecharge, op: '×' },
       { source: sg.starVirgoRecharge, op: '+' },
       { source: f.noticeT1BombRecharge, op: '+' },
       { source: up.upgrBombRechargeRate, op: '+' },
@@ -154,8 +154,8 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: art.artBombCapT3, op: '+' },
       { source: rel.epicRelicBombCapacity, op: '+' },
       { source: pet.petCrabBombCap, op: '+' },
-      { source: st.gemBombCapacity, op: '+' },
-      { source: st.vpBomberBombCapacity, op: '×' },
+      { source: st.storeGemBombCapacity, op: '+' },
+      { source: st.storeVpBomberBombCapacity, op: '×' },
       { source: ch.chBombCap, op: '+' },
       { source: U, op: '+', unknown: true }, // Bombs: Battery + Store Founder
     ],
@@ -238,8 +238,8 @@ export const bombsFormulas: FormulaMap = defineFormulas({
   },
   bomb_of_plenty_multi: {
     contributions: [
-      { source: st.founderBomBofPlenty, op: '+' },
-      { source: st.vpBomberBopMulti, op: '+' },
+      { source: st.storeFounderBomBofPlenty, op: '+' },
+      { source: st.storeVpBomberBopMulti, op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },
@@ -248,7 +248,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
   },
   bomb_transmuter_multi: {
     contributions: [
-      { source: st.vpBomberTransmuterMulti, op: '+' },
+      { source: st.storeVpBomberTransmuterMulti, op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },

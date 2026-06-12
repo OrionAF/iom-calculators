@@ -47,8 +47,8 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
   lootbug_golden_chance: {
     contributions: [
       { source: card.cardMiscGoldenLootbug, op: '+' },
-      { source: st.founderGoldenLootbug, op: '+' },
-      { source: st.vpGoldenLootbug, op: '+' },
+      { source: st.storeFounderGoldenLootbug, op: '+' },
+      { source: st.storeVpGoldenLootbug, op: '+' },
       { source: U, op: '+', unknown: true }, // Stargazing: Aquarius + Cards
     ],
   },
@@ -60,9 +60,9 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
       { source: it.goldenLootbugLanternPermCap, op: '+' },
       { source: con.staEastwoodLootbugCap, op: '+' },
       { source: pet.petWhaleQuestLootbugBank, op: '+' },
-      { source: st.vpBankersLootbugBank, op: '+' },
-      { source: st.vpBiggerBankersLootbugBank, op: '+' },
-      { source: st.vpLootbugBonanzaBankCap, op: '+' },
+      { source: st.storeVpBankersLootbugBank, op: '+' },
+      { source: st.storeVpBiggerBankersLootbugBank, op: '+' },
+      { source: st.storeVpLootbugBonanzaBankCap, op: '+' },
       { source: sg.starOphiuchusFreebie, op: '+' },
       { source: sg.ssBankedFreebieLootbugLootbug, op: '+' },
       { source: arch.idolTheseusBankUnlock, op: '+' },
@@ -82,7 +82,7 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sk.anyoneUpLootinLootMulti, op: '+' },
       { source: card.cardMiscLootbug, op: '×' },
-      { source: st.vpLootbugBonanzaLootMul, op: '×' },
+      { source: st.storeVpLootbugBonanzaLootMul, op: '×' },
       { source: sg.ssLootbugLootMul, op: '+' },
       { source: arch.idolTheseus, op: '+' },
       { source: U, op: '+', unknown: true }, // Store + Cards + Fishing

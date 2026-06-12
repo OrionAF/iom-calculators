@@ -32,7 +32,7 @@ export const cardsFormulas: FormulaMap = defineFormulas({
       { source: U, op: '+', unknown: true }, // Stargazing: Cetus (+0.15/rank)
       { source: up.upgrPolychromeOreCardMulti, op: '+' },
       { source: pet.petHappyBotQuestPolyOre, op: '×1+' },
-      { source: st.vpPolyPotencyOre, op: '×' },
+      { source: st.storeVpPolyPotencyOre, op: '×' },
       { source: tr.trGlimmeringGeoduckT2POCM, op: '×' },
     ],
   },
@@ -44,14 +44,14 @@ export const cardsFormulas: FormulaMap = defineFormulas({
   polychrome_card_bonus_vein: {
     contributions: [
       { source: pet.petHappyBotQuestPolyVein, op: '×1+' },
-      { source: st.vpPolyPotencyVein, op: '×' },
+      { source: st.storeVpPolyPotencyVein, op: '×' },
       { source: U, op: '+', unknown: true }, // Skill-Tree: Insane In The Vein Gain; Relics: last Mythic
     ],
   },
   polychrome_card_bonus_star: {
     contributions: [
       { source: pet.petHappyBotQuestPolyStar, op: '×1+' },
-      { source: st.vpPolyPotencyStar, op: '×' },
+      { source: st.storeVpPolyPotencyStar, op: '×' },
       { source: tr.trGlimmeringGeoduckT1PSCM, op: '×' },
     ],
   },
@@ -59,7 +59,7 @@ export const cardsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: f.polyCardMultiT2, op: '+' },
       { source: f.polyCardMultiE2, op: '+' },
-      { source: st.vpPolyPotencyFish, op: '×' },
+      { source: st.storeVpPolyPotencyFish, op: '×' },
       { source: U, op: '+', unknown: true }, // Archaeology: star card idol
     ],
   },

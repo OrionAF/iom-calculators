@@ -35,7 +35,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: f.rodMultiT1, op: '×' },
       { source: f.rodMultiE1, op: '×' },
       { source: sk.motleySchoolRod, op: '×' },
-      { source: st.vpHalfWayFishingRod, op: '×' },
+      { source: st.storeVpHalfWayFishingRod, op: '×' },
       { source: card.cardMiscFishingRod, op: '×' },
     ],
   },
@@ -107,7 +107,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: sk.completionistGatekeeperTier2Dock, op: '+' },
       { source: pet.petNibblesQuestTier2Dock, op: '+' },
       { source: arch.idolTethysTier2Dock, op: '+' },
-      { source: st.vpLegendaryHaulerTier2Dock, op: '×' },
+      { source: st.storeVpLegendaryHaulerTier2Dock, op: '×' },
       { source: UNKNOWN, op: '+', unknown: true }, // Stargazing: 10th Black Hole boost
       { source: card.cardDroneAnglerInf, op: '×1+' },
     ],
@@ -126,7 +126,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: con.staCraftFishIncomeMul, op: '×' },
       { source: sg.starCetusFishIncome, op: '+' },
       { source: sg.ssFishIncomeMul, op: '+' },
-      { source: st.vpLegendaryHaulerFishIncome, op: '×' },
+      { source: st.storeVpLegendaryHaulerFishIncome, op: '×' },
     ],
   },
 
@@ -164,7 +164,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: f.tripleTickT1, op: '+' },
       { source: f.tripleTickE2, op: '+' },
       { source: sk.letsPickUpThePaceTriple, op: '+' },
-      { source: st.vpFishersTripleTick, op: '+' },
+      { source: st.storeVpFishersTripleTick, op: '+' },
       { source: pet.petNibblesTripleTick, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Megalodon Tier 1 Tribute
     ],
@@ -177,7 +177,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
   fishing_5x_tick_chance: {
     contributions: [
       { source: UNKNOWN, op: '+', unknown: true }, // Divine Relic
-      { source: st.vpLegendaryHauler5xTick, op: '+' },
+      { source: st.storeVpLegendaryHauler5xTick, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Infernal Mr Nibbles Card
       { source: card.cardPetMrNibblesInf, op: '+' },
     ],
@@ -206,7 +206,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
   fishing_tiny_notice_chance: {
     contributions: [
       { source: f.tinyNoticeE1, op: '+' },
-      { source: st.vpAnglersNotice, op: '+' },
+      { source: st.storeVpAnglersNotice, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Mr Nibbles Pet Card
       { source: card.cardPetMrNibbles, op: '+' },
     ],
