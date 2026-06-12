@@ -15,7 +15,11 @@ describe('combinedCardMultiplier', () => {
 
 describe('infernal card bonus stats', () => {
   it('infernal_card_bonus_ore = 1 + 0.12×set + 0.02×total', () => {
-    const v = computeStat(ALL_FORMULAS['infernal_card_bonus_ore'], {}, { infernalOreCards: 33, totalInfernalCards: 198 })
+    const v = computeStat(
+      ALL_FORMULAS['infernal_card_bonus_ore'],
+      {},
+      { infernalOreCards: 33, totalInfernalCards: 198 },
+    )
     expect(v).toBeCloseTo(1 + 0.12 * 33 + 0.02 * 198) // 8.92 — the wiki example
   })
   it('poly ore bonus starts at base 4', () => {
@@ -98,11 +102,54 @@ describe('Infernal REPLACE vs KEEP semantics — confirmed in-game', () => {
   })
 
   it('pet/drone primaries KEEP the Polychrome value at Infernal', () => {
-    expect(card.cardPetCrab.fn(4, { infernalPetCards: 13, totalInfernalCards: 263 })).toBeCloseTo(0.15)
+    expect(card.cardPetCrab.fn(4, { infernalPetCards: 13, totalInfernalCards: 263 })).toBeCloseTo(
+      0.15,
+    )
     expect(card.cardDroneVoidCap.fn(4, {})).toBe(10)
   })
 
   it('bomb cards cap at level 3 (no Infernal bomb set)', () => {
     expect(card.cardBombBasicBomb.maxLevel).toBe(3)
+  })
+})
+
+describe('resource card sets + deriveCardCounts', () => {
+  it('dynamic sets cover the full wiki card lists', async () => {
+    const c = await import('$lib/sources/cards')
+    expect(Object.keys(c.dynamicOres)).toHaveLength(78)
+    expect(Object.keys(c.dynamicBars)).toHaveLength(78)
+    expect(Object.keys(c.dynamicVeins)).toHaveLength(19)
+    expect(Object.keys(c.dynamicStars)).toHaveLength(19)
+    expect(Object.keys(c.dynamicFish)).toHaveLength(44)
+    expect(Object.keys(c.dynamicBombs)).toHaveLength(13)
+  })
+
+  it('derives counts from tracked levels', async () => {
+    const { deriveCardCounts } = await import('./cardMath')
+    const counts = deriveCardCounts({
+      'cards.ore.Tin': 4, // infernal ore: 4 cards owned, poly, infernal
+      'cards.ore.Copper': 3, // poly
+      'cards.bar.Tin': 4,
+      'cards.pet.crab': 4,
+      'cards.misc.Alex': 4,
+      'cards.leg.megalodon': 4,
+    })
+    expect(counts.cardsOwned).toBe(4 + 3 + 4 + 4 + 4 + 4)
+    expect(counts.polyCardCount).toBe(6)
+    expect(counts.infernalOreCards).toBe(1)
+    expect(counts.infernalBarCards).toBe(1)
+    expect(counts.infernalPetCards).toBe(1)
+    expect(counts.infernalMiscCards).toBe(1)
+    expect(counts.infernalLegendaryFishCards).toBe(1)
+    expect(counts.totalInfernalCards).toBe(5)
+  })
+
+  it('bomb cards are clamped to level 3 and never count as infernal', async () => {
+    const { deriveCardCounts } = await import('./cardMath')
+    const c = await import('$lib/sources/cards')
+    const bombKey = Object.values(c.dynamicBombs)[0].key
+    const counts = deriveCardCounts({ [bombKey]: 4 })
+    expect(counts.cardsOwned).toBe(3)
+    expect(counts.totalInfernalCards).toBe(0)
   })
 })
