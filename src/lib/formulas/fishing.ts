@@ -107,7 +107,8 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: sk.completionistGatekeeperTier2Dock, op: '+' },
       { source: pet.petNibblesQuestTier2Dock, op: '+' },
       { source: arch.idolTethysTier2Dock, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Legendary Hauler + BH10 + Card
+      { source: st.vpLegendaryHaulerTier2Dock, op: '×' },
+      { source: UNKNOWN, op: '+', unknown: true }, // Stargazing: 10th Black Hole boost
       { source: card.cardDroneAnglerInf, op: '×1+' },
     ],
   },
@@ -125,7 +126,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: con.staCraftFishIncomeMul, op: '×' },
       { source: sg.starCetusFishIncome, op: '+' },
       { source: sg.ssFishIncomeMul, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Legendary Hauler Bundle
+      { source: st.vpLegendaryHaulerFishIncome, op: '×' },
     ],
   },
 
@@ -176,7 +177,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
   fishing_5x_tick_chance: {
     contributions: [
       { source: UNKNOWN, op: '+', unknown: true }, // Divine Relic
-      { source: UNKNOWN, op: '+', unknown: true }, // Legendary Hauler Bundle
+      { source: st.vpLegendaryHauler5xTick, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Infernal Mr Nibbles Card
       { source: card.cardPetMrNibblesInf, op: '+' },
     ],
@@ -205,7 +206,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
   fishing_tiny_notice_chance: {
     contributions: [
       { source: f.tinyNoticeE1, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Angler's Bundle (Store)
+      { source: st.vpAnglersNotice, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Mr Nibbles Pet Card
       { source: card.cardPetMrNibbles, op: '+' },
     ],

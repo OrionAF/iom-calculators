@@ -1,8 +1,22 @@
 # Wiki ↔ formula cross-check
 
-Generated from data/wiki/*.json. Stats checked: 175; with findings: 58; unmatched: 0.
+Generated from data/wiki/*.json. Stats checked: 175; with findings: 55; unmatched: 0; annotated-source gaps: 12.
 
 ## Wiki stats with no matching registry name / formula
+
+## Annotated sources missing from their stat's formula
+- founderSupplyDropCd (store.founder) → statKey 'founder_supply_drop_cd' has no formula
+- founderDoubleSupplyDrop (store.founder) → statKey 'founder_double_supply_drop_chance' has no formula
+- founderTripleSupplyDrop (store.founder) → statKey 'founder_triple_supply_drop_chance' has no formula
+- founderGoldenSupplyDrop (store.founder) → statKey 'founder_golden_supply_drop_chance' has no formula
+- founderGemBombGemChance (store.founder) → statKey 'gem_bomb_gem_chance' has no formula
+- vpArchFragmentGain (store.vp.archaeologyBundle) → statKey 'archaeology_fragment_gain_multi' has no formula
+- vpAscensionArchExp (store.vp.ascensionBundle) → statKey 'archaeology_exp_gain_multi' has no formula
+- vpAscensionAutoTap (store.vp.ascensionBundle) → statKey 'archaeology_crosshair_auto_tap' has no formula
+- vpAscensionLootMod (store.vp.ascensionBundle) → statKey 'archaeology_lood_mod_chance' has no formula
+- vpAscensionGoldenCrosshair (store.vp.ascensionBundle) → statKey 'archaeology_golden_crosshair_chance' has no formula
+- vpCapitalistRelicChance (store.vp.capitalistBundle) → statKey 'freebie_chance_for_bonus_relic' has no formula
+- vpSkillSurgeSkillShard (store.vp.skillSurgeBundle) → statKey 'freebie_chance_for_skill_shard' has no formula
 
 ## Per-stat findings
 
@@ -163,9 +177,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 58; unmatche
 ### All Star Multiplier (`all_star_multi`)
 - wiki has (sub-formula) in Drones but our formula is flat: The Fueled Midas Suit (Requires a Tier 2 Notice Upgrade
 
-### Novagiant Combo Multiplier (`novagiant_combo_multi`)
-- missing system Store: The "Singularity Bundle!" Value Pack; The "Half Way Bundle!" Value Pack
-
 ### Candy Eaten (`candy_eaten`)
 - missing system Items: Cosmic Candy
 
@@ -175,18 +186,10 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 58; unmatche
 ### Fishing Drone Base Power (`fishing_drone_power`)
 - missing system Items: Pike (Requires the Poseidon Idol
 
-### Fish Income Multiplier (`fishing_income_multi`)
-- missing system Store: The "Legendary Hauler Bundle!" Value Pack (formula has 1 unknown placeholder(s))
-
 ### 5x Fish Tick Chance (`fishing_5x_tick_chance`)
-- missing system Relics: A Divine Relic (formula has 3 unknown placeholder(s))
-- missing system Store: The "Legendary Hauler Bundle!" Value Pack (formula has 3 unknown placeholder(s))
-
-### Tiny Notice Chance (`fishing_tiny_notice_chance`)
-- missing system Store: The "Angler's Bundle!" Value Pack (formula has 2 unknown placeholder(s))
+- missing system Relics: A Divine Relic (formula has 2 unknown placeholder(s))
 
 ### Tier 2 Dock Power (`fishing_tier2_dock_multi`)
-- missing system Store: The "Legendary Hauler Bundle!" Value Pack (formula has 1 unknown placeholder(s))
 - missing system Stargazing: The Tenth Black Hole boost (formula has 1 unknown placeholder(s))
 
 ### Item Duration Multiplier (`item_duration_multi`)

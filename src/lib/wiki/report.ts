@@ -4,6 +4,8 @@ import { flattenContributions } from '$lib/engine/compute'
 import { ALL_FORMULAS } from '$lib/formulas'
 import { STAT_REGISTRY } from '$lib/stats/registry'
 import { parseStatsPage, type WikiStat } from './parse'
+import { storeSources } from '$lib/sources/store'
+import { cardSources } from '$lib/sources/cards'
 
 /**
  * Cross-checks our formulas against the wiki Stats dumps (data/wiki/).
@@ -111,6 +113,35 @@ function formulaOpsBySystem(formula: StatFormula): Map<SourceSystem, Set<string>
   return map
 }
 
+/**
+ * Entry-level gap detection: a source that declares a statKey announces an
+ * intent to contribute to that stat. If the stat's formula doesn't reference
+ * that exact source object, the wiring was missed. This catches gaps the
+ * system-level check can't see — a Store bundle hiding behind another store
+ * source already present in the formula (the omission class that left nine
+ * stargazing bundles unwired).
+ */
+export function annotatedSourceGaps(): string[] {
+  const gaps: string[] = []
+  const aggregates: Array<Record<string, unknown>> = [storeSources, cardSources]
+  for (const aggregate of aggregates) {
+    for (const [name, value] of Object.entries(aggregate)) {
+      const src = value as { key?: string; statKey?: string }
+      if (typeof src?.key !== 'string' || typeof src.statKey !== 'string') continue
+      const formula = ALL_FORMULAS[src.statKey]
+      if (!formula) {
+        gaps.push(`${name} (${src.key}) → statKey '${src.statKey}' has no formula`)
+        continue
+      }
+      const wired = flattenContributions(formula).some((c) => c.source === value)
+      if (!wired) {
+        gaps.push(`${name} (${src.key}) not wired into '${src.statKey}'`)
+      }
+    }
+  }
+  return gaps
+}
+
 export function buildWikiReport(readFile: (path: string) => string): string {
   const wikiStats = loadWikiStats(readFile)
   const nameToKey = registryKeyByName()
@@ -188,13 +219,18 @@ export function buildWikiReport(readFile: (path: string) => string): string {
     }
   }
 
+  const sourceGaps = annotatedSourceGaps()
+
   const header = [
     '# Wiki ↔ formula cross-check',
     '',
-    `Generated from data/wiki/*.json. Stats checked: ${statsChecked}; with findings: ${statsWithFindings}; unmatched: ${unmatched.length}.`,
+    `Generated from data/wiki/*.json. Stats checked: ${statsChecked}; with findings: ${statsWithFindings}; unmatched: ${unmatched.length}; annotated-source gaps: ${sourceGaps.length}.`,
     '',
     '## Wiki stats with no matching registry name / formula',
     ...unmatched.map((n) => `- ${n}`),
+    '',
+    '## Annotated sources missing from their stat\'s formula',
+    ...sourceGaps.map((g) => `- ${g}`),
     '',
     '## Per-stat findings',
   ]
