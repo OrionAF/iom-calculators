@@ -16,7 +16,6 @@ export function combinedCardMultiplier(polyBonus: number, infernalBonus: number)
 
 import type { Source } from '$lib/engine/types'
 import { cardSources } from '$lib/sources/cards'
-import { resourceCardSources } from '$lib/sources/resourceCards'
 
 /** Runtime-input keys derived from tracked card levels. */
 export interface CardCounts {
@@ -37,6 +36,7 @@ export interface CardCounts {
 }
 
 const SET_PREFIX_TO_COUNT: Record<string, keyof CardCounts> = {
+  misc: 'infernalMiscCards',
   ore: 'infernalOreCards',
   bar: 'infernalBarCards',
   drone: 'infernalDroneCards',
@@ -50,7 +50,8 @@ const SET_PREFIX_TO_COUNT: Record<string, keyof CardCounts> = {
 /** All level-tracked card sources, deduplicated by key (multi-effect cards share one key). */
 function allCardSourcesByKey(): Map<string, Source> {
   const map = new Map<string, Source>()
-  for (const s of [...Object.values(cardSources), ...resourceCardSources]) {
+  for (const s of Object.values(cardSources)) {
+    if (typeof s?.key !== 'string') continue // guard against non-Source entries
     if (s.key.startsWith('cards.infernal.')) continue // computed bonuses, not cards
     if (!map.has(s.key)) map.set(s.key, s)
   }

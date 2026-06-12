@@ -324,16 +324,32 @@ const categoryMultiplier = (cat: InfernalCategory, rt: Record<string, number>) =
 //   unchanged and a separate Infernal secondary effect is added (infT).
 
 /** KEEP-semantics multiplier track: clamps at the Polychrome value. */
-const keepMul = (st: number, g: number, p: number) => (n: number) => (n <= 0 ? 1 : n === 1 ? st : n === 2 ? g : p)
+const keepMul = (st: number, g: number, p: number) => (n: number) =>
+  n <= 0 ? 1 : n === 1 ? st : n === 2 ? g : p
 /** KEEP-semantics bonus track: clamps at the Polychrome value. */
-const keepAdd = (st: number, g: number, p: number) => (n: number) => (n <= 0 ? 0 : n === 1 ? st : n === 2 ? g : p)
+const keepAdd = (st: number, g: number, p: number) => (n: number) =>
+  n <= 0 ? 0 : n === 1 ? st : n === 2 ? g : p
 
 /** REPLACE-semantics multiplier track: Infernal = 1 + (poly − 1) × catMult. */
-const replMul = (cat: InfernalCategory) => (st: number, g: number, p: number) => (n: number, rt: Record<string, number>) =>
-  n <= 0 ? 1 : n === 1 ? st : n === 2 ? g : n === 3 ? p : 1 + (p - 1) * categoryMultiplier(cat, rt)
+const replMul =
+  (cat: InfernalCategory) =>
+  (st: number, g: number, p: number) =>
+  (n: number, rt: Record<string, number>) =>
+    n <= 0
+      ? 1
+      : n === 1
+        ? st
+        : n === 2
+          ? g
+          : n === 3
+            ? p
+            : 1 + (p - 1) * categoryMultiplier(cat, rt)
 /** REPLACE-semantics bonus track: Infernal = poly bonus × catMult. */
-const replAdd = (cat: InfernalCategory) => (st: number, g: number, p: number) => (n: number, rt: Record<string, number>) =>
-  n <= 0 ? 0 : n === 1 ? st : n === 2 ? g : n === 3 ? p : p * categoryMultiplier(cat, rt)
+const replAdd =
+  (cat: InfernalCategory) =>
+  (st: number, g: number, p: number) =>
+  (n: number, rt: Record<string, number>) =>
+    n <= 0 ? 0 : n === 1 ? st : n === 2 ? g : n === 3 ? p : p * categoryMultiplier(cat, rt)
 
 const miscMul = replMul('misc')
 const miscAdd = replAdd('misc')
@@ -345,7 +361,8 @@ const starMul = replMul('star')
 const fishMul = replMul('fish')
 
 /** Infernal-only secondary effect (KEEP categories), scaled by the category multiplier. */
-const infT = (v: number, cat: InfernalCategory) => (n: number, rt: Record<string, number>) => (n >= 4 ? v * categoryMultiplier(cat, rt) : 0)
+const infT = (v: number, cat: InfernalCategory) => (n: number, rt: Record<string, number>) =>
+  n >= 4 ? v * categoryMultiplier(cat, rt) : 0
 
 /** Helper to dynamically generate card blocks while strictly keeping your key formats */
 const generateCardGroup = (
@@ -396,19 +413,43 @@ export const dynamicFish = generateCardGroup('fish', FISH_DATA, fishMul(1.5, 2.0
 
 // ─── Misc cards ──────────────
 export const cardMiscSuperStar = card('misc.SuperStar', 'Super Star', miscMul(1.05, 1.1, 1.2))
-export const cardMiscNovagiant = card('misc.Novagiant', 'Novagiant Combo', miscMul(1.08, 1.16, 1.24))
+export const cardMiscNovagiant = card(
+  'misc.Novagiant',
+  'Novagiant Combo',
+  miscMul(1.08, 1.16, 1.24),
+)
 export const cardMiscMinerName = card('misc.MinerName', 'Miner Name', miscMul(1.1, 1.2, 1.4))
 export const cardMiscLootbug = card('misc.Lootbug', 'Lootbug', miscMul(1.1, 1.2, 1.3))
-export const cardMiscGoldenLootbug = card('misc.GoldenLootbug', 'Golden Lootbug', miscAdd(0.02, 0.04, 0.06))
+export const cardMiscGoldenLootbug = card(
+  'misc.GoldenLootbug',
+  'Golden Lootbug',
+  miscAdd(0.02, 0.04, 0.06),
+)
 export const cardMiscPrestige = card('misc.Prestige', 'Prestige', miscMul(0.95, 0.9, 0.8))
 export const cardMiscFreebie = card('misc.Freebie', 'Freebie', miscAdd(1, 2, 4))
 export const cardMiscStonks = card('misc.Stonks', 'Stonks', miscMul(1.1, 1.2, 1.3))
-export const cardMiscSuperStonks = card('misc.SuperStonks', 'Super Stonks', miscAdd(0.005, 0.01, 0.02))
-export const cardMiscUltraStonks = card('misc.UltraStonks', 'Ultra Stonks', miscAdd(0.005, 0.01, 0.02))
+export const cardMiscSuperStonks = card(
+  'misc.SuperStonks',
+  'Super Stonks',
+  miscAdd(0.005, 0.01, 0.02),
+)
+export const cardMiscUltraStonks = card(
+  'misc.UltraStonks',
+  'Ultra Stonks',
+  miscAdd(0.005, 0.01, 0.02),
+)
 export const cardMiscContract = card('misc.Contract', 'Contract', miscAdd(1, 2, 3))
 export const cardMiscVoidPortal = card('misc.VoidPortal', 'Void Portal', miscMul(1.05, 1.1, 1.2))
-export const cardMiscGoldenVoidPortal = card('misc.GoldenVoidPortal', 'Golden Void Portal', miscMul(1.08, 1.16, 1.24))
-export const cardMiscRainbowVoidPortal = card('misc.RainbowVoidPortal', 'Rainbow Void Portal', miscMul(1.08, 1.16, 1.24))
+export const cardMiscGoldenVoidPortal = card(
+  'misc.GoldenVoidPortal',
+  'Golden Void Portal',
+  miscMul(1.08, 1.16, 1.24),
+)
+export const cardMiscRainbowVoidPortal = card(
+  'misc.RainbowVoidPortal',
+  'Rainbow Void Portal',
+  miscMul(1.08, 1.16, 1.24),
+)
 export const cardMiscWorld1 = card('misc.World1', 'World 1', miscMul(1.06, 1.12, 1.24))
 export const cardMiscWorld2 = card('misc.World2', 'World 2', miscMul(1.06, 1.12, 1.24))
 export const cardMiscWorld3 = card('misc.World3', 'World 3', miscMul(1.06, 1.12, 1.24))
@@ -417,10 +458,22 @@ export const cardMiscAlex = card('misc.Alex', 'Alex', miscMul(1.1, 1.2, 1.4))
 export const cardMiscBlueCow = card('misc.BlueCow', 'Blue Cow', miscAdd(0.05, 0.1, 0.15))
 export const cardMiscGoldenOre = card('misc.GoldenOre', 'Golden Ore', miscMul(1.06, 1.12, 1.24))
 export const cardMiscSushi = card('misc.Sushi', 'Sushi', miscAdd(5, 10, 20))
-export const cardMiscArchAbility = card('misc.ArchAbility', 'Arch Ability', miscAdd(-0.03, -0.06, -0.1))
+export const cardMiscArchAbility = card(
+  'misc.ArchAbility',
+  'Arch Ability',
+  miscAdd(-0.03, -0.06, -0.1),
+)
 export const cardMiscGoldenVein = card('misc.GoldenVein', 'Golden Vein', miscMul(1.08, 1.16, 1.24))
-export const cardMiscRainbowVein = card('misc.RainbowVein', 'Rainbow Vein', miscMul(1.08, 1.16, 1.24))
-export const cardMiscGleamingVein = card('misc.GleamingVein', 'Gleaming Vein', miscMul(1.08, 1.16, 1.24))
+export const cardMiscRainbowVein = card(
+  'misc.RainbowVein',
+  'Rainbow Vein',
+  miscMul(1.08, 1.16, 1.24),
+)
+export const cardMiscGleamingVein = card(
+  'misc.GleamingVein',
+  'Gleaming Vein',
+  miscMul(1.08, 1.16, 1.24),
+)
 export const cardMiscFuel = card('misc.Fuel', 'Fuel', miscMul(1.02, 1.05, 1.1))
 export const cardMiscFishingRod = card('misc.FishingRod', 'Fishing Rod', miscMul(1.02, 1.05, 1.1))
 export const cardMiscCode = card('misc.Code', 'Code', miscMul(1.01, 1.03, 1.06))
@@ -431,12 +484,24 @@ export const cardMiscLute = card('misc.Lute', 'Lute', miscMul(1.06, 1.12, 1.18))
 export const cardMiscJulk = card('misc.Julk', 'Julk', miscMul(1.04, 1.08, 1.12))
 export const cardMiscYummyPizza = card('misc.YummyPizza', 'Yummy Pizza', miscMul(1.01, 1.02, 1.03))
 export const cardMiscLootfrog = card('misc.Lootfrog', 'Lootfrog', miscAdd(1, 2, 4))
-export const cardMiscGoldenLootfrog = card('misc.GoldenLootfrog', 'Golden Lootfrog', miscAdd(0.005, 0.01, 0.02))
-export const cardMiscBigLootfrog = card('misc.BigLootfrog', 'Big Lootfrog', miscMul(1.09, 1.18, 1.27))
+export const cardMiscGoldenLootfrog = card(
+  'misc.GoldenLootfrog',
+  'Golden Lootfrog',
+  miscAdd(0.005, 0.01, 0.02),
+)
+export const cardMiscBigLootfrog = card(
+  'misc.BigLootfrog',
+  'Big Lootfrog',
+  miscMul(1.09, 1.18, 1.27),
+)
 export const cardMiscFloor73 = card('misc.Floor73', 'Floor 73', miscMul(1.02, 1.04, 1.06))
 export const cardMiscRelicChest = card('misc.RelicChest', 'Relic', miscAdd(0.01, 0.02, 0.03))
 export const cardMiscBone = card('misc.Bone', 'Bone', miscMul(1.05, 1.1, 1.15))
-export const cardMiscStoreFreebieTimer = card('misc.StoreFreebieTimer', 'Store', miscAdd(-2, -4, -6))
+export const cardMiscStoreFreebieTimer = card(
+  'misc.StoreFreebieTimer',
+  'Store',
+  miscAdd(-2, -4, -6),
+)
 
 // ─── Pet cards: primary track (Standard/Gilded/Polychrome) ───────────────────
 export const cardPetCrab = card('pet.crab', 'Crab Pet', keepAdd(0.05, 0.1, 0.15))
@@ -465,13 +530,29 @@ export const cardPetPenguinInf = card('pet.penguin', 'Infernal Penguin Pet', inf
 export const cardPetAxolotlInf = card('pet.axolotl', 'Infernal Axolotl Pet', infT(0.04, 'pet'))
 export const cardPetWhaleInf = card('pet.whale', 'Infernal Whale Pet', infT(0.1, 'pet'))
 export const cardPetTotemInf = card('pet.totem', 'Infernal Totem Pet', infT(0.065, 'pet'))
-export const cardPetHappyBotInf = card('pet.happyBot', 'Infernal Happy-Bot Pet', infT(0.0002, 'pet'))
-export const cardPetLeprechaunInf = card('pet.leprechaun', 'Infernal Leprechaun Pet', infT(0.0085, 'pet'))
+export const cardPetHappyBotInf = card(
+  'pet.happyBot',
+  'Infernal Happy-Bot Pet',
+  infT(0.0002, 'pet'),
+)
+export const cardPetLeprechaunInf = card(
+  'pet.leprechaun',
+  'Infernal Leprechaun Pet',
+  infT(0.0085, 'pet'),
+)
 export const cardPetStarfishInf = card('pet.starfish', 'Infernal Starfish Pet', infT(0.0025, 'pet'))
 export const cardPetDinoInf = card('pet.dino', 'Infernal Dino Pet', infT(0.0085, 'pet'))
-export const cardPetMrNibblesInf = card('pet.mrNibbles', 'Infernal Mr Nibbles Pet', infT(0.009, 'pet'))
+export const cardPetMrNibblesInf = card(
+  'pet.mrNibbles',
+  'Infernal Mr Nibbles Pet',
+  infT(0.009, 'pet'),
+)
 export const cardPetNaginiInf = card('pet.nagini', 'Infernal Nagini Pet', infT(0.03, 'pet'))
-export const cardPetButterflyInf = card('pet.butterfly', 'Infernal Butterfly Pet', infT(0.04, 'pet'))
+export const cardPetButterflyInf = card(
+  'pet.butterfly',
+  'Infernal Butterfly Pet',
+  infT(0.04, 'pet'),
+)
 
 // ─── Drone cards: grade caps + Infernal secondary effects ────────────────────
 // NOTE: the wiki lists a further "+0.30x/+0.002x" set/total Infernal scaling on
@@ -480,9 +561,21 @@ export const dynamicDroneCaps = generateCardGroup('drone', DRONE_DATA, keepAdd(2
 export const cardDroneBearInf = card('drone.bear', 'Infernal Bear Drone', infT(0.45, 'drone'))
 export const cardDroneChainInf = card('drone.chain', 'Infernal Chain Drone', infT(0.14, 'drone'))
 export const cardDroneMidasInf = card('drone.midas', 'Infernal Midas Drone', infT(0.06, 'drone'))
-export const cardDroneFroggerInf = card('drone.frogger', 'Infernal Frogger Drone', infT(0.1, 'drone'))
-export const cardDroneVeinseekerInf = card('drone.veinseeker', 'Infernal Veinseeker Drone', infT(0.11, 'drone'))
-export const cardDroneStarburstInf = card('drone.starburst', 'Infernal Starburst Drone', infT(0.09, 'drone'))
+export const cardDroneFroggerInf = card(
+  'drone.frogger',
+  'Infernal Frogger Drone',
+  infT(0.1, 'drone'),
+)
+export const cardDroneVeinseekerInf = card(
+  'drone.veinseeker',
+  'Infernal Veinseeker Drone',
+  infT(0.11, 'drone'),
+)
+export const cardDroneStarburstInf = card(
+  'drone.starburst',
+  'Infernal Starburst Drone',
+  infT(0.09, 'drone'),
+)
 export const cardDroneElixirInf = card('drone.elixir', 'Infernal Elixir Drone', infT(0.07, 'drone'))
 export const cardDroneVoidInf = card('drone.void', 'Infernal Void Drone', infT(0.09, 'drone'))
 export const cardDroneAnglerInf = card('drone.angler', 'Infernal Angler Drone', infT(0.11, 'drone'))
@@ -492,16 +585,44 @@ export const cardDronePrismInf = card('drone.prism', 'Infernal Prism Drone', inf
 // legendary-fish category multiplier) ─────────────────────────────────────────
 export const cardLegRainbowTrout = card('leg.rainbowTrout', 'Rainbow Trout', legAdd(0.25, 0.5, 1.0))
 export const cardLegDuneEelworm = card('leg.duneEelworm', "Dune's Eelworm", legAdd(0.4, 0.8, 1.4))
-export const cardLegShellstealer = card('leg.glacialShellstealer', 'Glacial Shellstealer', legAdd(0.3, 0.6, 1.0))
+export const cardLegShellstealer = card(
+  'leg.glacialShellstealer',
+  'Glacial Shellstealer',
+  legAdd(0.3, 0.6, 1.0),
+)
 export const cardLegMegalodon = card('leg.megalodon', 'Megalodon', legAdd(0.35, 0.7, 1.25))
-export const cardLegRadioactiveSlugBomb = card('leg.radioactiveSlug', 'Radioactive Slug', legAdd(3, 5, 11))
-export const cardLegRadioactiveSlugExp = card('leg.radioactiveSlug', 'Radioactive Slug', legAdd(3, 5, 11))
+export const cardLegRadioactiveSlugBomb = card(
+  'leg.radioactiveSlug',
+  'Radioactive Slug',
+  legAdd(3, 5, 11),
+)
+export const cardLegRadioactiveSlugExp = card(
+  'leg.radioactiveSlug',
+  'Radioactive Slug',
+  legAdd(3, 5, 11),
+)
 export const cardLegCthulhu = card('leg.cthulhu', 'Cthulhu', legAdd(1, 2, 4))
-export const cardLegGeoduck = card('leg.glimmeringGeoduck', 'Glimmering Geoduck', legAdd(0.14, 0.28, 0.52))
+export const cardLegGeoduck = card(
+  'leg.glimmeringGeoduck',
+  'Glimmering Geoduck',
+  legAdd(0.14, 0.28, 0.52),
+)
 export const cardLegLaviathan = card('leg.laviathan', 'Laviathan', legAdd(0.4, 0.8, 1.4))
-export const cardLegStormSerpent = card('leg.stormSerpent', 'Storm Serpent', legAdd(0.14, 0.28, 0.56))
-export const cardLegMeltingGibbous = card('leg.meltingGibbous', 'Melting Gibbous', legAdd(0.1, 0.2, 0.3))
-export const cardLegBlackenedBasker = card('leg.blackenedBasker', 'Blackened Basker', legAdd(0.0015, 0.003, 0.006))
+export const cardLegStormSerpent = card(
+  'leg.stormSerpent',
+  'Storm Serpent',
+  legAdd(0.14, 0.28, 0.56),
+)
+export const cardLegMeltingGibbous = card(
+  'leg.meltingGibbous',
+  'Melting Gibbous',
+  legAdd(0.1, 0.2, 0.3),
+)
+export const cardLegBlackenedBasker = card(
+  'leg.blackenedBasker',
+  'Blackened Basker',
+  legAdd(0.0015, 0.003, 0.006),
+)
 // Cthulhu card (Divine Relics Cap +1/+2/+4) has no registry stat yet.
 
 // ─── Bomb cards ──────────────────────────────────────────────────────────────
@@ -525,21 +646,69 @@ const TOTAL_INFERNAL_INPUT = {
   type: 'integer' as const,
   min: 0,
 }
-const infernalSetBonus = (cat: InfernalCategory, key: string, name: string, setLabel: string): Source => ({
+const infernalSetBonus = (
+  cat: InfernalCategory,
+  key: string,
+  name: string,
+  setLabel: string,
+): Source => ({
   key: `cards.${key}`,
   name,
   system: 'cards',
   fn: (_l, rt) => categoryMultiplier(cat, rt) - 1,
-  inputs: [{ key: INFERNAL_SCALING[cat].input, label: setLabel, type: 'integer' as const, min: 0 }, TOTAL_INFERNAL_INPUT],
+  inputs: [
+    { key: INFERNAL_SCALING[cat].input, label: setLabel, type: 'integer' as const, min: 0 },
+    TOTAL_INFERNAL_INPUT,
+  ],
 })
-export const infernalBonusOre = infernalSetBonus('ore', 'infernal.ore', 'Infernal Ore Card Bonus', 'Infernal Ore Cards Owned')
-export const infernalBonusBar = infernalSetBonus('bar', 'infernal.bar', 'Infernal Bar Card Bonus', 'Infernal Bar Cards Owned')
-export const infernalBonusVein = infernalSetBonus('vein', 'infernal.vein', 'Infernal Vein Card Bonus', 'Infernal Vein Cards Owned')
-export const infernalBonusStar = infernalSetBonus('star', 'infernal.star', 'Infernal Star Card Bonus', 'Infernal Star Cards Owned')
-export const infernalBonusFish = infernalSetBonus('fish', 'infernal.fish', 'Infernal Fish Card Bonus', 'Infernal Fish Cards Owned')
-export const infernalBonusMisc = infernalSetBonus('misc', 'infernal.misc', 'Infernal Misc Card Bonus', 'Infernal Misc Cards Owned')
-export const infernalBonusDrone = infernalSetBonus('drone', 'infernal.drone', 'Infernal Drone Card Bonus', 'Infernal Drone Cards Owned')
-export const infernalBonusPet = infernalSetBonus('pet', 'infernal.pet', 'Infernal Pet Card Bonus', 'Infernal Pet Cards Owned')
+export const infernalBonusOre = infernalSetBonus(
+  'ore',
+  'infernal.ore',
+  'Infernal Ore Card Bonus',
+  'Infernal Ore Cards Owned',
+)
+export const infernalBonusBar = infernalSetBonus(
+  'bar',
+  'infernal.bar',
+  'Infernal Bar Card Bonus',
+  'Infernal Bar Cards Owned',
+)
+export const infernalBonusVein = infernalSetBonus(
+  'vein',
+  'infernal.vein',
+  'Infernal Vein Card Bonus',
+  'Infernal Vein Cards Owned',
+)
+export const infernalBonusStar = infernalSetBonus(
+  'star',
+  'infernal.star',
+  'Infernal Star Card Bonus',
+  'Infernal Star Cards Owned',
+)
+export const infernalBonusFish = infernalSetBonus(
+  'fish',
+  'infernal.fish',
+  'Infernal Fish Card Bonus',
+  'Infernal Fish Cards Owned',
+)
+export const infernalBonusMisc = infernalSetBonus(
+  'misc',
+  'infernal.misc',
+  'Infernal Misc Card Bonus',
+  'Infernal Misc Cards Owned',
+)
+export const infernalBonusDrone = infernalSetBonus(
+  'drone',
+  'infernal.drone',
+  'Infernal Drone Card Bonus',
+  'Infernal Drone Cards Owned',
+)
+export const infernalBonusPet = infernalSetBonus(
+  'pet',
+  'infernal.pet',
+  'Infernal Pet Card Bonus',
+  'Infernal Pet Cards Owned',
+)
 export const infernalBonusLegendaryFish = infernalSetBonus(
   'legendaryFish',
   'infernal.legendaryFish',
@@ -606,14 +775,14 @@ export const cardSources = {
   cardMiscVydn,
   cardMiscRainbowVoidPortal,
   cardPetCrab,
-  dynamicOres,
-  dynamicBars,
-  dynamicVeins,
-  dynamicStars,
-  dynamicFish,
-  dynamicBombs,
+  ...dynamicOres,
+  ...dynamicBars,
+  ...dynamicVeins,
+  ...dynamicStars,
+  ...dynamicFish,
+  ...dynamicBombs,
   cardBombBasicBomb,
-  dynamicDroneCaps,
+  ...dynamicDroneCaps,
   cardDroneBearCap,
   cardDroneChainCap,
   cardDroneMidasCap,
