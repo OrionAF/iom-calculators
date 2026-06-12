@@ -41,3 +41,37 @@ describe('card rarity tracks', () => {
     expect(card.cardPetRabbit.fn(0, {})).toBe(1)
   })
 })
+
+describe('infernal category multipliers — verified against in-game data', () => {
+  // Player snapshot: 263 total Infernal cards.
+  const rt = (setKey: string, owned: number) => ({ [setKey]: owned, totalInfernalCards: 263 })
+  const cases: Array<[string, string, number, number]> = [
+    ['infernal_card_bonus_ore', 'infernalOreCards', 66, 14.18],
+    ['infernal_card_bonus_bar', 'infernalBarCards', 75, 15.26],
+    ['infernal_card_bonus_misc', 'infernalMiscCards', 20, 1.4],
+    ['infernal_card_bonus_drone', 'infernalDroneCards', 9, 4.23],
+    ['infernal_card_bonus_pet', 'infernalPetCards', 13, 8.03],
+    ['infernal_card_bonus_vein', 'infernalVeinCards', 16, 6.03],
+    ['infernal_card_bonus_star', 'infernalStarCards', 18, 7.23],
+    ['infernal_card_bonus_fish', 'infernalFishCards', 36, 5.2],
+    ['infernal_card_bonus_legendary_fish', 'infernalLegendaryFishCards', 10, 3.26],
+  ]
+  for (const [stat, input, owned, expected] of cases) {
+    it(`${stat}: ${owned} set + 263 total → ${expected}×`, () => {
+      expect(computeStat(ALL_FORMULAS[stat], {}, rt(input, owned))).toBeCloseTo(expected, 2)
+    })
+  }
+})
+
+describe('infernal effects scale with their category multiplier', () => {
+  it('pet secondary: Crab recharge 0.0325 × pet multiplier', () => {
+    const rt = { infernalPetCards: 13, totalInfernalCards: 263 }
+    expect(card.cardPetCrabInf.fn(4, rt)).toBeCloseTo(0.0325 * 8.026)
+    expect(card.cardPetCrabInf.fn(3, rt)).toBe(0)
+  })
+  it('legendary fish primary: poly value × category multiplier at Infernal', () => {
+    const rt = { infernalLegendaryFishCards: 10, totalInfernalCards: 263 }
+    expect(card.cardLegRainbowTrout.fn(3, rt)).toBeCloseTo(1.0)
+    expect(card.cardLegRainbowTrout.fn(4, rt)).toBeCloseTo(1.0 * 3.263)
+  })
+})

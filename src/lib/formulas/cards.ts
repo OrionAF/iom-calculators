@@ -64,9 +64,58 @@ export const cardsFormulas: FormulaMap = defineFormulas({
     ],
   },
 
-  infernal_card_bonus_ore: { contributions: [{ source: card.infernalBonusOre, op: '+' }] },
-  infernal_card_bonus_bar: { contributions: [{ source: card.infernalBonusBar, op: '+' }] },
-  infernal_card_bonus_vein: { contributions: [{ source: card.infernalBonusVein, op: '+' }] },
-  infernal_card_bonus_star: { contributions: [{ source: card.infernalBonusStar, op: '+' }] },
-  infernal_card_bonus_fish: { contributions: [{ source: card.infernalBonusFish, op: '+' }] },
+  infernal_card_bonus_ore: {
+    contributions: [
+      { source: card.infernalBonusOre, op: '+' },
+      { source: U, op: '×', unknown: true }, // "Bonus from Other Sources" (in-game; sources unknown)
+    ],
+  },
+  infernal_card_bonus_bar: {
+    contributions: [
+      { source: card.infernalBonusBar, op: '+' },
+      { source: U, op: '×', unknown: true }, // "Bonus from Other Sources" (in-game; sources unknown)
+    ],
+  },
+  infernal_card_bonus_vein: {
+    contributions: [
+      { source: card.infernalBonusVein, op: '+' },
+      { source: U, op: '×', unknown: true }, // "Bonus from Other Sources" (in-game; sources unknown)
+    ],
+  },
+  infernal_card_bonus_star: {
+    contributions: [
+      { source: card.infernalBonusStar, op: '+' },
+      { source: U, op: '×', unknown: true }, // "Bonus from Other Sources" (in-game; sources unknown)
+    ],
+  },
+  infernal_card_bonus_fish: {
+    contributions: [
+      { source: card.infernalBonusFish, op: '+' },
+      { source: U, op: '×', unknown: true }, // "Bonus from Other Sources" (in-game; sources unknown)
+    ],
+  },
+  infernal_card_bonus_misc: {
+    contributions: [
+      { source: card.infernalBonusMisc, op: '+' },
+      { source: U, op: '×', unknown: true }, // "Bonus from Other Sources" (in-game; sources unknown)
+    ],
+  },
+  infernal_card_bonus_drone: {
+    contributions: [
+      { source: card.infernalBonusDrone, op: '+' },
+      { source: U, op: '×', unknown: true }, // "Bonus from Other Sources" (in-game; sources unknown)
+    ],
+  },
+  infernal_card_bonus_pet: {
+    contributions: [
+      { source: card.infernalBonusPet, op: '+' },
+      { source: U, op: '×', unknown: true }, // "Bonus from Other Sources" (in-game; sources unknown)
+    ],
+  },
+  infernal_card_bonus_legendary_fish: {
+    contributions: [
+      { source: card.infernalBonusLegendaryFish, op: '+' },
+      { source: U, op: '×', unknown: true }, // "Bonus from Other Sources" (in-game; sources unknown)
+    ],
+  },
 })

@@ -1891,6 +1891,38 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     unit: 'multiplier',
     base: 1,
   },
+  infernal_card_bonus_misc: {
+    name: 'Infernal Card Bonus - Misc',
+    description:
+      'Scales Infernal Misc card effects: 1 + 0.02 × (set Infernals) + 0 × (total Infernals), times any Bonus from Other Sources.',
+    icon: 'Card_Backing_Polychrome.png',
+    unit: 'multiplier',
+    base: 1,
+  },
+  infernal_card_bonus_drone: {
+    name: 'Infernal Card Bonus - Drone',
+    description:
+      'Scales Infernal Drone card effects: 1 + 0.30 × (set Infernals) + 0.002 × (total Infernals), times any Bonus from Other Sources.',
+    icon: 'Card_Backing_Polychrome.png',
+    unit: 'multiplier',
+    base: 1,
+  },
+  infernal_card_bonus_pet: {
+    name: 'Infernal Card Bonus - Pet',
+    description:
+      'Scales Infernal Pet card effects: 1 + 0.50 × (set Infernals) + 0.002 × (total Infernals), times any Bonus from Other Sources.',
+    icon: 'Card_Backing_Polychrome.png',
+    unit: 'multiplier',
+    base: 1,
+  },
+  infernal_card_bonus_legendary_fish: {
+    name: 'Infernal Card Bonus - Legendary Fish',
+    description:
+      'Scales Infernal Legendary Fish card effects: 1 + 0.20 × (set Infernals) + 0.001 × (total Infernals), times any Bonus from Other Sources.',
+    icon: 'Card_Backing_Polychrome.png',
+    unit: 'multiplier',
+    base: 1,
+  },
   drone_bear_grade_cap_increase: {
     name: 'Bear Drone Grade Cap Increase',
     description: 'Increases the maximum grade of the Bear Drone.',
