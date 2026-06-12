@@ -1,6 +1,6 @@
 # Wiki ↔ formula cross-check
 
-Generated from data/wiki/*.json. Stats checked: 175; with findings: 65; unmatched: 0.
+Generated from data/wiki/*.json. Stats checked: 175; with findings: 58; unmatched: 0.
 
 ## Wiki stats with no matching registry name / formula
 
@@ -147,37 +147,9 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 65; unmatche
 ### Auto-Catch Chance (`star_auto_catch_chance`)
 - missing system Drones: The Fueled Starburst Suit; An Elixir Drone Buff (Also from the Founder Supply Drop and Lootbugs (formula has 2 unknown placeholder(s))
 
-### Star Triple Spawn Chance (`star_triple_spawn_chance`)
-- missing system Store: The "Progression Booster Bundle!" Value Pack; The "Stargazing Supernova Bundle!" Value Pack; The "Stargazing Supergiant Bundle!" Value Pack (formula has 1 unknown placeholder(s))
-
 ### Super Star Spawn Rate Multiplier (`super_star_spawn_multi`)
 - missing system Drones: An Elixir Drone Buff (formula has 3 unknown placeholder(s))
 - missing system Fishing: A Tier 1 Notice Upgrade (formula has 3 unknown placeholder(s))
-
-### Super Star Triple Chance (`super_star_triple_chance`)
-- missing system Store: The "Stargazing Supernova Bundle!" Value Pack (formula has 1 unknown placeholder(s))
-
-### Super Star 10x Spawn Chance (`super_star_10x_chance`)
-- missing system Store: The "Stargazing Supergiant Bundle!" Value Pack; The "Singularity Bundle!" Value Pack (formula has 1 unknown placeholder(s))
-
-### Star Supernova Multiplier (`star_supernova_multi`)
-- missing system Store: The "Stargazing Supernova Bundle!" Value Pack (formula has 5 unknown placeholder(s))
-- missing system Pets: The Axolotl Pet Quest (formula has 5 unknown placeholder(s))
-
-### Super Star Supernova Chance (`super_star_supernova_chance`)
-- missing system Store: The "Stargazing Supernova Bundle!" Value Pack (formula has 1 unknown placeholder(s))
-
-### Super Star Supernova Multiplier (`super_star_supernova_multi`)
-- missing system Store: The "Stargazing Supernova Bundle!" Value Pack (formula has 3 unknown placeholder(s))
-
-### Star Supergiant Chance (`star_supergiant_chance`)
-- missing system Store: The "Stargazing Supergiant Bundle!" Value Pack (formula has 2 unknown placeholder(s))
-
-### Star Supergiant Multiplier (`star_supergiant_multi`)
-- missing system Store: The "Stargazing Supergiant Bundle!" Value Pack (formula has 1 unknown placeholder(s))
-
-### Super Star Supergiant Chance (`super_star_supergiant_chance`)
-- missing system Store: The "Stargazing Supergiant Bundle!" Value Pack; The "Singularity Bundle!" Value Pack (formula has 1 unknown placeholder(s))
 
 ### Super Star Supergiant Multiplier (`super_star_supergiant_multi`)
 - missing system Store: The "Stargazing Supergiant Bundle!" Value Pack (formula has 1 unknown placeholder(s))

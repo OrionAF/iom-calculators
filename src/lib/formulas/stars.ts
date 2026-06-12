@@ -73,7 +73,9 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: sg.starSagittarius, op: '+' },
       { source: drone.droneSuitStarburstPassive, op: '+' },
       { source: drone.droneSuitStarburstUpgrade, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store: 3 value packs
+      { source: st.vpProgressionTripleStar, op: '+' },
+      { source: st.vpSupernovaTripleStar, op: '+' },
+      { source: st.vpSupergiants3TripleStar, op: '+' },
       { source: tr.trMegalodonT1TSC, op: '+' },
     ],
   },
@@ -105,7 +107,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
   super_star_triple_chance: {
     contributions: [
       { source: sg.starLeo, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store: Stargazing Supernova Bundle
+      { source: st.vpSupernovaTripleSuperStar, op: '+' },
     ],
   },
 
@@ -119,7 +121,8 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: sk.ctrlCCtrlVStarsSuper10x, op: '+' },
       { source: pet.petStarfishSuper10xChance, op: '+' },
       { source: up.upgrSuperStar10xChance, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store + Fishing
+      { source: st.vpSupergiants10xSuperStar, op: '+' },
+      { source: st.vpSingularity10xSuperStar, op: '+' },
       { source: tr.trMegalodonT2SS10C, op: '+' },
     ],
   },
@@ -152,13 +155,10 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: arch.idolPandora, op: '+' },
       { source: con.staWarmthStarSupernova, op: '+' },
       { source: f.noticeT1StarSupernovaMul, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store: Stargazing Supernova Bundle
+      { source: st.vpSupernovaStarNovaMul, op: '+' },
       { source: card.cardLegMegalodon, op: '×1+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Pets: Axolotl Pet Quest
-      { source: UNKNOWN, op: '+', unknown: true }, // Construct: Statue of Warmth (adds)
-      { source: UNKNOWN, op: '+', unknown: true }, // Archaeology: Astraeus Idol
+      { source: pet.petAxolotlQuestSupernovaMul, op: '+' },
       { source: tr.trMegalodonT2ASM, op: '×' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Fishing: Tier 1 Notice (adds)
     ],
   },
 
@@ -170,7 +170,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: pet.petStarfishSupernovaChance, op: '+' },
       { source: ct.ctSupernovaChanceW2, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store: Stargazing Supernova Bundle
+      { source: st.vpSupernovaSuperStarNova, op: '+' },
     ],
   },
 
@@ -183,8 +183,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: sk.ctrlFStarsSuperStarSupernovaMul, op: '+' },
       { source: rel.divineRelicSupernovaMul, op: '+' },
       { source: con.staWarmthSuperStarSupernova, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store: Stargazing Supernova Bundle
-      { source: UNKNOWN, op: '+', unknown: true }, // Construct: Statue of Warmth
+      { source: st.vpSupernovaSuperStarNovaMul, op: '+' },
       { source: tr.trMegalodonT2ASM, op: '×' },
       { source: UNKNOWN, op: '×', unknown: true }, // Fishing: Tier 1 Notice (×)
     ],
@@ -198,12 +197,12 @@ export const starsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sg.supergiants, op: '+' },
       { source: sk.whyAreThereStarsSupergiant, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store: Stargazing Supergiant Bundle
+      { source: st.vpSupergiants3StarsChance, op: '+' },
       { source: ch.chStarSupergiants, op: '+' },
       { source: ct.ctStarSupergiants, op: '+' },
       { source: f.noticeT2StarSupergiants, op: '+' },
       { source: up.upgrStarSupergiantChance, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store
+      { source: st.vpSingularitySupergiantChance, op: '+' },
     ],
   },
 
@@ -217,7 +216,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: con.staWarmthStarSupergiants, op: '+' },
       { source: arch.idolHyperion, op: '+' },
       { source: up.upgrStarSupergiantMul, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store + Cards
+      { source: st.vpSupergiants3StarMul, op: '×' },
       { source: card.cardDroneStarburstInf, op: '×1+' },
     ],
   },
@@ -231,7 +230,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: sg.superSupergiants, op: '+' },
       { source: ch.chSuperStarSupergiants, op: '+' },
       { source: ct.ctSuperStarSupergiants, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Store
+      { source: st.vpSupergiants3SuperStarsChance, op: '+' },
     ],
   },
 

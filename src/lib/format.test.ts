@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   formatStat,
   formatStatByKey,
+  formatSourceValue,
   formatGold,
   formatPercent,
   formatMultiplier,
@@ -265,5 +266,33 @@ describe('formatStatByKey — affix rules in notation mode', () => {
     expect(formatStatByKey('drone_count', 1234, 'scientific')).toBe('1.23e3')
     expect(formatStatByKey('bomb_crit_chance', 1234, 'engineering')).toBe('1.23e3%')
     expect(formatStatByKey('prestige_point_multi', 1.23e8, 'engineering')).toBe('123e6×')
+  })
+})
+
+describe('formatStatByKey — raw option and registry-driven units', () => {
+  it('raw: true returns the bare number without unit or sign', () => {
+    expect(formatStatByKey('bomb_crit_chance', 97.2, 'standard', { raw: true })).toBe('97.20')
+    expect(formatStatByKey('freebie_gems_bonus', 4, 'standard', { raw: true })).toBe('4')
+  })
+
+  it('registry sign renders for bonus stats', () => {
+    expect(formatStatByKey('freebie_gems_bonus', 4, 'standard')).toBe('+4')
+  })
+
+  it('minutes unit renders with the minutes suffix', () => {
+    expect(formatStatByKey('founder_supply_drop_cd', 38, 'standard')).toBe('38 minutes')
+  })
+})
+
+describe('formatSourceValue — decimal convention', () => {
+  it('scales percents from decimals, unlike formatStatByKey (point convention)', () => {
+    expect(formatSourceValue('bomb_crit_chance', 0.125)).toBe('12.5%')
+    expect(formatStatByKey('bomb_crit_chance', 12.5)).toBe('12.50%')
+  })
+
+  it('renders multipliers, minutes and signed counts', () => {
+    expect(formatSourceValue('ore_income_multi', 2)).toBe('2×')
+    expect(formatSourceValue('founder_supply_drop_cd', 38)).toBe('38 minutes')
+    expect(formatSourceValue('freebie_gems_bonus', 4)).toBe('+4')
   })
 })
