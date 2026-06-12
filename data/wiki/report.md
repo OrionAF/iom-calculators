@@ -1,6 +1,6 @@
 # Wiki ↔ formula cross-check
 
-Generated from data/wiki/*.json. Stats checked: 175; with findings: 55; unmatched: 0; annotated-source gaps: 12.
+Generated from data/wiki/*.json. Stats checked: 175; with findings: 51; unmatched: 0; annotated-source gaps: 12.
 
 ## Wiki stats with no matching registry name / formula
 
@@ -19,9 +19,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 55; unmatche
 - vpSkillSurgeSkillShard (store.vp.skillSurgeBundle) → statKey 'freebie_chance_for_skill_shard' has no formula
 
 ## Per-stat findings
-
-### Bomb Crit Damage (`bomb_crit_damage`)
-- missing system Skill-Tree: The "Demolition Expert" Skill
 
 ### Bomb Recharge Speed (`bomb_recharge_speed`)
 - missing system Drones: An Elixir Drone Buff (Also from Lootbugs (formula has 1 unknown placeholder(s))
@@ -46,9 +43,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 55; unmatche
 - missing system Construct: The Statue of Hygiene; The Statue of Propulsion; The Statue of Nature (formula has 1 unknown placeholder(s))
 - missing system Fishing: The Radioactive Slug Tier 1 Tribute (formula has 1 unknown placeholder(s))
 
-### Number Of Drones (`drone_count`)
-- missing system Drones: A Drone Upgrade
-
 ### Drone Exp Gain Multiplier (`coal_drone_exp_multi`)
 - missing system Skins: A Skin Reward (formula has 1 unknown placeholder(s))
 
@@ -60,9 +54,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 55; unmatche
 
 ### Elixir Crit Chance (`elixir_crit_chance`)
 - missing system Fishing: The Dune's Eelworm Tier 2 Tribute (formula has 1 unknown placeholder(s))
-
-### Ore Sell Price Multiplier (`ore_sell_price_multi`)
-- missing system Pets: The Penguin Pet Skin
 
 ### Ore Income Multiplier (`ore_income_multi`)
 - missing system Drones: An Elixir Drone Buff (Also from Gifts, Lootbugs, and the Founder Supply Drop (formula has 1 unknown placeholder(s))
@@ -95,9 +86,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 55; unmatche
 - missing system Items: Yummy Pizza (formula has 1 unknown placeholder(s))
 - missing system Pets: The Nagini Pet (formula has 1 unknown placeholder(s))
 - missing system Stargazing: Eridanus (formula has 1 unknown placeholder(s))
-
-### 20x Craft Chance (`craft_20x_chance`)
-- missing system Skill-Tree: The "Super Smither" Skill (formula has 1 unknown placeholder(s))
 
 ### Bonus Obelisk Fight Length (`obelisk_timer_add`)
 - missing system Relics: A Legendary Relic (formula has 1 unknown placeholder(s))

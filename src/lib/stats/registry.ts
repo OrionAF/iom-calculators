@@ -50,6 +50,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
       "How much damage you do when holding the screen. It's the only way to deal damage to Obelisks. Obelisk Armor is subtracted from your Pickaxe Damage before crits are calculated. If you have less Pickaxe Damage than the Obelisk has Armor, you will always do 0 damage regardless of crits. Drone Damage is based on Pickaxe Damage.",
     icon: 'Pickaxe_Damage.png',
     category: 'pickaxe',
+    base: 1,
   },
   pickaxe_attack_speed_per_second: {
     name: 'Pickaxe Attack Speed',
@@ -57,11 +58,11 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     icon: 'Pickaxe_Attack_Speed.png',
     unit: 'perSecond',
     category: 'pickaxe',
+    base: 6,
   },
   pickaxe_radius_percent: {
     name: 'Pickaxe Radius',
-    description:
-      "Multiplies the area you can deal damage in. It appears to be a circle, but it's actually a square.",
+    description: "Multiplies the area you can deal damage in. It appears to be a circle, but it's actually a square.",
     icon: 'Pickaxe_Radius.png',
     unit: 'percent',
     sign: '+',
@@ -83,8 +84,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   pickaxe_super_crit_chance: {
     name: 'Pickaxe Super Crit Chance',
-    description:
-      'The chance to multiply your damage by Pickaxe Super Crit Damage. Only rolls when Pickaxe Crit Chance activates.',
+    description: 'The chance to multiply your damage by Pickaxe Super Crit Damage. Only rolls when Pickaxe Crit Chance activates.',
     icon: 'Pickaxe_Super_Crit_Chance.png',
     unit: 'percent',
     category: 'pickaxe',
@@ -98,8 +98,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   pickaxe_ultra_crit_chance: {
     name: 'Pickaxe Ultra Crit Chance',
-    description:
-      'The chance to multiply your damage by Pickaxe Ultra Crit Damage. Only rolls when Pickaxe Super Crit Chance activates.',
+    description: 'The chance to multiply your damage by Pickaxe Ultra Crit Damage. Only rolls when Pickaxe Super Crit Chance activates.',
     icon: 'Pickaxe_Ultra_Crit_Chance.png',
     unit: 'percent',
     category: 'pickaxe',
@@ -113,8 +112,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   pickaxe_omega_crit_chance: {
     name: 'Pickaxe Omega Crit Chance',
-    description:
-      'The chance to multiply your damage by Pickaxe Omega Crit Damage. Only rolls when Pickaxe Ultra Crit Chance activates.',
+    description: 'The chance to multiply your damage by Pickaxe Omega Crit Damage. Only rolls when Pickaxe Ultra Crit Chance activates.',
     icon: 'Pickaxe_Omega_Crit_Chance.png',
     unit: 'percent',
     category: 'pickaxe',
@@ -133,7 +131,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Bomb Damage',
     description: 'Bomb damage before factoring in Additional Bomb Multiplier',
     icon: 'Bomb_Damage.png',
-    base: 1,
+    base: 50,
     category: 'bombs',
   },
   bomb_crit_chance: {
@@ -183,8 +181,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   bomb_super_crit_chance: {
     name: 'Bomb Super Crit Chance',
-    description:
-      'The chance to multiply your bomb damage by Bomb Super Crit Damage. Only rolls when Bomb Crit Chance activates.',
+    description: 'The chance to multiply your bomb damage by Bomb Super Crit Damage. Only rolls when Bomb Crit Chance activates.',
     icon: 'Bomb_Super_Crit_Chance.png',
     unit: 'percent',
     category: 'bombs',
@@ -198,8 +195,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   bomb_ultra_crit_chance: {
     name: 'Bomb Ultra Crit Chance',
-    description:
-      'The chance to multiply your bomb damage by Bomb Ultra Crit Damage. Only rolls when Bomb Super Crit Chance activates.',
+    description: 'The chance to multiply your bomb damage by Bomb Ultra Crit Damage. Only rolls when Bomb Super Crit Chance activates.',
     icon: 'Bomb_Ultra_Crit_Chance.png',
     unit: 'percent',
     category: 'bombs',
@@ -213,8 +209,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   bomb_omega_crit_chance: {
     name: 'Bomb Omega Crit Chance',
-    description:
-      'The chance to multiply your bomb damage by Bomb Omega Crit Damage. Only rolls when Bomb Ultra Crit Chance activates.',
+    description: 'The chance to multiply your bomb damage by Bomb Omega Crit Damage. Only rolls when Bomb Ultra Crit Chance activates.',
     icon: 'Bomb_Omega_Crit_Chance.png',
     unit: 'percent',
     category: 'bombs',
@@ -264,8 +259,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   bomb_of_plenty_multi: {
     name: 'Bomb of Plenty Multiplier',
-    description:
-      'Marks Rocks to give Ores.  Gives you bonus ore. Best used to farm gold and on easy to craft bars.',
+    description: 'Marks Rocks to give Ores.  Gives you bonus ore. Best used to farm gold and on easy to craft bars.',
     icon: 'Bomb_of_Plenty.png',
     unit: 'multiplier',
     base: 1,
@@ -295,6 +289,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     description: 'Gives extra drones.',
     icon: 'Number_Of_Drones.png',
     category: 'drones',
+    base: 0,
   },
   drone_damage_percent: {
     name: 'Drone Damage',
@@ -321,8 +316,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   drone_attack_speed_percent: {
     name: 'Drone Attack Speed',
-    description:
-      'Increases the attack speed of your drones. The Base attack speed is 1.25 times per second.',
+    description: 'Increases the attack speed of your drones. The Base attack speed is 1.25 times per second.',
     icon: 'Drone_Attack_Speed.png',
     unit: 'percent',
     sign: '+',
@@ -351,8 +345,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   coal_generation_seconds: {
     name: 'Coal Generation Time',
-    description:
-      'The time it takes your generator to produce coal. (Base is 90 seconds, reduced by upgrades and affected by game speed).',
+    description: 'The time it takes your generator to produce coal. (Base is 90 seconds, reduced by upgrades and affected by game speed).',
     icon: 'Coal_Generation_Time.png',
     unit: 'seconds',
     base: 90,
@@ -413,8 +406,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   golden_void_portal_multi: {
     name: 'Golden Void Portal Multi',
-    description:
-      'The additional multiplier to resources in a Void Portal when a Golden Void Portal triggers. (Base: 5x)',
+    description: 'The additional multiplier to resources in a Void Portal when a Golden Void Portal triggers. (Base: 5x)',
     icon: 'Golden_Void_Portal_Multi.png',
     unit: 'multiplier',
     base: 5,
@@ -429,8 +421,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   rainbow_void_portal_multi: {
     name: 'Rainbow Void Portal Multiplier',
-    description:
-      'The additional multiplier to resources in a Golden Void Portal when it rolls as a Rainbow Void Portal. (Base: 5x)',
+    description: 'The additional multiplier to resources in a Golden Void Portal when it rolls as a Rainbow Void Portal. (Base: 5x)',
     icon: 'Rainbow_Void_Portal_Multiplier.png',
     unit: 'multiplier',
     base: 5,
@@ -510,8 +501,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   rainbow_floor_chance: {
     name: 'Rainbow Floor Chance',
-    description:
-      'The chance for a floor to be rainbow. Golden and Rainbow Floor Chance roll separately, a floor can be rainbow but not golden.',
+    description: 'The chance for a floor to be rainbow. Golden and Rainbow Floor Chance roll separately, a floor can be rainbow but not golden.',
     icon: 'Rainbow_Floor_Chance.png',
     unit: 'percent',
     category: 'ores',
@@ -527,16 +517,14 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   galactic_floor_chance: {
     name: 'Galactic Rainbow Floor Chance',
-    description:
-      'The chance for a floor to be a Galactic Rainbow floor. Only rolls on Rainbow floors.',
+    description: 'The chance for a floor to be a Galactic Rainbow floor. Only rolls on Rainbow floors.',
     icon: 'Galactic_Rainbow_Floor_Chance.png',
     unit: 'percent',
     category: 'ores',
   },
   galactic_floor_multi: {
     name: 'Galactic Rainbow Floor Multiplier',
-    description:
-      'The multiplier to ore gained from a Galactic Rainbow floor. The All Floor Multi is factored into the displayed amount. (Base: 10x)',
+    description: 'The multiplier to ore gained from a Galactic Rainbow floor. The All Floor Multi is factored into the displayed amount. (Base: 10x)',
     icon: 'Galactic_Rainbow_Floor_Multiplier.png',
     unit: 'multiplier',
     base: 10,
@@ -544,8 +532,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   prismatic_floor_chance: {
     name: 'Prismatic Galactic Floor Chance',
-    description:
-      'The chance for a floor to be a Prismatic Galactic Rainbow floor. Only rolls on Galactic Rainbow Floors.',
+    description: 'The chance for a floor to be a Prismatic Galactic Rainbow floor. Only rolls on Galactic Rainbow Floors.',
     icon: 'Prismatic_Galactic_Floor_Chance.png',
     unit: 'percent',
     category: 'ores',
@@ -561,16 +548,14 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   pizzas_eaten: {
     name: 'Pizzas Eaten',
-    description:
-      'The number of pizzas eaten. The effect caps at 200, but the Pizzas Eaten stat will keep increasing beyond that point.',
+    description: 'The number of pizzas eaten. The effect caps at 200, but the Pizzas Eaten stat will keep increasing beyond that point.',
     icon: 'Pizzas_Eaten.png',
     unit: 'count',
     category: 'ores',
   },
   steak_eaten: {
     name: 'Steaks Eaten',
-    description:
-      'The number of steaks eaten. The effect caps at 500, but the Steaks Eaten stat will keep increasing beyond that point.',
+    description: 'The number of steaks eaten. The effect caps at 500, but the Steaks Eaten stat will keep increasing beyond that point.',
     icon: 'Steaks_Eaten.png',
     unit: 'count',
     category: 'ores',
@@ -636,8 +621,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   bar_output_multi: {
     name: 'Bar Output Multiplier',
-    description:
-      'The multiplier applied to the number of bars you receive from sources of bar creation like crafting or Transmuter Bomb.',
+    description: 'The multiplier applied to the number of bars you receive from sources of bar creation like crafting or Transmuter Bomb.',
     icon: 'Bar_Output_Multiplier.png',
     unit: 'multiplier',
     base: 1,
@@ -706,13 +690,12 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     description: 'The multiplier on Experience gained.',
     icon: 'Experience_Gain_Multiplier.png',
     unit: 'multiplier',
-    base: 1,
+    base: 3.5,
     category: 'prestige',
   },
   floor_clear_requirement_multi: {
     name: 'Floor Clear Requirement',
-    description:
-      'The multiplier on the number of times a floor must be cleared to move on to the next floor.',
+    description: 'The multiplier on the number of times a floor must be cleared to move on to the next floor.',
     icon: 'Floor_Clear_Requirement.png',
     unit: 'multiplier',
     base: 1,
@@ -740,6 +723,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     description: 'Increases the rate at which Lootbugs appear.',
     icon: 'Lootbug_Spawn_Rate_Multiplier.png',
     unit: 'multiplier',
+    base: 1,
     category: 'lootbugs',
   },
   lootbug_triple_chance: {
@@ -780,8 +764,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   lootfrog_lanterns_used: {
     name: 'Lanterns Used',
-    description:
-      'The number of lootbug lanterns used. The effect caps at 25, but the Lanterns Used stat will keep increasing beyond that point.',
+    description: 'The number of lootbug lanterns used. The effect caps at 25, but the Lanterns Used stat will keep increasing beyond that point.',
     icon: 'Lanterns_Used.png',
     unit: 'count',
     category: 'lootbugs',
@@ -829,8 +812,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   lootfrog_golden_multi: {
     name: 'Golden Lootfrog Multiplier',
-    description:
-      'The multiplier on Lootfrog rewards when a Lootfrog spawns as a Golden Lootfrog. (Base: 2x)',
+    description: 'The multiplier on Lootfrog rewards when a Lootfrog spawns as a Golden Lootfrog. (Base: 2x)',
     icon: 'Golden_Lootfrog_Multiplier.png',
     unit: 'multiplier',
     base: 2,
@@ -859,8 +841,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   lootfrog_big_multi: {
     name: 'Big Lootfrog Multi',
-    description:
-      'The multiplier on Lootfrog rewards when a Lootfrog spawns as a Big Lootfrog. (Base: 5x)',
+    description: 'The multiplier on Lootfrog rewards when a Lootfrog spawns as a Big Lootfrog. (Base: 5x)',
     icon: 'Big_Lootfrog_Multi.png',
     unit: 'multiplier',
     base: 5,
@@ -878,8 +859,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   chest_meter_multi: {
     name: 'Chest Meter Gain Multiplier',
-    description:
-      'How quickly the Item and Relic Chest meters fill up. Actually functions by reducing the damage requirement.',
+    description: 'How quickly the Item and Relic Chest meters fill up. Actually functions by reducing the damage requirement.',
     icon: 'Chest_Meter_Gain_Multiplier.png',
     unit: 'multiplier',
     base: 1,
@@ -890,6 +870,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     description: 'How many Items you receive when you open an Item Chest.',
     icon: 'Items_Contained_In_Chests.png',
     sign: '+',
+    base: 1,
     category: 'chests',
   },
   freebie_gems_bonus: {
@@ -897,6 +878,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     description: 'How many gems you receive from a Freebie Pack in addition to the base 5.',
     icon: 'Bonus_Gems_From_Freebie_Pack.png',
     sign: '+',
+    base: 5,
     category: 'chests',
   },
   freebie_5x_chance: {
@@ -909,8 +891,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   freebie_refresh_chance: {
     name: 'Instant Refresh Chance',
-    description:
-      'The chance for a Freebie to become claimable again immediately after being claimed.',
+    description: 'The chance for a Freebie to become claimable again immediately after being claimed.',
     icon: 'Instant_Refresh_Chance.png',
     unit: 'percent',
     category: 'chests',
@@ -940,8 +921,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   stonks_multi: {
     name: 'Stonks Freebie Multiplier',
-    description:
-      'The multiplier to base Stonks rewards. The All Stonks Multi is factored into the displayed amount. (Base: 1x)',
+    description: 'The multiplier to base Stonks rewards. The All Stonks Multi is factored into the displayed amount. (Base: 1x)',
     icon: 'Stonks_Freebie_Multiplier.png',
     unit: 'multiplier',
     base: 1,
@@ -956,8 +936,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   super_stonks_multi: {
     name: 'Super Stonks Multiplier',
-    description:
-      'The multiplier to rewards when Super Stonks procs. The All Stonks Multi is factored into the displayed amount. (Base: 2x)',
+    description: 'The multiplier to rewards when Super Stonks procs. The All Stonks Multi is factored into the displayed amount. (Base: 2x)',
     icon: 'Super_Stonks_Multiplier.png',
     unit: 'multiplier',
     base: 2,
@@ -972,8 +951,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   ultra_stonks_multi: {
     name: 'Ultra Stonks Multiplier',
-    description:
-      'The multiplier to rewards when Ultra Stonks procs. The All Stonks Multi is factored into the displayed amount. (Base: 25x)',
+    description: 'The multiplier to rewards when Ultra Stonks procs. The All Stonks Multi is factored into the displayed amount. (Base: 25x)',
     icon: 'Ultra_Stonks_Multiplier.png',
     unit: 'multiplier',
     base: 25,
@@ -991,8 +969,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
 
   contract_cost_reduction: {
     name: 'Contract Cost Reduction',
-    description:
-      'Reduces the amount of bars required to complete Contracts. Functions by increasing the denominator of the multiplier.',
+    description: 'Reduces the amount of bars required to complete Contracts. Functions by increasing the denominator of the multiplier.',
     icon: 'Contract_Cost_Reduction.png',
     unit: 'percent',
     category: 'contracts',
@@ -1027,8 +1004,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   contract_points_rewarded: {
     name: 'Contract Points Rewarded',
-    description:
-      'The base amount of Contract Points awarded upon completing a Contract. Starts at 10.',
+    description: 'The base amount of Contract Points awarded upon completing a Contract. Starts at 10.',
     icon: 'Contract_Points_Rewarded.png',
     sign: '+',
     base: 10,
@@ -1054,8 +1030,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
 
   vein_spawn_rate_multi: {
     name: 'Vein Spawn Rate Multiplier',
-    description:
-      "The multiplier that is determined by a Vein's rarity to determine the chance that an Ore becomes a Vein.",
+    description: "The multiplier that is determined by a Vein's rarity to determine the chance that an Ore becomes a Vein.",
     icon: 'Vein_Spawn_Rate_Multiplier.png',
     unit: 'multiplier',
     base: 1,
@@ -1093,8 +1068,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   rainbow_vein_multi: {
     name: 'Rainbow Vein Multiplier',
-    description:
-      'The multiplier applied to Golden Veins when they roll as Rainbow Veins. (Base: 20x)',
+    description: 'The multiplier applied to Golden Veins when they roll as Rainbow Veins. (Base: 20x)',
     icon: 'Rainbow_Vein_Multiplier.png',
     unit: 'multiplier',
     base: 20,
@@ -1120,8 +1094,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
 
   star_spawn_rate: {
     name: 'Star Spawn Rate Multiplier',
-    description:
-      'The multiplier on the chance that a Star spawns when a floor is cleared. (Base: 1/50)',
+    description: 'The multiplier on the chance that a Star spawns when a floor is cleared. (Base: 1/50)',
     icon: 'Star_Spawn_Rate_Multiplier.png',
     unit: 'multiplier',
     category: 'stars',
@@ -1149,8 +1122,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   super_star_spawn_multi: {
     name: 'Super Star Spawn Rate Multiplier',
-    description:
-      'The multiplier on the chance that a Super Star spawns when a Star spawns. (Base: 1/100)',
+    description: 'The multiplier on the chance that a Super Star spawns when a Star spawns. (Base: 1/100)',
     icon: 'Super_Star_Spawn_Rate_Multiplier.png',
     unit: 'multiplier',
     category: 'stars',
@@ -1253,8 +1225,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   super_star_radiant_multi: {
     name: 'Super Star Radiant Multi',
-    description:
-      'The multiplier on the value of a Super Star when it is a Radiant Super Star. (Base: 10x)',
+    description: 'The multiplier on the value of a Super Star when it is a Radiant Super Star. (Base: 10x)',
     icon: 'Super_Star_Radiant_Multi.png',
     unit: 'multiplier',
     base: 10,
@@ -1278,8 +1249,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   candy_eaten: {
     name: 'Candy Eaten',
-    description:
-      'The number of candy eaten. The effect caps at 250, but the Candy Eaten stat will keep increasing beyond that point.',
+    description: 'The number of candy eaten. The effect caps at 250, but the Candy Eaten stat will keep increasing beyond that point.',
     icon: 'Candy_Eaten.png',
     unit: 'count',
     category: 'stars',
@@ -1311,8 +1281,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   fishing_drone_multiplier: {
     name: 'Drone Power Multiplier',
-    description:
-      'The multiplier on Fishing Drone Base Power that gives the total fishing power per Fishing Drone.',
+    description: 'The multiplier on Fishing Drone Base Power that gives the total fishing power per Fishing Drone.',
     icon: 'Drone_Power_Multiplier.png',
     unit: 'multiplier',
     base: 1,
@@ -1416,8 +1385,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   fishing_tick_speed: {
     name: 'Frames Per Fish Tick',
-    description:
-      'When Sushi is active, this is the amount of fishing ticks used in the time it takes to fill the time bar.',
+    description: 'When Sushi is active, this is the amount of fishing ticks used in the time it takes to fill the time bar.',
     icon: 'Obelisk_Fight_Duration_Icon.png',
     unit: 'multiplier',
     category: 'fishing',
@@ -1667,8 +1635,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   pickaxe_bar_cost_reduction: {
     name: 'Pickaxe Bar Cost Reduction',
-    description:
-      'Reduces the amount of bars required to upgrade the pickaxe on the "Upgrades" menu by this amount.',
+    description: 'Reduces the amount of bars required to upgrade the pickaxe on the "Upgrades" menu by this amount.',
     icon: 'Bar_Cost_Reduction.png',
     sign: '-',
   },
@@ -1715,8 +1682,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   archaeology_spd_mod_gain: {
     name: 'Speed Mod Gain',
-    description:
-      'The amount of hits in Archaeology you receive with increased attack speed when breaking an ore with the Speed Mod.',
+    description: 'The amount of hits in Archaeology you receive with increased attack speed when breaking an ore with the Speed Mod.',
     icon: 'Archaeology_Speed_Mod_Chance.png',
     sign: '+',
   },
@@ -1734,8 +1700,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   archaeology_ability_insta: {
     name: 'Ability Instacharge Chance',
-    description:
-      'The chance the cooldown of the ability is instantly reset in Archaeology.  Can trigger when an ability is activated.',
+    description: 'The chance the cooldown of the ability is instantly reset in Archaeology.  Can trigger when an ability is activated.',
     icon: 'Archaeology_Ability_Instacharge.png',
     unit: 'percent',
   },
@@ -1893,24 +1858,21 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   infernal_card_bonus_misc: {
     name: 'Infernal Card Bonus - Misc',
-    description:
-      'Scales Infernal Misc card effects: 1 + 0.02 × (set Infernals) + 0 × (total Infernals), times any Bonus from Other Sources.',
+    description: 'Scales Infernal Misc card effects: 1 + 0.02 × (set Infernals) + 0 × (total Infernals), times any Bonus from Other Sources.',
     icon: 'Card_Backing_Polychrome.png',
     unit: 'multiplier',
     base: 1,
   },
   infernal_card_bonus_drone: {
     name: 'Infernal Card Bonus - Drone',
-    description:
-      'Scales Infernal Drone card effects: 1 + 0.30 × (set Infernals) + 0.002 × (total Infernals), times any Bonus from Other Sources.',
+    description: 'Scales Infernal Drone card effects: 1 + 0.30 × (set Infernals) + 0.002 × (total Infernals), times any Bonus from Other Sources.',
     icon: 'Card_Backing_Polychrome.png',
     unit: 'multiplier',
     base: 1,
   },
   infernal_card_bonus_pet: {
     name: 'Infernal Card Bonus - Pet',
-    description:
-      'Scales Infernal Pet card effects: 1 + 0.50 × (set Infernals) + 0.002 × (total Infernals), times any Bonus from Other Sources.',
+    description: 'Scales Infernal Pet card effects: 1 + 0.50 × (set Infernals) + 0.002 × (total Infernals), times any Bonus from Other Sources.',
     icon: 'Card_Backing_Polychrome.png',
     unit: 'multiplier',
     base: 1,

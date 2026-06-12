@@ -16,8 +16,12 @@ docs/
 src/lib/utilities/*.txt
 src/lib/components/*.txt
 CONTEXT.md
+GEMINI.md
 
 # Agent / tooling scratch
 .cave/
 .claude/
 .superpowers/
+.fallow/
+.gemini/
+graphify-out/

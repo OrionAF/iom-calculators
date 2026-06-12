@@ -21,7 +21,7 @@ import { cardSources } from '$lib/sources/cards'
 
 /** Wiki menu name → our SourceSystem ids. Absent = informational, skip. */
 const SYSTEM_MAP: Record<string, SourceSystem[]> = {
-  'Skill-Tree': ['skillTree'],
+  SkillTree: ['skillTree'],
   Store: ['store'],
   Cards: ['cards'],
   Relics: ['relics'],
@@ -229,7 +229,7 @@ export function buildWikiReport(readFile: (path: string) => string): string {
     '## Wiki stats with no matching registry name / formula',
     ...unmatched.map((n) => `- ${n}`),
     '',
-    '## Annotated sources missing from their stat\'s formula',
+    "## Annotated sources missing from their stat's formula",
     ...sourceGaps.map((g) => `- ${g}`),
     '',
     '## Per-stat findings',

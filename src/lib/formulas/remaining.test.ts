@@ -73,8 +73,8 @@ describe('known base values from wiki', () => {
   it('lootfrog_big_multi base = 5', () => expect(lootfrogsFormulas.lootfrog_big_multi.base).toBe(5))
   it('contract_points_rewarded base = 10', () =>
     expect(contractsFormulas.contract_points_rewarded.base).toBe(10))
-  it('bomb_damage base = 1 (all-multiplicative wiki structure)', () =>
-    expect(bombsFormulas.bomb_damage.base).toBe(1))
+  it('bomb_damage base = 50 (in-game base damage; menu groups multiply)', () =>
+    expect(bombsFormulas.bomb_damage.base).toBe(50))
   it('all_stonks_multi base = 1', () => expect(chestsFormulas.all_stonks_multi.base).toBe(1))
   it('star_supernova_multi base = 10', () =>
     expect(starsFormulas.star_supernova_multi.base).toBe(10))
