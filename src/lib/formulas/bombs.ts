@@ -75,7 +75,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: con.staPropBombDmg, op: '×' },
       { source: con.staComfortDmg, op: '×1+' }, // fn uses rt.w4StatueCount
       // ── Cards: Radioactive Slug × Bone ──
-      { source: card.cardBone, op: '×' },
+      { source: card.cardMiscBone, op: '×' },
       { source: card.cardLegRadioactiveSlugBomb, op: '×1+' },
       // ── Store: Perk × Founders Bundle × Gem Upgrade ──
       { source: st.perkBombDamage, op: '×' },

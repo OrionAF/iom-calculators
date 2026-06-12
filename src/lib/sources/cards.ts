@@ -547,6 +547,20 @@ export const infernalBonusLegendaryFish = infernalSetBonus(
   'Infernal Legendary Fish Cards Owned',
 )
 
+export const {
+  cardDroneBearCap,
+  cardDroneChainCap,
+  cardDroneMidasCap,
+  cardDroneFroggerCap,
+  cardDroneVeinseekerCap,
+  cardDroneStarburstCap,
+  cardDroneElixirCap,
+  cardDroneVoidCap,
+  cardDroneAnglerCap,
+  cardDronePrismCap,
+} = dynamicDroneCaps as any
+export const { cardBombBasicBomb } = dynamicBombs as any
+
 export const cardSources = {
   cardPetNagini,
   cardMiscAlex,
@@ -598,7 +612,18 @@ export const cardSources = {
   dynamicStars,
   dynamicFish,
   dynamicBombs,
+  cardBombBasicBomb,
   dynamicDroneCaps,
+  cardDroneBearCap,
+  cardDroneChainCap,
+  cardDroneMidasCap,
+  cardDroneFroggerCap,
+  cardDroneVeinseekerCap,
+  cardDroneStarburstCap,
+  cardDroneElixirCap,
+  cardDroneVoidCap,
+  cardDroneAnglerCap,
+  cardDronePrismCap,
   cardPetDwarfSuperCrit,
   cardPetDwarfUltraCrit,
   cardPetDuck,

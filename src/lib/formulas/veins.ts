@@ -74,7 +74,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: pet.petTotemGoldenVeinMul, op: '+' },
       { source: pet.petDuckQuestGoldenVeinMul, op: '+' },
       { source: ch.chGoldenVeinMul, op: '+' },
-      { source: card.cardGoldenVein, op: '×' },
+      { source: card.cardMiscGoldenVein, op: '×' },
       { source: st.vpVeinExtractorGoldenVeinMul, op: '×' },
       { source: sg.starAriesGoldenVein, op: '+' },
       { source: f.noticeT1GoldenVeinMul, op: '+' },
@@ -98,7 +98,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
   rainbow_vein_multi: {
     contributions: [
       { source: sk.insaneInTheVeinGainRainbowVein, op: '+' },
-      { source: card.cardRainbowVein, op: '×' },
+      { source: card.cardMiscRainbowVein, op: '×' },
       { source: f.noticeT1RainbowVeinMul, op: '+' },
       { source: up.upgrRainbowVeinMul, op: '+' },
       { source: card.cardLegShellstealer, op: '×1+' },
@@ -117,7 +117,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: drone.coalGleamingVein, op: '+' },
       { source: arch.archGleamingMul, op: '+' },
-      { source: card.cardGleamingVein, op: '×' },
+      { source: card.cardMiscGleamingVein, op: '×' },
       { source: tr.trGlacialShellstealerT2GVM, op: '+' }, // adds to base 5x
     ],
   },

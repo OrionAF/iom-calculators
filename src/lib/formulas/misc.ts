@@ -51,7 +51,7 @@ export const miscFormulas: FormulaMap = defineFormulas({
   item_duration_multi: {
     contributions: [
       { source: art.artItemDurationT1, op: '+' },
-      { source: card.cardCode, op: '×' },
+      { source: card.cardMiscCode, op: '×' },
       { source: sk.friendshipEndedItemDuration, op: '+' },
       { source: sg.starCapricornItemDuration, op: '+' },
       { source: sg.ssItemDuration, op: '+' },

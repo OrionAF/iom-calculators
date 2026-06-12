@@ -166,40 +166,40 @@ describe('petSources', () => {
 // ─── Cards ────────────────────────────────────────────────────────────────────
 describe('cardSources', () => {
   it('alex: rarity 0 → ×1.00 neutral', () => {
-    expect(card.cardAlex.fn(0, {})).toBeCloseTo(1.0)
+    expect(card.cardMiscAlex.fn(0, {})).toBeCloseTo(1.0)
   })
   it('alex: rarity 1 base → ×1.10', () => {
-    expect(card.cardAlex.fn(1, {})).toBeCloseTo(1.1)
+    expect(card.cardMiscAlex.fn(1, {})).toBeCloseTo(1.1)
   })
   it('alex: rarity 2 gilded → ×1.20', () => {
-    expect(card.cardAlex.fn(2, {})).toBeCloseTo(1.2)
+    expect(card.cardMiscAlex.fn(2, {})).toBeCloseTo(1.2)
   })
   it('alex: rarity 3 polychrome → ×1.40', () => {
-    expect(card.cardAlex.fn(3, {})).toBeCloseTo(1.4)
+    expect(card.cardMiscAlex.fn(3, {})).toBeCloseTo(1.4)
   })
   it('bone: rarity 3 → ×1.15 bomb damage', () => {
-    expect(card.cardBone.fn(3, {})).toBeCloseTo(1.15)
+    expect(card.cardMiscBone.fn(3, {})).toBeCloseTo(1.15)
   })
   it("celio's hat: rarity 3 → ×1.40 prestige pts", () => {
-    expect(card.cardCeliosHat.fn(3, {})).toBeCloseTo(1.4)
+    expect(card.cardMiscCeliosHat.fn(3, {})).toBeCloseTo(1.4)
   })
   it('prestige card: rarity 3 → ×0.80 floor clear (reduction)', () => {
-    expect(card.cardPrestige.fn(3, {})).toBeCloseTo(0.8)
+    expect(card.cardMiscPrestige.fn(3, {})).toBeCloseTo(0.8)
   })
   it('super star card: rarity 2 → ×1.10 all star', () => {
-    expect(card.cardSuperStar.fn(2, {})).toBeCloseTo(1.1)
+    expect(card.cardMiscSuperStar.fn(2, {})).toBeCloseTo(1.1)
   })
   it('freebie card: rarity 3 → +4 gems', () => {
-    expect(card.cardFreebie.fn(3, {})).toBe(4)
+    expect(card.cardMiscFreebie.fn(3, {})).toBe(4)
   })
   it('golden lootbug card: rarity 1 → +2% chance', () => {
-    expect(card.cardGoldenLootbug.fn(1, {})).toBeCloseTo(0.02)
+    expect(card.cardMiscGoldenLootbug.fn(1, {})).toBeCloseTo(0.02)
   })
   it('fishing rod card: rarity 1 → ×1.02', () => {
-    expect(card.cardFishingRod.fn(1, {})).toBeCloseTo(1.02)
+    expect(card.cardMiscFishingRod.fn(1, {})).toBeCloseTo(1.02)
   })
   it('super stonks: rarity 3 → +2% chance', () => {
-    expect(card.cardSuperStonks.fn(3, {})).toBeCloseTo(0.02)
+    expect(card.cardMiscSuperStonks.fn(3, {})).toBeCloseTo(0.02)
   })
 })
 
