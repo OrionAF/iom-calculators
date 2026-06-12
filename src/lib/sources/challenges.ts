@@ -54,9 +54,7 @@ export const chPickaxeDmgPerChallenge: Source = {
   system: 'challenges',
   maxLevel: 3,
   fn: (n, rt) => n * 0.01 * (rt['challengesCompleted'] ?? 0),
-  inputs: [
-    { key: 'challengesCompleted', label: 'Regular Challenges Completed', type: 'integer', min: 0 },
-  ],
+  inputs: [{ key: 'challengesCompleted', label: 'Regular Challenges Completed', type: 'integer', min: 0 }],
 }
 /** Regular: Skill Shard Chance +1%, max 1. → freebie_chance_for_skill_shard */
 export const chSkillShardChance: Source = {
@@ -93,9 +91,7 @@ export const chPickaxeDmgPerSkillNode: Source = {
   system: 'challenges',
   maxLevel: 3,
   fn: (n, rt) => n * 0.01 * (rt['skillNodesUnlocked'] ?? 0),
-  inputs: [
-    { key: 'skillNodesUnlocked', label: 'Skill-Tree Nodes Unlocked', type: 'integer', min: 0 },
-  ],
+  inputs: [{ key: 'skillNodesUnlocked', label: 'Skill-Tree Nodes Unlocked', type: 'integer', min: 0 }],
 }
 /** Regular: Obelisk Armor -12%, max 1. Positive fn per reduction convention. → obelisk_armor_reduction */
 export const chObeliskArmor: Source = {
