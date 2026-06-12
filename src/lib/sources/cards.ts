@@ -456,7 +456,8 @@ export const cardDroneStarburstInf = card(
 export const cardDroneElixirInf = card('drone.elixir', 'Infernal Elixir Drone', infT(0.07, 'drone'))
 export const cardDroneVoidInf = card('drone.void', 'Infernal Void Drone', infT(0.09, 'drone'))
 export const cardDroneAnglerInf = card('drone.angler', 'Infernal Angler Drone', infT(0.11, 'drone'))
-// Prism Drone Infernal effect value is '?' on the wiki — no source yet.
+// Prism value confirmed in-game ('?' on the wiki).
+export const cardDronePrismInf = card('drone.prism', 'Infernal Prism Drone', infT(0.01, 'drone'))
 
 // ─── Legendary Fish cards (primary track; Infernal +0.20x/+0.001x set/total ──
 // scaling is the wiki's documented exception and is NOT applied yet) ──────────
@@ -669,6 +670,7 @@ export const cardSources = {
   cardDroneElixirInf,
   cardDroneVoidInf,
   cardDroneAnglerInf,
+  cardDronePrismInf,
   cardLegRainbowTrout,
   cardLegDuneEelworm,
   cardLegShellstealer,

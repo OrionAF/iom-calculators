@@ -67,7 +67,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 67; unmatche
 
 ### Prismatic Galactic Floor Chance (`prismatic_floor_chance`)
 - missing system Drones: The Fueled Prism Drone (formula has 1 unknown placeholder(s))
-- missing system Cards: The Infernal Prism Drone Card (formula has 1 unknown placeholder(s))
 
 ### Prismatic Galactic Floor Multi (`prismatic_floor_multi`)
 - missing system Drones: The Fueled Prism Drone (formula has 1 unknown placeholder(s))

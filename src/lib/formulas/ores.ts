@@ -200,8 +200,9 @@ export const oresFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: con.staCrochetPrismaticFloor, op: '+' },
       { source: up.upgrPrismaticFloorChance, op: '+' },
-      { source: U, op: '+', unknown: true }, // Fueled Prism (temp), WQ8
+      { source: U, op: '+', unknown: true }, // Drones: Fueled Prism Drone
       { source: wq.wqPrismaticFloorChanceQ8, op: '+' },
+      { source: card.cardDronePrismInf, op: '+' },
     ],
   },
   prismatic_floor_multi: {

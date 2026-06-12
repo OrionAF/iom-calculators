@@ -75,3 +75,14 @@ describe('infernal effects scale with their category multiplier', () => {
     expect(card.cardLegRainbowTrout.fn(4, rt)).toBeCloseTo(1.0 * 3.263)
   })
 })
+
+describe('drone card semantics — confirmed in-game', () => {
+  it('grade cap track stays at Polychrome value when Ignited', () => {
+    expect(card.cardDroneBearCap.fn(3, {})).toBe(10)
+    expect(card.cardDroneBearCap.fn(4, {})).toBe(10)
+  })
+  it('Prism Infernal: +1% prismatic floor chance, scaled by drone multiplier', () => {
+    const rt = { infernalDroneCards: 9, totalInfernalCards: 263 }
+    expect(card.cardDronePrismInf.fn(4, rt)).toBeCloseTo(0.01 * 4.226)
+  })
+})
