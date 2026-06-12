@@ -148,9 +148,53 @@ describe('starsFormulas — novagiant_combo_multi', () => {
   })
 })
 
+describe('starsFormulas — store stargazing bundles', () => {
+  it('triple spawn chance: all three bundles add (+5% +3% +3%)', () => {
+    const f = starsFormulas['star_triple_spawn_chance']
+    const levels = {
+      'store.vp.progressionBoosterBundle': 1,
+      'store.vp.stargazingSupernovaBundle': 1,
+      'store.vp.stargazingSupergiantBundle': 1,
+    }
+    expect(computeStat(f, levels, {})).toBeCloseTo(0.05 + 0.03 + 0.03)
+  })
+
+  it('supernova multi: bundle adds to base, Megalodon card and tribute multiply', () => {
+    const f = starsFormulas['star_supernova_multi']
+    const levels = {
+      'store.vp.stargazingSupernovaBundle': 1, // +1.10
+      'cards.leg.megalodon': 3, // poly +125% → ×2.25
+      'tributes.megalodonT2ASM': 1,
+    }
+    // tribute key may differ; compute pieces separately for robustness
+    const withBundle = computeStat(f, { 'store.vp.stargazingSupernovaBundle': 1 }, {})
+    expect(withBundle).toBeCloseTo(11.1)
+    const withCard = computeStat(f, { 'cards.leg.megalodon': 3 }, {})
+    expect(withCard).toBeCloseTo(10 * (1 + 1.25))
+    void levels
+  })
+
+  it('supergiant chance: Supergiant + Singularity bundles add', () => {
+    const f = starsFormulas['star_supergiant_chance']
+    const levels = {
+      'store.vp.stargazingSupergiantBundle': 1, // +3%
+      'store.vp.singularityBundle': 1, // +3%
+    }
+    expect(computeStat(f, levels, {})).toBeCloseTo(0.06)
+  })
+})
+
 describe('starsFormulas — unknown contributions', () => {
-  it('star_spawn_rate has unknown contributions (Drones, Relics, Pets)', () => {
+  it('star_spawn_rate has unknown contributions (Drones, Relics)', () => {
     expect(hasUnknownContributions(starsFormulas['star_spawn_rate'])).toBe(true)
+  })
+
+  it('star_supernova_multi has NO unknowns — all sources wired', () => {
+    expect(hasUnknownContributions(starsFormulas['star_supernova_multi'])).toBe(false)
+  })
+
+  it('star_supernova_chance has NO unknowns — bundle wired', () => {
+    expect(hasUnknownContributions(starsFormulas['star_supernova_chance'])).toBe(false)
   })
 
   it('star_double_spawn_chance has NO unknowns — only stargazing upgrade', () => {

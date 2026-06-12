@@ -13,6 +13,9 @@ import { lootfrogsFormulas } from './lootfrogs'
 import { prestigeFormulas } from './prestige'
 import { obeliskFormulas } from './obelisk'
 import { miscFormulas } from './misc'
+import { starsFormulas } from './stars'
+import { fishingFormulas } from './fishing'
+import { cardsFormulas } from './cards'
 import type { FormulaMap } from '$lib/engine/types'
 
 function allReturnBase(formulas: FormulaMap, label: string) {
@@ -38,6 +41,9 @@ allReturnBase(lootfrogsFormulas, 'lootfrogs')
 allReturnBase(prestigeFormulas, 'prestige')
 allReturnBase(obeliskFormulas, 'obelisk')
 allReturnBase(miscFormulas, 'misc')
+allReturnBase(starsFormulas, 'stars')
+allReturnBase(fishingFormulas, 'fishing')
+allReturnBase(cardsFormulas, 'cards')
 
 // ── Known base value assertions ───────────────────────────────────────────────
 
@@ -67,4 +73,34 @@ describe('known base values from wiki', () => {
   it('lootfrog_big_multi base = 5', () => expect(lootfrogsFormulas.lootfrog_big_multi.base).toBe(5))
   it('contract_points_rewarded base = 10', () =>
     expect(contractsFormulas.contract_points_rewarded.base).toBe(10))
+  it('bomb_damage base = 1 (all-multiplicative wiki structure)', () =>
+    expect(bombsFormulas.bomb_damage.base).toBe(1))
+  it('all_stonks_multi base = 1', () => expect(chestsFormulas.all_stonks_multi.base).toBe(1))
+  it('star_supernova_multi base = 10', () =>
+    expect(starsFormulas.star_supernova_multi.base).toBe(10))
+  it('super_star_supernova_multi base = 10', () =>
+    expect(starsFormulas.super_star_supernova_multi.base).toBe(10))
+  it('star_supergiant_multi base = 3', () =>
+    expect(starsFormulas.star_supergiant_multi.base).toBe(3))
+  it('star_radiant_multi base = 10', () => expect(starsFormulas.star_radiant_multi.base).toBe(10))
+  it('polychrome card bonuses base = 4 (all five sets)', () => {
+    for (const k of ['ore', 'bar', 'vein', 'star', 'fish']) {
+      expect(cardsFormulas[`polychrome_card_bonus_${k}`].base, k).toBe(4)
+    }
+  })
+  it('infernal card bonuses base = 1 (all nine categories)', () => {
+    for (const k of [
+      'ore',
+      'bar',
+      'vein',
+      'star',
+      'fish',
+      'misc',
+      'drone',
+      'pet',
+      'legendary_fish',
+    ]) {
+      expect(cardsFormulas[`infernal_card_bonus_${k}`].base, k).toBe(1)
+    }
+  })
 })

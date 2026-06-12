@@ -189,6 +189,12 @@ describe('storeProgress — gem upgrade ranks', () => {
     expect(get(storeProgress).gemUpgrades.pickaxe_damage).toBe(0)
   })
 
+  it('clamps multi-effect upgrades to the max across their sources', () => {
+    // bomb_damage_capacity has two effect sources (damage + capacity), both max 22.
+    setGemUpgradeRank('bomb_damage_capacity', 99)
+    expect(get(storeProgress).gemUpgrades.bomb_damage_capacity).toBe(22)
+  })
+
   it('clamps above maxLevel to maxLevel', () => {
     setGemUpgradeRank('pickaxe_damage', 99)
     expect(get(storeProgress).gemUpgrades.pickaxe_damage).toBe(22)

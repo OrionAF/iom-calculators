@@ -1,5 +1,10 @@
 import { get } from 'svelte/store'
 import { persistedStore } from '$lib/storage/persistedStore'
+// NOTE: this store is the Store page's persisted state. The formula engine
+// never reads it directly — stores/progress.ts derives the unified
+// 'source key → level' map (progressLevels) from it. Gem upgrade max ranks
+// come from the referenced sources via gemUpgradeMaxLevel(); the catalog
+// holds no numeric values.
 import {
   VALUE_PACKS,
   PERKS,
