@@ -73,6 +73,8 @@ export const prestigeFormulas: FormulaMap = defineFormulas({
       { source: up.upgrExpGain, op: '+' },
       { source: U, op: '+', unknown: true }, // Prestige + Drones Elixir + Store + Skins
       { source: sn.snExpGain, op: '×1+' },
+      { source: card.cardPetDino, op: '×' },
+      { source: card.cardLegRadioactiveSlugExp, op: '×1+' },
     ],
   },
   floor_clear_requirement_multi: {
@@ -90,7 +92,8 @@ export const prestigeFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sk.doTheseUpgradesArtifactCap, op: '+' },
       { source: con.staSlayingArtifactCap, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards + Construct
+      { source: U, op: '+', unknown: true }, // Construct: Platinized Statue of Rhythm
+      { source: card.cardPetHappyBot, op: '+' },
     ],
   },
   artifact_tier4_cap_increase: {

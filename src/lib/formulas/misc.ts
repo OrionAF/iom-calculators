@@ -56,6 +56,7 @@ export const miscFormulas: FormulaMap = defineFormulas({
       { source: sg.starCapricornItemDuration, op: '+' },
       { source: sg.ssItemDuration, op: '+' },
       { source: U, op: '+', unknown: true }, // Prestige + Skins
+      { source: card.cardPetRabbitInf, op: '×1+' },
     ],
   },
   gem_upgrade_cap_increase: {

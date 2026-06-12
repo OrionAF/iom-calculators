@@ -122,7 +122,8 @@ export const pickaxeFormulas: FormulaMap = defineFormulas({
       },
       // ── Cards: Alex × Infernal Dwarf × Infernal Bear ──
       { source: card.cardAlex, op: '×' },
-      { source: U, op: '×', unknown: true }, // Cards: Infernal Dwarf, Infernal Bear Drone
+      { source: card.cardPetDwarfInf, op: '×1+' },
+      { source: card.cardDroneBearInf, op: '×1+' },
       // ── Pets: (Dwarf + Dwarf Skin + Whale) × Dino ──
       {
         label: 'Pets',
@@ -210,6 +211,7 @@ export const pickaxeFormulas: FormulaMap = defineFormulas({
       { source: ch.chPickaxeBombSuperCrit, op: '+' },
       { source: up.upgrSuperCritChance1, op: '+' },
       { source: up.upgrSuperCritChance2, op: '+' },
+      { source: card.cardPetDwarfSuperCrit, op: '+' },
     ],
   },
   pickaxe_super_crit_damage: {
@@ -226,6 +228,7 @@ export const pickaxeFormulas: FormulaMap = defineFormulas({
       { source: ct.ctUltraCritChance, op: '+' },
       { source: up.upgrUltraCritChance1, op: '+' },
       { source: up.upgrUltraCritChance2, op: '+' },
+      { source: card.cardPetDwarfUltraCrit, op: '+' },
     ],
   },
   pickaxe_ultra_crit_damage: {

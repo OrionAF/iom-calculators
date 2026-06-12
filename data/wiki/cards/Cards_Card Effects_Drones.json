@@ -1,0 +1,10 @@
+{
+  "title": "Cards/Card Effects/Drones",
+  "pageid": 4843,
+  "url": "https://shminer.miraheze.org/wiki/Cards/Card_Effects/Drones",
+  "categories": [
+    "Pages with reference errors"
+  ],
+  "links": [],
+  "wikitext": "{| class=\"wikitable text-align-center align-left-2 align-left-3\" style=\"font-size:0.9em\"\n! colspan=\"2\" | Card !! Standard || Gilded || Polychrome || Infernal<ref name=InfernalEffect />\n|-\n| {{CardShowcase|card=Drone Bear Icon}} || Bear Drone || Grade Cap for Bear Drone +2 || +5 || +10 || Pickaxe/Bomb Damage +45%, +0.30x/+0.002x\n|-\n| {{CardShowcase|card=Drone Chain Icon}} || Chain Drone || Grade Cap for Chain Drone +2 || +5 || +10 || Golden Floor Multi +14%, +0.30x/+0.002x\n|-\n| {{CardShowcase|card=Drone Midas Icon}} || Midas Drone || Grade Cap for Midas Drone +2 || +5 || +10 || Coal Capacity +6%, +0.30x/+0.002x\n|-\n| {{CardShowcase|card=Drone Frogger Icon}} || Frogger Drone || Grade Cap for Frogger Drone +2 || +5 || +10 || Lootfrog Loot Multi +10%, +0.30x/+0.002x\n|-\n| {{CardShowcase|card=Drone Veinseeker Icon}} || Veinseeker Drone || Grade Cap for Veinseeker Drone +2 || +5 || +10 || Vein Income Multi +11%, +0.30x/+0.002x\n|-\n| {{CardShowcase|card=Drone Starburst Icon}} || Starburst Drone || Grade Cap for Starburst Drone +2 || +5 || +10 || Star Supergiant Multi +9%, +0.30x/+0.002x\n|-\n| {{CardShowcase|card=Drone Elixir Icon}} || Elixir Drone || Grade Cap for Elixir Drone +2 || +5 || +10 || Elixir Crit Multi +7%, +0.30x/+0.002x\n|-\n| {{CardShowcase|card=Drone Void Icon}} || Void Drone || Grade Cap for Void Drone +2 || +5 || +10 || Void Portal Base Multi +9%, +0.30x/+0.002x\n|-\n| {{CardShowcase|card=Drone Angler Icon}} || Angler Drone || Grade Cap for Angler Drone +2 || +5 || +10 || Tier 2 Dock Power +11%, +0.30x/+0.002x\n|-\n| {{CardShowcase|card=Drone Prism Icon}} || Prism Drone || Grade Cap for Prism Drone +2 || +5 || +10 || Prismatic Floor Chance +{{Edit button|text=?}}%, +0.30x/+0.002x\n|}"
+}

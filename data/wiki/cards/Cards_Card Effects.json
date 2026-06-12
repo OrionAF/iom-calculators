@@ -1,0 +1,18 @@
+{
+  "title": "Cards/Card Effects",
+  "pageid": 4850,
+  "url": "https://shminer.miraheze.org/wiki/Cards/Card_Effects",
+  "categories": [
+    "Pages using Tabber parser tag"
+  ],
+  "links": [
+    "Archaeology",
+    "Fishing",
+    "Pets",
+    "Skill-Tree",
+    "Stargazing",
+    "Store",
+    "Upgrades"
+  ],
+  "wikitext": "<tabber>\nOres=\n{{:Cards/Card Effects/Ores}}\n|-|\nBars=\n{{:Cards/Card Effects/Bars}}\n|-|\nBombs=\n{{:Cards/Card Effects/Bombs}}\n|-|\nMisc=\n{{:Cards/Card Effects/Misc}}\n|-|\nDrones=\n{{:Cards/Card Effects/Drones}}\n|-|\nPets=\n{{:Cards/Card Effects/Pets}}\n|-|\nVeins=\n{{:Cards/Card Effects/Veins}}\n|-|\nStars=\n{{:Cards/Card Effects/Stars}}\n|-|\nArchaeology=\n{{:Cards/Card Effects/Archaeology}}\n|-|\nFish=\n{{:Cards/Card Effects/Fish}}\n|-|\nLegendary Fish=\n{{:Cards/Card Effects/Legendary Fish}}\n</tabber>\n<references/>"
+}

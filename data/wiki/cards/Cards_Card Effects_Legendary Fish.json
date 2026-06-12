@@ -1,0 +1,10 @@
+{
+  "title": "Cards/Card Effects/Legendary Fish",
+  "pageid": 4849,
+  "url": "https://shminer.miraheze.org/wiki/Cards/Card_Effects/Legendary_Fish",
+  "categories": [
+    "Pages with reference errors"
+  ],
+  "links": [],
+  "wikitext": "{| class=\"wikitable text-align-center align-left-2 align-left-3\" style=\"font-size:0.9em\"\n! colspan=\"2\" | Card !! Standard || Gilded || Polychrome || Infernal<ref name=InfernalEffect />\n|-\n| {{CardShowcase|card=Lake Legendary Fish}} || Rainbow Trout || Rainbow Floor Multi +25% || +50% || +100% || +0.20x/+0.001x\n|-\n| {{CardShowcase|card=Desert Legendary Fish}} || Dune's Eelworm || Golden Portal Multi +40% || +80% || +140% || +0.20x/+0.001x\n|-\n| {{CardShowcase|card=Tundra Legendary Fish}} || Glacial Shellstealer || Rainbow Vein Multi +30% || +60% || +100% || +0.20x/+0.001x\n|-\n| {{CardShowcase|card=Ocean Legendary Fish}} || Megalodon || Star Supernova Multi +35% || +70% || +125% || +0.20x/+0.001x\n|-\n| {{CardShowcase|card=Nuclear Legendary Fish}} || Radioactive Slug || Bomb Damage/Exp Gain +300% || +500% || +1100% || +0.20x/+0.001x\n|-\n| {{CardShowcase|card=Abyss Legendary Fish}} || Cthulhu || Divine Relics Cap +1 || +2 || +4 || +0.20x/+0.001x\n|-\n| {{CardShowcase|card=Cave Legendary Fish}} || Glimmering Geoduck || Banked Freebie Cap +14% || +28% || +52% || +0.20x/+0.001x\n|-\n| {{CardShowcase|card=Volcano Legendary Fish}} || Laviathan || Bar Output Multiplier +40% || +80% || +140% || +0.20x/+0.001x\n|-\n| {{CardShowcase|card=Sky Legendary Fish}} || Storm Serpent || Super Stonks Multiplier +14% || +28% || +56% || +0.20x/+0.001x\n|-\n| {{CardShowcase|card=Solaris Legendary Fish}} || Melting Gibbous || Gems From Freebie +10% || +20% || +30% || +0.20x/+0.001x\n|-\n| {{CardShowcase|card=Galaxy Legendary Fish}} || Blackened Basker || Super Stonks Chance +0.15% || +0.30% || +0.60% || +0.20x/+0.001x\n|}"
+}

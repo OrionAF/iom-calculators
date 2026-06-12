@@ -745,7 +745,8 @@ export const upgrPolychromeOreCardMulti: Source = {
   name: 'Polychrome Ore Card Multi',
   system: 'upgrades',
   maxLevel: 50,
-  fn: (l) => 1 + l * 0.05,
+  // Bonus-shaped: sums with base 4 + Cetus inside the poly bonus formula.
+  fn: (l) => l * 0.05,
   inputs: [],
 }
 

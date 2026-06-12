@@ -11,6 +11,7 @@ import { challengeSources as ch } from '$lib/sources/challenges'
 import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { cardSources as card } from '$lib/sources/cards'
 
 const U: Source = {
   key: '_unknown',
@@ -78,7 +79,8 @@ export const craftingFormulas: FormulaMap = defineFormulas({
       { source: art.artBarOutputT4, op: '+' },
       { source: st.perkBarOutput, op: '×' },
       { source: up.upgrBarOutputMul, op: '+' },
-      { source: U, op: '×', unknown: true }, // Cards
+      { source: card.cardLegLaviathan, op: '×1+' },
+      { source: card.cardPetAxolotlInf, op: '×1+' },
     ],
   },
   bar_upgrade_cost_reduction: {
@@ -97,6 +99,7 @@ export const craftingFormulas: FormulaMap = defineFormulas({
       { source: sg.starAquariusBarCraft, op: '+' },
       { source: ch.chBarCraftCosts, op: '+' },
       { source: U, op: '+', unknown: true }, // Store + Cards
+      { source: card.cardPetAxolotl, op: '+' },
     ],
   },
 })
