@@ -330,7 +330,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: sk.whyAreThereStarsNovagiant, op: '+' },
       { source: ch.chNovagiantComboMul, op: '+' },
       { source: pet.petStarfishQuestNovagiant, op: '+' },
-      { source: wq.wqNovogiantMultiQ5, op: '×1+' },
+      { source: wq.wqNovagiantMultiQ5, op: '×1+' },
       { source: card.cardMiscNovagiant, op: '×' },
       { source: st.storeVpSingularityNovagiant, op: '×' },
       { source: st.storeVpHalfWayNovagiant, op: '×' },

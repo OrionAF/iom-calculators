@@ -7,6 +7,7 @@ export const wqWorld4SpeedModifierQ1: Source = {
   name: 'World Quest: World 4 Speed Modifier -10%',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'wq_world4_speedmodifier',
   fn: (n) => n * -0.1,
   inputs: [],
 }
@@ -15,6 +16,7 @@ export const wqRainbowFloorChanceQ2: Source = {
   name: 'World Quest: Rainbow Floor Chance +3%',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'rainbow_floor_chance',
   fn: (n) => n * 0.03,
   inputs: [],
 }
@@ -23,22 +25,25 @@ export const wqGoldenFrogChanceQ3: Source = {
   name: 'World Quest: Golden Frog Chance +1%',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'lootfrog_golden_chance',
   fn: (n) => n * 0.01,
   inputs: [],
 }
 export const wqWorld4SpeedModifierQ4: Source = {
   key: 'worldquests.World4SpeedModifierQ4',
   name: 'World Quest: World 4 Speed Modifier -10%',
+  statKey: 'wq_world4_speedmodifier',
   system: 'worldquests',
   maxLevel: 1,
   fn: (n) => n * -0.1,
   inputs: [],
 }
-export const wqNovogiantMultiQ5: Source = {
-  key: 'worldquests.NovogiantMultiQ5',
-  name: 'World Quest: Novogiant Multi +10%',
+export const wqNovagiantMultiQ5: Source = {
+  key: 'worldquests.NovagiantMultiQ5',
+  name: 'World Quest: Novagiant Multi +10%',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'novagiant_combo_multi',
   fn: (n) => n * 0.1,
   inputs: [],
 }
@@ -47,12 +52,14 @@ export const wqRainbowVoidPortalChanceQ6: Source = {
   name: 'World Quest: Rainbow Void Portal Chance +1%',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'rainbow_void_portal_chance',
   fn: (n) => n * 0.01,
   inputs: [],
 }
 export const wqWorld4SpeedModifierQ7: Source = {
   key: 'worldquests.World4SpeedModifierQ7',
   name: 'World Quest: World 4 Speed Modifier -10%',
+  statKey: 'wq_world4_speedmodifier',
   system: 'worldquests',
   maxLevel: 1,
   fn: (n) => n * -0.1,
@@ -63,6 +70,7 @@ export const wqPrismaticFloorChanceQ8: Source = {
   name: 'World Quest: Prismatic Floor Chance +1%',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'prismatic_floor_chance',
   fn: (n) => n * 0.01,
   inputs: [],
 }
@@ -71,6 +79,7 @@ export const wqElixirDroneGradeCapQ9: Source = {
   name: 'World Quest: Elixir Drone Grade Cap +5',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'drone_elixir_grade_cap_increase',
   fn: (n) => n * 5,
   inputs: [],
 }
@@ -79,6 +88,7 @@ export const wqVeinIncomeMultiQ10: Source = {
   name: 'World Quest: Vein Income Multi 1.10×',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'vein_income_multi',
   fn: (n) => 1 + n * 0.1,
   inputs: [],
 }
@@ -87,12 +97,14 @@ export const wqLootfrog10SpawnChanceQ11: Source = {
   name: 'World Quest: Lootfrog 10x Spawn Chance +0.25%',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'lootfrog_10x_spawn_chance',
   fn: (n) => n * 0.0025,
   inputs: [],
 }
 export const wqWorld4SpeedModifierQ12: Source = {
   key: 'worldquests.World4SpeedModifierQ12',
   name: 'World Quest: World 4 Speed Modifier -10%',
+  statKey: 'wq_world4_speedmodifier',
   system: 'worldquests',
   maxLevel: 1,
   fn: (n) => n * -0.1,
@@ -103,6 +115,7 @@ export const wqGalacticRainbowFloorChanceQ13: Source = {
   name: 'World Quest: Galactic Rainbow Floor Chance +2%',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'galactic_floor_chance',
   fn: (n) => n * 0.02,
   inputs: [],
 }
@@ -111,12 +124,14 @@ export const wqUnlockGoldenYummyPizzaQ14: Source = {
   name: 'World Quest: Unlock Golden Yummy Pizza',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'item_unlock_golden_yummy_pizza',
   fn: (n) => n * 1,
   inputs: [],
 }
 export const wqWorld4SpeedModifierQ15: Source = {
   key: 'worldquests.World4SpeedModifierQ15',
   name: 'World Quest: World 4 Speed Modifier -10%',
+  statKey: 'wq_world4_speedmodifier',
   system: 'worldquests',
   maxLevel: 1,
   fn: (n) => n * -0.1,
@@ -127,6 +142,7 @@ export const wqRainbowVeinChanceQ16: Source = {
   name: 'World Quest: Rainbow Vein Chance +6%',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'rainbow_vein_chance',
   fn: (n) => n * 0.06,
   inputs: [],
 }
@@ -135,6 +151,7 @@ export const wqAllFloorMultiQ17: Source = {
   name: 'World Quest: All Floor Multi +5%',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'all_floor_multipliers',
   fn: (n) => n * 0.05,
   inputs: [],
 }
@@ -143,6 +160,7 @@ export const wqBigLootfrogMultiQ18: Source = {
   name: 'World Quest: Big Lootfrog Multi +10%',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'lootfrog_big_multi',
   fn: (n) => n * 0.1,
   inputs: [],
 }
@@ -151,6 +169,7 @@ export const wqButterflyPetLevelCapQ19: Source = {
   name: 'World Quest: Butterfly Pet Level Cap +5',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'pet_level_cap_butterfly',
   fn: (n) => n * 5,
   inputs: [],
 }
@@ -159,6 +178,7 @@ export const wqUnlockGoldenCosmicCandyQ20: Source = {
   name: 'World Quest: Unlock Golden Cosmic Candy',
   system: 'worldquests',
   maxLevel: 1,
+  statKey: 'item_unlock_golden_cosmic_candy',
   fn: (n) => n * 1,
   inputs: [],
 }
@@ -168,7 +188,7 @@ export const worldquestsSources = {
   wqRainbowFloorChanceQ2,
   wqGoldenFrogChanceQ3,
   wqWorld4SpeedModifierQ4,
-  wqNovogiantMultiQ5,
+  wqNovagiantMultiQ5,
   wqRainbowVoidPortalChanceQ6,
   wqWorld4SpeedModifierQ7,
   wqPrismaticFloorChanceQ8,
