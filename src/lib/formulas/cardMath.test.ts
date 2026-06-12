@@ -15,11 +15,7 @@ describe('combinedCardMultiplier', () => {
 
 describe('infernal card bonus stats', () => {
   it('infernal_card_bonus_ore = 1 + 0.12×set + 0.02×total', () => {
-    const v = computeStat(
-      ALL_FORMULAS['infernal_card_bonus_ore'],
-      {},
-      { infernalOreCards: 33, totalInfernalCards: 198 },
-    )
+    const v = computeStat(ALL_FORMULAS['infernal_card_bonus_ore'], {}, { infernalOreCards: 33, totalInfernalCards: 198 })
     expect(v).toBeCloseTo(1 + 0.12 * 33 + 0.02 * 198) // 8.92 — the wiki example
   })
   it('poly ore bonus starts at base 4', () => {
@@ -37,7 +33,7 @@ describe('card rarity tracks', () => {
     expect(card.cardPetDwarfInf.fn(4, {})).toBeCloseTo(0.25)
   })
   it('multiplier tracks are neutral when unowned', () => {
-    expect(card.cardNovagiant.fn(0, {})).toBe(1)
+    expect(card.cardMiscNovagiant.fn(0, {})).toBe(1)
     expect(card.cardPetRabbit.fn(0, {})).toBe(1)
   })
 })
@@ -92,19 +88,17 @@ describe('Infernal REPLACE vs KEEP semantics — confirmed in-game', () => {
 
   it('misc multiplier card: Infernal = 1 + (poly − 1) × catMult', () => {
     // Alex poly ×1.40 → Infernal 1 + 0.4 × 1.4 = 1.56
-    expect(card.cardAlex.fn(3, rt)).toBeCloseTo(1.4)
-    expect(card.cardAlex.fn(4, rt)).toBeCloseTo(1.56)
+    expect(card.cardMiscAlex.fn(3, rt)).toBeCloseTo(1.4)
+    expect(card.cardMiscAlex.fn(4, rt)).toBeCloseTo(1.56)
   })
 
   it('misc bonus card: Infernal = poly bonus × catMult', () => {
     // Freebie poly +4 → Infernal 4 × 1.4 = 5.6
-    expect(card.cardFreebie.fn(4, rt)).toBeCloseTo(5.6)
+    expect(card.cardMiscFreebie.fn(4, rt)).toBeCloseTo(5.6)
   })
 
   it('pet/drone primaries KEEP the Polychrome value at Infernal', () => {
-    expect(card.cardPetCrab.fn(4, { infernalPetCards: 13, totalInfernalCards: 263 })).toBeCloseTo(
-      0.15,
-    )
+    expect(card.cardPetCrab.fn(4, { infernalPetCards: 13, totalInfernalCards: 263 })).toBeCloseTo(0.15)
     expect(card.cardDroneVoidCap.fn(4, {})).toBe(10)
   })
 

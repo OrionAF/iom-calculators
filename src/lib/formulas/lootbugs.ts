@@ -39,14 +39,14 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: pet.petWhaleLootbugTriple, op: '+' },
       { source: sg.starLibraTripleLootbug, op: '+' },
-      { source: card.cardGoldenLootbug, op: '+' },
+      { source: card.cardMiscGoldenLootbug, op: '+' },
       { source: sn.snTripleLootbugChance, op: '+' },
       { source: card.cardPetWhale, op: '+' },
     ],
   },
   lootbug_golden_chance: {
     contributions: [
-      { source: card.cardGoldenLootbug, op: '+' },
+      { source: card.cardMiscGoldenLootbug, op: '+' },
       { source: st.founderGoldenLootbug, op: '+' },
       { source: st.vpGoldenLootbug, op: '+' },
       { source: U, op: '+', unknown: true }, // Stargazing: Aquarius + Cards
@@ -81,7 +81,7 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
   lootbug_loot_multi: {
     contributions: [
       { source: sk.anyoneUpLootinLootMulti, op: '+' },
-      { source: card.cardLootbug, op: '×' },
+      { source: card.cardMiscLootbug, op: '×' },
       { source: st.vpLootbugBonanzaLootMul, op: '×' },
       { source: sg.ssLootbugLootMul, op: '+' },
       { source: arch.idolTheseus, op: '+' },

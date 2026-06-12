@@ -65,7 +65,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sk.gasolineGuzzlerFuelDuration, op: '+' },
       { source: rel.rareRelicFuelDuration, op: '+' },
-      { source: card.cardFuel, op: '×' },
+      { source: card.cardMiscFuel, op: '×' },
       { source: st.vpDroneCatalystFuel, op: '×' },
       { source: st.vpVoidOverdriveFuel, op: '×' },
       { source: drone.coalFuelDuration, op: '+' },
@@ -78,7 +78,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sk.gasolineGuzzlerCoalCap, op: '+' },
       { source: drone.coalCoalCapacity, op: '+' },
-      { source: card.cardVydn, op: '×' },
+      { source: card.cardMiscVydn, op: '×' },
       { source: card.cardDroneMidasInf, op: '×1+' },
     ],
   },
@@ -95,7 +95,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: drone.coalDroneExp, op: '+' },
       { source: pet.petTotemQuestDroneExp, op: '+' },
       { source: arch.idolTalosDroneExp, op: '+' },
-      { source: card.cardBlueCow, op: '×1+' },
+      { source: card.cardMiscBlueCow, op: '×1+' },
       { source: U, op: '+', unknown: true }, // Skins: Skin Reward
     ],
   },
@@ -110,7 +110,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
   void_portal_base_multi: {
     contributions: [
       { source: sk.callOfTheVoidPortalMulti, op: '+' },
-      { source: card.cardVoidPortal, op: '×' },
+      { source: card.cardMiscVoidPortal, op: '×' },
       { source: st.vpVoidOverdriveVoidMul, op: '×' },
       { source: drone.coalVoidPortalMul, op: '+' },
       { source: card.cardDroneVoidInf, op: '×1+' },
@@ -128,7 +128,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
   },
   golden_void_portal_multi: {
     contributions: [
-      { source: card.cardGoldenVoidPortal, op: '×' },
+      { source: card.cardMiscGoldenVoidPortal, op: '×' },
       { source: pet.petNaginiQuestGoldenVoidMul, op: '+' },
       { source: st.vpVoidOverdriveGoldenPortalMul, op: '×' },
       { source: arch.idolThemis, op: '+' },
@@ -136,7 +136,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: tr.trDuneEelwormT2EBCC, op: '+' },
       { source: tr.trDuneEelwormT2GVPM, op: '×' },
       { source: card.cardLegDuneEelworm, op: '×1+' },
-      { source: card.cardGoldenVoidPortal, op: '×' },
+      { source: card.cardMiscGoldenVoidPortal, op: '×' },
     ],
   },
   rainbow_void_portal_chance: {
@@ -155,7 +155,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: arch.idolCronusPortalMulUnlock, op: '+' },
       { source: up.upgrRainbowVoidMul, op: '+' },
       { source: card.cardPetButterfly, op: '×1+' },
-      { source: card.cardRainbowVoidPortal, op: '×' },
+      { source: card.cardMiscRainbowVoidPortal, op: '×' },
       { source: U, op: '+', unknown: true }, // Upgrades: Anchorium Bar
     ],
   },

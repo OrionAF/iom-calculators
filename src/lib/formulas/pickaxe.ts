@@ -121,7 +121,7 @@ export const pickaxeFormulas: FormulaMap = defineFormulas({
         ],
       },
       // ── Cards: Alex × Infernal Dwarf × Infernal Bear ──
-      { source: card.cardAlex, op: '×' },
+      { source: card.cardMiscAlex, op: '×' },
       { source: card.cardPetDwarfInf, op: '×1+' },
       { source: card.cardDroneBearInf, op: '×1+' },
       // ── Pets: (Dwarf + Dwarf Skin + Whale) × Dino ──
