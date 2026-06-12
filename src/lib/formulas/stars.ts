@@ -332,6 +332,8 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: pet.petStarfishQuestNovagiant, op: '+' },
       { source: wq.wqNovogiantMultiQ5, op: '×1+' },
       { source: card.cardMiscNovagiant, op: '×' },
+      { source: st.vpSingularityNovagiant, op: '×' },
+      { source: st.vpHalfWayNovagiant, op: '×' },
     ],
   },
   candy_eaten: { contributions: [] },
