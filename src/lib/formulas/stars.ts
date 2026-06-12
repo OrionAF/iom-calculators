@@ -94,6 +94,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: ct.ctSuperStarSpawn, op: '+' },
       { source: ch.chSuperStarSpawn, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Fishing: Tier 1 Notice Upgrade
+      { source: card.cardPetStarfish, op: '×1+' },
     ],
   },
 
@@ -152,7 +153,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: con.staWarmthStarSupernova, op: '+' },
       { source: f.noticeT1StarSupernovaMul, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Store: Stargazing Supernova Bundle
-      { source: UNKNOWN, op: '+', unknown: true }, // Cards: Megalodon Fish Card
+      { source: card.cardLegMegalodon, op: '×1+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Pets: Axolotl Pet Quest
       { source: UNKNOWN, op: '+', unknown: true }, // Construct: Statue of Warmth (adds)
       { source: UNKNOWN, op: '+', unknown: true }, // Archaeology: Astraeus Idol
@@ -217,6 +218,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: arch.idolHyperion, op: '+' },
       { source: up.upgrStarSupergiantMul, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Store + Cards
+      { source: card.cardDroneStarburstInf, op: '×1+' },
     ],
   },
 
@@ -255,6 +257,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: con.staTimekeepingRadiantChance, op: '+' },
       { source: arch.idolPrometheusRadiantChanceUnlock, op: '+' },
       { source: tr.trBlackenedBaskerT2RSC, op: '+' },
+      { source: card.cardPetStarfishInf, op: '+' },
     ],
   },
 
@@ -329,6 +332,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: ch.chNovagiantComboMul, op: '+' },
       { source: pet.petStarfishQuestNovagiant, op: '+' },
       { source: wq.wqNovogiantMultiQ5, op: '×1+' },
+      { source: card.cardNovagiant, op: '×' },
     ],
   },
   candy_eaten: { contributions: [] },

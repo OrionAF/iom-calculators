@@ -32,14 +32,16 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
       { source: arch.idolEros, op: '+' },
       { source: up.upgrLootbugSpawnRate, op: '+' },
       { source: U, op: '+', unknown: true }, // Drones fueled Bear (temp) + Cards
+      { source: card.cardPetDuck, op: '×1+' },
     ],
   },
   lootbug_triple_chance: {
     contributions: [
       { source: pet.petWhaleLootbugTriple, op: '+' },
       { source: sg.starLibraTripleLootbug, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards + Skins
+      { source: card.cardGoldenLootbug, op: '+' },
       { source: sn.snTripleLootbugChance, op: '+' },
+      { source: card.cardPetWhale, op: '+' },
     ],
   },
   lootbug_golden_chance: {

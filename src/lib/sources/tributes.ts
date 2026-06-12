@@ -191,7 +191,7 @@ export const trGlimmeringGeoduckT1PSCM: Source = {
   name: 'Tribute: Glimmering Geoduck T1 - Polychrome Star Card Multi 1.25×',
   system: 'tributes',
   maxLevel: 1,
-  fn: (n) => n * 1.25,
+  fn: (n) => 1 + n * 0.25,
   inputs: [],
 }
 export const trGlimmeringGeoduckT2UGGB: Source = {
@@ -207,7 +207,7 @@ export const trGlimmeringGeoduckT2POCM: Source = {
   name: 'Tribute: Glimmering Geoduck T2 - Polychrome Ore Card Multi 1.30×',
   system: 'tributes',
   maxLevel: 1,
-  fn: (n) => n * 1.3,
+  fn: (n) => 1 + n * 0.3,
   inputs: [],
 }
 export const trLaviathanT1UIOABC: Source = {

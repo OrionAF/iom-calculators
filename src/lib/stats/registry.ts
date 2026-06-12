@@ -1777,6 +1777,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   polychrome_card_bonus_vein: {
     name: 'Poly Card Bonus - Veins',
+    base: 4,
     description: 'Increases the bonus on all Polychrome Vein cards.',
     icon: 'Card_Backing_Polychrome.png',
     unit: 'multiplier',
@@ -1784,6 +1785,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   polychrome_card_bonus_ore: {
     name: 'Poly Card Bonus - Ores',
+    base: 4,
     description: 'Increases the bonus on all Polychrome Ore cards.',
     icon: 'Card_Backing_Polychrome.png',
     unit: 'multiplier',
@@ -1791,6 +1793,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   polychrome_card_bonus_star: {
     name: 'Poly Card Bonus - Star',
+    base: 4,
     description: 'Increases the bonus on all Polychrome Star cards.',
     icon: 'Card_Backing_Polychrome.png',
     unit: 'multiplier',
@@ -1798,6 +1801,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   polychrome_card_bonus_fish: {
     name: 'Poly Card Bonus - Fish',
+    base: 4,
     description: 'Increases the bonus on all Polychrome Fish cards.',
     icon: 'Card_Backing_Polychrome.png',
     unit: 'multiplier',
@@ -1838,6 +1842,74 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     description: 'Reduces the amount of ticks required on all T2 docks',
     icon: 'Tier_2_Dock_Ticks.png',
     sign: '-',
+  },
+  polychrome_card_bonus_bar: {
+    name: 'Poly Card Bonus - Bars',
+    description: 'Increases the bonus on all Polychrome Bar cards.',
+    icon: 'Card_Backing_Polychrome.png',
+    unit: 'multiplier',
+    sign: '+',
+    base: 4,
+  },
+  infernal_card_bonus_ore: {
+    name: 'Infernal Card Bonus - Ore',
+    description:
+      'Scales the Infernal multiplier on Ore cards: 1 + 0.12 × (set Infernals) + 0.02 × (total Infernals). Combined card multiplier = 1 + (Poly bonus − 1) × this value.',
+    icon: 'Card_Backing_Polychrome.png',
+    unit: 'multiplier',
+    base: 1,
+  },
+  infernal_card_bonus_bar: {
+    name: 'Infernal Card Bonus - Bar',
+    description:
+      'Scales the Infernal multiplier on Bar cards: 1 + 0.12 × (set Infernals) + 0.02 × (total Infernals). Combined card multiplier = 1 + (Poly bonus − 1) × this value.',
+    icon: 'Card_Backing_Polychrome.png',
+    unit: 'multiplier',
+    base: 1,
+  },
+  infernal_card_bonus_vein: {
+    name: 'Infernal Card Bonus - Vein',
+    description:
+      'Scales the Infernal multiplier on Vein cards: 1 + 0.15 × (set Infernals) + 0.01 × (total Infernals). Combined card multiplier = 1 + (Poly bonus − 1) × this value.',
+    icon: 'Card_Backing_Polychrome.png',
+    unit: 'multiplier',
+    base: 1,
+  },
+  infernal_card_bonus_star: {
+    name: 'Infernal Card Bonus - Star',
+    description:
+      'Scales the Infernal multiplier on Star cards: 1 + 0.20 × (set Infernals) + 0.01 × (total Infernals). Combined card multiplier = 1 + (Poly bonus − 1) × this value.',
+    icon: 'Card_Backing_Polychrome.png',
+    unit: 'multiplier',
+    base: 1,
+  },
+  infernal_card_bonus_fish: {
+    name: 'Infernal Card Bonus - Fish',
+    description:
+      'Scales the Infernal multiplier on Fish cards: 1 + 0.08 × (set Infernals) + 0.005 × (total Infernals). Combined card multiplier = 1 + (Poly bonus − 1) × this value.',
+    icon: 'Card_Backing_Polychrome.png',
+    unit: 'multiplier',
+    base: 1,
+  },
+  drone_bear_grade_cap_increase: {
+    name: 'Bear Drone Grade Cap Increase',
+    description: 'Increases the maximum grade of the Bear Drone.',
+    sign: '+',
+  },
+  drone_starburst_grade_cap_increase: {
+    name: 'Starburst Drone Grade Cap Increase',
+    description: 'Increases the maximum grade of the Starburst Drone.',
+    sign: '+',
+  },
+  drone_elixir_grade_cap_increase: {
+    name: 'Elixir Drone Grade Cap Increase',
+    description: 'Increases the maximum grade of the Elixir Drone.',
+    sign: '+',
+  },
+  drone_angler_grade_cap_increase: {
+    name: 'Angler Drone Grade Cap Increase',
+    description: 'Increases the maximum grade of the Angler Drone.',
+    sign: '+',
   },
   drone_void_grade_cap_increase: {
     name: 'Void Drone Grade Cap Increase',

@@ -37,6 +37,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: drone.droneSuitVeinseekerUpgrade, op: '+' },
       { source: sg.starAriesVeinSpawn, op: '+' },
       { source: U, op: '+', unknown: true }, // Prestige + Elixir drone (temp) + Store + Cards
+      { source: card.cardPetTotem, op: '×1+' },
     ],
   },
   vein_income_multi: {
@@ -50,7 +51,8 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: st.vpProgressionVeinIncome, op: '×' },
       { source: arch.idolChione, op: '+' },
       { source: up.upgrVeinIncomeMul, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards: Infernal Duck × Infernal Veinseeker
+      { source: card.cardPetDuckInf, op: '×1+' },
+      { source: card.cardDroneVeinseekerInf, op: '×1+' },
       { source: wq.wqVeinIncomeMultiQ10, op: '×' },
     ],
   },
@@ -99,12 +101,15 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: card.cardRainbowVein, op: '×' },
       { source: f.noticeT1RainbowVeinMul, op: '+' },
       { source: up.upgrRainbowVeinMul, op: '+' },
+      { source: card.cardLegShellstealer, op: '×1+' },
+      { source: card.cardPetTotemInf, op: '×1+' },
     ],
   },
   gleaming_vein_chance: {
     contributions: [
       { source: arch.archGleamingChance, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards: Infernal Dino; Stargazing: BH14
+      { source: card.cardPetDinoInf, op: '+' },
+      { source: U, op: '+', unknown: true }, // Stargazing: BH14
       { source: tr.trGlacialShellstealerT1GVC, op: '+' },
     ],
   },
@@ -112,7 +117,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: drone.coalGleamingVein, op: '+' },
       { source: arch.archGleamingMul, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards: Gleaming Vein Misc Card
+      { source: card.cardGleamingVein, op: '×' },
       { source: tr.trGlacialShellstealerT2GVM, op: '+' }, // adds to base 5x
     ],
   },

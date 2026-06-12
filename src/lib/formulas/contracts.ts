@@ -8,6 +8,7 @@ import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { upgradeSources as up } from '$lib/sources/upgrades'
 import { skinsSources as sn } from '$lib/sources/skins'
+import { cardSources as card } from '$lib/sources/cards'
 
 const U: Source = {
   key: '_unknown',
@@ -50,14 +51,14 @@ export const contractsFormulas: FormulaMap = defineFormulas({
       { source: con.staAffluence10xContract, op: '+' },
       { source: arch.idolHermes10xContract, op: '+' },
       { source: f.noticeT2ContractChance10x, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards
+      { source: card.cardFrozenAra, op: '+' },
     ],
   },
   contract_points_rewarded: {
     contributions: [
       { source: sk.whosAskingContractPoints, op: '+' },
       { source: pet.petRabbitSkinContractPoints, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards
+      { source: card.cardContract, op: '+' },
     ],
   },
   contract_cap_increase: {
@@ -77,6 +78,7 @@ export const contractsFormulas: FormulaMap = defineFormulas({
       { source: pet.petRabbitQuestContractCost, op: '+' },
       { source: sg.starCancerContractCost, op: '+' },
       { source: U, op: '+', unknown: true },
+      { source: card.cardPetRabbit, op: '×' },
     ],
   },
 })

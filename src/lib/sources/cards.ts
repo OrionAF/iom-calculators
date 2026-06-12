@@ -285,6 +285,217 @@ export const cardFishingRod: Source = {
   inputs: [],
 }
 
+// ─── Rarity track helpers ────────────────────────────────────────────────────
+// Card level scale: 0 = unowned, 1 = Standard, 2 = Gilded, 3 = Polychrome,
+// 4 = Infernal. Igniting is assumed to KEEP the Polychrome primary effect
+// (the Infernal layer adds a separate secondary effect), so primary tracks
+// clamp at the Polychrome value.
+const mulT = (st: number, g: number, p: number) => (n: number) =>
+  n <= 0 ? 1 : n === 1 ? st : n === 2 ? g : p
+const addT = (st: number, g: number, p: number) => (n: number) =>
+  n <= 0 ? 0 : n === 1 ? st : n === 2 ? g : p
+/** Infernal-only secondary effect (bonus-shaped): active at card level 4. */
+const infT = (v: number) => (n: number) => (n >= 4 ? v : 0)
+
+const card = (key: string, name: string, fn: (n: number) => number): Source => ({
+  key: `cards.${key}`,
+  name: `Card: ${name}`,
+  system: 'cards',
+  maxLevel: 4,
+  fn,
+  inputs: [],
+})
+
+// ─── Misc cards (additions from the Cards wiki dump) ─────────────────────────
+export const cardNovagiant = card('novagiant', 'Novagiant Combo', mulT(1.08, 1.16, 1.24))
+export const cardUltraStonks = card('ultraStonks', 'Ultra Stonks', addT(0.005, 0.01, 0.02))
+export const cardContract = card('contract', 'Contract', addT(1, 2, 3))
+export const cardBlueCow = card('blueCow', 'Blue Cow', addT(0.05, 0.1, 0.15))
+export const cardArchAbility = card('archAbility', 'Arch Ability', addT(-0.03, -0.06, -0.1))
+export const cardGleamingVein = card('gleamingVein', 'Gleaming Vein', mulT(1.08, 1.16, 1.24))
+export const cardBigLootfrog = card('bigLootfrog', 'Big Lootfrog', mulT(1.09, 1.18, 1.27))
+export const cardFloor73 = card('floor73', 'Floor 73', mulT(1.02, 1.04, 1.06))
+export const cardRelicChest = card('relicChest', 'Relic', addT(0.01, 0.02, 0.03))
+/** Store: Freebie Timer −2s/−4s/−6s. */
+export const cardStoreFreebieTimer = card('storeFreebieTimer', 'Store', addT(-2, -4, -6))
+export const cardGoldenLootfrog = card('goldenLootfrog', 'Golden Lootfrog', addT(0.005, 0.01, 0.02))
+export const cardLute = card('lute', 'Lute', mulT(1.06, 1.12, 1.18))
+export const cardVydn = card('vydn', 'Vydn', mulT(1.04, 1.08, 1.12))
+export const cardRainbowVoidPortal = card(
+  'rainbowVoidPortal',
+  'Rainbow Void Portal',
+  mulT(1.08, 1.16, 1.24),
+)
+
+// ─── Pet cards: primary track (Standard/Gilded/Polychrome) ───────────────────
+export const cardPetCrab = card('pet.crab', 'Crab Pet', addT(0.05, 0.1, 0.15))
+export const cardPetDwarfSuperCrit = card('pet.dwarf', 'Dwarf Pet', addT(0.03, 0.06, 0.1))
+export const cardPetDwarfUltraCrit = card('pet.dwarf', 'Dwarf Pet', addT(0.03, 0.06, 0.1))
+export const cardPetDuck = card('pet.duck', 'Duck Pet', addT(0.05, 0.1, 0.15))
+export const cardPetRabbit = card('pet.rabbit', 'Rabbit Pet', mulT(0.94, 0.88, 0.8))
+export const cardPetPenguin = card('pet.penguin', 'Penguin Pet', addT(1, 2, 4))
+export const cardPetAxolotl = card('pet.axolotl', 'Axolotl Pet', addT(-0.03, -0.06, -0.1))
+export const cardPetWhale = card('pet.whale', 'Whale Pet', addT(0.05, 0.1, 0.15))
+export const cardPetTotem = card('pet.totem', 'Totem Pet', addT(0.1, 0.2, 0.3))
+export const cardPetHappyBot = card('pet.happyBot', 'Happy-Bot Pet', addT(1, 2, 3))
+export const cardPetLeprechaun = card('pet.leprechaun', 'Leprechaun Pet', addT(0.1, 0.2, 0.3))
+export const cardPetStarfish = card('pet.starfish', 'Starfish Pet', addT(0.05, 0.1, 0.15))
+export const cardPetDino = card('pet.dino', 'Dino Pet', mulT(1.5, 2, 4))
+export const cardPetMrNibbles = card('pet.mrNibbles', 'Mr Nibbles Pet', addT(0.01, 0.02, 0.04))
+export const cardPetButterfly = card('pet.butterfly', 'Butterfly Pet', addT(0.12, 0.24, 0.5))
+
+// ─── Pet cards: Infernal secondary effects (active at level 4) ───────────────
+export const cardPetCrabInf = card('pet.crab', 'Infernal Crab Pet', infT(0.0325))
+export const cardPetDwarfInf = card('pet.dwarf', 'Infernal Dwarf Pet', infT(0.25))
+export const cardPetDuckInf = card('pet.duck', 'Infernal Duck Pet', infT(0.09))
+export const cardPetRabbitInf = card('pet.rabbit', 'Infernal Rabbit Pet', infT(0.025))
+export const cardPetPenguinInf = card('pet.penguin', 'Infernal Penguin Pet', infT(0.06))
+export const cardPetAxolotlInf = card('pet.axolotl', 'Infernal Axolotl Pet', infT(0.04))
+export const cardPetWhaleInf = card('pet.whale', 'Infernal Whale Pet', infT(0.1))
+export const cardPetTotemInf = card('pet.totem', 'Infernal Totem Pet', infT(0.065))
+export const cardPetHappyBotInf = card('pet.happyBot', 'Infernal Happy-Bot Pet', infT(0.0002))
+export const cardPetLeprechaunInf = card('pet.leprechaun', 'Infernal Leprechaun Pet', infT(0.0085))
+export const cardPetStarfishInf = card('pet.starfish', 'Infernal Starfish Pet', infT(0.0025))
+export const cardPetDinoInf = card('pet.dino', 'Infernal Dino Pet', infT(0.0085))
+export const cardPetMrNibblesInf = card('pet.mrNibbles', 'Infernal Mr Nibbles Pet', infT(0.009))
+export const cardPetNaginiInf = card('pet.nagini', 'Infernal Nagini Pet', infT(0.03))
+export const cardPetButterflyInf = card('pet.butterfly', 'Infernal Butterfly Pet', infT(0.04))
+
+// ─── Drone cards: grade caps + Infernal secondary effects ────────────────────
+// NOTE: the wiki lists a further "+0.30x/+0.002x" set/total Infernal scaling on
+// drone card effects; its exact interaction is unverified and NOT applied yet.
+export const cardDroneBearCap = card('drone.bear', 'Bear Drone', addT(2, 5, 10))
+export const cardDroneChainCap = card('drone.chain', 'Chain Drone', addT(2, 5, 10))
+export const cardDroneMidasCap = card('drone.midas', 'Midas Drone', addT(2, 5, 10))
+export const cardDroneFroggerCap = card('drone.frogger', 'Frogger Drone', addT(2, 5, 10))
+export const cardDroneVeinseekerCap = card('drone.veinseeker', 'Veinseeker Drone', addT(2, 5, 10))
+export const cardDroneStarburstCap = card('drone.starburst', 'Starburst Drone', addT(2, 5, 10))
+export const cardDroneElixirCap = card('drone.elixir', 'Elixir Drone', addT(2, 5, 10))
+export const cardDroneVoidCap = card('drone.void', 'Void Drone', addT(2, 5, 10))
+export const cardDroneAnglerCap = card('drone.angler', 'Angler Drone', addT(2, 5, 10))
+export const cardDronePrismCap = card('drone.prism', 'Prism Drone', addT(2, 5, 10))
+export const cardDroneBearInf = card('drone.bear', 'Infernal Bear Drone', infT(0.45))
+export const cardDroneChainInf = card('drone.chain', 'Infernal Chain Drone', infT(0.14))
+export const cardDroneMidasInf = card('drone.midas', 'Infernal Midas Drone', infT(0.06))
+export const cardDroneFroggerInf = card('drone.frogger', 'Infernal Frogger Drone', infT(0.1))
+export const cardDroneVeinseekerInf = card(
+  'drone.veinseeker',
+  'Infernal Veinseeker Drone',
+  infT(0.11),
+)
+export const cardDroneStarburstInf = card('drone.starburst', 'Infernal Starburst Drone', infT(0.09))
+export const cardDroneElixirInf = card('drone.elixir', 'Infernal Elixir Drone', infT(0.07))
+export const cardDroneVoidInf = card('drone.void', 'Infernal Void Drone', infT(0.09))
+export const cardDroneAnglerInf = card('drone.angler', 'Infernal Angler Drone', infT(0.11))
+// Prism Drone Infernal effect value is '?' on the wiki — no source yet.
+
+// ─── Legendary Fish cards (primary track; Infernal +0.20x/+0.001x set/total ──
+// scaling is the wiki's documented exception and is NOT applied yet) ──────────
+export const cardLegRainbowTrout = card('leg.rainbowTrout', 'Rainbow Trout', addT(0.25, 0.5, 1.0))
+export const cardLegDuneEelworm = card('leg.duneEelworm', "Dune's Eelworm", addT(0.4, 0.8, 1.4))
+export const cardLegShellstealer = card(
+  'leg.glacialShellstealer',
+  'Glacial Shellstealer',
+  addT(0.3, 0.6, 1.0),
+)
+export const cardLegMegalodon = card('leg.megalodon', 'Megalodon', addT(0.35, 0.7, 1.25))
+export const cardLegRadioactiveSlugBomb = card(
+  'leg.radioactiveSlug',
+  'Radioactive Slug',
+  addT(3, 5, 11),
+)
+export const cardLegRadioactiveSlugExp = card(
+  'leg.radioactiveSlug',
+  'Radioactive Slug',
+  addT(3, 5, 11),
+)
+export const cardLegGeoduck = card(
+  'leg.glimmeringGeoduck',
+  'Glimmering Geoduck',
+  addT(0.14, 0.28, 0.52),
+)
+export const cardLegLaviathan = card('leg.laviathan', 'Laviathan', addT(0.4, 0.8, 1.4))
+export const cardLegStormSerpent = card('leg.stormSerpent', 'Storm Serpent', addT(0.14, 0.28, 0.56))
+export const cardLegMeltingGibbous = card(
+  'leg.meltingGibbous',
+  'Melting Gibbous',
+  addT(0.1, 0.2, 0.3),
+)
+export const cardLegBlackenedBasker = card(
+  'leg.blackenedBasker',
+  'Blackened Basker',
+  addT(0.0015, 0.003, 0.006),
+)
+// Cthulhu card (Divine Relics Cap +1/+2/+4) has no registry stat yet.
+
+// ─── Infernal resource-card set bonuses ──────────────────────────────────────
+// InfernalBonus = 1 + perSet × (set infernals) + perTotal × (total infernals).
+// Combined card multiplier = 1 + (PolyBonus − 1) × InfernalBonus
+// (see formulas/cardMath.ts). The base 1 lives in the registry stat.
+const TOTAL_INFERNAL_INPUT = {
+  key: 'totalInfernalCards',
+  label: 'Total Infernal Cards Owned',
+  type: 'integer' as const,
+  min: 0,
+}
+const infernalSetBonus = (
+  key: string,
+  name: string,
+  setInputKey: string,
+  setLabel: string,
+  perSet: number,
+  perTotal: number,
+): Source => ({
+  key: `cards.${key}`,
+  name,
+  system: 'cards',
+  fn: (_l, rt) => perSet * (rt[setInputKey] ?? 0) + perTotal * (rt['totalInfernalCards'] ?? 0),
+  inputs: [
+    { key: setInputKey, label: setLabel, type: 'integer' as const, min: 0 },
+    TOTAL_INFERNAL_INPUT,
+  ],
+})
+export const infernalBonusOre = infernalSetBonus(
+  'infernal.ore',
+  'Infernal Ore Card Bonus',
+  'infernalOreCards',
+  'Infernal Ore Cards Owned',
+  0.12,
+  0.02,
+)
+export const infernalBonusBar = infernalSetBonus(
+  'infernal.bar',
+  'Infernal Bar Card Bonus',
+  'infernalBarCards',
+  'Infernal Bar Cards Owned',
+  0.12,
+  0.02,
+)
+export const infernalBonusVein = infernalSetBonus(
+  'infernal.vein',
+  'Infernal Vein Card Bonus',
+  'infernalVeinCards',
+  'Infernal Vein Cards Owned',
+  0.15,
+  0.01,
+)
+export const infernalBonusStar = infernalSetBonus(
+  'infernal.star',
+  'Infernal Star Card Bonus',
+  'infernalStarCards',
+  'Infernal Star Cards Owned',
+  0.2,
+  0.01,
+)
+export const infernalBonusFish = infernalSetBonus(
+  'infernal.fish',
+  'Infernal Fish Card Bonus',
+  'infernalFishCards',
+  'Infernal Fish Cards Owned',
+  0.08,
+  0.005,
+)
+
 export const cardSources = {
   cardNagini,
   cardAlex,
@@ -314,4 +525,83 @@ export const cardSources = {
   cardLootfrog,
   cardFrozenAra,
   cardFishingRod,
+  cardNovagiant,
+  cardUltraStonks,
+  cardContract,
+  cardBlueCow,
+  cardArchAbility,
+  cardGleamingVein,
+  cardBigLootfrog,
+  cardFloor73,
+  cardRelicChest,
+  cardStoreFreebieTimer,
+  cardGoldenLootfrog,
+  cardLute,
+  cardVydn,
+  cardRainbowVoidPortal,
+  cardPetCrab,
+  cardPetDwarfSuperCrit,
+  cardPetDwarfUltraCrit,
+  cardPetDuck,
+  cardPetRabbit,
+  cardPetPenguin,
+  cardPetAxolotl,
+  cardPetWhale,
+  cardPetTotem,
+  cardPetHappyBot,
+  cardPetLeprechaun,
+  cardPetStarfish,
+  cardPetDino,
+  cardPetMrNibbles,
+  cardPetButterfly,
+  cardPetCrabInf,
+  cardPetDwarfInf,
+  cardPetDuckInf,
+  cardPetRabbitInf,
+  cardPetPenguinInf,
+  cardPetAxolotlInf,
+  cardPetWhaleInf,
+  cardPetTotemInf,
+  cardPetHappyBotInf,
+  cardPetLeprechaunInf,
+  cardPetStarfishInf,
+  cardPetDinoInf,
+  cardPetMrNibblesInf,
+  cardPetNaginiInf,
+  cardPetButterflyInf,
+  cardDroneBearCap,
+  cardDroneChainCap,
+  cardDroneMidasCap,
+  cardDroneFroggerCap,
+  cardDroneVeinseekerCap,
+  cardDroneStarburstCap,
+  cardDroneElixirCap,
+  cardDroneVoidCap,
+  cardDroneAnglerCap,
+  cardDronePrismCap,
+  cardDroneBearInf,
+  cardDroneChainInf,
+  cardDroneMidasInf,
+  cardDroneFroggerInf,
+  cardDroneVeinseekerInf,
+  cardDroneStarburstInf,
+  cardDroneElixirInf,
+  cardDroneVoidInf,
+  cardDroneAnglerInf,
+  cardLegRainbowTrout,
+  cardLegDuneEelworm,
+  cardLegShellstealer,
+  cardLegMegalodon,
+  cardLegRadioactiveSlugBomb,
+  cardLegRadioactiveSlugExp,
+  cardLegGeoduck,
+  cardLegLaviathan,
+  cardLegStormSerpent,
+  cardLegMeltingGibbous,
+  cardLegBlackenedBasker,
+  infernalBonusOre,
+  infernalBonusBar,
+  infernalBonusVein,
+  infernalBonusStar,
+  infernalBonusFish,
 }

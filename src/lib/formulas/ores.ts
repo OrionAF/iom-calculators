@@ -101,6 +101,8 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: sg.starHerculesGoldenOreMul, op: '+' },
       { source: sg.ssGoldenOreMul, op: '+' },
       { source: up.upgrGoldenOreMul, op: '+' },
+      { source: card.cardGoldenOre, op: '×' },
+      { source: card.cardPetPenguinInf, op: '×1+' },
     ],
   },
   golden_floor_chance: {
@@ -126,6 +128,8 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: f.noticeT1GoldenFloor, op: '+' },
       { source: up.upgrGoldenFloorMul, op: '+' },
       { source: U, op: '+', unknown: true }, // Drones (fueled Chain) + Items (Eye of Newt+Iris)
+      { source: card.cardFloor73, op: '×' },
+      { source: card.cardDroneChainInf, op: '×1+' },
     ],
   },
   rainbow_floor_chance: {
@@ -160,6 +164,9 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: sg.starPiscesRainbowFloor, op: '+' },
       { source: up.upgrRainbowFloorMul, op: '+' },
       { source: tr.trRainbowTroutT1RFM, op: '×' },
+      { source: card.cardLute, op: '×' },
+      { source: card.cardLegRainbowTrout, op: '×1+' },
+      { source: card.cardPetLeprechaun, op: '×1+' },
     ],
   },
   galactic_floor_chance: {
@@ -175,6 +182,8 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: arch.idolSisyphusGalactic, op: '+' },
       { source: U, op: '+', unknown: true },
       { source: wq.wqGalacticRainbowFloorChanceQ13, op: '+' },
+      { source: card.cardNagini, op: '+' },
+      { source: card.cardPetLeprechaunInf, op: '+' },
     ],
   },
   galactic_floor_multi: {
@@ -183,6 +192,7 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: pet.petLeprechaunQuestGalacticMul, op: '+' },
       { source: sg.starDracoGalacticMul, op: '+' },
       { source: tr.trMegalodonT1GFM, op: '×' },
+      { source: card.cardWorld3, op: '×' },
     ],
   },
 
@@ -215,26 +225,9 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: tr.trRainbowTroutT2AFM, op: '×' },
       { source: sn.snAllFloorMulti, op: '×' },
       { source: wq.wqAllFloorMultiQ17, op: '×1+' },
-    ],
-  },
-
-  polychrome_card_bonus_ore: {
-    contributions: [
-      { source: up.upgrPolychromeOreCardMulti, op: '×' },
-      { source: pet.petHappyBotQuestPolyOre, op: '+' },
-      { source: U, op: '+', unknown: true }, // Stargazing: Cetus poly card, Cards
-    ],
-  },
-  polychrome_card_bonus_star: {
-    contributions: [
-      { source: pet.petHappyBotQuestPolyStar, op: '+' },
-      { source: U, op: '+', unknown: true },
-    ],
-  },
-  polychrome_card_bonus_vein: {
-    contributions: [
-      { source: pet.petHappyBotQuestPolyVein, op: '+' },
-      { source: U, op: '+', unknown: true },
+      { source: card.cardYummyPizza, op: '×' },
+      { source: card.cardWorld4, op: '×' },
+      { source: card.cardPetNaginiInf, op: '×1+' },
     ],
   },
 })

@@ -13,6 +13,7 @@ import { lootfrogsFormulas } from './lootfrogs'
 import { prestigeFormulas } from './prestige'
 import { obeliskFormulas } from './obelisk'
 import { miscFormulas } from './misc'
+import { cardsFormulas } from './cards'
 import type { FormulaMap } from '$lib/engine/types'
 
 /** All stat formulas across every domain. */
@@ -32,4 +33,5 @@ export const ALL_FORMULAS: FormulaMap = {
   ...prestigeFormulas,
   ...obeliskFormulas,
   ...miscFormulas,
+  ...cardsFormulas,
 }

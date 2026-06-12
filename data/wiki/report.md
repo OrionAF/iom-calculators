@@ -1,6 +1,6 @@
 # Wiki ↔ formula cross-check
 
-Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatched: 0.
+Generated from data/wiki/*.json. Stats checked: 175; with findings: 67; unmatched: 0.
 
 ## Wiki stats with no matching registry name / formula
 
@@ -11,7 +11,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 
 ### Bomb Recharge Speed (`bomb_recharge_speed`)
 - missing system Drones: An Elixir Drone Buff (Also from Lootbugs (formula has 1 unknown placeholder(s))
-- missing system Cards: The Infernal Crab Pet Card (formula has 1 unknown placeholder(s))
 
 ### Additional Bomb Multiplier (`bomb_additional_multiplier`)
 - missing system Workshop: The Basic & Chain Damage Upgrade (Only for Basic and Chain Bombs; The Infinity Bomb Scaling Upgrade (Only for Infinity Bomb (formula has 1 unknown placeholder(s))
@@ -27,7 +26,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 
 ### Bomb Cap Multiplier (`bomb_cap_multiplier`)
 - missing system Store: The Bomber Extraordinaire Bundle (formula has 1 unknown placeholder(s))
-- missing system Cards: The Crab Pet Card (formula has 1 unknown placeholder(s))
 - missing system Pets: The Crab Pet (formula has 1 unknown placeholder(s))
 
 ### Workshop Upgrade Cap Increase (`bomb_workshop_cap_increase`)
@@ -37,11 +35,7 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 ### Number Of Drones (`drone_count`)
 - missing system Drones: A Drone Upgrade
 
-### Coal Capacity Multiplier (`coal_capacity_multi`)
-- missing system Cards: The Infernal Midas Drone Card; The Vydn Misc Card (formula has 1 unknown placeholder(s))
-
 ### Drone Exp Gain Multiplier (`coal_drone_exp_multi`)
-- missing system Cards: The Blue Cow Misc Card (formula has 1 unknown placeholder(s))
 - missing system Skins: A Skin Reward (formula has 1 unknown placeholder(s))
 
 ### Golden Void Portal Chance (`golden_void_portal_chance`)
@@ -50,14 +44,8 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 ### Rainbow Void Portal Chance (`rainbow_void_portal_chance`)
 - missing system Stargazing: The Eleventh Black Hole boost (formula has 1 unknown placeholder(s))
 
-### Rainbow Void Portal Multiplier (`rainbow_void_portal_multi`)
-- missing system Cards: The Butterfly Pet Card (formula has 1 unknown placeholder(s))
-
 ### Elixir Crit Chance (`elixir_crit_chance`)
 - missing system Fishing: The Dune's Eelworm Tier 2 Tribute (formula has 1 unknown placeholder(s))
-
-### Elixir Crit Multi (`elixir_crit_multi`)
-- missing system Cards: The Infernal Elixir Drone Card (formula has 1 unknown placeholder(s))
 
 ### Ore Sell Price Multiplier (`ore_sell_price_multi`)
 - missing system Pets: The Penguin Pet Skin
@@ -98,12 +86,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 ### 20x Craft Chance (`craft_20x_chance`)
 - missing system Skill-Tree: The "Super Smither" Skill (formula has 1 unknown placeholder(s))
 
-### Bar Output Multiplier (`bar_output_multi`)
-- missing system Cards: The Laviathan Legendary Fish Card; The Infernal Axolotl Pet Card (formula has 1 unknown placeholder(s))
-
-### Bar Craft Cost (`bar_craft_cost_multi`)
-- missing system Cards: The Axolotl Pet Card (formula has 1 unknown placeholder(s))
-
 ### Bonus Obelisk Fight Length (`obelisk_timer_add`)
 - missing system Relics: A Legendary Relic (formula has 1 unknown placeholder(s))
 
@@ -116,15 +98,8 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 ### Experience Gain Multiplier (`experience_multi`)
 - missing system Drones: An Elixir Drone Buff (Also from the Founder Supply Drop (formula has 1 unknown placeholder(s))
 
-### Artifact Upgrade Cap Increase (`artifact_cap_increase`)
-- missing system Cards: The Happy Bot Pet Card (formula has 1 unknown placeholder(s))
-
 ### Lootbug Spawn Rate Multiplier (`lootbug_spawn_rate`)
 - missing system Drones: Fueled Bomb Bear Drone (formula has 1 unknown placeholder(s))
-- missing system Cards: The Duck Card (formula has 1 unknown placeholder(s))
-
-### Triple Lootbug Chance (`lootbug_triple_chance`)
-- missing system Cards: The Whale Card (formula has 1 unknown placeholder(s))
 
 ### Golden Lootbug Chance (`lootbug_golden_chance`)
 - missing system Stargazing: Aquarius (formula has 1 unknown placeholder(s))
@@ -138,37 +113,22 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 ### Lanterns Used (`lootfrog_lanterns_used`)
 - missing system Items: Lootbug Lantern
 
-### Lootfrog Loot Multiplier (`lootfrog_loot_multi`)
-- missing system Cards: The Infernal Butterfly Pet CardThe Infernal Frogger Drone Card (formula has 1 unknown placeholder(s))
-
 ### Golden Lootfrog Chance (`lootfrog_golden_chance`)
-- missing system Cards: The Golden Lootfrog Misc Card (formula has 1 unknown placeholder(s))
 - missing system Stargazing: The Sixth Black Hole boost (formula has 1 unknown placeholder(s))
-
-### Big Lootfrog Multi (`lootfrog_big_multi`)
-- missing system Cards: The Big Frog Misc Card (formula has 1 unknown placeholder(s))
 
 ### Chance For 2x Chests (`chest_double_chance`)
 - missing system Relics: An Epic Relic (formula has 1 unknown placeholder(s))
 
 ### Banked Freebie Cap (`freebie_bank_cap`)
-- missing system Cards: The Glimmering Geoduck Legendary Fish Card (formula has 1 unknown placeholder(s))
+- op mismatch in Cards: wiki group joins '+', ours: ×1+
 
 ### Freebie Cooldown (`freebie_cooldown_seconds`)
 - missing system Store: The Founders Bundle (formula has 1 unknown placeholder(s))
-- missing system Cards: The Store Misc Card (formula has 1 unknown placeholder(s))
-
-### Stonks Chance (`stonks_chance`)
-- missing system Cards: The Infernal Happy-Bot Pet Card (formula has 1 unknown placeholder(s))
 
 ### Super Stonks Chance (`super_stonks_chance`)
 - missing system Stargazing: Eridanus; The Third Black Hole Bonus
 
-### Super Stonks Multiplier (`super_stonks_multi`)
-- missing system Cards: The Storm Serpent Legendary Fish Card; The Infernal Whale Pet Card (formula has 1 unknown placeholder(s))
-
 ### Ultra Stonks Chance (`ultra_stonks_chance`)
-- missing system Cards: The Ultra Stonks Misc Card (formula has 1 unknown placeholder(s))
 - missing system Stargazing: The 17th Black Hole Boost (formula has 1 unknown placeholder(s))
 
 ### All Stonks Multi (`all_stonks_multi`)
@@ -178,21 +138,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 ### Contract Cost Reduction (`contract_cost_reduction`)
 - missing system Relics: A Rare Relic (formula has 1 unknown placeholder(s))
 
-### 10x Contract Point Chance (`contract_10x_points_chance`)
-- missing system Cards: The FrozenAra Misc Card (formula has 1 unknown placeholder(s))
-
-### Contract Points Rewarded (`contract_points_rewarded`)
-- missing system Cards: The Contract Misc Card (formula has 1 unknown placeholder(s))
-
-### Contract Upgrade Cost Reduction (`contract_upgrade_cost_reduction`)
-- missing system Cards: The Rabbit Pet Card (formula has 1 unknown placeholder(s))
-
-### Vein Spawn Rate Multiplier (`vein_spawn_rate_multi`)
-- missing system Cards: The Totem Pet Card (formula has 1 unknown placeholder(s))
-
-### Vein Income Multiplier (`vein_income_multi`)
-- missing system Cards: The Infernal Duck Pet CardThe Infernal Veinseeker Drone Card (formula has 1 unknown placeholder(s))
-
 ### Golden Vein Chance (`golden_vein_chance`)
 - missing system Stargazing: Aries (formula has 1 unknown placeholder(s))
 
@@ -200,11 +145,7 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 - missing system Drones: The Fueled Veinseeker Suit (formula has 1 unknown placeholder(s))
 
 ### Gleaming Vein Chance (`gleaming_vein_chance`)
-- missing system Cards: The Infernal Dino Pet Card (formula has 1 unknown placeholder(s))
 - missing system Stargazing: The Fourteenth Black Hole boost (formula has 1 unknown placeholder(s))
-
-### Gleaming Vein Multiplier (`gleaming_vein_multi`)
-- missing system Cards: The Gleaming Vein Misc Card (formula has 1 unknown placeholder(s))
 
 ### Star Spawn Rate Multiplier (`star_spawn_rate`)
 - missing system Drones: The Fueled Starburst Suit; An Elixir Drone Buff (Also from Gifts, the Founder Supply Drop, and Lootbugs (formula has 3 unknown placeholder(s))
@@ -218,7 +159,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 
 ### Super Star Spawn Rate Multiplier (`super_star_spawn_multi`)
 - missing system Drones: An Elixir Drone Buff (formula has 3 unknown placeholder(s))
-- missing system Cards: The Starfish Pet Card (formula has 3 unknown placeholder(s))
 - missing system Fishing: A Tier 1 Notice Upgrade (formula has 3 unknown placeholder(s))
 
 ### Super Star Triple Chance (`super_star_triple_chance`)
@@ -228,9 +168,8 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 - missing system Store: The "Stargazing Supergiant Bundle!" Value Pack; The "Singularity Bundle!" Value Pack (formula has 1 unknown placeholder(s))
 
 ### Star Supernova Multiplier (`star_supernova_multi`)
-- missing system Store: The "Stargazing Supernova Bundle!" Value Pack (formula has 6 unknown placeholder(s))
-- missing system Cards: The Megalodon Legendary Fish Card (formula has 6 unknown placeholder(s))
-- missing system Pets: The Axolotl Pet Quest (formula has 6 unknown placeholder(s))
+- missing system Store: The "Stargazing Supernova Bundle!" Value Pack (formula has 5 unknown placeholder(s))
+- missing system Pets: The Axolotl Pet Quest (formula has 5 unknown placeholder(s))
 
 ### Super Star Supernova Chance (`super_star_supernova_chance`)
 - missing system Store: The "Stargazing Supernova Bundle!" Value Pack (formula has 1 unknown placeholder(s))
@@ -243,7 +182,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 
 ### Star Supergiant Multiplier (`star_supergiant_multi`)
 - missing system Store: The "Stargazing Supergiant Bundle!" Value Pack (formula has 1 unknown placeholder(s))
-- missing system Cards: The Infernal Starburst Drone Card (formula has 1 unknown placeholder(s))
 
 ### Super Star Supergiant Chance (`super_star_supergiant_chance`)
 - missing system Store: The "Stargazing Supergiant Bundle!" Value Pack; The "Singularity Bundle!" Value Pack (formula has 1 unknown placeholder(s))
@@ -251,15 +189,11 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 ### Super Star Supergiant Multiplier (`super_star_supergiant_multi`)
 - missing system Store: The "Stargazing Supergiant Bundle!" Value Pack (formula has 1 unknown placeholder(s))
 
-### Star Radiant Chance (`star_radiant_chance`)
-- missing system Cards: The Infernal Starfish Pet Card
-
 ### All Star Multiplier (`all_star_multi`)
 - wiki has (sub-formula) in Drones but our formula is flat: The Fueled Midas Suit (Requires a Tier 2 Notice Upgrade
 
 ### Novagiant Combo Multiplier (`novagiant_combo_multi`)
 - missing system Store: The "Singularity Bundle!" Value Pack; The "Half Way Bundle!" Value Pack
-- missing system Cards: The Novagiant Misc Card
 
 ### Candy Eaten (`candy_eaten`)
 - missing system Items: Cosmic Candy
@@ -276,15 +210,12 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 85; unmatche
 ### 5x Fish Tick Chance (`fishing_5x_tick_chance`)
 - missing system Relics: A Divine Relic (formula has 3 unknown placeholder(s))
 - missing system Store: The "Legendary Hauler Bundle!" Value Pack (formula has 3 unknown placeholder(s))
-- missing system Cards: The Infernal Mr Nibbles Pet Card (formula has 3 unknown placeholder(s))
 
 ### Tiny Notice Chance (`fishing_tiny_notice_chance`)
 - missing system Store: The "Angler's Bundle!" Value Pack (formula has 2 unknown placeholder(s))
-- missing system Cards: The Mr Nibbles Pet Card (formula has 2 unknown placeholder(s))
 
 ### Tier 2 Dock Power (`fishing_tier2_dock_multi`)
 - missing system Store: The "Legendary Hauler Bundle!" Value Pack (formula has 1 unknown placeholder(s))
-- missing system Cards: The Infernal Angler Drone Card (formula has 1 unknown placeholder(s))
 - missing system Stargazing: The Tenth Black Hole boost (formula has 1 unknown placeholder(s))
 
 ### Item Duration Multiplier (`item_duration_multi`)

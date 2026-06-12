@@ -78,7 +78,8 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sk.gasolineGuzzlerCoalCap, op: '+' },
       { source: drone.coalCoalCapacity, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards (Vydn)
+      { source: card.cardVydn, op: '×' },
+      { source: card.cardDroneMidasInf, op: '×1+' },
     ],
   },
   coal_fuel_save_chance: {
@@ -94,7 +95,8 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: drone.coalDroneExp, op: '+' },
       { source: pet.petTotemQuestDroneExp, op: '+' },
       { source: arch.idolTalosDroneExp, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards + Skins
+      { source: card.cardBlueCow, op: '×1+' },
+      { source: U, op: '+', unknown: true }, // Skins: Skin Reward
     ],
   },
   void_portal_chance: {
@@ -111,7 +113,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: card.cardVoidPortal, op: '×' },
       { source: st.vpVoidOverdriveVoidMul, op: '×' },
       { source: drone.coalVoidPortalMul, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards
+      { source: card.cardDroneVoidInf, op: '×1+' },
     ],
   },
   golden_void_portal_chance: {
@@ -133,6 +135,8 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: up.upgrGoldenVoidChance, op: '+' },
       { source: tr.trDuneEelwormT2EBCC, op: '+' },
       { source: tr.trDuneEelwormT2GVPM, op: '×' },
+      { source: card.cardLegDuneEelworm, op: '×1+' },
+      { source: card.cardGoldenVoidPortal, op: '×' },
     ],
   },
   rainbow_void_portal_chance: {
@@ -150,11 +154,81 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: arch.idolCronusPortalMulUnlock, op: '+' },
       { source: up.upgrRainbowVoidMul, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards Butterfly Pet, Upgrades
+      { source: card.cardPetButterfly, op: '×1+' },
+      { source: card.cardRainbowVoidPortal, op: '×' },
+      { source: U, op: '+', unknown: true }, // Upgrades: Anchorium Bar
     ],
   },
   elixir_crit_chance: {
     contributions: [{ source: U, op: '+', unknown: true }],
   },
-  elixir_crit_multi: { contributions: [{ source: U, op: '+', unknown: true }] },
+  elixir_crit_multi: {
+    contributions: [
+      { source: U, op: '+', unknown: true },
+      { source: card.cardDroneElixirInf, op: '×1+' },
+    ],
+  },
+
+  // ─── Drone grade caps (cards + tributes) ───
+  drone_bear_grade_cap_increase: {
+    contributions: [
+      { source: card.cardDroneBearCap, op: '+' },
+      { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+    ],
+  },
+  drone_chain_grade_cap_increase: {
+    contributions: [
+      { source: card.cardDroneChainCap, op: '+' },
+      { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+    ],
+  },
+  drone_midas_grade_cap_increase: {
+    contributions: [
+      { source: card.cardDroneMidasCap, op: '+' },
+      { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+    ],
+  },
+  drone_frogger_grade_cap_increase: {
+    contributions: [
+      { source: card.cardDroneFroggerCap, op: '+' },
+      { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+    ],
+  },
+  drone_veinseeker_grade_cap_increase: {
+    contributions: [
+      { source: card.cardDroneVeinseekerCap, op: '+' },
+      { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+    ],
+  },
+  drone_starburst_grade_cap_increase: {
+    contributions: [
+      { source: card.cardDroneStarburstCap, op: '+' },
+      { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+    ],
+  },
+  drone_elixir_grade_cap_increase: {
+    contributions: [
+      { source: card.cardDroneElixirCap, op: '+' },
+      { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+    ],
+  },
+  drone_void_grade_cap_increase: {
+    contributions: [
+      { source: card.cardDroneVoidCap, op: '+' },
+      { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+      { source: tr.trGlacialShellstealerT2VDGC, op: '+' },
+    ],
+  },
+  drone_angler_grade_cap_increase: {
+    contributions: [
+      { source: card.cardDroneAnglerCap, op: '+' },
+      { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+    ],
+  },
+  drone_prism_grade_cap_increase: {
+    contributions: [
+      { source: card.cardDronePrismCap, op: '+' },
+      { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+    ],
+  },
 })

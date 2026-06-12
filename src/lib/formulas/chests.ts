@@ -50,6 +50,7 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: st.vpHalfWayFreebieGems, op: '+' },
       { source: con.staFallacyFreebieGems, op: '+' },
       { source: U, op: '+', unknown: true },
+      { source: card.cardLegMeltingGibbous, op: '×1+' },
     ],
   },
   freebie_5x_chance: {
@@ -92,7 +93,7 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: pet.petHappyBotQuestFreebieBank, op: '+' },
       { source: sg.starOphiuchusFreebie, op: '+' },
       { source: sg.ssBankedFreebieLootbugFreebie, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards: Glimmering Geoduck Legendary Fish Card
+      { source: card.cardLegGeoduck, op: '×1+' },
       { source: sn.snBankedFreebies, op: '+' },
       { source: sn.snBankedFreebiesLootbugs, op: '×1+' }, // 21st Reward (multiplies ALL Freebie Cap)
     ],
@@ -104,12 +105,15 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: con.staEastwoodFreebieTimer, op: '+' },
       { source: up.upgrFreebieCooldown, op: '+' },
       { source: U, op: '+', unknown: true }, // Store Founder + Cards
+      { source: card.cardStoreFreebieTimer, op: '+' },
     ],
   },
   stonks_chance: {
     contributions: [
       { source: con.staCombatStonksChance, op: '+' },
       { source: U, op: '+', unknown: true },
+      { source: card.cardPetHappyBotInf, op: '+' },
+      { source: card.cardPetHappyBotInf, op: '+' },
     ],
   },
   stonks_multi: {
@@ -129,6 +133,8 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: ch.chSuperStonksChance, op: '+' },
       { source: st.vpChiefExecSuperStonksChance, op: '+' },
       { source: up.upgrSuperStonksChance, op: '+' },
+      { source: card.cardLegBlackenedBasker, op: '+' },
+      { source: card.cardLegBlackenedBasker, op: '+' },
     ],
   },
   super_stonks_multi: {
@@ -136,6 +142,10 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: st.vpChiefExecSuperStonksMul, op: '×' },
       { source: arch.idolCharon, op: '+' },
       { source: U, op: '+', unknown: true },
+      { source: card.cardLegStormSerpent, op: '×1+' },
+      { source: card.cardPetWhaleInf, op: '×1+' },
+      { source: card.cardLegStormSerpent, op: '×1+' },
+      { source: card.cardPetWhaleInf, op: '×1+' },
     ],
   },
   ultra_stonks_chance: {
@@ -144,6 +154,8 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: arch.idolCharonUltraStonksUnlock, op: '+' },
       { source: arch.idolSisyphusUltraStonks, op: '+' },
       { source: U, op: '+', unknown: true },
+      { source: card.cardUltraStonks, op: '+' },
+      { source: card.cardUltraStonks, op: '+' },
     ],
   },
   ultra_stonks_multi: {
@@ -157,5 +169,8 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: U, op: '×', unknown: true }, // Challenges: Divine Challenge Upgrade
       { source: U, op: '×', unknown: true }, // Construct: Statue of Combat
     ],
+  },
+  chance_for_relic_chest: {
+    contributions: [{ source: card.cardRelicChest, op: '+' }],
   },
 })

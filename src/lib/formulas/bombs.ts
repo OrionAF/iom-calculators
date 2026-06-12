@@ -76,7 +76,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: con.staComfortDmg, op: '×1+' }, // fn uses rt.w4StatueCount
       // ── Cards: Radioactive Slug × Bone ──
       { source: card.cardBone, op: '×' },
-      { source: U, op: '×', unknown: true }, // Cards: Radioactive Slug Legendary Fish Card
+      { source: card.cardLegRadioactiveSlugBomb, op: '×1+' },
       // ── Store: Perk × Founders Bundle × Gem Upgrade ──
       { source: st.perkBombDamage, op: '×' },
       { source: st.gemBombDamage, op: '×1+' },
@@ -136,6 +136,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: f.noticeT1BombRecharge, op: '+' },
       { source: up.upgrBombRechargeRate, op: '+' },
       { source: U, op: '+', unknown: true }, // Drones Elixir + Lootbugs
+      { source: card.cardPetCrabInf, op: '×1+' },
     ],
   },
   bomb_free_chance: {
@@ -164,6 +165,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: con.staAppetiteBombCap, op: '×' },
       { source: U, op: '+', unknown: true }, // Workshop Bomb Battery Cap
       { source: sn.snBombCapacity, op: '×1+' },
+      { source: card.cardPetCrab, op: '×1+' },
     ],
   },
   bomb_super_crit_chance: {

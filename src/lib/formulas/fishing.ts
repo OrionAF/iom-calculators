@@ -108,6 +108,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: pet.petNibblesQuestTier2Dock, op: '+' },
       { source: arch.idolTethysTier2Dock, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Legendary Hauler + BH10 + Card
+      { source: card.cardDroneAnglerInf, op: '×1+' },
     ],
   },
 
@@ -177,6 +178,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: UNKNOWN, op: '+', unknown: true }, // Divine Relic
       { source: UNKNOWN, op: '+', unknown: true }, // Legendary Hauler Bundle
       { source: UNKNOWN, op: '+', unknown: true }, // Infernal Mr Nibbles Card
+      { source: card.cardPetMrNibblesInf, op: '+' },
     ],
   },
 
@@ -205,6 +207,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: f.tinyNoticeE1, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Angler's Bundle (Store)
       { source: UNKNOWN, op: '+', unknown: true }, // Mr Nibbles Pet Card
+      { source: card.cardPetMrNibbles, op: '+' },
     ],
   },
 
@@ -264,13 +267,5 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    */
   fishing_tick_speed: {
     contributions: [{ source: UNKNOWN, op: '+', unknown: true }],
-  },
-
-  polychrome_card_bonus_fish: {
-    contributions: [
-      { source: f.polyCardMultiT2, op: '+' },
-      { source: f.polyCardMultiE2, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Archaeology star card
-    ],
   },
 })

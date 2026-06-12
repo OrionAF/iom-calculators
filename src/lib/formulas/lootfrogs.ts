@@ -39,6 +39,8 @@ export const lootfrogsFormulas: FormulaMap = defineFormulas({
       { source: st.vpFrogFrenzyLootfrogMul, op: '×' },
       { source: up.upgrLootfrogLootMul, op: '+' },
       { source: U, op: '+', unknown: true }, // Workshop + Cards
+      { source: card.cardPetButterflyInf, op: '×1+' },
+      { source: card.cardDroneFroggerInf, op: '×1+' },
     ],
   },
   lootfrog_golden_chance: {
@@ -48,6 +50,7 @@ export const lootfrogsFormulas: FormulaMap = defineFormulas({
       { source: U, op: '+', unknown: true }, // Stargazing BH6, Fishing Melting G T2, WQ3
       { source: tr.trMeltingGibbousT2GFC, op: '+' },
       { source: wq.wqGoldenFrogChanceQ3, op: '+' },
+      { source: card.cardGoldenLootfrog, op: '+' },
     ],
   },
   lootfrog_golden_multi: {
@@ -82,7 +85,7 @@ export const lootfrogsFormulas: FormulaMap = defineFormulas({
   lootfrog_big_multi: {
     contributions: [
       { source: arch.idolSisyphusBigFrogMul, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards: Big Frog Misc Card
+      { source: card.cardBigLootfrog, op: '×' },
       { source: wq.wqBigLootfrogMultiQ18, op: '×1+' },
     ],
   },
