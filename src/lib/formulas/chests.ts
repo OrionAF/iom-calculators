@@ -39,7 +39,7 @@ export const chestsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sk.gemsAndChestsFreebie, op: '+' },
       { source: con.staFriendshipFreebieGems, op: '+' },
-      { source: card.cardFreebie, op: '+' },
+      { source: card.cardMiscFreebie, op: '+' },
       { source: ch.chFreebieGemsBonus, op: '+' },
       { source: st.founderFreebieGems, op: '+' },
       { source: st.vpBankersFreebieGems, op: '+' },
@@ -105,7 +105,7 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: con.staEastwoodFreebieTimer, op: '+' },
       { source: up.upgrFreebieCooldown, op: '+' },
       { source: U, op: '+', unknown: true }, // Store Founder + Cards
-      { source: card.cardStoreFreebieTimer, op: '+' },
+      { source: card.cardMiscStoreFreebieTimer, op: '+' },
     ],
   },
   stonks_chance: {
@@ -118,7 +118,7 @@ export const chestsFormulas: FormulaMap = defineFormulas({
   },
   stonks_multi: {
     contributions: [
-      { source: card.cardStonks, op: '×' },
+      { source: card.cardMiscStonks, op: '×' },
       { source: st.vpInsiderStonksMul, op: '+' },
       { source: con.staCombatStonksMul, op: '+' },
       { source: sg.starEridanusStonksMul, op: '+' },
@@ -129,7 +129,7 @@ export const chestsFormulas: FormulaMap = defineFormulas({
   },
   super_stonks_chance: {
     contributions: [
-      { source: card.cardSuperStonks, op: '+' },
+      { source: card.cardMiscSuperStonks, op: '+' },
       { source: ch.chSuperStonksChance, op: '+' },
       { source: st.vpChiefExecSuperStonksChance, op: '+' },
       { source: up.upgrSuperStonksChance, op: '+' },
@@ -154,8 +154,8 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: arch.idolCharonUltraStonksUnlock, op: '+' },
       { source: arch.idolSisyphusUltraStonks, op: '+' },
       { source: U, op: '+', unknown: true },
-      { source: card.cardUltraStonks, op: '+' },
-      { source: card.cardUltraStonks, op: '+' },
+      { source: card.cardMiscUltraStonks, op: '+' },
+      { source: card.cardMiscUltraStonks, op: '+' },
     ],
   },
   ultra_stonks_multi: {
@@ -171,6 +171,6 @@ export const chestsFormulas: FormulaMap = defineFormulas({
     ],
   },
   chance_for_relic_chest: {
-    contributions: [{ source: card.cardRelicChest, op: '+' }],
+    contributions: [{ source: card.cardMiscRelicChest, op: '+' }],
   },
 })

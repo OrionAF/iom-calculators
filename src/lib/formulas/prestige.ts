@@ -35,7 +35,7 @@ export const prestigeFormulas: FormulaMap = defineFormulas({
       { source: con.staSlayingPrestigePts, op: '×' },
       { source: pet.petDwarfQuestPrestigePts, op: '+' },
       { source: ch.chExpPrestigePts, op: '+' },
-      { source: card.cardCeliosHat, op: '×' },
+      { source: card.cardMiscCeliosHat, op: '×' },
       { source: st.perkPrestigePts, op: '×' },
       { source: sg.starLibraPrestige, op: '+' },
       { source: U, op: '+', unknown: true }, // Prestige + Store + Cards + Construct + Skins
@@ -64,7 +64,7 @@ export const prestigeFormulas: FormulaMap = defineFormulas({
       { source: pet.petDuckExp, op: '+' },
       { source: ct.ctExpGainW1, op: '+' },
       { source: ch.chExpPrestigePts, op: '+' },
-      { source: card.cardMinerName, op: '×' },
+      { source: card.cardMiscMinerName, op: '×' },
       { source: st.vpPetTrainerExp, op: '×' },
       { source: sg.starCapricornExp, op: '+' },
       { source: sg.ssExpGain, op: '+' },
@@ -82,7 +82,7 @@ export const prestigeFormulas: FormulaMap = defineFormulas({
       { source: sk.easyProgressorFloorClear, op: '+' },
       { source: art.artFloorClearT2, op: '+' },
       { source: pet.petDwarfQuestFloorClear, op: '+' },
-      { source: card.cardPrestige, op: '×' },
+      { source: card.cardMiscPrestige, op: '×' },
       { source: con.staRhythmFloorClear, op: '+' },
       { source: U, op: '+', unknown: true }, // Skins
       { source: sn.snFloorClearReq, op: '×1+' },

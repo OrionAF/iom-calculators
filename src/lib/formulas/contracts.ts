@@ -51,14 +51,14 @@ export const contractsFormulas: FormulaMap = defineFormulas({
       { source: con.staAffluence10xContract, op: '+' },
       { source: arch.idolHermes10xContract, op: '+' },
       { source: f.noticeT2ContractChance10x, op: '+' },
-      { source: card.cardFrozenAra, op: '+' },
+      { source: card.cardMiscFrozenAra, op: '+' },
     ],
   },
   contract_points_rewarded: {
     contributions: [
       { source: sk.whosAskingContractPoints, op: '+' },
       { source: pet.petRabbitSkinContractPoints, op: '+' },
-      { source: card.cardContract, op: '+' },
+      { source: card.cardMiscContract, op: '+' },
     ],
   },
   contract_cap_increase: {

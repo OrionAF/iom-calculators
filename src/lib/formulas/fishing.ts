@@ -36,7 +36,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: f.rodMultiE1, op: '×' },
       { source: sk.motleySchoolRod, op: '×' },
       { source: st.vpHalfWayFishingRod, op: '×' },
-      { source: card.cardFishingRod, op: '×' },
+      { source: card.cardMiscFishingRod, op: '×' },
     ],
   },
 
