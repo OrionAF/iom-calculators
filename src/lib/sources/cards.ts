@@ -1,305 +1,9 @@
 import type { Source } from '$lib/engine/types'
 
-// ─── Ore Cards (rarity 0=none, 1=base, 2=gilded, 3=polychrome) ──────────────
-// Formula is (base(4)+Cetus+Upgrades)*(1+pets)*bundle*tribute
-
-// ─── Pet Cards (rarity 0=none, 1=base, 2=gilded, 3=polychrome) ──────────────
-export const cardNagini: Source = {
-  key: 'cards.nagini',
-  name: 'Card: Nagini',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([0, 0.01, 0.02, 0.04] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-// ─── Misc Cards (rarity 0=none, 1=base, 2=gilded, 3=polychrome) ──────────────
-
-/** Alex: Pickaxe Damage ×1.10 / ×1.20 / ×1.40 */
-export const cardAlex: Source = {
-  key: 'cards.alex',
-  name: 'Card: Alex',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.1, 1.2, 1.4] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Bone: Bomb Damage ×1.05 / ×1.10 / ×1.15 */
-export const cardBone: Source = {
-  key: 'cards.bone',
-  name: 'Card: Bone',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.05, 1.1, 1.15] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** World 1: Golden Floor Multi ×1.06 / ×1.12 / ×1.24 */
-export const cardWorld1: Source = {
-  key: 'cards.world1',
-  name: 'Card: World 1',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.06, 1.12, 1.24] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** World 2: Rainbow Floor Multi ×1.06 / ×1.12 / ×1.24 */
-export const cardWorld2: Source = {
-  key: 'cards.world2',
-  name: 'Card: World 2',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.06, 1.12, 1.24] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** World 3: Galactic Floor Multi ×1.06 / ×1.12 / ×1.24 */
-export const cardWorld3: Source = {
-  key: 'cards.world3',
-  name: 'Card: World 3',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.06, 1.12, 1.24] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** World 4: All Floor Multi ×1.06 / ×1.12 / ×1.24 */
-export const cardWorld4: Source = {
-  key: 'cards.world4',
-  name: 'Card: World 4',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.06, 1.12, 1.24] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Celio's Hat: Prestige Point Gain ×1.10 / ×1.20 / ×1.40 */
-export const cardCeliosHat: Source = {
-  key: 'cards.celiosHat',
-  name: "Card: Celio's Hat",
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.1, 1.2, 1.4] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Julk: Ore Sell Price ×1.04 / ×1.08 / ×1.12 */
-export const cardJulk: Source = {
-  key: 'cards.julk',
-  name: 'Card: Julk',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.04, 1.08, 1.12] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Lootbug: Lootbug Loot Multi ×1.10 / ×1.20 / ×1.30 */
-export const cardLootbug: Source = {
-  key: 'cards.lootbug',
-  name: 'Card: Lootbug',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.1, 1.2, 1.3] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Golden Lootbug: Golden Lootbug Chance +2% / +4% / +6% */
-export const cardGoldenLootbug: Source = {
-  key: 'cards.goldenLootbug',
-  name: 'Card: Golden Lootbug',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([0, 0.02, 0.04, 0.06] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Golden Ore: Golden Ore Multi ×1.06 / ×1.12 / ×1.24 */
-export const cardGoldenOre: Source = {
-  key: 'cards.goldenOre',
-  name: 'Card: Golden Ore',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.06, 1.12, 1.24] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Golden Vein: Golden Vein Multi ×1.08 / ×1.16 / ×1.24 */
-export const cardGoldenVein: Source = {
-  key: 'cards.goldenVein',
-  name: 'Card: Golden Vein',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.08, 1.16, 1.24] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Rainbow Vein: Rainbow Vein Multi ×1.08 / ×1.16 / ×1.24 */
-export const cardRainbowVein: Source = {
-  key: 'cards.rainbowVein',
-  name: 'Card: Rainbow Vein',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.08, 1.16, 1.24] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Fuel: Coal/Drone Fuel Duration ×1.02 / ×1.05 / ×1.10 */
-export const cardFuel: Source = {
-  key: 'cards.fuel',
-  name: 'Card: Fuel',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.02, 1.05, 1.1] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Code: Item Duration ×1.01 / ×1.03 / ×1.06 */
-export const cardCode: Source = {
-  key: 'cards.code',
-  name: 'Card: Code',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.01, 1.03, 1.06] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Void Portal: Void Portal Multi ×1.05 / ×1.10 / ×1.20 */
-export const cardVoidPortal: Source = {
-  key: 'cards.voidPortal',
-  name: 'Card: Void Portal',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.05, 1.1, 1.2] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Golden Void Portal: Golden Void Portal Multi ×1.08 / ×1.16 / ×1.24 */
-export const cardGoldenVoidPortal: Source = {
-  key: 'cards.goldenVoidPortal',
-  name: 'Card: Golden Void Portal',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.08, 1.16, 1.24] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Freebie: Gems From Freebie +1 / +2 / +4 */
-export const cardFreebie: Source = {
-  key: 'cards.freebie',
-  name: 'Card: Freebie',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([0, 1, 2, 4] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Super Star: All Star Value ×1.05 / ×1.10 / ×1.20 */
-export const cardSuperStar: Source = {
-  key: 'cards.superStar',
-  name: 'Card: Super Star',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.05, 1.1, 1.2] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Miner Name: Experience Gain ×1.10 / ×1.20 / ×1.40 */
-export const cardMinerName: Source = {
-  key: 'cards.minerName',
-  name: 'Card: Miner Name',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.1, 1.2, 1.4] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Stonks: Stonks Multi ×1.10 / ×1.20 / ×1.30 */
-export const cardStonks: Source = {
-  key: 'cards.stonks',
-  name: 'Card: Stonks',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.1, 1.2, 1.3] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Super Stonks: Super Stonks Chance +0.50% / +1% / +2% */
-export const cardSuperStonks: Source = {
-  key: 'cards.superStonks',
-  name: 'Card: Super Stonks',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([0, 0.005, 0.01, 0.02] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Prestige: Floor Clear Requirement ×0.95 / ×0.90 / ×0.80 */
-export const cardPrestige: Source = {
-  key: 'cards.prestige',
-  name: 'Card: Prestige',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 0.95, 0.9, 0.8] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Yummy Pizza (card): All Floor Multi ×1.01 / ×1.02 / ×1.03 */
-export const cardYummyPizza: Source = {
-  key: 'cards.yummyPizza',
-  name: 'Card: Yummy Pizza',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.01, 1.02, 1.03] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Lootfrog (card): Lootfrog Capacity +1 / +2 / +4 */
-export const cardLootfrog: Source = {
-  key: 'cards.lootfrog',
-  name: 'Card: Lootfrog',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([0, 1, 2, 4] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** FrozenAra: 10× Contract Chance +0.10% / +0.20% / +0.30% */
-export const cardFrozenAra: Source = {
-  key: 'cards.frozenAra',
-  name: 'Card: FrozenAra',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([0, 0.001, 0.002, 0.003] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-/** Fishing Rod: Fishing Rod Power ×1.02 / ×1.05 / ×1.10 */
-export const cardFishingRod: Source = {
-  key: 'cards.fishingRod',
-  name: 'Card: Fishing Rod',
-  system: 'cards',
-  maxLevel: 3,
-  fn: (n) => ([1, 1.02, 1.05, 1.1] as const)[Math.min(n, 3)],
-  inputs: [],
-}
-
-// ─── Rarity track helpers ────────────────────────────────────────────────────
-// Card level scale: 0 = unowned, 1 = Standard, 2 = Gilded, 3 = Polychrome,
-// 4 = Infernal. Igniting is assumed to KEEP the Polychrome primary effect
-// (the Infernal layer adds a separate secondary effect), so primary tracks
-// clamp at the Polychrome value.
-const mulT = (st: number, g: number, p: number) => (n: number) =>
-  n <= 0 ? 1 : n === 1 ? st : n === 2 ? g : p
-const addT = (st: number, g: number, p: number) => (n: number) =>
-  n <= 0 ? 0 : n === 1 ? st : n === 2 ? g : p
-/** Infernal-only secondary effect (bonus-shaped): active at card level 4. */
-/**
- * Infernal category scaling, verified against in-game data (all 9 categories
- * reproduce exactly): categoryMultiplier = 1 + perSet × setInfernals
- * + perTotal × totalInfernals (× a separate "Bonus from Other Sources").
- */
+// ─── Infernal category scaling ───────────────────────────────────────────────
+// Verified against in-game data (all 9 categories reproduce exactly):
+//   categoryMultiplier = 1 + perSet × setInfernals + perTotal × totalInfernals
+// (× a separate "Bonus from Other Sources").
 export const INFERNAL_SCALING = {
   ore: { input: 'infernalOreCards', perSet: 0.12, perTotal: 0.02 },
   bar: { input: 'infernalBarCards', perSet: 0.12, perTotal: 0.02 },
@@ -319,75 +23,143 @@ const categoryMultiplier = (cat: InfernalCategory, rt: Record<string, number>) =
   return 1 + c.perSet * (rt[c.input] ?? 0) + c.perTotal * (rt['totalInfernalCards'] ?? 0)
 }
 
-/**
- * Infernal-only secondary effect (bonus-shaped), scaled by the category's
- * Infernal multiplier — the listed base value is what the card shows at
- * 1.00x category multiplier.
- */
+// ─── Rarity track helpers ────────────────────────────────────────────────────
+// Card level scale: 0 = unowned, 1 = Standard, 2 = Gilded, 3 = Polychrome,
+// 4 = Infernal.
+//
+// Two Infernal semantics (confirmed in-game):
+// - REPLACE (Misc, Legendary Fish, and the per-resource sets): the Infernal
+//   value REPLACES the Polychrome one. In multiplier shape that's
+//   1 + (poly − 1) × categoryMultiplier; in bonus shape, bonus × multiplier
+//   (the same identity expressed both ways).
+// - KEEP (Drone, Pet, Archaeology): the Polychrome primary bonus is kept
+//   unchanged and a separate Infernal secondary effect is added (infT).
+
+/** KEEP-semantics multiplier track: clamps at the Polychrome value. */
+const keepMul = (st: number, g: number, p: number) => (n: number) =>
+  n <= 0 ? 1 : n === 1 ? st : n === 2 ? g : p
+/** KEEP-semantics bonus track: clamps at the Polychrome value. */
+const keepAdd = (st: number, g: number, p: number) => (n: number) =>
+  n <= 0 ? 0 : n === 1 ? st : n === 2 ? g : p
+
+/** REPLACE-semantics multiplier track: Infernal = 1 + (poly − 1) × catMult. */
+const replMul =
+  (cat: InfernalCategory) =>
+  (st: number, g: number, p: number) =>
+  (n: number, rt: Record<string, number>) =>
+    n <= 0
+      ? 1
+      : n === 1
+        ? st
+        : n === 2
+          ? g
+          : n === 3
+            ? p
+            : 1 + (p - 1) * categoryMultiplier(cat, rt)
+/** REPLACE-semantics bonus track: Infernal = poly bonus × catMult. */
+const replAdd =
+  (cat: InfernalCategory) =>
+  (st: number, g: number, p: number) =>
+  (n: number, rt: Record<string, number>) =>
+    n <= 0 ? 0 : n === 1 ? st : n === 2 ? g : n === 3 ? p : p * categoryMultiplier(cat, rt)
+
+const miscMul = replMul('misc')
+const miscAdd = replAdd('misc')
+const legAdd = replAdd('legendaryFish')
+
+/** Infernal-only secondary effect (KEEP categories), scaled by the category multiplier. */
 const infT = (v: number, cat: InfernalCategory) => (n: number, rt: Record<string, number>) =>
   n >= 4 ? v * categoryMultiplier(cat, rt) : 0
 
-/**
- * Legendary fish primary track: at Infernal the Polychrome bonus is scaled
- * by the Legendary Fish category multiplier (the wiki's "exception").
- */
-const legT = (st: number, g: number, p: number) => (n: number, rt: Record<string, number>) =>
-  n <= 0
-    ? 0
-    : n === 1
-      ? st
-      : n === 2
-        ? g
-        : n === 3
-          ? p
-          : p * categoryMultiplier('legendaryFish', rt)
-
-const card = (key: string, name: string, fn: Source['fn']): Source => ({
+const card = (key: string, name: string, fn: Source['fn'], maxLevel = 4): Source => ({
   key: `cards.${key}`,
   name: `Card: ${name}`,
   system: 'cards',
-  maxLevel: 4,
+  maxLevel,
   fn,
   inputs: [],
 })
 
+// ─── Ore Cards (rarity 0=none, 1=base, 2=gilded, 3=polychrome) ──────────────
+// Formula is (base(4)+Cetus+Upgrades)*(1+pets)*bundle*tribute
+
+// ─── Pet Cards (rarity 0=none, 1=base, 2=gilded, 3=polychrome) ──────────────
+// ─── Misc cards (REPLACE semantics: Infernal scales the Polychrome value) ───
+// Nagini is the Pet-set card (KEEP semantics; Infernal effect = cardPetNaginiInf).
+export const cardNagini = card('pet.nagini', 'Nagini Pet', keepAdd(0.01, 0.02, 0.04))
+export const cardAlex = card('alex', 'Alex', miscMul(1.1, 1.2, 1.4))
+export const cardBone = card('bone', 'Bone', miscMul(1.05, 1.1, 1.15))
+export const cardWorld1 = card('world1', 'World 1', miscMul(1.06, 1.12, 1.24))
+export const cardWorld2 = card('world2', 'World 2', miscMul(1.06, 1.12, 1.24))
+export const cardWorld3 = card('world3', 'World 3', miscMul(1.06, 1.12, 1.24))
+export const cardWorld4 = card('world4', 'World 4', miscMul(1.06, 1.12, 1.24))
+export const cardCeliosHat = card('celiosHat', "Celio's Hat", miscMul(1.1, 1.2, 1.4))
+export const cardJulk = card('julk', 'Julk', miscMul(1.04, 1.08, 1.12))
+export const cardLootbug = card('lootbug', 'Lootbug', miscMul(1.1, 1.2, 1.3))
+export const cardGoldenLootbug = card('goldenLootbug', 'Golden Lootbug', miscAdd(0.02, 0.04, 0.06))
+export const cardGoldenOre = card('goldenOre', 'Golden Ore', miscMul(1.06, 1.12, 1.24))
+export const cardGoldenVein = card('goldenVein', 'Golden Vein', miscMul(1.08, 1.16, 1.24))
+export const cardRainbowVein = card('rainbowVein', 'Rainbow Vein', miscMul(1.08, 1.16, 1.24))
+export const cardFuel = card('fuel', 'Fuel', miscMul(1.02, 1.05, 1.1))
+export const cardCode = card('code', 'Code', miscMul(1.01, 1.03, 1.06))
+export const cardVoidPortal = card('voidPortal', 'Void Portal', miscMul(1.05, 1.1, 1.2))
+export const cardGoldenVoidPortal = card(
+  'goldenVoidPortal',
+  'Golden Void Portal',
+  miscMul(1.08, 1.16, 1.24),
+)
+export const cardFreebie = card('freebie', 'Freebie', miscAdd(1, 2, 4))
+export const cardSuperStar = card('superStar', 'Super Star', miscMul(1.05, 1.1, 1.2))
+export const cardMinerName = card('minerName', 'Miner Name', miscMul(1.1, 1.2, 1.4))
+export const cardStonks = card('stonks', 'Stonks', miscMul(1.1, 1.2, 1.3))
+export const cardSuperStonks = card('superStonks', 'Super Stonks', miscAdd(0.005, 0.01, 0.02))
+export const cardPrestige = card('prestige', 'Prestige', miscMul(0.95, 0.9, 0.8))
+export const cardYummyPizza = card('yummyPizza', 'Yummy Pizza', miscMul(1.01, 1.02, 1.03))
+export const cardLootfrog = card('lootfrog', 'Lootfrog', miscAdd(1, 2, 4))
+export const cardFrozenAra = card('frozenAra', 'FrozenAra', miscAdd(0.001, 0.002, 0.003))
+export const cardFishingRod = card('fishingRod', 'Fishing Rod', miscMul(1.02, 1.05, 1.1))
+
 // ─── Misc cards (additions from the Cards wiki dump) ─────────────────────────
-export const cardNovagiant = card('novagiant', 'Novagiant Combo', mulT(1.08, 1.16, 1.24))
-export const cardUltraStonks = card('ultraStonks', 'Ultra Stonks', addT(0.005, 0.01, 0.02))
-export const cardContract = card('contract', 'Contract', addT(1, 2, 3))
-export const cardBlueCow = card('blueCow', 'Blue Cow', addT(0.05, 0.1, 0.15))
-export const cardArchAbility = card('archAbility', 'Arch Ability', addT(-0.03, -0.06, -0.1))
-export const cardGleamingVein = card('gleamingVein', 'Gleaming Vein', mulT(1.08, 1.16, 1.24))
-export const cardBigLootfrog = card('bigLootfrog', 'Big Lootfrog', mulT(1.09, 1.18, 1.27))
-export const cardFloor73 = card('floor73', 'Floor 73', mulT(1.02, 1.04, 1.06))
-export const cardRelicChest = card('relicChest', 'Relic', addT(0.01, 0.02, 0.03))
+export const cardNovagiant = card('novagiant', 'Novagiant Combo', miscMul(1.08, 1.16, 1.24))
+export const cardUltraStonks = card('ultraStonks', 'Ultra Stonks', miscAdd(0.005, 0.01, 0.02))
+export const cardContract = card('contract', 'Contract', miscAdd(1, 2, 3))
+export const cardBlueCow = card('blueCow', 'Blue Cow', miscAdd(0.05, 0.1, 0.15))
+export const cardArchAbility = card('archAbility', 'Arch Ability', miscAdd(-0.03, -0.06, -0.1))
+export const cardGleamingVein = card('gleamingVein', 'Gleaming Vein', miscMul(1.08, 1.16, 1.24))
+export const cardBigLootfrog = card('bigLootfrog', 'Big Lootfrog', miscMul(1.09, 1.18, 1.27))
+export const cardFloor73 = card('floor73', 'Floor 73', miscMul(1.02, 1.04, 1.06))
+export const cardRelicChest = card('relicChest', 'Relic', miscAdd(0.01, 0.02, 0.03))
 /** Store: Freebie Timer −2s/−4s/−6s. */
-export const cardStoreFreebieTimer = card('storeFreebieTimer', 'Store', addT(-2, -4, -6))
-export const cardGoldenLootfrog = card('goldenLootfrog', 'Golden Lootfrog', addT(0.005, 0.01, 0.02))
-export const cardLute = card('lute', 'Lute', mulT(1.06, 1.12, 1.18))
-export const cardVydn = card('vydn', 'Vydn', mulT(1.04, 1.08, 1.12))
+export const cardStoreFreebieTimer = card('storeFreebieTimer', 'Store', miscAdd(-2, -4, -6))
+export const cardGoldenLootfrog = card(
+  'goldenLootfrog',
+  'Golden Lootfrog',
+  miscAdd(0.005, 0.01, 0.02),
+)
+export const cardLute = card('lute', 'Lute', miscMul(1.06, 1.12, 1.18))
+export const cardVydn = card('vydn', 'Vydn', miscMul(1.04, 1.08, 1.12))
 export const cardRainbowVoidPortal = card(
   'rainbowVoidPortal',
   'Rainbow Void Portal',
-  mulT(1.08, 1.16, 1.24),
+  miscMul(1.08, 1.16, 1.24),
 )
 
 // ─── Pet cards: primary track (Standard/Gilded/Polychrome) ───────────────────
-export const cardPetCrab = card('pet.crab', 'Crab Pet', addT(0.05, 0.1, 0.15))
-export const cardPetDwarfSuperCrit = card('pet.dwarf', 'Dwarf Pet', addT(0.03, 0.06, 0.1))
-export const cardPetDwarfUltraCrit = card('pet.dwarf', 'Dwarf Pet', addT(0.03, 0.06, 0.1))
-export const cardPetDuck = card('pet.duck', 'Duck Pet', addT(0.05, 0.1, 0.15))
-export const cardPetRabbit = card('pet.rabbit', 'Rabbit Pet', mulT(0.94, 0.88, 0.8))
-export const cardPetPenguin = card('pet.penguin', 'Penguin Pet', addT(1, 2, 4))
-export const cardPetAxolotl = card('pet.axolotl', 'Axolotl Pet', addT(-0.03, -0.06, -0.1))
-export const cardPetWhale = card('pet.whale', 'Whale Pet', addT(0.05, 0.1, 0.15))
-export const cardPetTotem = card('pet.totem', 'Totem Pet', addT(0.1, 0.2, 0.3))
-export const cardPetHappyBot = card('pet.happyBot', 'Happy-Bot Pet', addT(1, 2, 3))
-export const cardPetLeprechaun = card('pet.leprechaun', 'Leprechaun Pet', addT(0.1, 0.2, 0.3))
-export const cardPetStarfish = card('pet.starfish', 'Starfish Pet', addT(0.05, 0.1, 0.15))
-export const cardPetDino = card('pet.dino', 'Dino Pet', mulT(1.5, 2, 4))
-export const cardPetMrNibbles = card('pet.mrNibbles', 'Mr Nibbles Pet', addT(0.01, 0.02, 0.04))
-export const cardPetButterfly = card('pet.butterfly', 'Butterfly Pet', addT(0.12, 0.24, 0.5))
+export const cardPetCrab = card('pet.crab', 'Crab Pet', keepAdd(0.05, 0.1, 0.15))
+export const cardPetDwarfSuperCrit = card('pet.dwarf', 'Dwarf Pet', keepAdd(0.03, 0.06, 0.1))
+export const cardPetDwarfUltraCrit = card('pet.dwarf', 'Dwarf Pet', keepAdd(0.03, 0.06, 0.1))
+export const cardPetDuck = card('pet.duck', 'Duck Pet', keepAdd(0.05, 0.1, 0.15))
+export const cardPetRabbit = card('pet.rabbit', 'Rabbit Pet', keepMul(0.94, 0.88, 0.8))
+export const cardPetPenguin = card('pet.penguin', 'Penguin Pet', keepAdd(1, 2, 4))
+export const cardPetAxolotl = card('pet.axolotl', 'Axolotl Pet', keepAdd(-0.03, -0.06, -0.1))
+export const cardPetWhale = card('pet.whale', 'Whale Pet', keepAdd(0.05, 0.1, 0.15))
+export const cardPetTotem = card('pet.totem', 'Totem Pet', keepAdd(0.1, 0.2, 0.3))
+export const cardPetHappyBot = card('pet.happyBot', 'Happy-Bot Pet', keepAdd(1, 2, 3))
+export const cardPetLeprechaun = card('pet.leprechaun', 'Leprechaun Pet', keepAdd(0.1, 0.2, 0.3))
+export const cardPetStarfish = card('pet.starfish', 'Starfish Pet', keepAdd(0.05, 0.1, 0.15))
+export const cardPetDino = card('pet.dino', 'Dino Pet', keepMul(1.5, 2, 4))
+export const cardPetMrNibbles = card('pet.mrNibbles', 'Mr Nibbles Pet', keepAdd(0.01, 0.02, 0.04))
+export const cardPetButterfly = card('pet.butterfly', 'Butterfly Pet', keepAdd(0.12, 0.24, 0.5))
 
 // ─── Pet cards: Infernal secondary effects (active at level 4) ───────────────
 export const cardPetCrabInf = card('pet.crab', 'Infernal Crab Pet', infT(0.0325, 'pet'))
@@ -425,16 +197,20 @@ export const cardPetButterflyInf = card(
 // ─── Drone cards: grade caps + Infernal secondary effects ────────────────────
 // NOTE: the wiki lists a further "+0.30x/+0.002x" set/total Infernal scaling on
 // drone card effects; its exact interaction is unverified and NOT applied yet.
-export const cardDroneBearCap = card('drone.bear', 'Bear Drone', addT(2, 5, 10))
-export const cardDroneChainCap = card('drone.chain', 'Chain Drone', addT(2, 5, 10))
-export const cardDroneMidasCap = card('drone.midas', 'Midas Drone', addT(2, 5, 10))
-export const cardDroneFroggerCap = card('drone.frogger', 'Frogger Drone', addT(2, 5, 10))
-export const cardDroneVeinseekerCap = card('drone.veinseeker', 'Veinseeker Drone', addT(2, 5, 10))
-export const cardDroneStarburstCap = card('drone.starburst', 'Starburst Drone', addT(2, 5, 10))
-export const cardDroneElixirCap = card('drone.elixir', 'Elixir Drone', addT(2, 5, 10))
-export const cardDroneVoidCap = card('drone.void', 'Void Drone', addT(2, 5, 10))
-export const cardDroneAnglerCap = card('drone.angler', 'Angler Drone', addT(2, 5, 10))
-export const cardDronePrismCap = card('drone.prism', 'Prism Drone', addT(2, 5, 10))
+export const cardDroneBearCap = card('drone.bear', 'Bear Drone', keepAdd(2, 5, 10))
+export const cardDroneChainCap = card('drone.chain', 'Chain Drone', keepAdd(2, 5, 10))
+export const cardDroneMidasCap = card('drone.midas', 'Midas Drone', keepAdd(2, 5, 10))
+export const cardDroneFroggerCap = card('drone.frogger', 'Frogger Drone', keepAdd(2, 5, 10))
+export const cardDroneVeinseekerCap = card(
+  'drone.veinseeker',
+  'Veinseeker Drone',
+  keepAdd(2, 5, 10),
+)
+export const cardDroneStarburstCap = card('drone.starburst', 'Starburst Drone', keepAdd(2, 5, 10))
+export const cardDroneElixirCap = card('drone.elixir', 'Elixir Drone', keepAdd(2, 5, 10))
+export const cardDroneVoidCap = card('drone.void', 'Void Drone', keepAdd(2, 5, 10))
+export const cardDroneAnglerCap = card('drone.angler', 'Angler Drone', keepAdd(2, 5, 10))
+export const cardDronePrismCap = card('drone.prism', 'Prism Drone', keepAdd(2, 5, 10))
 export const cardDroneBearInf = card('drone.bear', 'Infernal Bear Drone', infT(0.45, 'drone'))
 export const cardDroneChainInf = card('drone.chain', 'Infernal Chain Drone', infT(0.14, 'drone'))
 export const cardDroneMidasInf = card('drone.midas', 'Infernal Midas Drone', infT(0.06, 'drone'))
@@ -459,44 +235,67 @@ export const cardDroneAnglerInf = card('drone.angler', 'Infernal Angler Drone', 
 // Prism value confirmed in-game ('?' on the wiki).
 export const cardDronePrismInf = card('drone.prism', 'Infernal Prism Drone', infT(0.01, 'drone'))
 
-// ─── Legendary Fish cards (primary track; Infernal +0.20x/+0.001x set/total ──
-// scaling is the wiki's documented exception and is NOT applied yet) ──────────
-export const cardLegRainbowTrout = card('leg.rainbowTrout', 'Rainbow Trout', legT(0.25, 0.5, 1.0))
-export const cardLegDuneEelworm = card('leg.duneEelworm', "Dune's Eelworm", legT(0.4, 0.8, 1.4))
+// ─── Legendary Fish cards (REPLACE semantics: Infernal = poly bonus × the ────
+// legendary-fish category multiplier) ─────────────────────────────────────────
+export const cardLegRainbowTrout = card('leg.rainbowTrout', 'Rainbow Trout', legAdd(0.25, 0.5, 1.0))
+export const cardLegDuneEelworm = card('leg.duneEelworm', "Dune's Eelworm", legAdd(0.4, 0.8, 1.4))
 export const cardLegShellstealer = card(
   'leg.glacialShellstealer',
   'Glacial Shellstealer',
-  legT(0.3, 0.6, 1.0),
+  legAdd(0.3, 0.6, 1.0),
 )
-export const cardLegMegalodon = card('leg.megalodon', 'Megalodon', legT(0.35, 0.7, 1.25))
+export const cardLegMegalodon = card('leg.megalodon', 'Megalodon', legAdd(0.35, 0.7, 1.25))
 export const cardLegRadioactiveSlugBomb = card(
   'leg.radioactiveSlug',
   'Radioactive Slug',
-  legT(3, 5, 11),
+  legAdd(3, 5, 11),
 )
 export const cardLegRadioactiveSlugExp = card(
   'leg.radioactiveSlug',
   'Radioactive Slug',
-  legT(3, 5, 11),
+  legAdd(3, 5, 11),
 )
 export const cardLegGeoduck = card(
   'leg.glimmeringGeoduck',
   'Glimmering Geoduck',
-  legT(0.14, 0.28, 0.52),
+  legAdd(0.14, 0.28, 0.52),
 )
-export const cardLegLaviathan = card('leg.laviathan', 'Laviathan', legT(0.4, 0.8, 1.4))
-export const cardLegStormSerpent = card('leg.stormSerpent', 'Storm Serpent', legT(0.14, 0.28, 0.56))
+export const cardLegLaviathan = card('leg.laviathan', 'Laviathan', legAdd(0.4, 0.8, 1.4))
+export const cardLegStormSerpent = card(
+  'leg.stormSerpent',
+  'Storm Serpent',
+  legAdd(0.14, 0.28, 0.56),
+)
 export const cardLegMeltingGibbous = card(
   'leg.meltingGibbous',
   'Melting Gibbous',
-  legT(0.1, 0.2, 0.3),
+  legAdd(0.1, 0.2, 0.3),
 )
 export const cardLegBlackenedBasker = card(
   'leg.blackenedBasker',
   'Blackened Basker',
-  legT(0.0015, 0.003, 0.006),
+  legAdd(0.0015, 0.003, 0.006),
 )
 // Cthulhu card (Divine Relics Cap +1/+2/+4) has no registry stat yet.
+
+// ─── Bomb cards ──────────────────────────────────────────────────────────────
+// Max level 3: bomb cards cannot be Ignited (no Infernal bomb set). Their own
+// effect ("On Recharge: 50% to gain 2x bomb") is not a tracked stat; these
+// sources exist so a Cards page can track levels and feed card-count runtime
+// inputs (cardsOwned, polyCardCount) used by per-card upgrades and skills.
+export const cardBombBasicBomb = card('bomb.basicBomb', 'Basic Bomb', () => 0, 3)
+export const cardBombChainBomb = card('bomb.chainBomb', 'Chain Bomb', () => 0, 3)
+export const cardBombBombOfPlenty = card('bomb.bombOfPlenty', 'Bomb of Plenty', () => 0, 3)
+export const cardBombExpBomb = card('bomb.expBomb', 'Exp Bomb', () => 0, 3)
+export const cardBombMegabomb = card('bomb.megabomb', 'MEGABOMB', () => 0, 3)
+export const cardBombInfinityBomb = card('bomb.infinityBomb', 'Infinity Bomb', () => 0, 3)
+export const cardBombTransmuterBomb = card('bomb.transmuterBomb', 'Transmuter Bomb', () => 0, 3)
+export const cardBombGemBomb = card('bomb.gemBomb', 'Gem Bomb', () => 0, 3)
+export const cardBombCherryBomb = card('bomb.cherryBomb', 'Cherry Bomb', () => 0, 3)
+export const cardBombBatteryBomb = card('bomb.batteryBomb', 'Battery Bomb', () => 0, 3)
+export const cardBombD20Bomb = card('bomb.d20Bomb', 'D20 Bomb', () => 0, 3)
+export const cardBombFoundersBomb = card('bomb.foundersBomb', 'Founders Bomb', () => 0, 3)
+export const cardBombVeinmorpherBomb = card('bomb.veinmorpherBomb', 'Veinmorpher Bomb', () => 0, 3)
 
 // ─── Infernal resource-card set bonuses ──────────────────────────────────────
 // InfernalBonus = 1 + perSet × (set infernals) + perTotal × (total infernals).
@@ -682,6 +481,19 @@ export const cardSources = {
   cardLegStormSerpent,
   cardLegMeltingGibbous,
   cardLegBlackenedBasker,
+  cardBombBasicBomb,
+  cardBombChainBomb,
+  cardBombBombOfPlenty,
+  cardBombExpBomb,
+  cardBombMegabomb,
+  cardBombInfinityBomb,
+  cardBombTransmuterBomb,
+  cardBombGemBomb,
+  cardBombCherryBomb,
+  cardBombBatteryBomb,
+  cardBombD20Bomb,
+  cardBombFoundersBomb,
+  cardBombVeinmorpherBomb,
   infernalBonusOre,
   infernalBonusBar,
   infernalBonusVein,
