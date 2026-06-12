@@ -86,3 +86,29 @@ describe('drone card semantics — confirmed in-game', () => {
     expect(card.cardDronePrismInf.fn(4, rt)).toBeCloseTo(0.01 * 4.226)
   })
 })
+
+describe('Infernal REPLACE vs KEEP semantics — confirmed in-game', () => {
+  const rt = { infernalMiscCards: 20, totalInfernalCards: 263 } // misc multiplier 1.40×
+
+  it('misc multiplier card: Infernal = 1 + (poly − 1) × catMult', () => {
+    // Alex poly ×1.40 → Infernal 1 + 0.4 × 1.4 = 1.56
+    expect(card.cardAlex.fn(3, rt)).toBeCloseTo(1.4)
+    expect(card.cardAlex.fn(4, rt)).toBeCloseTo(1.56)
+  })
+
+  it('misc bonus card: Infernal = poly bonus × catMult', () => {
+    // Freebie poly +4 → Infernal 4 × 1.4 = 5.6
+    expect(card.cardFreebie.fn(4, rt)).toBeCloseTo(5.6)
+  })
+
+  it('pet/drone primaries KEEP the Polychrome value at Infernal', () => {
+    expect(card.cardPetCrab.fn(4, { infernalPetCards: 13, totalInfernalCards: 263 })).toBeCloseTo(
+      0.15,
+    )
+    expect(card.cardDroneVoidCap.fn(4, {})).toBe(10)
+  })
+
+  it('bomb cards cap at level 3 (no Infernal bomb set)', () => {
+    expect(card.cardBombBasicBomb.maxLevel).toBe(3)
+  })
+})
