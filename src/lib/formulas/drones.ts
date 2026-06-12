@@ -24,6 +24,7 @@ const U: Source = {
 export const dronesFormulas: FormulaMap = defineFormulas({
   drone_count: {
     contributions: [
+      { source: drone.droneUpgradeUnlockDrone, op: '+' },
       { source: st.vpDroneCount, op: '+' },
       { source: sk.threesACrowdDrone, op: '+' },
       { source: tr.trCthulhuT2U1MD, op: '+' },

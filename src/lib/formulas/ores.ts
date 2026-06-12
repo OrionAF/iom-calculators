@@ -61,9 +61,8 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: st.gemOreSellPrice, op: '×' },
       { source: st.vpBallerOreSell, op: '×' },
       { source: up.upgrOreSellPrice, op: '+' },
-      { source: up.upgrGalacticFloorChance1, op: '+' },
-      { source: up.upgrGalacticFloorChance2, op: '+' },
-      // Pets skin + Skins
+      { source: up.upgrOreSellPrice, op: '+' },
+      { source: pet.petPenguinSkinOreSell, op: '+' },
       { source: sn.snOreSellPrice, op: '×1+' },
     ],
   },

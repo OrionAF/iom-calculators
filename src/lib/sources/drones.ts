@@ -4,6 +4,15 @@ import type { Source } from '$lib/engine/types'
 // Permanent upgrades from the Drones → Upgrades tab.
 
 /** Drone Damage (Pickaxe %) +20% per level. Max 10. → drone_damage_percent */
+export const droneUpgradeUnlockDrone: Source = {
+  key: 'drones.upgrade.unlock',
+  name: 'Drone Upgrade – Unlock',
+  system: 'drones',
+  maxLevel: 1,
+  fn: (n) => n * 1,
+  inputs: [],
+}
+/** Drone Damage (Pickaxe %) +20% per level. Max 10. → drone_damage_percent */
 export const droneUpgradeDamage: Source = {
   key: 'drones.upgrade.damage',
   name: 'Drone Upgrade – Damage',
@@ -294,6 +303,7 @@ export const coalLootfrog10x: Source = {
 
 export const droneSources = {
   // Drone upgrade menu
+  droneUpgradeUnlockDrone,
   droneUpgradeDamage,
   droneUpgradeRadius,
   droneUpgradeMovespeed,

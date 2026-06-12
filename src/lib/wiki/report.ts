@@ -19,7 +19,7 @@ import { parseStatsPage, type WikiStat } from './parse'
 
 /** Wiki menu name → our SourceSystem ids. Absent = informational, skip. */
 const SYSTEM_MAP: Record<string, SourceSystem[]> = {
-  'Skill-Tree': ['skillTree'],
+  SkillTree: ['skillTree'],
   Store: ['store'],
   Cards: ['cards'],
   Relics: ['relics'],
@@ -145,30 +145,18 @@ export function buildWikiReport(readFile: (path: string) => string): string {
       const covered = mapped.some((s) => haveSystems.has(s))
       if (!covered) {
         const note = unknownCount > 0 ? ` (formula has ${unknownCount} unknown placeholder(s))` : ''
-        findings.push(
-          `missing system ${group.system}: ${group.entries.map((e) => e.text).join('; ')}${note}`,
-        )
+        findings.push(`missing system ${group.system}: ${group.entries.map((e) => e.text).join('; ')}${note}`)
         continue
       }
 
       // Group-join op heuristic: wiki group joins '+' but every contribution
       // we have from that system is '×' (or the reverse).
       const ourOps = new Set(mapped.flatMap((s) => [...(opsBySystem.get(s) ?? [])]))
-      if (
-        group.joinOpExplicit &&
-        group.joinOp === '+' &&
-        ourOps.size > 0 &&
-        !ourOps.has('+') &&
-        !ourOps.has('=')
-      ) {
-        findings.push(
-          `op mismatch in ${group.system}: wiki group joins '+', ours: ${[...ourOps].join(',')}`,
-        )
+      if (group.joinOpExplicit && group.joinOp === '+' && ourOps.size > 0 && !ourOps.has('+') && !ourOps.has('=')) {
+        findings.push(`op mismatch in ${group.system}: wiki group joins '+', ours: ${[...ourOps].join(',')}`)
       }
       if (group.joinOp === '=' && !ourOps.has('=')) {
-        findings.push(
-          `op mismatch in ${group.system}: wiki group joins '=', ours: ${[...ourOps].join(',')}`,
-        )
+        findings.push(`op mismatch in ${group.system}: wiki group joins '=', ours: ${[...ourOps].join(',')}`)
       }
 
       if (group.hasParens && !hasGroupTerms) {
