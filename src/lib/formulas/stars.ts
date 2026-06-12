@@ -14,6 +14,8 @@ import { fishingSources as f } from '$lib/sources/fishing'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { constructSources as con } from '$lib/sources/construct'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { tributesSources as tr } from '$lib/sources/tributes'
+import { worldquestsSources as wq } from '$lib/sources/worldquests'
 
 const UNKNOWN: Source = {
   key: '_unknown',
@@ -72,7 +74,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: drone.droneSuitStarburstPassive, op: '+' },
       { source: drone.droneSuitStarburstUpgrade, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Store: 3 value packs
-      { source: UNKNOWN, op: '+', unknown: true }, // Fishing: Megalodon Tier 1 Tribute
+      { source: tr.trMegalodonT1TSC, op: '+' },
     ],
   },
 
@@ -85,10 +87,10 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: sg.superStarSpawn, op: '+' },
       { source: sg.starVirgo, op: '+' },
       { source: it.goldenPrimalMeatSuperStar, op: '×' },
-      { source: it.iceCreamSuperStarSpawn, op: '+' },
+      // Wiki: Items group is Primal Meat × Ice Cream (multiplied, not added)
+      { source: it.iceCreamSuperStarSpawn, op: '×' },
       { source: UNKNOWN, op: '+', unknown: true }, // Drones: Elixir Drone (temp)
       { source: UNKNOWN, op: '×', unknown: true }, // Items: Primal Meat (×)
-      { source: UNKNOWN, op: '+', unknown: true }, // Items: Ice Cream
       { source: ct.ctSuperStarSpawn, op: '+' },
       { source: ch.chSuperStarSpawn, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Fishing: Tier 1 Notice Upgrade
@@ -117,6 +119,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: pet.petStarfishSuper10xChance, op: '+' },
       { source: up.upgrSuperStar10xChance, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Store + Fishing
+      { source: tr.trMegalodonT2SS10C, op: '+' },
     ],
   },
 
@@ -153,7 +156,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: UNKNOWN, op: '+', unknown: true }, // Pets: Axolotl Pet Quest
       { source: UNKNOWN, op: '+', unknown: true }, // Construct: Statue of Warmth (adds)
       { source: UNKNOWN, op: '+', unknown: true }, // Archaeology: Astraeus Idol
-      { source: UNKNOWN, op: '×', unknown: true }, // Fishing: Megalodon Tier 2 (×)
+      { source: tr.trMegalodonT2ASM, op: '×' },
       { source: UNKNOWN, op: '+', unknown: true }, // Fishing: Tier 1 Notice (adds)
     ],
   },
@@ -181,7 +184,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: con.staWarmthSuperStarSupernova, op: '+' },
       { source: UNKNOWN, op: '+', unknown: true }, // Store: Stargazing Supernova Bundle
       { source: UNKNOWN, op: '+', unknown: true }, // Construct: Statue of Warmth
-      { source: UNKNOWN, op: '×', unknown: true }, // Fishing: Megalodon Tier 2 (×)
+      { source: tr.trMegalodonT2ASM, op: '×' },
       { source: UNKNOWN, op: '×', unknown: true }, // Fishing: Tier 1 Notice (×)
     ],
   },
@@ -251,7 +254,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: sg.radiantChance, op: '+' },
       { source: con.staTimekeepingRadiantChance, op: '+' },
       { source: arch.idolPrometheusRadiantChanceUnlock, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Fishing Blackened Basker T2
+      { source: tr.trBlackenedBaskerT2RSC, op: '+' },
     ],
   },
 
@@ -275,7 +278,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: sg.superRadiant, op: '+' },
       { source: con.staRodentiaRadiantChance, op: '+' },
       { source: arch.idolPrometheus_SSRadiantChanceUnlock, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Fishing Blackened Basker T1
+      { source: tr.trBlackenedBaskerT1RSSC, op: '+' },
     ],
   },
 
@@ -310,6 +313,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: st.vpSingularityAllStar, op: '×' },
       { source: f.noticeT1AllStarMul, op: '+' },
       { source: drone.droneMidasEnhancementAllStar, op: '+' },
+      { source: tr.trMeltingGibbousT1ASM, op: '×' },
     ],
   },
 
@@ -324,6 +328,8 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: sk.whyAreThereStarsNovagiant, op: '+' },
       { source: ch.chNovagiantComboMul, op: '+' },
       { source: pet.petStarfishQuestNovagiant, op: '+' },
+      { source: wq.wqNovogiantMultiQ5, op: '×1+' },
     ],
   },
+  candy_eaten: { contributions: [] },
 })

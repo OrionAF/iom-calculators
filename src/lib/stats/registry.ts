@@ -133,6 +133,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     name: 'Bomb Damage',
     description: 'Bomb damage before factoring in Additional Bomb Multiplier',
     icon: 'Bomb_Damage.png',
+    base: 1,
     category: 'bombs',
   },
   bomb_crit_chance: {
@@ -976,6 +977,13 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     icon: 'Ultra_Stonks_Multiplier.png',
     unit: 'multiplier',
     base: 25,
+    category: 'chests',
+  },
+  all_stonks_multi: {
+    name: 'All Stonks Multiplier',
+    description: 'The multiplier to all Stonks procs (Stonks, Super Stonks and Ultra Stonks).',
+    unit: 'multiplier',
+    base: 1,
     category: 'chests',
   },
 

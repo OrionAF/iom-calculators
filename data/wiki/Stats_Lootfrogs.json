@@ -1,0 +1,25 @@
+{
+  "title": "Stats/Lootfrogs",
+  "pageid": 6693,
+  "url": "https://shminer.miraheze.org/wiki/Stats/Lootfrogs",
+  "categories": [
+    "Pages using Tabber parser tag"
+  ],
+  "links": [
+    "Archaeology",
+    "Cards",
+    "Challenges",
+    "Construct",
+    "Contracts",
+    "Drones",
+    "Fishing",
+    "Floors",
+    "Pets",
+    "Skill-Tree",
+    "Stargazing",
+    "Store",
+    "Upgrades",
+    "Workshop"
+  ],
+  "wikitext": "<tabber>\nLootfrogs Caught=\n{{Stat|Lootfrogs Caught|The number of Lootfrogs that you have caught by tapping them when they spawn. Lootfrogs are spawned by the [[Drones#Drone Fuel|Fueled Frogger Drone]] after purchasing a [[Stargazing#Black Hole|Black Hole]] buff.\n| '''Lootfrogs''' |Catch Lootfrogs<br>}}\n|-|\nGolden Lootfrogs Caught=\n{{Stat|Golden Lootfrogs Caught|The number of Golden Lootfrogs that you have caught by tapping them when they spawn. Golden Lootfrogs have a chance to spawn instead of normal Lootfrogs after you get Golden Lootfrog Chance.\n| '''Lootfrogs''' |Catch Golden Lootfrogs<br>}}\n|-|\nLootfrog Capacity=\n{{Stat|Lootfrog Capacity|The maximum number of Lootfrogs that may be on the screen at one time. (Base: 5)\n| '''Store'''<math>+</math> |The \"[[Store#Value_Packs|Frog Frenzy Bundle!]]\" Value Pack| '''Skill-Tree'''<math>+</math> |The \"[[Skill-Tree#Skills|Frog Frenzy]]\" Skill| '''Cards'''<math>+</math> | The [[Cards#tabber-Misc|Lootfrog Misc Card]]<br>}}\n|-|\nLootfrog Loot Multiplier=\n{{Stat|Lootfrog Loot Multiplier|The multiplier to loot from Lootfrogs.\n| '''Store''' |The \"[[Store#Value_Packs|Frog Frenzy Bundle!]]\" Value Pack<br>| '''Workshop''' |A [[Workshop#tabber-World_4_Upgrades|World 4 Workshop Upgrade]]| '''Cards''' |The [[Cards#tabber-Pets|Infernal Butterfly Pet Card]]<math>\\times</math>The [[Cards#tabber-Drones|Infernal Frogger Drone Card]]| '''Upgrades''' |The {{Sprite|Mateyum Bar|Upgrades#World_4_Upgrades||Mateyum Bar Upgrade}}}}\n|-|\nGolden Lootfrog Chance=\n{{Stat|Golden Lootfrog Chance|The chance for a Lootfrog to appear as a Golden Lootfrog.\n| '''Cards'''<math>+</math> | The [[Cards#tabber-Misc|Golden Lootfrog Misc Card]]<br>| '''Stargazing'''<math>+</math> |The [[Stargazing#Black Hole|Sixth Black Hole boost]]| '''Challenges'''<math>+</math> |A [[Challenges#tabber-Divine_2|Divine Challenge Upgrade]]| '''Construct'''<math>+</math> |The [[Construct#World_4_Bonuses|Statue of Antagonism]]| '''Fishing'''<math>+</math> |The [[Fishing#tabber-Melting_Gibbous|Melting Gibbous Tier 2 Tribute]]| '''Floors'''<math>+</math> |The [[Floors#World Quests|Third World Quest]]<br>}}\n|-|\nGolden Lootfrog Multiplier=\n{{Stat|Golden Lootfrog Multiplier|The multiplier on Lootfrog rewards when a Lootfrog spawns as a Golden Lootfrog. (Base: 2x)\n| '''Lootfrogs''' |Golden Lootfrogs Caught (Requires the \"[[Skill-Tree#Skills|Pond Yield]]\" Skill)| '''Construct''' |The [[Construct#World_4_Bonuses|Statue of Antagonism]]}}\n|-|\nLootfrog Triple Spawn Chance=\n{{Stat|Lootfrog Triple Spawn Chance|The chance for 3 Lootfrogs to spawn in place of 1.\n| '''Store'''<math>+</math> |The \"[[Store#Value_Packs|Frog Frenzy Bundle!]]\" Value Pack| '''Skill-Tree'''<math>+</math> |The \"[[Skill-Tree#Skills|Frog Frenzy]]\" Skill| '''Pets'''<math>+</math> |The [[Pets#tabber-Butterfly_2|Butterfly Pet]]| '''Contracts'''<math>+</math> |A [[Contracts#tabber-World_4|World 4 Contract Upgrade]]|spriteOverride=Frog Frenzy}}\n|-|\nLootfrog 10x Spawn Chance=\n{{Stat|Lootfrog 10x Spawn Chance|The chance for 10 Lootfrogs to spawn in place of 1.\n| '''Drones'''<math>+</math> |A [[Drones#Coal_Upgrades|Coal Upgrade]]| '''Floors'''<math>+</math> |The [[Floors#World_Quests|11th World Quest]]}}\n|-|\nBig Lootfrog Chance=\n{{Stat|Big Lootfrog Chance|The chance for a Lootfrog to spawn as a big Lootfrog.\n| '''Challenges'''<math>+</math> |A [[Challenges#tabber-Divine_2|Divine Challenge Upgrade]]| '''Pets'''<math>+</math> |The [[Pets#tabber-Butterfly_Quest_Skin|Butterfly Pet Quest]]| '''Archaeology'''<math>+</math> |The [[Archaeology#tabber-Divine_Idols_2|Sisyphus]] Idol}}\n|-|\nBig Lootfrog Multi=\n{{Stat|Big Lootfrog Multi|The multiplier on Lootfrog rewards when a Lootfrog spawns as a Big Lootfrog. (Base: 5x)\n| '''Cards''' |The [[Cards#tabber-Misc|Big Frog Misc Card]]| '''Archaeology''' |The [[Archaeology#tabber-Divine_Idols_2|Sisyphus]] Idol| '''Floors''' |The [[Floors#World_Quests|18th World Quest]]}}\n</tabber>"
+}

@@ -15,7 +15,7 @@ export const trRainbowTroutT1RFM: Source = {
   name: 'Tribute: Rainbow Trout T1 - Rainbow Floor Multi 1.15×',
   system: 'tributes',
   maxLevel: 1,
-  fn: (n) => n * 1.15,
+  fn: (n) => 1 + n * 0.15,
   inputs: [],
 }
 export const trRainbowTroutT2MNC: Source = {
@@ -31,7 +31,7 @@ export const trRainbowTroutT2AFM: Source = {
   name: 'Tribute: Rainbow Trout T2 - All Floor Multis 1.10×',
   system: 'tributes',
   maxLevel: 1,
-  fn: (n) => n * 1.1,
+  fn: (n) => 1 + n * 0.1,
   inputs: [],
 }
 export const trDuneEelwormT1GVPC: Source = {
@@ -71,7 +71,7 @@ export const trDuneEelwormT2GVPM: Source = {
   name: "Tribute: Dune's Eelworm T2 - Golden Void Portal Multi 1.50×",
   system: 'tributes',
   maxLevel: 1,
-  fn: (n) => n * 1.5,
+  fn: (n) => 1 + n * 0.5,
   inputs: [],
 }
 export const trGlacialShellstealerT1GVC: Source = {
@@ -127,7 +127,7 @@ export const trMegalodonT1GFM: Source = {
   name: 'Tribute: Megalodon T1 - Galactic Floor Multi 1.15×',
   system: 'tributes',
   maxLevel: 1,
-  fn: (n) => n * 1.15,
+  fn: (n) => 1 + n * 0.15,
   inputs: [],
 }
 export const trMegalodonT2ASM: Source = {
@@ -135,7 +135,7 @@ export const trMegalodonT2ASM: Source = {
   name: 'Tribute: Megalodon T2 - All Supernova Multis 1.25×',
   system: 'tributes',
   maxLevel: 1,
-  fn: (n) => n * 1.25,
+  fn: (n) => 1 + n * 0.25,
   inputs: [],
 }
 export const trMegalodonT2SS10C: Source = {
@@ -151,7 +151,7 @@ export const trRadioactiveSlugT1ABCM: Source = {
   name: 'Tribute: Radioactive Slug T1 - All Bomb Crit Multis 2.00×',
   system: 'tributes',
   maxLevel: 1,
-  fn: (n) => n * 2.0,
+  fn: (n) => 1 + n * 1.0,
   inputs: [],
 }
 export const trCthulhuT1ADTR: Source = {
@@ -271,7 +271,7 @@ export const trStormSerpentT2LLM: Source = {
   name: 'Tribute: Storm Serpent T2 - Lootbug Loot Multi 1.20×',
   system: 'tributes',
   maxLevel: 1,
-  fn: (n) => n * 1.2,
+  fn: (n) => 1 + n * 0.2,
   inputs: [],
 }
 export const trMeltingGibbousT1ASM: Source = {
@@ -279,7 +279,7 @@ export const trMeltingGibbousT1ASM: Source = {
   name: 'Tribute: Melting Gibbous T1 - All Star Multi 1.20×',
   system: 'tributes',
   maxLevel: 1,
-  fn: (n) => n * 1.2,
+  fn: (n) => 1 + n * 0.2,
   inputs: [],
 }
 export const trMeltingGibbousT1RPC: Source = {
@@ -398,6 +398,12 @@ export const tributesSources = {
   trStormSerpentT2CSC,
   trStormSerpentT2LLM,
   trStormSerpentT2UGEON,
+  trMeltingGibbousT1ASM,
+  trMeltingGibbousT1NUC,
+  trMeltingGibbousT1RPC,
+  trMeltingGibbousT2GFC,
+  trMeltingGibbousT2PQC,
+  trMeltingGibbousT2UGLL,
   trBlackenedBaskerT1ADGC,
   trBlackenedBaskerT1RSSC,
   trBlackenedBaskerT1UGH,

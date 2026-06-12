@@ -13,6 +13,7 @@ import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { skinsSources as sn } from '$lib/sources/skins'
 
 const U: Source = {
   key: '_unknown',
@@ -34,7 +35,17 @@ export const miscFormulas: FormulaMap = defineFormulas({
       { source: sg.ssGameSpeed, op: '+' },
       { source: f.noticeT1RemoveW3SpeedMod, op: '+' },
       { source: up.upgrGameSpeed, op: '+' },
-      { source: U, op: '+', unknown: true }, // Skins + Floors (ores)
+      // Wiki: two Skin Rewards sum within the Skins menu, group joins ×
+      {
+        label: 'Skins',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: sn.snGameSpeedT1, op: '+' },
+          { source: sn.snGameSpeedT2, op: '+' },
+        ],
+      },
+      { source: U, op: '+', unknown: true }, // Misc: floor speed penalties (W3/W4)
     ],
   },
   item_duration_multi: {
@@ -62,7 +73,8 @@ export const miscFormulas: FormulaMap = defineFormulas({
       { source: st.vpPetTrainerPetLevel, op: '×' },
       { source: f.noticeT1PetLevelUp, op: '+' },
       { source: up.upgrPetLevelChance, op: '+' },
-      { source: U, op: '+', unknown: true }, // Store + Skins
+      { source: U, op: '+', unknown: true }, // Relics: Mythic; Construct: Feline; Misc: pet skins
+      { source: sn.snPetLevelUpChance, op: '×1+' },
     ],
   },
 })

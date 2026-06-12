@@ -7,6 +7,7 @@ import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { skinsSources as sn } from '$lib/sources/skins'
 
 const U: Source = {
   key: '_unknown',
@@ -34,7 +35,7 @@ export const contractsFormulas: FormulaMap = defineFormulas({
       { source: con.staAffluenceTripleContract, op: '+' },
       { source: f.noticeT1TripleContractChance, op: '+' },
       { source: up.upgrTripleContractChance, op: '+' },
-      { source: U, op: '+', unknown: true }, // Skins
+      { source: sn.snTripleContractChance, op: '+' },
     ],
   },
   contract_5x_points_chance: {

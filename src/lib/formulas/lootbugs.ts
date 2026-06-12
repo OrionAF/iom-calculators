@@ -10,6 +10,8 @@ import { challengeSources as ch } from '$lib/sources/challenges'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { tributesSources as tr } from '$lib/sources/tributes'
+import { skinsSources as sn } from '$lib/sources/skins'
 
 const U: Source = {
   key: '_unknown',
@@ -37,6 +39,7 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
       { source: pet.petWhaleLootbugTriple, op: '+' },
       { source: sg.starLibraTripleLootbug, op: '+' },
       { source: U, op: '+', unknown: true }, // Cards + Skins
+      { source: sn.snTripleLootbugChance, op: '+' },
     ],
   },
   lootbug_golden_chance: {
@@ -61,13 +64,16 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
       { source: sg.starOphiuchusFreebie, op: '+' },
       { source: sg.ssBankedFreebieLootbugLootbug, op: '+' },
       { source: arch.idolTheseusBankUnlock, op: '+' },
-      { source: U, op: '+', unknown: true }, // Fishing + Skins
+      { source: tr.trStormSerpentT1LBC, op: '+' },
+      { source: U, op: '×', unknown: true }, // Stargazing: 8th Black Hole boost (multiplies everything)
+      { source: sn.snBankedFreebiesLootbugs, op: '×1+' },
     ],
   },
   lootbug_gem_cost_reduction: {
     contributions: [
       { source: sk.savingForARainyDayLootbugGem, op: '+' },
       { source: U, op: '+', unknown: true }, // Pets + Skins
+      { source: sn.snLootbugGemPrice, op: '+' },
     ],
   },
   lootbug_loot_multi: {
@@ -78,6 +84,7 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
       { source: sg.ssLootbugLootMul, op: '+' },
       { source: arch.idolTheseus, op: '+' },
       { source: U, op: '+', unknown: true }, // Store + Cards + Fishing
+      { source: tr.trStormSerpentT2LLM, op: '×' },
     ],
   },
   lootfrog_lanterns_used: { contributions: [] },

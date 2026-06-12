@@ -168,7 +168,10 @@ describe('computeStat', () => {
   })
 
   it("'×1+' at level 0 is neutral (×1)", () => {
-    const f: StatFormula = { base: 2, contributions: [{ source: srcD, op: '×1+' }] }
+    const f: StatFormula = {
+      base: 2,
+      contributions: [{ source: srcD, op: '×1+' }],
+    }
     expect(computeStat(f, {}, {})).toBeCloseTo(2)
   })
 
@@ -338,5 +341,99 @@ describe('getRequiredRuntimeInputsForMap', () => {
       stat_b: multiplicativeFormula,
     }
     expect(getRequiredRuntimeInputsForMap(formulas)).toHaveLength(0)
+  })
+})
+
+// ─── Group terms ──────────────────────────────────────────────────────────────
+
+describe('computeStat — group terms', () => {
+  // Bonus group acting as a multiplier — wiki: (Rock Cake + Primal Meat) × Hamburger
+  it('base-1 group: (1 + Σ bonuses) × factor, joined ×', () => {
+    const f: StatFormula = {
+      base: 100,
+      contributions: [
+        {
+          label: 'Items',
+          base: 1,
+          op: '×',
+          contributions: [
+            { source: srcA, op: '+' }, // 0.01/level
+            { source: srcC, op: '×' }, // buff factor 1.5
+          ],
+        },
+      ],
+    }
+    // group = (1 + 0.05) × 1.5 = 1.575 → 100 × 1.575
+    const levels = { 'test.srcA': 5, 'test.srcC': 1 }
+    expect(computeStat(f, levels, {})).toBeCloseTo(100 * 1.05 * 1.5)
+  })
+
+  // Flat sum scaled by a factor, joined + — wiki: (Gem Upgrade + bundles) × Chief Exec
+  it('base-0 group: (Σ amounts) × factor, joined +', () => {
+    const f: StatFormula = {
+      base: 2,
+      contributions: [
+        {
+          label: 'Store',
+          base: 0,
+          op: '+',
+          contributions: [
+            { source: srcD, op: '+' }, // level×2
+            { source: srcC, op: '×' }, // ×1.5 when active
+          ],
+        },
+      ],
+    }
+    // group = (0 + 6) × 1.5 = 9 → 2 + 9 = 11
+    const levels = { 'test.srcD': 3, 'test.srcC': 1 }
+    expect(computeStat(f, levels, {})).toBeCloseTo(11)
+  })
+
+  it('group at all-zero levels is neutral for its join op', () => {
+    const mulGroup: StatFormula = {
+      base: 7,
+      contributions: [{ base: 1, op: '×', contributions: [{ source: srcA, op: '+' }] }],
+    }
+    const addGroup: StatFormula = {
+      base: 7,
+      contributions: [{ base: 0, op: '+', contributions: [{ source: srcA, op: '+' }] }],
+    }
+    expect(computeStat(mulGroup, {}, {})).toBeCloseTo(7) // ×(1+0)
+    expect(computeStat(addGroup, {}, {})).toBeCloseTo(7) // +0
+  })
+
+  it('unknown contributions inside groups are skipped', () => {
+    const f: StatFormula = {
+      base: 0,
+      contributions: [
+        {
+          base: 1,
+          op: '×',
+          contributions: [
+            { source: srcA, op: '+' },
+            { source: srcB, op: '+', unknown: true },
+          ],
+        },
+        { source: srcD, op: '+' },
+      ],
+    }
+    const levels = { 'test.srcA': 5, 'test.srcD': 1 }
+    expect(computeStat(f, levels, { fish: 100 })).toBeCloseTo((0 + 2) * 1.05)
+  })
+
+  it('flatten helpers see group members', () => {
+    const f: StatFormula = {
+      base: 0,
+      contributions: [
+        {
+          base: 1,
+          op: '×',
+          contributions: [{ source: srcB, op: '+', unknown: true }],
+        },
+        { source: srcA, op: '+' },
+      ],
+    }
+    expect(hasUnknownContributions(f)).toBe(true)
+    expect(getRequiredSources(f).map((s) => s.key)).toEqual(['test.srcA'])
   })
 })

@@ -10,6 +10,7 @@ import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { petSources as pet } from '$lib/sources/pets'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { skinsSources as sn } from '$lib/sources/skins'
 
 const U: Source = {
   key: '_unknown',
@@ -20,7 +21,9 @@ const U: Source = {
 }
 
 export const chestsFormulas: FormulaMap = defineFormulas({
-  chest_double_chance: { contributions: [{ source: U, op: '+', unknown: true }] },
+  chest_double_chance: {
+    contributions: [{ source: U, op: '+', unknown: true }],
+  },
   chest_meter_multi: {
     contributions: [
       { source: sk.haveYouTriedGettingLuckierChestMeter, op: '×' },
@@ -66,20 +69,32 @@ export const chestsFormulas: FormulaMap = defineFormulas({
   },
   freebie_bank_cap: {
     contributions: [
+      // Wiki Store group: (Gem Upgrade + bundles + Founder T6) × Chief
+      // Executive, and that PRODUCT joins additively — Chief Exec's ×1.10
+      // scales only the Store sum, not the other menus.
+      {
+        label: 'Store',
+        base: 0,
+        op: '+',
+        contributions: [
+          { source: st.gemFreebieBank, op: '+' },
+          { source: st.founderFreebieBank, op: '+' },
+          { source: st.vpBankersFreebieBank, op: '+' },
+          { source: st.vpBiggerBankersFreebieBank, op: '+' },
+          { source: st.vpInsiderFreebieBank, op: '+' },
+          { source: st.vpChiefExecFreebieBank, op: '×' },
+        ],
+      },
       { source: sk.chronokeeperFrebieCap, op: '+' },
       { source: sk.savingForARainyDayFrebieCap, op: '+' },
       { source: con.staEastwoodFreebieBank, op: '+' },
       { source: ch.chFreebieBank, op: '+' },
-      { source: st.gemFreebieBank, op: '+' },
-      { source: st.founderFreebieBank, op: '+' },
-      { source: st.vpBankersFreebieBank, op: '+' },
-      { source: st.vpBiggerBankersFreebieBank, op: '+' },
-      { source: st.vpInsiderFreebieBank, op: '+' },
-      { source: st.vpChiefExecFreebieBank, op: '×' },
       { source: pet.petHappyBotQuestFreebieBank, op: '+' },
       { source: sg.starOphiuchusFreebie, op: '+' },
       { source: sg.ssBankedFreebieLootbugFreebie, op: '+' },
-      { source: U, op: '+', unknown: true }, // Cards + Skins
+      { source: U, op: '+', unknown: true }, // Cards: Glimmering Geoduck Legendary Fish Card
+      { source: sn.snBankedFreebies, op: '+' },
+      { source: sn.snBankedFreebiesLootbugs, op: '×1+' }, // 21st Reward (multiplies ALL Freebie Cap)
     ],
   },
   freebie_cooldown_seconds: {
@@ -105,6 +120,7 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: sg.starEridanusStonksMul, op: '+' },
       { source: ch.chAllStonksMulStonks, op: '+' },
       { source: U, op: '+', unknown: true }, // Cards + Skins
+      { source: sn.snStonksMulti, op: '×1+' },
     ],
   },
   super_stonks_chance: {
@@ -134,6 +150,12 @@ export const chestsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: con.staCombatUltraStonksMul, op: '+' },
       { source: ch.chAllStonksMulUltra, op: '+' },
+    ],
+  },
+  all_stonks_multi: {
+    contributions: [
+      { source: U, op: '×', unknown: true }, // Challenges: Divine Challenge Upgrade
+      { source: U, op: '×', unknown: true }, // Construct: Statue of Combat
     ],
   },
 })

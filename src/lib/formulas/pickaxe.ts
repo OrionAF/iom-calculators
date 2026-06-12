@@ -25,76 +25,144 @@ const U: Source = {
 
 export const pickaxeFormulas: FormulaMap = defineFormulas({
   pickaxe_damage: {
+    // Wiki structure: menu groups MULTIPLY; inside a group, parenthesized
+    // bonuses sum into a (1 + Σ) factor, then per-menu multipliers chain.
+    // Stat = (flat base damage) × Π menu groups.
     contributions: [
-      // ── Skill-Tree (additive) ─────────────────────────────────────────
-      { source: sk.swingHarderDamage, op: '+' },
-      { source: sk.superDamageDamage, op: '+' },
-      { source: sk.relicRampageDamage, op: '+' },
-      // ── Items ──────────────────────────────────────────────────────────
-      { source: it.rockCake, op: '+' },
-      { source: it.primalMeatPickaxe, op: '+' },
-      { source: it.goldenPrimalMeatPickaxe, op: '+' },
-      { source: it.hamburgerPickaxe, op: '×' },
-      { source: it.goldenHamburgerPickaxe, op: '×' },
-      // ── Workshop ───────────────────────────────────────────────────────
-      { source: ws.wsPickaxeDmgW1, op: '+' },
-      { source: ws.wsPickaxeDmgW3, op: '×' },
-      { source: ws.wsPickaxeBombDmgW4, op: '×' },
-      // ── Contracts ──────────────────────────────────────────────────────
-      { source: ct.ctPickaxeDmgPerContract, op: '+' },
-      { source: ct.ctPickaxeDmgW1, op: '+' },
-      { source: ct.ctPickaxeBombDmgW3, op: '×' },
-      // ── Prestige Artifacts ─────────────────────────────────────────────
-      { source: art.artPickaxeDmgT1, op: '+' },
-      { source: art.artPickaxeDmgT2, op: '+' },
-      { source: art.artPickaxeDmgT3, op: '+' },
-      { source: art.artPickaxeDmgT4, op: '+' }, // fn uses rt.statueCount
-      // ── Construct Statues ─────────────────────────────────────────────
-      { source: con.staRhythmPickaxe, op: '×' },
-      { source: con.staCraftPickaxeDmg, op: '×' },
-      { source: con.staComfortDmg, op: '+' }, // fn uses rt.w4StatueCount
-      { source: con.staRodentiaPickaxe, op: '+' }, // fn uses rt.w4StatueCount
-      // ── Pets ───────────────────────────────────────────────────────────
-      { source: pet.petDwarfPickaxeDmg, op: '+' },
-      { source: pet.petWhalePickaxeDmg, op: '+' },
-      { source: pet.petDinoPickaxeDmg, op: '×' },
-      // ── Cards ──────────────────────────────────────────────────────────
-      { source: card.cardAlex, op: '×' },
-      // ── Relics ─────────────────────────────────────────────────────────
-      { source: rel.commonRelicPickaxeDamage, op: '+' },
-      { source: rel.epicRelicPickaxeDamage, op: '+' },
-      // ── Skill-Tree (multiplicative) ────────────────────────────────────
-      { source: sk.waitMyUltraCritsCanCritDamage, op: '×' },
-      { source: sk.tonsOfDamageDamage, op: '×' },
-      { source: sk.polychromePowerDamage, op: '×' },
-      { source: sk.idleObeliskMincerDamage, op: '×' },
-      // ── Store ──────────────────────────────────────────────────────────
-      { source: st.gemPickaxeDamage, op: '×' },
-      // ── Challenges ──────────────────────────────────────────────────────────
-      { source: ch.chPickaxeDmgPerChallenge, op: '+' },
-      { source: ch.chPickaxeDmgPerSkillNode, op: '+' },
-      { source: ch.chPickaxeDmgPerObelisk, op: '+' },
-      // ── Stargazing ───────────────────────────────────────────────────────────
-      { source: sg.starTaurusPickaxeDmg, op: '+' },
-      { source: sg.starScorpioPickaxeDmg, op: '+' },
-      // ── Fishing ──────────────────────────────────────────────────────────────
-      { source: f.noticeT1PickaxeDmg, op: '+' },
-      // ── Upgrades ─────────────────────────────────────────────────────────
-      { source: up.upgrUpgradePickaxe, op: '+' },
-      { source: up.upgrPickaxeDmg1, op: '+' },
-      { source: up.upgrPickaxeDmg2, op: '+' },
-      { source: up.upgrPickaxeDmg3, op: '+' },
-      { source: up.upgrPickaxeDmg4, op: '+' },
-      { source: up.upgrPickaxeDmg5, op: '+' },
-      { source: up.upgrPickaxeDmgPerCard, op: '+' },
-      { source: up.upgrPickaxeDmgPerStatue1, op: '+' },
-      { source: up.upgrPickaxeDmgPerStatue2, op: '+' },
-      { source: up.upgrPickaxeDmgPerPolyCard, op: '+' },
+      // ── Upgrades: BaseDamage × (1 + Σ % upgrades) × bar multiplier chain ──
+      { source: up.upgrUpgradePickaxe, op: '+' }, // flat base damage
+      {
+        label: 'Upgrades %',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: up.upgrPickaxeDmg1, op: '+' },
+          { source: up.upgrPickaxeDmg2, op: '+' },
+          { source: up.upgrPickaxeDmg3, op: '+' },
+          { source: up.upgrPickaxeDmg4, op: '+' },
+          { source: up.upgrPickaxeDmg5, op: '+' },
+          { source: up.upgrPickaxeDmgPerCard, op: '+' },
+          { source: up.upgrPickaxeDmgPerStatue1, op: '+' },
+          { source: up.upgrPickaxeDmgPerStatue2, op: '+' },
+          { source: up.upgrPickaxeDmgPerPolyCard, op: '+' },
+        ],
+      },
       { source: up.upgrPickaxeDmgMul1, op: '×' },
       { source: up.upgrPickaxeDmgMul2, op: '×' },
       { source: up.upgrPickaxeDmgMul3, op: '×' },
       { source: up.upgrPickaxeAndBombDmgW3, op: '×' },
       { source: up.upgrPickaxeAndBombDmgW4, op: '×' },
+      // ── Skill-Tree: (Swing + Super + Relic + Ultra Crits) × Tons × Poly × Mincer ──
+      {
+        label: 'Skill-Tree',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: sk.swingHarderDamage, op: '+' },
+          { source: sk.superDamageDamage, op: '+' },
+          { source: sk.relicRampageDamage, op: '+' },
+          { source: sk.waitMyUltraCritsCanCritDamage, op: '+' },
+          { source: sk.tonsOfDamageDamage, op: '×' },
+          { source: sk.polychromePowerDamage, op: '×' },
+          { source: sk.idleObeliskMincerDamage, op: '×' },
+        ],
+      },
+      // ── Items: (Rock Cake + Primal Meats) × Hamburgers ──
+      {
+        label: 'Items',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: it.rockCake, op: '+' },
+          { source: it.primalMeatPickaxe, op: '+' },
+          { source: it.goldenPrimalMeatPickaxe, op: '+' },
+          { source: it.hamburgerPickaxe, op: '×' },
+          { source: it.goldenHamburgerPickaxe, op: '×' },
+        ],
+      },
+      // ── Prestige: artifact tiers sum within the menu ──
+      {
+        label: 'Prestige',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: art.artPickaxeDmgT1, op: '+' },
+          { source: art.artPickaxeDmgT2, op: '+' },
+          { source: art.artPickaxeDmgT3, op: '+' },
+          { source: art.artPickaxeDmgT4, op: '+' }, // fn uses rt.statueCount
+        ],
+      },
+      // ── Relics ──
+      {
+        label: 'Relics',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: rel.commonRelicPickaxeDamage, op: '+' },
+          { source: rel.epicRelicPickaxeDamage, op: '+' },
+        ],
+      },
+      // ── Store: Gem Upgrade × Founders Bundle ──
+      { source: st.gemPickaxeDamage, op: '×' },
+      { source: U, op: '×', unknown: true }, // Store: Founders Bundle (×)
+      // ── Workshop: W1 × W3 × W4 (wiki: all multiplicative) ──
+      { source: ws.wsPickaxeDmgW1, op: '×1+' },
+      { source: ws.wsPickaxeDmgW3, op: '×' },
+      { source: ws.wsPickaxeBombDmgW4, op: '×' },
+      // ── Challenges: per-X damage upgrades sum within the menu ──
+      {
+        label: 'Challenges',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: ch.chPickaxeDmgPerChallenge, op: '+' },
+          { source: ch.chPickaxeDmgPerSkillNode, op: '+' },
+          { source: ch.chPickaxeDmgPerObelisk, op: '+' },
+        ],
+      },
+      // ── Cards: Alex × Infernal Dwarf × Infernal Bear ──
+      { source: card.cardAlex, op: '×' },
+      { source: U, op: '×', unknown: true }, // Cards: Infernal Dwarf, Infernal Bear Drone
+      // ── Pets: (Dwarf + Dwarf Skin + Whale) × Dino ──
+      {
+        label: 'Pets',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: pet.petDwarfPickaxeDmg, op: '+' },
+          { source: pet.petDwarfSkinPickaxeDmg, op: '+' },
+          { source: pet.petWhalePickaxeDmg, op: '+' },
+          { source: pet.petDinoPickaxeDmg, op: '×' },
+        ],
+      },
+      // ── Construct: Rhythm × Craftmanship × Comfort ×? Rodentia ──
+      { source: con.staRhythmPickaxe, op: '×' },
+      { source: con.staCraftPickaxeDmg, op: '×' },
+      { source: con.staComfortDmg, op: '×1+' }, // fn uses rt.w4StatueCount
+      { source: con.staRodentiaPickaxe, op: '×1+' }, // fn uses rt.w4StatueCount; wiki marks ×?
+      // ── Stargazing: Taurus + Scorpio sum within the menu ──
+      {
+        label: 'Stargazing',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: sg.starTaurusPickaxeDmg, op: '+' },
+          { source: sg.starScorpioPickaxeDmg, op: '+' },
+        ],
+      },
+      // ── Fishing ──
+      { source: f.noticeT1PickaxeDmg, op: '×1+' },
+      // ── Contracts: (Per Contract + W1 %) × W3 multiplier ──
+      {
+        label: 'Contracts',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: ct.ctPickaxeDmgPerContract, op: '+' },
+          { source: ct.ctPickaxeDmgW1, op: '+' },
+          { source: ct.ctPickaxeBombDmgW3, op: '×' },
+        ],
+      },
     ],
   },
   pickaxe_attack_speed_per_second: {
@@ -160,7 +228,9 @@ export const pickaxeFormulas: FormulaMap = defineFormulas({
       { source: up.upgrUltraCritChance2, op: '+' },
     ],
   },
-  pickaxe_ultra_crit_damage: { contributions: [{ source: U, op: '+', unknown: true }] },
+  pickaxe_ultra_crit_damage: {
+    contributions: [{ source: U, op: '+', unknown: true }],
+  },
   pickaxe_omega_crit_chance: {
     contributions: [
       { source: sk.waitMyUltraCritsCanCritOmega, op: '+' },
@@ -169,5 +239,7 @@ export const pickaxeFormulas: FormulaMap = defineFormulas({
       { source: up.upgrOmegaCritChance, op: '+' },
     ],
   },
-  pickaxe_omega_crit_damage: { contributions: [{ source: U, op: '+', unknown: true }] },
+  pickaxe_omega_crit_damage: {
+    contributions: [{ source: U, op: '+', unknown: true }],
+  },
 })

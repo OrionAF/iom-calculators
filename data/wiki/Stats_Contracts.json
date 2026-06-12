@@ -1,0 +1,21 @@
+{
+  "title": "Stats/Contracts",
+  "pageid": 6695,
+  "url": "https://shminer.miraheze.org/wiki/Stats/Contracts",
+  "categories": [
+    "Pages using Tabber parser tag"
+  ],
+  "links": [
+    "Archaeology",
+    "Cards",
+    "Chests",
+    "Construct",
+    "Fishing",
+    "Pets",
+    "Skill-Tree",
+    "Skins",
+    "Stargazing",
+    "Upgrades"
+  ],
+  "wikitext": "<tabber>\nContract Cost Reduction=\n{{Stat|Contract Cost Reduction|Reduces the amount of bars required to complete Contracts. Functions by increasing the denominator of the multiplier, e.g. a 50% reduction is a <math>\\frac{100\\%}{100\\%+50\\%}</math> multiplier on the requirement.\n| '''Relics''' | A [[Chests#List_of_relics|Rare Relic]]}}\n|-|\nDouble Contract Point Chance=\n{{Stat|Double Contract Point Chance|The chance to be awarded 2x Contract Points upon completing a Contract.\n| '''Stargazing'''<math>+</math> |[[Stargazing#Stars|Cancer]]<math>+</math><br>A [[Stargazing#Super Stars|Super Star upgrade]]}}\n|-|\nTriple Contract Point Chance=\n{{Stat|Triple Contract Point Chance|The chance to be awarded 3x Contract Points upon completing a Contract.\n| '''Skill-Tree'''<math>+</math> |The \"[[Skill-Tree#Skills|Who's Asking For All These Bars?]]\" Skill<br>| '''Construct'''<math>+</math> |The [[Construct#World 3 Bonuses|Statue of Affluence]]<br>| '''Upgrades'''<math>+</math> | A [[Upgrades#World_2_Upgrades|World 2 Upgrade]] (Level 175) | '''Skins'''<math>+</math> |A [[Skins#Skin_Rewards|Skin Reward]]}}\n|-|\n5x Contract Point Chance=\n{{Stat|5x Contract Point Chance|The chance to be awarded 5x Contract Points upon completing a Contract.\n| '''Pets'''<math>+</math> |The [[Pets#tabber-Rabbit_4|Rabbit Pet Quest]]}}\n|-|\n10x Contract Point Chance=\n{{Stat|10x Contract Point Chance|The chance to be awarded 10x Contract Points upon completing a Contract.\n| '''Skill-Tree'''<math>+</math> |The [[Skill-Tree#Skills|\"Please Sir Don't Make Me Prestige Again\"]] Skill<br>| '''Cards'''<math>+</math> |The [[Cards#Misc Cards|FrozenAra Misc Card]]<br>| '''Construct'''<math>+</math> |The [[Construct#World 3 Bonuses|Statue of Affluence]]| '''Archaeology'''<math>+</math> |The [[Archaeology#tabber-Common_Idols_3|Hermes]] Idol| '''Fishing'''<math>+</math> |A Tier 2 [[Fishing#Notices|Notice Upgrade]]}}\n|-|\nContract Points Rewarded=\n{{Stat|Contract Points Rewarded|The base amount of Contract Points awarded upon completing a Contract. Starts at 10.\n| '''Skill-Tree'''<math>+</math> |The \"[[Skill-Tree#Skills|Who's Asking For All These Bars?]]\" Skill<br>| '''Cards'''<math>+</math> |The [[Cards#Misc Cards|Contract Misc Card]]<br>| '''Pets'''<math>+</math> |The [[Pets#tabber-Rabbit_Skin|Rabbit Pet Skin]]}}\n|-|\nContract Upgrade Cap Increase=\n{{Stat|Contract Upgrade Cap Increase|The increase to the maximum level of Contract Upgrades.\n| '''Skill-Tree'''<math>+</math> |The \"[[Skill-Tree#Skills|Idle Obelisk Mincer]]\" Skill| '''Pets'''<math>+</math> |The [[Pets#tabber-Happy-Bot_Skin|Happy Bot Skin]]<br>| '''Construct'''<math>+</math> |The [[Construct#World 1 Bonuses|Statue of Childhood]]<math>+</math><br>The [[Construct#World 3 Bonuses|Statue of Affluence]]<br>| '''Archaeology'''<math>+</math>|The [[Archaeology#tabber-Common Idols|Hera]] Idol<math>+</math><br>The [[Archaeology#tabber-Common_Idols_3|Hermes]] Idol}}\n|-|\nContract Upgrade Cost Reduction=\n{{Stat|Contract Upgrade Cost Reduction|The amount by which Contract Upgrade costs are multiplied.\n| '''Cards''' |The Rabbit Pet [[Cards#Card_Effects|Card]]<br>| '''Pets''' |The [[Pets#tabber-Rabbit|Rabbit Pet]]<math>+</math><br>The [[Pets#tabber-Rabbit_4|Rabbit Pet Quest]]<br>| '''Stargazing''' |[[Stargazing#Stars|Cancer]]}}\n</tabber>"
+}

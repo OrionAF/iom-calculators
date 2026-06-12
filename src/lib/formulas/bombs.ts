@@ -15,6 +15,8 @@ import { fishingSources as f } from '$lib/sources/fishing'
 import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { challengeSources as ch } from '$lib/sources/challenges'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { tributesSources as tr } from '$lib/sources/tributes'
+import { skinsSources as sn } from '$lib/sources/skins'
 
 const U: Source = {
   key: '_unknown',
@@ -26,51 +28,77 @@ const U: Source = {
 
 export const bombsFormulas: FormulaMap = defineFormulas({
   bomb_damage: {
+    // Wiki structure: menu groups MULTIPLY (registry base 1); bonuses sum
+    // inside their menu's (1 + Σ) group, per-menu multipliers chain.
     contributions: [
-      // ── Skill-Tree (additive) ──────────────────────────────────────────
-      { source: sk.biggerBlastsDamage, op: '+' },
-      { source: sk.arsenalAdvancementDamage, op: '+' },
-      { source: sk.allRoundBomberDamage, op: '+' },
-      { source: sk.flamboyantBombsDamage, op: '+' },
-      // ── Items ────────────────────────────────────────────────────────
+      // ── Skill-Tree: (Bigger Blasts + All-Round + Arsenal + Flamboyant) ──
+      {
+        label: 'Skill-Tree',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: sk.biggerBlastsDamage, op: '+' },
+          { source: sk.arsenalAdvancementDamage, op: '+' },
+          { source: sk.allRoundBomberDamage, op: '+' },
+          { source: sk.flamboyantBombsDamage, op: '+' },
+        ],
+      },
+      // ── Items: Chaos Totems × Hamburgers (wiki: multiplied) ──
       { source: it.chaosTotemBombDamage, op: '×' },
       { source: it.goldenChaosTotemBombDamage, op: '×' },
       { source: it.hamburgerBomb, op: '×' },
       { source: it.goldenHamburgerBomb, op: '×' },
-      // ── Relics ───────────────────────────────────────────────────────
-      { source: rel.rareRelicBombDamage, op: '+' },
-      // ── Workshop ─────────────────────────────────────────────────────
-      { source: ws.wsBombDmgW1, op: '+' },
-      { source: ws.wsBombDmgW2, op: '+' },
+      // ── Relics ──
+      { source: rel.rareRelicBombDamage, op: '×1+' },
+      // ── Workshop: W2 × W3 × W4 ──
+      { source: ws.wsBombDmgW1, op: '×1+' }, // not on the wiki list — possibly the Basic & Chain upgrade (Additional Bomb Multiplier); verify
+      { source: ws.wsBombDmgW2, op: '×1+' },
       { source: ws.wsBombDmgW3, op: '×' },
       { source: ws.wsPickaxeBombDmgW4, op: '×' },
-      // ── Contracts ────────────────────────────────────────────────────
-      { source: ct.ctBombDmgPerContract, op: '+' },
-      { source: ct.ctPickaxeBombDmgW3, op: '×' },
-      // ── Prestige Artifacts ────────────────────────────────────────────
-      { source: art.artBombDmgT1, op: '+' },
-      { source: art.artBombDmgT2, op: '+' },
-      { source: art.artBombDmgT3, op: '+' },
-      { source: art.artBombDmgT4, op: '+' }, // fn uses rt.statueCount
-      // ── Construct Statues ─────────────────────────────────────────────
+      // ── Contracts: (per-contract W2) × W3 multiplier ──
+      {
+        label: 'Contracts',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: ct.ctBombDmgPerContract, op: '+' },
+          { source: ct.ctPickaxeBombDmgW3, op: '×' },
+        ],
+      },
+      // ── Prestige: T1 × T2 × T3 × T4 (wiki: tiers multiply each other) ──
+      { source: art.artBombDmgT1, op: '×1+' },
+      { source: art.artBombDmgT2, op: '×1+' },
+      { source: art.artBombDmgT3, op: '×1+' },
+      { source: art.artBombDmgT4, op: '×1+' }, // fn uses rt.statueCount
+      // ── Construct: Awareness × Propulsion × Comfort ──
       { source: con.staAwarenessBombDmg, op: '×' },
       { source: con.staPropBombDmg, op: '×' },
-      { source: con.staComfortDmg, op: '+' }, // fn uses rt.w4StatueCount
-      // ── Cards ────────────────────────────────────────────────────────
+      { source: con.staComfortDmg, op: '×1+' }, // fn uses rt.w4StatueCount
+      // ── Cards: Radioactive Slug × Bone ──
       { source: card.cardBone, op: '×' },
-      // ── Store ────────────────────────────────────────────────────────
+      { source: U, op: '×', unknown: true }, // Cards: Radioactive Slug Legendary Fish Card
+      // ── Store: Perk × Founders Bundle × Gem Upgrade ──
       { source: st.perkBombDamage, op: '×' },
-      { source: st.gemBombDamage, op: '+' },
-      // ── Drones ────────────────────────────────────────────────────────
-      { source: drone.droneSuitBearUpgrade, op: '+' },
-      // ── Fishing ──────────────────────────────────────────────────────────
-      { source: f.noticeT1BombDmg, op: '+' },
-      { source: up.upgrBombDmg1, op: '+' },
-      { source: up.upgrBombDmg2, op: '+' },
-      { source: up.upgrBombDmg3, op: '+' },
-      { source: up.upgrBombDmgMul1, op: '×' },
-      { source: up.upgrBombDmgMul2, op: '×' },
-      { source: up.upgrBombDmgMul3, op: '×' },
+      { source: st.gemBombDamage, op: '×1+' },
+      { source: U, op: '×', unknown: true }, // Store: Founders Bundle (×)
+      // ── Drones ──
+      { source: drone.droneSuitBearUpgrade, op: '×1+' },
+      // ── Fishing ──
+      { source: f.noticeT1BombDmg, op: '×1+' },
+      // ── Upgrades: (Gold lvl 20 + VR-Tin + Lapis) × bar multiplier chain ──
+      {
+        label: 'Upgrades',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: up.upgrBombDmg1, op: '+' },
+          { source: up.upgrBombDmg2, op: '+' },
+          { source: up.upgrBombDmg3, op: '+' },
+          { source: up.upgrBombDmgMul1, op: '×' },
+          { source: up.upgrBombDmgMul2, op: '×' },
+          { source: up.upgrBombDmgMul3, op: '×' },
+        ],
+      },
       { source: up.upgrPickaxeAndBombDmgW3, op: '×' },
       { source: up.upgrPickaxeAndBombDmgW4, op: '×' },
     ],
@@ -89,6 +117,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: ch.chBombCritDmg, op: '+' },
       { source: up.upgrBombCritDmg1, op: '+' },
       { source: up.upgrBombCritDmg2, op: '+' },
+      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
     ],
   },
   bomb_recharge_speed: {
@@ -134,6 +163,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: con.staAppetiteBombCap, op: '×' },
       { source: U, op: '+', unknown: true }, // Workshop Bomb Battery Cap
+      { source: sn.snBombCapacity, op: '×1+' },
     ],
   },
   bomb_super_crit_chance: {
@@ -145,7 +175,12 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: U, op: '+', unknown: true }, // Items (Rock Cake + Cassandra Idol)
     ],
   },
-  bomb_super_crit_damage: { contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_super_crit_damage: {
+    contributions: [
+      { source: U, op: '+', unknown: true },
+      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
+    ],
+  },
   bomb_ultra_crit_chance: {
     contributions: [
       { source: sk.flamboyantBombsUltraCrit, op: '+' },
@@ -157,16 +192,30 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: up.upgrBombUltraCrit2, op: '+' },
     ],
   },
-  bomb_ultra_crit_damage: { contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_ultra_crit_damage: {
+    contributions: [
+      { source: U, op: '+', unknown: true },
+      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
+    ],
+  },
   bomb_omega_crit_chance: {
     contributions: [
       { source: ct.ctOmegaCritChance, op: '+' },
       { source: up.upgrBombOmegaCrit, op: '+' },
     ],
   },
-  bomb_omega_crit_damage: { contributions: [{ source: U, op: '+', unknown: true }] },
-  bomb_cherry3x_chance: { contributions: [{ source: U, op: '+', unknown: true }] },
-  bomb_battery_cap_increases: { contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_omega_crit_damage: {
+    contributions: [
+      { source: U, op: '+', unknown: true },
+      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
+    ],
+  },
+  bomb_cherry3x_chance: {
+    contributions: [{ source: U, op: '+', unknown: true }],
+  },
+  bomb_battery_cap_increases: {
+    contributions: [{ source: U, op: '+', unknown: true }],
+  },
   bomb_additional_multiplier: {
     contributions: [
       { source: rel.mythicRelicBombMulti, op: '+' },
@@ -182,7 +231,9 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: U, op: '+', unknown: true }, // Construct (no workshop_upgrade_cap key) + Fishing
     ],
   },
-  bomb_of_plenty_make_gold_chance: { contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_of_plenty_make_gold_chance: {
+    contributions: [{ source: U, op: '+', unknown: true }],
+  },
   bomb_of_plenty_multi: {
     contributions: [
       { source: st.founderBomBofPlenty, op: '+' },
@@ -190,7 +241,9 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: U, op: '+', unknown: true },
     ],
   },
-  bomb_trans_apply_bop_chance: { contributions: [{ source: U, op: '+', unknown: true }] },
+  bomb_trans_apply_bop_chance: {
+    contributions: [{ source: U, op: '+', unknown: true }],
+  },
   bomb_transmuter_multi: {
     contributions: [
       { source: st.vpBomberTransmuterMulti, op: '+' },

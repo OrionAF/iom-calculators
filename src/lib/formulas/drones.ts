@@ -10,6 +10,8 @@ import { archaeologySources as arch } from '$lib/sources/archaeology'
 import { constructSources as con } from '$lib/sources/construct'
 import { petSources as pet } from '$lib/sources/pets'
 import { upgradeSources as up } from '$lib/sources/upgrades'
+import { tributesSources as tr } from '$lib/sources/tributes'
+import { worldquestsSources as wq } from '$lib/sources/worldquests'
 
 const U: Source = {
   key: '_unknown',
@@ -24,17 +26,28 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: st.vpDroneCount, op: '+' },
       { source: sk.threesACrowdDrone, op: '+' },
-      { source: U, op: '+', unknown: true }, // Fishing Cthulhu T2 + Blackened Basker T2
+      { source: tr.trCthulhuT2U1MD, op: '+' },
+      { source: tr.trBlackenedBaskerT2UMD, op: '+' },
     ],
   },
-  drone_damage_percent: { contributions: [{ source: drone.droneUpgradeDamage, op: '+' }] },
-  drone_radius_percent: { contributions: [{ source: drone.droneUpgradeRadius, op: '+' }] },
-  drone_movespeed_percent: { contributions: [{ source: drone.droneUpgradeMovespeed, op: '+' }] },
+  drone_damage_percent: {
+    contributions: [{ source: drone.droneUpgradeDamage, op: '+' }],
+  },
+  drone_radius_percent: {
+    contributions: [{ source: drone.droneUpgradeRadius, op: '+' }],
+  },
+  drone_movespeed_percent: {
+    contributions: [{ source: drone.droneUpgradeMovespeed, op: '+' }],
+  },
   drone_attack_speed_percent: {
     contributions: [{ source: drone.droneUpgradeAttackSpeed, op: '+' }],
   },
-  drone_triple_damage_chance: { contributions: [{ source: drone.droneUpgradeTripleDmg, op: '+' }] },
-  drone_rapid_fire_chance: { contributions: [{ source: drone.droneUpgradeRapidFire, op: '+' }] },
+  drone_triple_damage_chance: {
+    contributions: [{ source: drone.droneUpgradeTripleDmg, op: '+' }],
+  },
+  drone_rapid_fire_chance: {
+    contributions: [{ source: drone.droneUpgradeRapidFire, op: '+' }],
+  },
   drone_suit_cap: {
     contributions: [
       { source: sk.mechanicalEvolutionSuitCap, op: '+' },
@@ -108,6 +121,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: ct.ctGoldenVoidChance, op: '+' },
       { source: st.vpVoidOverdriveGoldenPortalChance, op: '+' },
       { source: U, op: '+', unknown: true }, // Pets + Fishing + Upgrades + Contracts
+      { source: tr.trDuneEelwormT1GVPC, op: '+' },
     ],
   },
   golden_void_portal_multi: {
@@ -117,7 +131,8 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: st.vpVoidOverdriveGoldenPortalMul, op: '×' },
       { source: arch.idolThemis, op: '+' },
       { source: up.upgrGoldenVoidChance, op: '+' },
-      { source: U, op: '+', unknown: true }, // Fishing Dune's Eelworm T2
+      { source: tr.trDuneEelwormT2EBCC, op: '+' },
+      { source: tr.trDuneEelwormT2GVPM, op: '×' },
     ],
   },
   rainbow_void_portal_chance: {
@@ -127,6 +142,8 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: arch.idolCronusPortalChance, op: '+' },
       { source: rel.divineRelicRainbowPortal, op: '+' },
       { source: U, op: '+', unknown: true }, // Stargazing BH11, Fishing Melting G T1, WQ6
+      { source: tr.trMeltingGibbousT1RPC, op: '+' },
+      { source: wq.wqRainbowVoidPortalChanceQ6, op: '+' },
     ],
   },
   rainbow_void_portal_multi: {
@@ -136,6 +153,8 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: U, op: '+', unknown: true }, // Cards Butterfly Pet, Upgrades
     ],
   },
-  elixir_crit_chance: { contributions: [{ source: U, op: '+', unknown: true }] },
+  elixir_crit_chance: {
+    contributions: [{ source: U, op: '+', unknown: true }],
+  },
   elixir_crit_multi: { contributions: [{ source: U, op: '+', unknown: true }] },
 })

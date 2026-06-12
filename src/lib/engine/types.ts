@@ -87,10 +87,39 @@ export interface Contribution {
   unknown?: boolean
 }
 
+/**
+ * A parenthesized sub-formula — the wiki pattern "(A + B) × C" inside one
+ * menu group. Evaluated with the same grouped semantics as a whole formula
+ * (own base, then '+' sum, then '×'/'×1+' factors), and the result joins
+ * the enclosing stat via `op`.
+ *
+ * `base` is the group's starting value:
+ *   1 → a bonus group acting as a multiplier: (1 + Σ bonuses) × factors
+ *   0 → a flat sum joining additively: (Σ amounts) × factors
+ *
+ * Groups contain only plain contributions — no nested groups. All 12
+ * wiki Stats pages fit this shape; if the game ever needs deeper nesting,
+ * widen this type deliberately.
+ */
+export interface GroupContribution {
+  /** Optional origin label for UI/debugging, e.g. 'Store', 'Skill-Tree'. */
+  label?: string
+  base: number
+  op: Op
+  contributions: Contribution[]
+}
+
+export type FormulaTerm = Contribution | GroupContribution
+
+/** Discriminates group terms from plain contributions. */
+export function isGroup(term: FormulaTerm): term is GroupContribution {
+  return 'contributions' in term
+}
+
 export interface StatFormula {
   /** Starting value before any contributions are applied. */
   base: number
-  contributions: Contribution[]
+  contributions: FormulaTerm[]
 }
 
 /**

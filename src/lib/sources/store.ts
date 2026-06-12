@@ -74,7 +74,7 @@ export const gemBombDamage: Source = {
   system: 'store',
   maxLevel: 22,
   statKey: 'bomb_damage',
-  op: '+',
+  op: '×1+',
   fn: (l) => l * 0.2,
   inputs: [],
 }

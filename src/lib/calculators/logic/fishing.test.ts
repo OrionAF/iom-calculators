@@ -10,8 +10,8 @@ describe('computeFishingStats', () => {
     expect(result.droneMultiplier).toBeCloseTo(1)
     expect(result.tier2DockMulti).toBe(0)
     expect(result.shinyChance).toBe(0)
-    expect(result.shinyMulti).toBeCloseTo(3)
-    expect(result.superShinyMulti).toBeCloseTo(2)
+    expect(result.shinyMulti).toBeCloseTo(5)
+    expect(result.superShinyMulti).toBeCloseTo(3)
   })
 
   it('super shiny chance: T2 level 20 + Gatekeeper level 3 + 30 legendary fish', () => {
@@ -48,7 +48,7 @@ describe('computeFishingStats', () => {
       },
       rt: {},
     })
-    // 1 + 20×0.06 + 25×0.08 + 3×0.10 = 1 + 1.20 + 2.00 + 0.30 = 4.50
-    expect(result.droneMultiplier).toBeCloseTo(4.5)
+    // Wiki product form: (1 + 1.20) × (1 + 2.00) × (1 + 0.30) = 8.58
+    expect(result.droneMultiplier).toBeCloseTo(8.58)
   })
 })

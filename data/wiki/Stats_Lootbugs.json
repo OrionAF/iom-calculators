@@ -1,0 +1,24 @@
+{
+  "title": "Stats/Lootbugs",
+  "pageid": 6692,
+  "url": "https://shminer.miraheze.org/wiki/Stats/Lootbugs",
+  "categories": [
+    "Pages using Tabber parser tag"
+  ],
+  "links": [
+    "Archaeology",
+    "Cards",
+    "Challenges",
+    "Construct",
+    "Drones",
+    "Fishing",
+    "Items",
+    "Pets",
+    "Skill-Tree",
+    "Skins",
+    "Stargazing",
+    "Store",
+    "Upgrades"
+  ],
+  "wikitext": "<tabber>\nLootbug Spawn Rate Multiplier=\n{{Stat|Lootbug Spawn Rate Multiplier|Increases the rate at which Lootbugs appear.\n| '''Base''' |Once every 20 in-game minutes<br>| '''Drones''' |[[Drones#Drone Buffs|Fueled Bomb Bear Drone]]<br>| '''Items''' |[[Items#Bread|Bread]] (requires buff from [[Archaeology#tabber-Common Idols|Eros]] idol)<math>\\times</math><br>[[Items#Tier_3_items|Lootbug Lantern]]<br>| '''Challenges''' |An [[Challenges#tabber-Extreme_2|Extreme Challenge Upgrade]]<br>| '''Cards''' | The [[Cards#Card Effects|Duck Card]]<br>| '''Pets''' |The [[Pets#tabber-Duck 3|Duck Pet]]<br>| '''Stargazing''' |[[Stargazing#Stars|Sagittarius]]<br>| '''Upgrades''' | A [[Upgrades#World 2 Upgrades|World 2 Upgrade]]}}\n|-|\nTriple Lootbug Chance=\n{{Stat|Triple Lootbug Chance|The chance for 3 Lootbugs to appear when a spawn occurs.\n| '''Cards'''<math>+</math> |The [[Cards#Card Effects|Whale Card]]<br>| '''Pets'''<math>+</math> | The [[Pets#tabber-Whale 2|Whale Pet]]<br>| '''Stargazing'''<math>+</math> |[[Stargazing#Stars|Libra]]| '''Skins'''<math>+</math> |A [[Skins#Skin_Rewards|Skin Reward]]}}\n|-|\nGolden Lootbug Chance=\n{{Stat|Golden Lootbug Chance|The chance for the Lootbug purchasable loot to be free.\n| '''Store''' |The [[Store#Value_Packs|Golden Lootbug Bundle]]<br>A [[Store#Founders_Bundle|Founder]] Perk ([[Store#VIP_Lounge|Tier 5]])<br>| '''Stargazing''' |[[Stargazing#Stars|Aquarius]]| '''Cards''' |[[Cards#tabber-Misc|Golden Lootbug]]}}\n|-|\nBanked Lootbug Cap=\n{{Stat|Banked Lootbug Cap|How many Lootbugs you can keep in storage in addition to the one on screen.\n| '''Items'''<math>+</math> |[[Items#Tier_3_items|Lootbug Lantern]]<br>| '''Store'''<math>+</math> | The [[Store#Value_Packs|Banker's Bundle!]]<br>The [[Store#Value_Packs|Bigger Banker's Bundle!]]<br>The [[Store#Value_Packs|Lootbug Bonanza Bundle!]]<br>| '''Skill-Tree'''<math>+</math> |[[Skill-Tree#Skills|Saving For A Rainy Day]]<math>+</math><br>[[Skill-Tree#Skills|Anyone Up Lootin' They Bugs]]<math>+</math><br>| '''Pets'''<math>+</math> | [[Pets#tabber-Whale 4|Whale Pet Quest]]<br> | '''Stargazing'''<math>+</math> |([[Stargazing#Stars|Ophiuchus]]<math>+</math><br>[[Stargazing#Super Stars|Super Star Upgrades]])<br>The [[Stargazing#Black_Hole|Eighth Black Hole boost]] (Multiplies everything)<br>| '''Construct'''<math>+</math> | The [[Construct#World 3 Bonuses|Statue of Eastwood]]<br>| '''Archaeology'''<math>+</math> |The [[Archaeology#tabber-Rare_Idols_3|Theseus]] Idol| '''Fishing'''<math>+</math> |The [[Fishing#tabber-Storm_Serpent|Tier 1 Storm Serpent Tribute]]| '''Skins'''<math>\\times</math> | A [[Skins#Skin_Rewards|Skin Reward]]}}\n|-|\nLootbug Gem Cost Reduction=\n{{Stat|Lootbug Gem Cost Reduction|The amount by which the gem cost of purchasable loot is reduced.\n| '''Skill-Tree'''<math>+</math> |[[Skill-Tree#Skills|Saving For A Rainy Day]]<br>| '''Pets'''<math>+</math> |The [[Pets#tabber-Whale Skin|Whale Pet Skin]]<br> | '''Skins'''<math>+</math> |[[Skins#Skin Rewards|Skin Rewards]]}}\n|-|\nLootbug Loot Multiplier=\n{{Stat|Lootbug Loot Multiplier|The multiplier on Lootbug rewards. Rewards which multiply to non-integers but must be integers randomly give the integers on either side of the value.\n| '''Skill-Tree''' |[[Skill-Tree#Skills|Anyone Up Lootin' They Bugs]]<br>| '''Store''' |The \"[[Store#Value Packs|Lootbug Bonanza Bundle!]]\" Value Pack<br>| '''Cards''' |The [[Cards#Misc_Cards|Lootbug Misc Card]]<br>| '''Stargazing''' |A [[Stargazing#Super_Stars|Super Star Upgrade]]<br>| '''Archaeology''' |The [[Archaeology#tabber-Rare_Idols_3|Theseus]] Idol| '''Fishing''' |The [[Fishing#tabber-Storm_Serpent|Tier 2 Storm Serpent Tribute]]}}\n|-|\nLanterns Used=\n{{Stat|Lanterns Used|The number of lootbug lanterns used. The effect caps at 25, but the Lanterns Used stat will keep increasing beyond that point.\n| '''Items''' |[[Items#LootbugLantern|Lootbug Lantern]]}}\n</tabber>"
+}

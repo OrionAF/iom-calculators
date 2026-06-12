@@ -11,6 +11,7 @@ import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { challengeSources as ch } from '$lib/sources/challenges'
 import { upgradeSources as up } from '$lib/sources/upgrades'
 import { workshopSources as ws } from '$lib/sources/workshop'
+import { tributesSources as tr } from '$lib/sources/tributes'
 
 // Placeholder for contributions whose per-level values are not yet known.
 // Marked unknown: true so the engine skips them and the UI flags them.
@@ -34,7 +35,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: f.rodMultiT1, op: '×' },
       { source: f.rodMultiE1, op: '×' },
       { source: sk.motleySchoolRod, op: '×' },
-      { source: st.vpHalfWayFishingRod, op: '+' },
+      { source: st.vpHalfWayFishingRod, op: '×' },
       { source: card.cardFishingRod, op: '×' },
     ],
   },
@@ -75,13 +76,23 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    * base = 1
    */
   fishing_drone_multiplier: {
+    // Wiki: menu groups multiply. The two Fishing upgrades multiply each
+    // other; Fishing With Friends + Completionist Gatekeeper sum within
+    // the Skill-Tree group.
     contributions: [
-      { source: f.droneMultiT1, op: '+' },
-      { source: f.droneMultiE1, op: '+' },
-      { source: sk.fishingWithFriendsDronePower, op: '+' },
-      { source: sk.completionistGatekeeperDronePower, op: '+' },
-      { source: arch.idolTethysDronePower, op: '+' },
-      { source: ws.wsDronePowerW3, op: '+' },
+      { source: ws.wsDronePowerW3, op: '×' },
+      {
+        label: 'Skill-Tree',
+        base: 1,
+        op: '×',
+        contributions: [
+          { source: sk.fishingWithFriendsDronePower, op: '+' },
+          { source: sk.completionistGatekeeperDronePower, op: '+' },
+        ],
+      },
+      { source: arch.idolTethysDronePower, op: '×1+' },
+      { source: f.droneMultiT1, op: '×1+' },
+      { source: f.droneMultiE1, op: '×1+' },
     ],
   },
 
@@ -242,7 +253,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: f.superShinyMultiE2, op: '+' },
       { source: arch.idolTethysSuperShiny, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Tier 1 Cthulhu Tribute
+      { source: tr.trCthulhuT1SSM, op: '+' }, // adds to base 2x
     ],
   },
 

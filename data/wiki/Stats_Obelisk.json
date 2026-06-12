@@ -1,0 +1,17 @@
+{
+  "title": "Stats/Obelisk",
+  "pageid": 6690,
+  "url": "https://shminer.miraheze.org/wiki/Stats/Obelisk",
+  "categories": [
+    "Pages using Tabber parser tag"
+  ],
+  "links": [
+    "Challenges",
+    "Chests",
+    "Obelisk",
+    "Pets",
+    "Prestige",
+    "Upgrades"
+  ],
+  "wikitext": "<tabber>\nBonus Obelisk Fight Length=\n{{Stat|Bonus Obelisk Fight Length|How much time you have to deal damage to the Obelisk per attempt.\n| '''Relics''' |A  [[Chests#List_of_relics|Legendary Relic]]}}\n|-|\nObelisk Cooldown=\n{{Stat|Obelisk Cooldown|How much time you need to wait in between Obelisk fight attempts.\n| '''Prestige''' |A [[Prestige#Tier 1 Artifacts|Tier 1 Artifact]]}}\n|-|\nObelisk Armor Reduction=\n{{Stat|Obelisk Armor Reduction|The multiplier applied to an [[Obelisk#Obelisk Base Armor|Obelisk's Base Armor]]\n| '''Prestige'''<math>+</math> |A [[Prestige#Tier 3 Artifacts|Tier 3 Artifact]]<br>| '''Challenges'''<math>+</math> |A [[Challenges#tabber-Regular 2|Regular Challenge Upgrade]]<br>| '''Pets'''<math>+</math> |The [[Pets#tabber-Duck Skin|Duck Pet Skin]]<br>| '''Upgrades'''<math>+</math> | The {{Sprite|Angelite Bar|Upgrades#World 1 Upgrades||Angelite Bar Upgrade}}}}\n</tabber>"
+}

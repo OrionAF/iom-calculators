@@ -306,7 +306,8 @@ const waitMyUltraCritsCanCritDamage: Source = {
   name: 'Wait My Ultra Crits Can Crit?',
   system: 'skillTree',
   maxLevel: 1,
-  fn: (l) => 1 + l * 2.0,
+  // Bonus-shaped: wiki sums this inside the Skill-Tree (…) group.
+  fn: (l) => l * 2.0,
   inputs: [],
 }
 const waitMyUltraCritsCanCritOmega: Source = {
@@ -349,7 +350,14 @@ const polychromePowerDamage: Source = {
   system: 'skillTree',
   maxLevel: 1,
   fn: (l, rt) => 1 + l * (rt['polyCardCount'] ?? 0) * 0.03,
-  inputs: [{ key: 'polyCardCount', label: 'Polychrome Cards Owned', type: 'integer', min: 0 }],
+  inputs: [
+    {
+      key: 'polyCardCount',
+      label: 'Polychrome Cards Owned',
+      type: 'integer',
+      min: 0,
+    },
+  ],
 }
 const polychromePowerOreSell: Source = {
   key: 'skillTree.polychromePower',
@@ -357,7 +365,14 @@ const polychromePowerOreSell: Source = {
   system: 'skillTree',
   maxLevel: 1,
   fn: (l, rt) => 1 + l * (rt['polyCardCount'] ?? 0) * 0.03,
-  inputs: [{ key: 'polyCardCount', label: 'Polychrome Cards Owned', type: 'integer', min: 0 }],
+  inputs: [
+    {
+      key: 'polyCardCount',
+      label: 'Polychrome Cards Owned',
+      type: 'integer',
+      min: 0,
+    },
+  ],
 }
 const polychromePowerExp: Source = {
   key: 'skillTree.polychromePower',
@@ -365,7 +380,14 @@ const polychromePowerExp: Source = {
   system: 'skillTree',
   maxLevel: 1,
   fn: (l, rt) => 1 + l * (rt['polyCardCount'] ?? 0) * 0.03,
-  inputs: [{ key: 'polyCardCount', label: 'Polychrome Cards Owned', type: 'integer', min: 0 }],
+  inputs: [
+    {
+      key: 'polyCardCount',
+      label: 'Polychrome Cards Owned',
+      type: 'integer',
+      min: 0,
+    },
+  ],
 }
 /** +0.1% Pickaxe Damage Per Relic Chest Opened (dynamic) */
 const relicRampageDamage: Source = {
@@ -374,7 +396,14 @@ const relicRampageDamage: Source = {
   system: 'skillTree',
   maxLevel: 1,
   fn: (l, rt) => l * (rt['relicChestsOpened'] ?? 0) * 0.001,
-  inputs: [{ key: 'relicChestsOpened', label: 'Relic Chests Opened', type: 'integer', min: 0 }],
+  inputs: [
+    {
+      key: 'relicChestsOpened',
+      label: 'Relic Chests Opened',
+      type: 'integer',
+      min: 0,
+    },
+  ],
 }
 /** ×2.50 Pickaxe Damage */
 const idleObeliskMincerDamage: Source = {
@@ -470,7 +499,12 @@ const demolitionExpertBombCritDmg: Source = {
   maxLevel: 1,
   fn: (l, rt) => l * (rt['bombCritChance'] ?? 0) * 0.5,
   inputs: [
-    { key: 'bombCritChance', label: 'Bomb Crit Chance (stat value)', type: 'number', min: 0 },
+    {
+      key: 'bombCritChance',
+      label: 'Bomb Crit Chance (stat value)',
+      type: 'number',
+      min: 0,
+    },
   ],
 }
 
@@ -569,7 +603,8 @@ const iHaveWaresOreSell: Source = {
   name: 'I Have Wares, If You Have Coin',
   system: 'skillTree',
   maxLevel: 1,
-  fn: (l) => 1 + l * 1.0,
+  // Bonus-shaped: wiki sums this with Easy Progressor inside the (…) group.
+  fn: (l) => l * 1.0,
   inputs: [],
 }
 const iHaveWaresGoldenFloor: Source = {
