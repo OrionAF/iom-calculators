@@ -112,3 +112,46 @@ describe('Infernal REPLACE vs KEEP semantics — confirmed in-game', () => {
     expect(card.cardBombBasicBomb.maxLevel).toBe(3)
   })
 })
+
+describe('resource card sets + deriveCardCounts', () => {
+  it('generates the full sets from the wiki dump', async () => {
+    const rc = await import('$lib/sources/resourceCards')
+    expect(rc.oreCardSources).toHaveLength(78)
+    expect(rc.barCardSources).toHaveLength(78)
+    expect(rc.veinCardSources).toHaveLength(19)
+    expect(rc.starCardSources).toHaveLength(19)
+    expect(rc.fishCardSources).toHaveLength(44)
+    const keys = rc.resourceCardSources.map((s) => s.key)
+    expect(new Set(keys).size).toBe(keys.length) // unique keys
+    expect(keys).toContain('cards.ore.tinOre')
+    expect(keys).toContain('cards.bar.djinniumBar')
+  })
+
+  it('derives counts from tracked levels', async () => {
+    const { deriveCardCounts } = await import('./cardMath')
+    const counts = deriveCardCounts({
+      'cards.ore.tinOre': 4, // infernal ore: 4 cards owned, poly, infernal
+      'cards.ore.copperOre': 3, // poly
+      'cards.bar.tinBar': 4,
+      'cards.pet.crab': 4,
+      'cards.alex': 4, // misc
+      'cards.bomb.basicBomb': 3, // bombs never infernal
+      'cards.leg.megalodon': 4,
+    })
+    expect(counts.cardsOwned).toBe(4 + 3 + 4 + 4 + 4 + 3 + 4)
+    expect(counts.polyCardCount).toBe(7)
+    expect(counts.infernalOreCards).toBe(1)
+    expect(counts.infernalBarCards).toBe(1)
+    expect(counts.infernalPetCards).toBe(1)
+    expect(counts.infernalMiscCards).toBe(1)
+    expect(counts.infernalLegendaryFishCards).toBe(1)
+    expect(counts.totalInfernalCards).toBe(5)
+  })
+
+  it('bomb cards are clamped to level 3 and never count as infernal', async () => {
+    const { deriveCardCounts } = await import('./cardMath')
+    const counts = deriveCardCounts({ 'cards.bomb.megabomb': 4 })
+    expect(counts.cardsOwned).toBe(3)
+    expect(counts.totalInfernalCards).toBe(0)
+  })
+})
