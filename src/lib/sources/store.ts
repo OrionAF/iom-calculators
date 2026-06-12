@@ -1,4 +1,4 @@
-import type { Source } from '$lib/engine/types'
+import type { Op, Source } from '$lib/engine/types'
 
 // Store sources own all store effect numbers (fn, maxLevel, statKey, op).
 // src/lib/store/catalog.ts references these sources for presentation;
@@ -7,19 +7,21 @@ import type { Source } from '$lib/engine/types'
 // Gem upgrades are leveled (fn scales with level).
 // Founder tier effects are leveled: level = current founder tier (0–12).
 
+const store = (key: string, name: string, maxLevel: number, statKey: string, op: Op, fn: Source['fn']): Source => ({
+  key: `store.${key}`,
+  name: `Store: ${name}`,
+  system: 'store',
+  maxLevel,
+  statKey,
+  op: op,
+  fn,
+  inputs: [],
+})
+
 // ─── Perks (binary owned/not) ─────────────────────────────────────────────────
 
 /** Perk: 2x Ore Income. op='×' → fn(1)=2 */
-export const perkOreIncome: Source = {
-  key: 'store.perk.oreIncome',
-  name: '2x Ore Income (Perk)',
-  system: 'store',
-  maxLevel: 1,
-  statKey: 'ore_income_multi',
-  op: '×',
-  fn: (o) => 1 + o * 1,
-  inputs: [],
-}
+export const storePerkOreIncome = store('perk.oreIncome', '2x Ore Income (Perk)', 1, 'ore_income_multi', '×', (o) => 1 + o * 1)
 /** Perk: 2x Prestige Point Income. op='×' */
 export const perkPrestigePts: Source = {
   key: 'store.perk.prestigePts',
@@ -1185,7 +1187,7 @@ export const vpHalfWayFreebieGems: Source = {
 
 export const storeSources = {
   // Perks
-  perkOreIncome,
+  storePerkOreIncome,
   perkPrestigePts,
   perkBarOutput,
   perkBombDamage,
