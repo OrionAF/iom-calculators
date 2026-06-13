@@ -229,7 +229,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: sk.doTheseUpgradesWorkshopCap, op: '+' },
       { source: sk.idleObeliskMincerWorkshopCap, op: '+' },
       { source: pet.petCrabSkinWorkshopCap, op: '+' },
-      { source: sg.starLeo, op: '+' },
+      { source: sg.starLeoWorkshopCap, op: '+' },
       { source: U, op: '+', unknown: true }, // Construct (no workshop_upgrade_cap key) + Fishing
     ],
   },

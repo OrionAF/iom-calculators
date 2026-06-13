@@ -63,7 +63,7 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
       { source: st.storeVpBankersLootbugBank, op: '+' },
       { source: st.storeVpBiggerBankersLootbugBank, op: '+' },
       { source: st.storeVpLootbugBonanzaBankCap, op: '+' },
-      { source: sg.starOphiuchusFreebie, op: '+' },
+      { source: sg.starOphiuchusLootbug, op: '+' },
       { source: sg.ssBankedFreebieLootbugLootbug, op: '+' },
       { source: arch.idolTheseusBankUnlock, op: '+' },
       { source: tr.trStormSerpentT1LBC, op: '+' },

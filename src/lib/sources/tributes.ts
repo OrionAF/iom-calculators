@@ -32,9 +32,7 @@ export const trRainbowTroutT2AFM = tr('RainbowTroutT2AFM', 'Tribute: Rainbow Tro
 export const trDuneEelwormT1GVPC = tr('DuneEelwormT1GVPC', "Tribute: Dune's Eelworm T1 - Golden Void Portal Chance +5%", 'golden_void_portal_chance', '+', (n) => n * 0.05)
 export const trDuneEelwormT1HC = tr('DuneEelwormT1HC', "Tribute: Dune's Eelworm T1 - Hercules Cap +3", undefined, undefined, (n) => n * 3)
 export const trDuneEelwormT1DC = tr('DuneEelwormT1DC', "Tribute: Dune's Eelworm T1 - Draco Cap +3", undefined, undefined, (n) => n * 3)
-// NOTE: named "Elixir Buff Crit Chance" but the formula wires this into
-// golden_void_portal_multi — likely a mis-wiring to verify.
-export const trDuneEelwormT2EBCC = tr('DuneEelwormT2EBCC', "Tribute: Dune's Eelworm T2 - Elixir Buff Crit Chance +10%", 'golden_void_portal_multi', '+', (n) => n * 0.1)
+export const trDuneEelwormT2EBCC = tr('DuneEelwormT2EBCC', "Tribute: Dune's Eelworm T2 - Elixir Buff Crit Chance +10%", 'elixir_crit_chance', '+', (n) => n * 0.1)
 export const trDuneEelwormT2GVPM = tr('DuneEelwormT2GVPM', "Tribute: Dune's Eelworm T2 - Golden Void Portal Multi 1.50×", 'golden_void_portal_multi', '×', (n) => 1 + n * 0.5)
 export const trGlacialShellstealerT1GVC = tr('GlacialShellstealerT1GVC', 'Tribute: Glacial Shellstealer T1 - Gleaming Vein Chance +5%', 'gleaming_vein_chance', '+', (n) => n * 0.05)
 export const trGlacialShellstealerT1TC = tr('GlacialShellstealerT1TC', 'Tribute: Glacial Shellstealer T1 - Totem Cap +5', undefined, undefined, (n) => n * 5)
