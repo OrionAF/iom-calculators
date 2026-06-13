@@ -69,7 +69,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
   golden_vein_multi: {
     contributions: [
       { source: it.goldenStrawberriesGoldenVein, op: '+' },
-      { source: rel.legendaryRelicVeinIncome, op: '+' },
+      { source: rel.legendaryRelicVeinIncomeGolden, op: '+' },
       { source: con.staPropGoldenVeinMul, op: '×' },
       { source: pet.petTotemGoldenVeinMul, op: '+' },
       { source: pet.petDuckQuestGoldenVeinMul, op: '+' },

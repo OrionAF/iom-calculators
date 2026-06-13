@@ -181,7 +181,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
   super_star_supernova_multi: {
     contributions: [
       { source: sk.ctrlFStarsSuperStarSupernovaMul, op: '+' },
-      { source: rel.divineRelicSupernovaMul, op: '+' },
+      { source: rel.divineRelicSupernovaMulSuper, op: '+' },
       { source: con.staWarmthSuperStarSupernova, op: '+' },
       { source: st.storeVpSupernovaSuperStarNovaMul, op: '+' },
       { source: tr.trMegalodonT2ASM, op: '×' },
