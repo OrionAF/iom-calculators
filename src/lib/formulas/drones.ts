@@ -134,7 +134,6 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: st.storeVpVoidOverdriveGoldenPortalMul, op: '×' },
       { source: arch.idolThemis, op: '+' },
       { source: up.upgrGoldenVoidChance, op: '+' },
-      { source: tr.trDuneEelwormT2EBCC, op: '+' },
       { source: tr.trDuneEelwormT2GVPM, op: '×' },
       { source: card.cardLegDuneEelworm, op: '×1+' },
       { source: card.cardMiscGoldenVoidPortal, op: '×' },
@@ -161,7 +160,10 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     ],
   },
   elixir_crit_chance: {
-    contributions: [{ source: U, op: '+', unknown: true }],
+    contributions: [
+      { source: tr.trDuneEelwormT2EBCC, op: '+' },
+      { source: U, op: '+', unknown: true },
+    ],
   },
   elixir_crit_multi: {
     contributions: [
