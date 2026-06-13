@@ -1,268 +1,83 @@
-import type { Source } from '$lib/engine/types'
+import type { Op, Source } from '$lib/engine/types'
+
+// Contract reward sources. "per Contract" sources are uncapped (level = contracts
+// completed); the rest are leveled upgrades. statKey/op mirror the formula wiring
+// (consistency test enforces op where used). A source feeding two stats keeps its
+// primary statKey and adds a sibling object sharing the key for the second stat.
+
+const ct = (
+  key: string,
+  name: string,
+  maxLevel: number | undefined,
+  statKey: string | undefined,
+  op: Op | undefined,
+  fn: Source['fn'],
+): Source => ({
+  key: `contracts.${key}`,
+  name,
+  system: 'contracts',
+  maxLevel,
+  statKey,
+  op,
+  fn,
+  inputs: [],
+})
 
 // ─── World 1 ──────────────────────────────────────────────────────────────────
 
-/** Pickaxe Damage +1% per contract completed (level = contracts done). */
-export const ctPickaxeDmgPerContract: Source = {
-  key: 'contracts.pickaxePerContract',
-  name: 'Contracts: Pickaxe Damage per Contract',
-  system: 'contracts',
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-export const ctTripleCraft: Source = {
-  key: 'contracts.tripleCraft',
-  name: 'Contracts: Triple Craft Chance (W1)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-export const ctPickaxeSuperCrit: Source = {
-  key: 'contracts.pickaxeSuperCrit',
-  name: 'Contracts: Pickaxe Super Crit Chance (W1)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-export const ctBombRechargeW1: Source = {
-  key: 'contracts.bombRechargeW1',
-  name: 'Contracts: Bomb Recharge (W1)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-export const ctExpGainW1: Source = {
-  key: 'contracts.expGainW1',
-  name: 'Contracts: EXP Gain (W1)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
-export const ctPickaxeCritDmg: Source = {
-  key: 'contracts.pickaxeCritDmg',
-  name: 'Contracts: Pickaxe Crit Damage (W1)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
-export const ctPickaxeDmgW1: Source = {
-  key: 'contracts.pickaxeDmgW1',
-  name: 'Contracts: Pickaxe Damage (W1)',
-  system: 'contracts',
-  maxLevel: 3,
-  fn: (n) => n * 0.15,
-  inputs: [],
-}
-/** Upgrade Bar Cost -5% per level. Max 3. Positive fn per reduction convention. → pickaxe_bar_cost_reduction */
-export const ctBarCostReductionW1: Source = {
-  key: 'contracts.barCostW1',
-  name: 'Contracts: Bar Cost Reduction (W1)',
-  system: 'contracts',
-  maxLevel: 3,
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
-export const ctPrestigePtsW1: Source = {
-  key: 'contracts.prestigePtsW1',
-  name: 'Contracts: Prestige Points (W1)',
-  system: 'contracts',
-  maxLevel: 3,
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
-export const ct10xCraft: Source = {
-  key: 'contracts.10xCraft',
-  name: 'Contracts: 10x Craft Chance (W1)',
-  system: 'contracts',
-  maxLevel: 1,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
+// Pickaxe per-contract feeds pickaxe_damage + pickaxe_super_crit_damage.
+export const ctPickaxeDmgPerContract = ct('pickaxePerContract', 'Contracts: Pickaxe Damage per Contract', undefined, 'pickaxe_damage', '+', (n) => n * 0.01)
+export const ctPickaxeDmgPerContractSuperCritDmg = ct('pickaxePerContract', 'Contracts: Pickaxe Damage per Contract', undefined, 'pickaxe_super_crit_damage', '+', (n) => n * 0.01)
+export const ctTripleCraft = ct('tripleCraft', 'Contracts: Triple Craft Chance (W1)', 5, 'triple_craft_chance', '+', (n) => n * 0.01)
+export const ctPickaxeSuperCrit = ct('pickaxeSuperCrit', 'Contracts: Pickaxe Super Crit Chance (W1)', 5, 'pickaxe_super_crit_chance', '+', (n) => n * 0.02)
+export const ctBombRechargeW1 = ct('bombRechargeW1', 'Contracts: Bomb Recharge (W1)', 5, 'bomb_recharge_speed', '+', (n) => n * 0.03)
+export const ctExpGainW1 = ct('expGainW1', 'Contracts: EXP Gain (W1)', 5, 'experience_multi', '+', (n) => n * 0.1)
+export const ctPickaxeCritDmg = ct('pickaxeCritDmg', 'Contracts: Pickaxe Crit Damage (W1)', 5, 'pickaxe_crit_damage', '+', (n) => n * 0.1)
+export const ctPickaxeDmgW1 = ct('pickaxeDmgW1', 'Contracts: Pickaxe Damage (W1)', 3, 'pickaxe_damage', '+', (n) => n * 0.15)
+// Reduction convention: positive fn, formula subtracts.
+export const ctBarCostReductionW1 = ct('barCostW1', 'Contracts: Bar Cost Reduction (W1)', 3, 'bar_upgrade_cost_reduction', '+', (n) => n * 0.05)
+export const ctPrestigePtsW1 = ct('prestigePtsW1', 'Contracts: Prestige Points (W1)', 3, 'prestige_point_multi', '+', (n) => n * 0.1)
+export const ct10xCraft = ct('10xCraft', 'Contracts: 10x Craft Chance (W1)', 1, 'craft_10x_chance', '+', (n) => n * 0.01)
 
 // ─── World 2 ──────────────────────────────────────────────────────────────────
 
-/** Bomb Damage +1% per contract completed (level = contracts done). */
-export const ctBombDmgPerContract: Source = {
-  key: 'contracts.bombPerContract',
-  name: 'Contracts: Bomb Damage per Contract',
-  system: 'contracts',
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-export const ctOreSellPriceW2: Source = {
-  key: 'contracts.oreSellW2',
-  name: 'Contracts: Ore Sell Price (W2)',
-  system: 'contracts',
-  maxLevel: 10,
-  fn: (n) => n * 0.15,
-  inputs: [],
-}
-export const ctVeinIncomeW2: Source = {
-  key: 'contracts.veinIncomeW2',
-  name: 'Contracts: Vein Income (W2)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.04,
-  inputs: [],
-}
-export const ctUltraCritChance: Source = {
-  key: 'contracts.ultraCritChance',
-  name: 'Contracts: Ultra Crit Chance (W2)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-export const ctGoldenFloorMulW2: Source = {
-  key: 'contracts.goldenFloorMulW2',
-  name: 'Contracts: Golden Floor Multi (W2)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-export const ctGoldenVeinChance: Source = {
-  key: 'contracts.goldenVeinChance',
-  name: 'Contracts: Golden Vein Chance (W2)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-export const ctSuperStarSpawn: Source = {
-  key: 'contracts.superStarSpawn',
-  name: 'Contracts: Super Star Spawn Rate (W2)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-export const ctGameSpeedW2: Source = {
-  key: 'contracts.gameSpeedW2',
-  name: 'Contracts: Game Speed (W2)',
-  system: 'contracts',
-  maxLevel: 10,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-export const ctRainbowFloorMul: Source = {
-  key: 'contracts.rainbowFloorMul',
-  name: 'Contracts: Rainbow Floor Multi (W2)',
-  system: 'contracts',
-  maxLevel: 10,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-export const ctSupernovaChanceW2: Source = {
-  key: 'contracts.supernovaChanceW2',
-  name: 'Contracts: Supernova Chance (W2)',
-  system: 'contracts',
-  maxLevel: 10,
-  fn: (n) => n * 0.0015,
-  inputs: [],
-}
+export const ctBombDmgPerContract = ct('bombPerContract', 'Contracts: Bomb Damage per Contract', undefined, 'bomb_damage', '+', (n) => n * 0.01)
+export const ctOreSellPriceW2 = ct('oreSellW2', 'Contracts: Ore Sell Price (W2)', 10, 'ore_sell_price_multi', '+', (n) => n * 0.15)
+export const ctVeinIncomeW2 = ct('veinIncomeW2', 'Contracts: Vein Income (W2)', 5, 'vein_income_multi', '+', (n) => n * 0.04)
+// Ultra Crit Chance feeds pickaxe + bomb ultra crit.
+export const ctUltraCritChance = ct('ultraCritChance', 'Contracts: Ultra Crit Chance (W2)', 5, 'pickaxe_ultra_crit_chance', '+', (n) => n * 0.01)
+export const ctUltraCritChanceBomb = ct('ultraCritChance', 'Contracts: Ultra Crit Chance (W2)', 5, 'bomb_ultra_crit_chance', '+', (n) => n * 0.01)
+export const ctGoldenFloorMulW2 = ct('goldenFloorMulW2', 'Contracts: Golden Floor Multi (W2)', 5, 'golden_floor_multi', '+', (n) => n * 0.03)
+export const ctGoldenVeinChance = ct('goldenVeinChance', 'Contracts: Golden Vein Chance (W2)', 5, 'golden_vein_chance', '+', (n) => n * 0.01)
+export const ctSuperStarSpawn = ct('superStarSpawn', 'Contracts: Super Star Spawn Rate (W2)', 5, 'super_star_spawn_multi', '+', (n) => n * 0.03)
+export const ctGameSpeedW2 = ct('gameSpeedW2', 'Contracts: Game Speed (W2)', 10, 'game_speed_multi', '+', (n) => n * 0.01)
+export const ctRainbowFloorMul = ct('rainbowFloorMul', 'Contracts: Rainbow Floor Multi (W2)', 10, 'rainbow_floor_multi', '+', (n) => n * 0.02)
+export const ctSupernovaChanceW2 = ct('supernovaChanceW2', 'Contracts: Supernova Chance (W2)', 10, 'super_star_supernova_chance', '+', (n) => n * 0.0015)
 
 // ─── World 3 ──────────────────────────────────────────────────────────────────
 
-export const ctRainbowFloorChance: Source = {
-  key: 'contracts.rainbowFloorChance',
-  name: 'Contracts: Rainbow Floor Chance (W3)',
-  system: 'contracts',
-  maxLevel: 10,
-  fn: (n) => n * 0.002,
-  inputs: [],
-}
-export const ctGoldenOreChanceW3: Source = {
-  key: 'contracts.goldenOreChanceW3',
-  name: 'Contracts: Golden Ore Chance (W3)',
-  system: 'contracts',
-  maxLevel: 15,
-  fn: (n) => n * 0.002,
-  inputs: [],
-}
-export const ctOmegaCritChance: Source = {
-  key: 'contracts.omegaCritChance',
-  name: 'Contracts: Omega Crit Chance (W3)',
-  system: 'contracts',
-  maxLevel: 15,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-export const ctPickaxeBombDmgW3: Source = {
-  key: 'contracts.pickaxeBombDmgW3',
-  name: 'Contracts: Pickaxe & Bomb Damage (W3)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => 1 + n * 0.08,
-  inputs: [],
-}
+export const ctRainbowFloorChance = ct('rainbowFloorChance', 'Contracts: Rainbow Floor Chance (W3)', 10, 'rainbow_floor_chance', '+', (n) => n * 0.002)
+export const ctGoldenOreChanceW3 = ct('goldenOreChanceW3', 'Contracts: Golden Ore Chance (W3)', 15, 'golden_ore_chance', '+', (n) => n * 0.002)
+// Omega Crit Chance feeds pickaxe + bomb omega crit.
+export const ctOmegaCritChance = ct('omegaCritChance', 'Contracts: Omega Crit Chance (W3)', 15, 'pickaxe_omega_crit_chance', '+', (n) => n * 0.02)
+export const ctOmegaCritChanceBomb = ct('omegaCritChance', 'Contracts: Omega Crit Chance (W3)', 15, 'bomb_omega_crit_chance', '+', (n) => n * 0.02)
+// Pickaxe & Bomb Damage feeds both, multiplicatively.
+export const ctPickaxeBombDmgW3 = ct('pickaxeBombDmgW3', 'Contracts: Pickaxe & Bomb Damage (W3)', 5, 'pickaxe_damage', '×', (n) => 1 + n * 0.08)
+export const ctPickaxeBombDmgW3Bomb = ct('pickaxeBombDmgW3', 'Contracts: Pickaxe & Bomb Damage (W3)', 5, 'bomb_damage', '×', (n) => 1 + n * 0.08)
+export const ctStarSupergiants = ct('starSupergiants', 'Contracts: Star Supergiant Chance (W3)', 5, 'star_supergiant_chance', '+', (n) => n * 0.002)
+export const ctSuperStarSupergiants = ct('superStarSupergiants', 'Contracts: Super Star Supergiant Chance (W3)', 5, 'super_star_supergiant_chance', '+', (n) => n * 0.001)
 
 // ─── World 4 ──────────────────────────────────────────────────────────────────
 
-export const ctRainbowVeinMul: Source = {
-  key: 'contracts.rainbowVeinMul',
-  name: 'Contracts: Rainbow Vein Multi (W4)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-export const ctAllStarMul: Source = {
-  key: 'contracts.allStarMul',
-  name: 'Contracts: All Star Multi (W4)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.0065,
-  inputs: [],
-}
-export const ctLootfrogTriple: Source = {
-  key: 'contracts.lootfrogTriple',
-  name: 'Contracts: Lootfrog Triple Spawn (W4)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.001,
-  inputs: [],
-}
-export const ctGoldenVoidChance: Source = {
-  key: 'contracts.goldenVoidChance',
-  name: 'Contracts: Golden Void Portal Chance (W4)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.001,
-  inputs: [],
-}
-export const ctPrismaticFloorMul: Source = {
-  key: 'contracts.prismaticFloorMul',
-  name: 'Contracts: Prismatic Floor Multi (W4)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.005,
-  inputs: [],
-}
-export const ctStarSupergiants: Source = {
-  key: 'contracts.starSupergiants',
-  name: 'Contracts: Star Supergiant Chance (W3)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.002,
-  inputs: [],
-}
-export const ctSuperStarSupergiants: Source = {
-  key: 'contracts.superStarSupergiants',
-  name: 'Contracts: Super Star Supergiant Chance (W3)',
-  system: 'contracts',
-  maxLevel: 5,
-  fn: (n) => n * 0.001,
-  inputs: [],
-}
+export const ctRainbowVeinMul = ct('rainbowVeinMul', 'Contracts: Rainbow Vein Multi (W4)', 5, 'rainbow_vein_chance', '+', (n) => n * 0.01)
+export const ctPrismaticFloorMul = ct('prismaticFloorMul', 'Contracts: Prismatic Floor Multi (W4)', 5, 'prismatic_floor_multi', '+', (n) => n * 0.005)
+export const ctAllStarMul = ct('allStarMul', 'Contracts: All Star Multi (W4)', 5, 'all_star_multi', '+', (n) => n * 0.0065)
+export const ctLootfrogTriple = ct('lootfrogTriple', 'Contracts: Lootfrog Triple Spawn (W4)', 5, 'lootfrog_triple_spawn_chance', '+', (n) => n * 0.001)
+export const ctGoldenVoidChance = ct('goldenVoidChance', 'Contracts: Golden Void Portal Chance (W4)', 5, 'golden_void_portal_chance', '+', (n) => n * 0.001)
 
 export const contractSources = {
   ctPickaxeDmgPerContract,
+  ctPickaxeDmgPerContractSuperCritDmg,
   ctTripleCraft,
   ctPickaxeSuperCrit,
   ctBombRechargeW1,
@@ -276,6 +91,7 @@ export const contractSources = {
   ctOreSellPriceW2,
   ctVeinIncomeW2,
   ctUltraCritChance,
+  ctUltraCritChanceBomb,
   ctGoldenFloorMulW2,
   ctGoldenVeinChance,
   ctSuperStarSpawn,
@@ -285,7 +101,9 @@ export const contractSources = {
   ctRainbowFloorChance,
   ctGoldenOreChanceW3,
   ctOmegaCritChance,
+  ctOmegaCritChanceBomb,
   ctPickaxeBombDmgW3,
+  ctPickaxeBombDmgW3Bomb,
   ctStarSupergiants,
   ctSuperStarSupergiants,
   ctRainbowVeinMul,

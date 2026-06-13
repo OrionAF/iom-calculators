@@ -62,7 +62,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
         op: '×',
         contributions: [
           { source: ct.ctBombDmgPerContract, op: '+' },
-          { source: ct.ctPickaxeBombDmgW3, op: '×' },
+          { source: ct.ctPickaxeBombDmgW3Bomb, op: '×' },
         ],
       },
       // ── Prestige: T1 × T2 × T3 × T4 (wiki: tiers multiply each other) ──
@@ -187,7 +187,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sk.flamboyantBombsUltraCrit, op: '+' },
       { source: con.staAwarenessUltraCrit, op: '+' },
-      { source: ct.ctUltraCritChance, op: '+' },
+      { source: ct.ctUltraCritChanceBomb, op: '+' },
       { source: ch.chBombUltraCritRegular, op: '+' },
       { source: ch.chBombUltraCritExtreme, op: '+' },
       { source: up.upgrBombUltraCrit1, op: '+' },
@@ -202,7 +202,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
   },
   bomb_omega_crit_chance: {
     contributions: [
-      { source: ct.ctOmegaCritChance, op: '+' },
+      { source: ct.ctOmegaCritChanceBomb, op: '+' },
       { source: up.upgrBombOmegaCrit, op: '+' },
     ],
   },
