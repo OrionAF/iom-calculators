@@ -32,11 +32,6 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: it.eyeOfNewtTripleRock, op: '+' },
       { source: it.goldenEyeOfNewtTripleRock, op: '+' },
       { source: rel.rareRelicTripleRock, op: '+' },
-      { source: it.yummyPizzaAllFloorPerm, op: '+' },
-      { source: it.goldenYummyPizzaAllFloorPerm, op: '+' },
-      { source: pet.petNaginiAllFloorMul, op: '+' },
-      { source: sg.starEridanusAllFloor, op: '+' },
-      { source: f.noticeT1AllFloorMul, op: '+' },
       { source: up.upgrTripleRockChance, op: '+' },
     ],
   },
@@ -219,6 +214,11 @@ export const oresFormulas: FormulaMap = defineFormulas({
   all_floor_multipliers: {
     contributions: [
       { source: con.staSopranoAllFloors, op: '+' },
+      { source: it.yummyPizzaAllFloorPerm, op: '+' },
+      { source: it.goldenYummyPizzaAllFloorPerm, op: '+' },
+      { source: pet.petNaginiAllFloorMul, op: '+' },
+      { source: sg.starEridanusAllFloor, op: '+' },
+      { source: f.noticeT1AllFloorMul, op: '+' },
       { source: card.cardMiscWorld4, op: '×' },
       { source: card.cardMiscYummyPizza, op: '×' },
       { source: U, op: '+', unknown: true },

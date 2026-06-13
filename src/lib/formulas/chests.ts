@@ -28,7 +28,6 @@ export const chestsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sk.haveYouTriedGettingLuckierChestMeter, op: '×' },
       { source: st.storeGemChestMeter, op: '×' },
-      { source: sg.starEridanusSuperStonks, op: '+' },
       { source: up.upgrMeterFillRate, op: '+' },
     ],
   },
@@ -130,6 +129,7 @@ export const chestsFormulas: FormulaMap = defineFormulas({
   super_stonks_chance: {
     contributions: [
       { source: card.cardMiscSuperStonks, op: '+' },
+      { source: sg.starEridanusSuperStonks, op: '+' },
       { source: ch.chSuperStonksChance, op: '+' },
       { source: st.storeVpChiefExecSuperStonksChance, op: '+' },
       { source: up.upgrSuperStonksChance, op: '+' },
