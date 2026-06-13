@@ -1,356 +1,88 @@
-import type { Source } from '$lib/engine/types'
+import type { Op, Source } from '$lib/engine/types'
+
+// Challenge reward sources. Most are leveled; the "per X" damage rewards scale
+// with a runtime count (pass fn + inputs). statKey/op mirror the formula wiring
+// (consistency test enforces op where used). A source feeding two stats keeps its
+// primary statKey and adds a sibling object sharing the key for the second stat.
+// Reduction-convention sources (bar/craft costs, obelisk armor) use a positive fn.
+
+const ch = (
+  key: string,
+  name: string,
+  maxLevel: number,
+  statKey: string | undefined,
+  op: Op | undefined,
+  fn: Source['fn'],
+  inputs: Source['inputs'] = [],
+): Source => ({
+  key: `challenges.${key}`,
+  name,
+  system: 'challenges',
+  maxLevel,
+  statKey,
+  op,
+  fn,
+  inputs,
+})
 
 // ─── Regular Challenge Rewards ────────────────────────────────────────────────
 
-/** Regular: Bar Upgrade Costs -5% per level. Max 3. Positive fn per reduction convention. → pickaxe_bar_cost_reduction */
-export const chBarUpgradeCosts: Source = {
-  key: 'challenges.barUpgradeCosts',
-  name: 'Challenge: Bar Upgrade Costs',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
+export const chBarUpgradeCosts = ch('barUpgradeCosts', 'Challenge: Bar Upgrade Costs', 3, 'bar_upgrade_cost_reduction', '+', (n) => n * 0.05)
 // TODO no registry key: Regular — Chain Bomb Amount +1, max 3
-export const chPickaxeSuperCritDmg: Source = {
-  key: 'challenges.pickaxeSuperCritDmg',
-  name: 'Challenge: Pickaxe Super Crit Damage',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
-export const chExpPrestigePts: Source = {
-  key: 'challenges.expPrestigePts',
-  name: 'Challenge: EXP & Prestige Points',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
-export const chBombCap: Source = {
-  key: 'challenges.bombCap',
-  name: 'Challenge: Bomb Capacity',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 3,
-  inputs: [],
-}
-export const chBombCritDmg: Source = {
-  key: 'challenges.bombCritDmg',
-  name: 'Challenge: Bomb Crit Damage',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n) => n * 0.2,
-  inputs: [],
-}
-/**
- * Regular: Pickaxe Damage +1% per Challenge completed, per bought level. Max 3.
- * → pickaxe_damage
- */
-export const chPickaxeDmgPerChallenge: Source = {
-  key: 'challenges.pickaxeDmgPerChallenge',
-  name: 'Challenge: Pickaxe Dmg/Challenge',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n, rt) => n * 0.01 * (rt['challengesCompleted'] ?? 0),
-  inputs: [{ key: 'challengesCompleted', label: 'Regular Challenges Completed', type: 'integer', min: 0 }],
-}
-/** Regular: Skill Shard Chance +1%, max 1. → freebie_chance_for_skill_shard */
-export const chSkillShardChance: Source = {
-  key: 'challenges.skillShardChance',
-  name: 'Challenge: Skill Shard Chance',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-export const chOreSellPrice: Source = {
-  key: 'challenges.oreSellPrice',
-  name: 'Challenge: Ore Sell Price',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n) => n * 0.15,
-  inputs: [],
-}
-export const chDoubleCraft: Source = {
-  key: 'challenges.doubleCraft',
-  name: 'Challenge: Double Craft Chance',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-/**
- * Regular: Pickaxe Damage +1% per Skill-Tree Node Unlocked, per bought level. Max 3.
- * → pickaxe_damage
- */
-export const chPickaxeDmgPerSkillNode: Source = {
-  key: 'challenges.pickaxeDmgPerSkillNode',
-  name: 'Challenge: Pickaxe Dmg/Skill Node',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n, rt) => n * 0.01 * (rt['skillNodesUnlocked'] ?? 0),
-  inputs: [{ key: 'skillNodesUnlocked', label: 'Skill-Tree Nodes Unlocked', type: 'integer', min: 0 }],
-}
-/** Regular: Obelisk Armor -12%, max 1. Positive fn per reduction convention. → obelisk_armor_reduction */
-export const chObeliskArmor: Source = {
-  key: 'challenges.obeliskArmor',
-  name: 'Challenge: Obelisk Armor',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.12,
-  inputs: [],
-}
-/** Regular: Bomb Super Crit Chance +25% (one-time) */
-export const chBombSuperCrit: Source = {
-  key: 'challenges.bombSuperCrit',
-  name: 'Challenge: Bomb Super Crit Chance',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.25,
-  inputs: [],
-}
-/** Regular: Bomb Ultra Crit Chance +5% (paired with above) */
-export const chBombUltraCritRegular: Source = {
-  key: 'challenges.bombUltraCritRegular',
-  name: 'Challenge: Bomb Ultra Crit Chance (Regular)',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
-export const chPickaxeSuperCritChance: Source = {
-  key: 'challenges.pickaxeSuperCritChance',
-  name: 'Challenge: Pickaxe Super Crit Chance',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Regular: Pickaxe AND Bomb Super Crit Chance +2%, max 3. Wired to both stats in formula. */
-export const chPickaxeBombSuperCrit: Source = {
-  key: 'challenges.pickaxeBombSuperCrit',
-  name: 'Challenge: P&B Super Crit Chance',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Regular: Bar Craft Costs -5% per level. Max 2. Positive fn per reduction convention. → bar_craft_cost_multi */
-export const chBarCraftCosts: Source = {
-  key: 'challenges.barCraftCosts',
-  name: 'Challenge: Bar Craft Costs',
-  system: 'challenges',
-  maxLevel: 2,
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
-export const chGoldenVeinMul: Source = {
-  key: 'challenges.goldenVeinMul',
-  name: 'Challenge: Golden Vein Multi',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
-export const chFreebieGemsBonus: Source = {
-  key: 'challenges.freebieGemsBonus',
-  name: 'Challenge: Gems from Freebie Pack',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n,
-  inputs: [],
-}
+export const chPickaxeSuperCritDmg = ch('pickaxeSuperCritDmg', 'Challenge: Pickaxe Super Crit Damage', 3, 'pickaxe_super_crit_damage', '+', (n) => n * 0.1)
+// EXP & Prestige Points feeds both stats.
+export const chExpPrestigePts = ch('expPrestigePts', 'Challenge: EXP & Prestige Points', 3, 'prestige_point_multi', '+', (n) => n * 0.1)
+export const chExpPrestigePtsExp = ch('expPrestigePts', 'Challenge: EXP & Prestige Points', 3, 'experience_multi', '+', (n) => n * 0.1)
+export const chBombCap = ch('bombCap', 'Challenge: Bomb Capacity', 1, 'bomb_capacity', '+', (n) => n * 3)
+export const chBombCritDmg = ch('bombCritDmg', 'Challenge: Bomb Crit Damage', 3, 'bomb_crit_damage', '+', (n) => n * 0.2)
+export const chPickaxeDmgPerChallenge = ch('pickaxeDmgPerChallenge', 'Challenge: Pickaxe Dmg/Challenge', 3, 'pickaxe_damage', '+', (n, rt) => n * 0.01 * (rt['challengesCompleted'] ?? 0), [{ key: 'challengesCompleted', label: 'Regular Challenges Completed', type: 'integer', min: 0 }])
+export const chSkillShardChance = ch('skillShardChance', 'Challenge: Skill Shard Chance', 1, 'freebie_chance_for_skill_shard', '+', (n) => n * 0.01)
+export const chOreSellPrice = ch('oreSellPrice', 'Challenge: Ore Sell Price', 3, 'ore_sell_price_multi', '+', (n) => n * 0.15)
+export const chDoubleCraft = ch('doubleCraft', 'Challenge: Double Craft Chance', 3, 'double_craft_chance', '+', (n) => n * 0.03)
+export const chBombSuperCrit = ch('bombSuperCrit', 'Challenge: Bomb Super Crit Chance', 1, 'bomb_super_crit_chance', '+', (n) => n * 0.25)
+export const chBombUltraCritRegular = ch('bombUltraCritRegular', 'Challenge: Bomb Ultra Crit Chance (Regular)', 1, 'bomb_ultra_crit_chance', '+', (n) => n * 0.05)
+export const chPickaxeDmgPerSkillNode = ch('pickaxeDmgPerSkillNode', 'Challenge: Pickaxe Dmg/Skill Node', 3, 'pickaxe_damage', '+', (n, rt) => n * 0.01 * (rt['skillNodesUnlocked'] ?? 0), [{ key: 'skillNodesUnlocked', label: 'Skill-Tree Nodes Unlocked', type: 'integer', min: 0 }])
+export const chObeliskArmor = ch('obeliskArmor', 'Challenge: Obelisk Armor', 1, 'obelisk_armor_reduction', '+', (n) => n * 0.12)
+export const chPickaxeSuperCritChance = ch('pickaxeSuperCritChance', 'Challenge: Pickaxe Super Crit Chance', 3, 'pickaxe_super_crit_chance', '+', (n) => n * 0.02)
+// Pickaxe AND Bomb Super Crit Chance feeds both stats.
+export const chPickaxeBombSuperCrit = ch('pickaxeBombSuperCrit', 'Challenge: P&B Super Crit Chance', 3, 'pickaxe_super_crit_chance', '+', (n) => n * 0.02)
+export const chPickaxeBombSuperCritBomb = ch('pickaxeBombSuperCrit', 'Challenge: P&B Super Crit Chance', 3, 'bomb_super_crit_chance', '+', (n) => n * 0.02)
+export const chBarCraftCosts = ch('barCraftCosts', 'Challenge: Bar Craft Costs', 2, 'bar_craft_cost_multi', '+', (n) => n * 0.05)
+export const chGoldenVeinMul = ch('goldenVeinMul', 'Challenge: Golden Vein Multi', 3, 'golden_vein_multi', '+', (n) => n * 0.05)
+export const chFreebieGemsBonus = ch('freebieGemsBonus', 'Challenge: Gems from Freebie Pack', 1, 'freebie_gems_bonus', '+', (n) => n)
 
 // ─── Extreme Challenge Rewards ────────────────────────────────────────────────
 
-/**
- * Extreme: Pickaxe Damage +2% per Obelisk Level, per bought level. Max 3.
- * → pickaxe_damage
- */
-export const chPickaxeDmgPerObelisk: Source = {
-  key: 'challenges.pickaxeDmgPerObelisk',
-  name: 'Extreme: Pickaxe Dmg/Obelisk Level',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n, rt) => n * 0.02 * (rt['obeliskLevel'] ?? 0),
-  inputs: [{ key: 'obeliskLevel', label: 'Obelisk Level', type: 'integer', min: 0 }],
-}
-export const chGoldenFloorMul: Source = {
-  key: 'challenges.goldenFloorMul',
-  name: 'Extreme Challenge: Golden Floor Multi',
-  system: 'challenges',
-  maxLevel: 2,
-  fn: (n) => n * 1.0,
-  inputs: [],
-}
-/** Extreme: Lootbug Spawn Rate +10%, max 1. → lootbug_spawn_rate */
-export const chLootbugSpawn: Source = {
-  key: 'challenges.lootbugSpawn',
-  name: 'Extreme: Lootbug Spawn Rate',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
-export const chSuperStarSpawn: Source = {
-  key: 'challenges.superStarSpawn',
-  name: 'Extreme Challenge: Super Star Spawn Rate',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
+export const chPickaxeDmgPerObelisk = ch('pickaxeDmgPerObelisk', 'Extreme: Pickaxe Dmg/Obelisk Level', 3, 'pickaxe_damage', '+', (n, rt) => n * 0.02 * (rt['obeliskLevel'] ?? 0), [{ key: 'obeliskLevel', label: 'Obelisk Level', type: 'integer', min: 0 }])
+export const chGoldenFloorMul = ch('goldenFloorMul', 'Extreme Challenge: Golden Floor Multi', 2, 'golden_floor_multi', '+', (n) => n * 1.0)
+export const chLootbugSpawn = ch('lootbugSpawn', 'Extreme: Lootbug Spawn Rate', 1, 'lootbug_spawn_rate', '+', (n) => n * 0.1)
+export const chSuperStarSpawn = ch('superStarSpawn', 'Extreme Challenge: Super Star Spawn Rate', 1, 'super_star_spawn_multi', '+', (n) => n * 0.1)
 // TODO no registry key: Extreme — Pet Level Cap +1, max 1
-export const chRainbowFloorMulExtreme: Source = {
-  key: 'challenges.rainbowFloorMulExtreme',
-  name: 'Extreme Challenge: Rainbow Floor Multi',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
-export const chBombUltraCritExtreme: Source = {
-  key: 'challenges.bombUltraCritExtreme',
-  name: 'Extreme Challenge: Bomb Ultra Crit Chance',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n) => n * 0.04,
-  inputs: [],
-}
-export const chFreebieBank: Source = {
-  key: 'challenges.freebieBank',
-  name: 'Extreme Challenge: Banked Freebie Cap',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n,
-  inputs: [],
-}
-/** Extreme: Galactic Rainbow Chance +2%, max 1. → galactic_floor_chance */
-export const chGalacticFloor: Source = {
-  key: 'challenges.galacticFloor',
-  name: 'Extreme: Galactic Floor Chance',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
+export const chRainbowFloorMulExtreme = ch('rainbowFloorMulExtreme', 'Extreme Challenge: Rainbow Floor Multi', 3, 'rainbow_floor_multi', '+', (n) => n * 0.05)
+export const chBombUltraCritExtreme = ch('bombUltraCritExtreme', 'Extreme Challenge: Bomb Ultra Crit Chance', 3, 'bomb_ultra_crit_chance', '+', (n) => n * 0.04)
+export const chFreebieBank = ch('freebieBank', 'Extreme Challenge: Banked Freebie Cap', 1, 'freebie_bank_cap', '+', (n) => n)
+export const chGalacticFloor = ch('galacticFloor', 'Extreme: Galactic Floor Chance', 1, 'galactic_floor_chance', '+', (n) => n * 0.02)
 
 // ─── Divine Challenge Rewards ─────────────────────────────────────────────────
 
-/** Divine: Super Star Supergiant Chance +0.50% per level. Max 3. → super_star_supergiant_chance */
-export const chSuperStarSupergiants: Source = {
-  key: 'challenges.superStarSupergiants',
-  name: 'Divine: Super Star Supergiant Chance',
-  system: 'challenges',
-  maxLevel: 3,
-  fn: (n) => n * 0.005,
-  inputs: [],
-}
-/** Divine: Shiny Fish Multiplier +10%, max 1. → fishing_shiny_multi */
-export const chShinyFishMul: Source = {
-  key: 'challenges.shinyFishMul',
-  name: 'Divine: Shiny Fish Multi',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
-export const chGoldenOreChance: Source = {
-  key: 'challenges.goldenOreChance',
-  name: 'Divine Challenge: Golden Ore Chance',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Divine: Star Supergiant Chance +2%, max 1. → star_supergiant_chance */
-export const chStarSupergiants: Source = {
-  key: 'challenges.starSupergiants',
-  name: 'Divine: Star Supergiant Chance',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Divine: Star Spawn Rate +5%, max 2. → star_spawn_rate */
-export const chStarSpawnRate: Source = {
-  key: 'challenges.starSpawnRate',
-  name: 'Divine: Star Spawn Rate',
-  system: 'challenges',
-  maxLevel: 2,
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
-/** Divine: Golden (Loot)frog Chance +1%, max 1. → lootfrog_golden_chance */
-export const chGoldenFrogChance: Source = {
-  key: 'challenges.goldenFrogChance',
-  name: 'Divine: Golden Frog Chance',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-export const chSuperStonksChance: Source = {
-  key: 'challenges.superStonksChance',
-  name: 'Divine Challenge: Super Stonks Chance',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Divine: Novagiant Combo Multi +20%, max 1. → novagiant_combo_multi */
-export const chNovagiantComboMul: Source = {
-  key: 'challenges.novagiantComboMul',
-  name: 'Divine: Novagiant Combo Multi',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.2,
-  inputs: [],
-}
-/** Divine: Divine Relic Caps +2, max 1. → artifact_tier4_cap_increase */
-export const chDivineRelicCaps: Source = {
-  key: 'challenges.divineRelicCaps',
-  name: 'Divine: Divine Relic Caps',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 2,
-  inputs: [],
-}
-/** Divine: Big Lootfrog Chance +0.50%, max 1. → lootfrog_big_chance */
-export const chBigLootfrogChance: Source = {
-  key: 'challenges.bigLootfrogChance',
-  name: 'Divine: Big Lootfrog Chance',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.005,
-  inputs: [],
-}
-/** Divine: All Stonks Multipliers ×1.15 (additive +15%), max 1. → stonks_multi */
-export const chAllStonksMulStonks: Source = {
-  key: 'challenges.allStonksMulStonks',
-  name: 'Divine: All Stonks Multi (stonks)',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.15,
-  inputs: [],
-}
-/** Divine: All Stonks Multipliers ×1.15 (additive +15%), max 1. → ultra_stonks_multi */
-export const chAllStonksMulUltra: Source = {
-  key: 'challenges.allStonksMulUltra',
-  name: 'Divine: All Stonks Multi (ultra)',
-  system: 'challenges',
-  maxLevel: 1,
-  fn: (n) => n * 0.15,
-  inputs: [],
-}
+export const chSuperStarSupergiants = ch('superStarSupergiants', 'Divine: Super Star Supergiant Chance', 3, 'super_star_supergiant_chance', '+', (n) => n * 0.005)
+export const chShinyFishMul = ch('shinyFishMul', 'Divine: Shiny Fish Multi', 1, 'fishing_shiny_multi', '+', (n) => n * 0.1)
+export const chGoldenOreChance = ch('goldenOreChance', 'Divine Challenge: Golden Ore Chance', 1, 'golden_ore_chance', '+', (n) => n * 0.01)
+export const chStarSupergiants = ch('starSupergiants', 'Divine: Star Supergiant Chance', 1, 'star_supergiant_chance', '+', (n) => n * 0.02)
+export const chStarSpawnRate = ch('starSpawnRate', 'Divine: Star Spawn Rate', 2, 'star_spawn_rate', '+', (n) => n * 0.05)
+export const chGoldenFrogChance = ch('goldenFrogChance', 'Divine: Golden Frog Chance', 1, 'lootfrog_golden_chance', '+', (n) => n * 0.01)
+export const chSuperStonksChance = ch('superStonksChance', 'Divine Challenge: Super Stonks Chance', 1, 'super_stonks_chance', '+', (n) => n * 0.01)
+export const chNovagiantComboMul = ch('novagiantComboMul', 'Divine: Novagiant Combo Multi', 1, 'novagiant_combo_multi', '+', (n) => n * 0.2)
+export const chDivineRelicCaps = ch('divineRelicCaps', 'Divine: Divine Relic Caps', 1, 'artifact_tier4_cap_increase', '+', (n) => n * 2)
+export const chBigLootfrogChance = ch('bigLootfrogChance', 'Divine: Big Lootfrog Chance', 1, 'lootfrog_big_chance', '+', (n) => n * 0.005)
+export const chAllStonksMulStonks = ch('allStonksMulStonks', 'Divine: All Stonks Multi (stonks)', 1, 'stonks_multi', '+', (n) => n * 0.15)
+export const chAllStonksMulUltra = ch('allStonksMulUltra', 'Divine: All Stonks Multi (ultra)', 1, 'ultra_stonks_multi', '+', (n) => n * 0.15)
 
 export const challengeSources = {
-  // Regular
   chBarUpgradeCosts,
   chPickaxeSuperCritDmg,
   chExpPrestigePts,
+  chExpPrestigePtsExp,
   chBombCap,
   chBombCritDmg,
   chPickaxeDmgPerChallenge,
@@ -363,10 +95,10 @@ export const challengeSources = {
   chObeliskArmor,
   chPickaxeSuperCritChance,
   chPickaxeBombSuperCrit,
+  chPickaxeBombSuperCritBomb,
   chBarCraftCosts,
   chGoldenVeinMul,
   chFreebieGemsBonus,
-  // Extreme
   chPickaxeDmgPerObelisk,
   chGoldenFloorMul,
   chLootbugSpawn,
@@ -375,7 +107,6 @@ export const challengeSources = {
   chRainbowFloorMulExtreme,
   chBombUltraCritExtreme,
   chGalacticFloor,
-  // Divine
   chSuperStarSupergiants,
   chShinyFishMul,
   chGoldenOreChance,

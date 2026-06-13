@@ -173,7 +173,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: sk.demolitionExpertSuperCrit, op: '+' },
       { source: art.artBombSuperCritT3, op: '+' },
       { source: ch.chBombSuperCrit, op: '+' },
-      { source: ch.chPickaxeBombSuperCrit, op: '+' },
+      { source: ch.chPickaxeBombSuperCritBomb, op: '+' },
       { source: U, op: '+', unknown: true }, // Items (Rock Cake + Cassandra Idol)
     ],
   },
