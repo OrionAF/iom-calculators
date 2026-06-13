@@ -1,6 +1,6 @@
 # Wiki ↔ formula cross-check
 
-Generated from data/wiki/*.json. Stats checked: 175; with findings: 51; unmatched: 0; annotated-source gaps: 12.
+Generated from data/wiki/*.json. Stats checked: 175; with findings: 53; unmatched: 0; annotated-source gaps: 12.
 
 ## Wiki stats with no matching registry name / formula
 
@@ -19,6 +19,9 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 51; unmatche
 - storeVpSkillSurgeSkillShard (store.vp.skillSurgeBundle) → statKey 'freebie_chance_for_skill_shard' has no formula
 
 ## Per-stat findings
+
+### Bomb Crit Damage (`bomb_crit_damage`)
+- missing system Skill-Tree: The "Demolition Expert" Skill
 
 ### Bomb Recharge Speed (`bomb_recharge_speed`)
 - missing system Drones: An Elixir Drone Buff (Also from Lootbugs (formula has 1 unknown placeholder(s))
@@ -86,6 +89,9 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 51; unmatche
 - missing system Items: Yummy Pizza (formula has 1 unknown placeholder(s))
 - missing system Pets: The Nagini Pet (formula has 1 unknown placeholder(s))
 - missing system Stargazing: Eridanus (formula has 1 unknown placeholder(s))
+
+### 20x Craft Chance (`craft_20x_chance`)
+- missing system Skill-Tree: The "Super Smither" Skill (formula has 1 unknown placeholder(s))
 
 ### Bonus Obelisk Fight Length (`obelisk_timer_add`)
 - missing system Relics: A Legendary Relic (formula has 1 unknown placeholder(s))

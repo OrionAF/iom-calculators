@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { STAT_CATALOG, STATUE_STATE_LABELS } from './catalog'
 
 describe('STAT_CATALOG', () => {
-  it('has 18 categories', () => {
-    expect(STAT_CATALOG.length).toBe(18)
+  it('has 21 categories', () => {
+    expect(STAT_CATALOG.length).toBe(21)
   })
 
   it('has unique category ids', () => {

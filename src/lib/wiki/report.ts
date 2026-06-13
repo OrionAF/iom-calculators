@@ -21,7 +21,7 @@ import { cardSources } from '$lib/sources/cards'
 
 /** Wiki menu name → our SourceSystem ids. Absent = informational, skip. */
 const SYSTEM_MAP: Record<string, SourceSystem[]> = {
-  SkillTree: ['skillTree'],
+  'Skill-Tree': ['skillTree'],
   Store: ['store'],
   Cards: ['cards'],
   Relics: ['relics'],
