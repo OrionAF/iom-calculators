@@ -17,6 +17,7 @@ src/lib/utilities/*.txt
 src/lib/components/*.txt
 CONTEXT.md
 GEMINI.md
+CLAUDE.md
 
 # Agent / tooling scratch
 .cave/
