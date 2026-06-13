@@ -112,7 +112,6 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: con.staCombatStonksChance, op: '+' },
       { source: U, op: '+', unknown: true },
       { source: card.cardPetHappyBotInf, op: '+' },
-      { source: card.cardPetHappyBotInf, op: '+' },
     ],
   },
   stonks_multi: {
@@ -134,7 +133,6 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: st.storeVpChiefExecSuperStonksChance, op: '+' },
       { source: up.upgrSuperStonksChance, op: '+' },
       { source: card.cardLegBlackenedBasker, op: '+' },
-      { source: card.cardLegBlackenedBasker, op: '+' },
     ],
   },
   super_stonks_multi: {
@@ -142,8 +140,6 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: st.storeVpChiefExecSuperStonksMul, op: '×' },
       { source: arch.idolCharon, op: '+' },
       { source: U, op: '+', unknown: true },
-      { source: card.cardLegStormSerpent, op: '×1+' },
-      { source: card.cardPetWhaleInf, op: '×1+' },
       { source: card.cardLegStormSerpent, op: '×1+' },
       { source: card.cardPetWhaleInf, op: '×1+' },
     ],
@@ -154,7 +150,6 @@ export const chestsFormulas: FormulaMap = defineFormulas({
       { source: arch.idolCharonUltraStonksUnlock, op: '+' },
       { source: arch.idolSisyphusUltraStonks, op: '+' },
       { source: U, op: '+', unknown: true },
-      { source: card.cardMiscUltraStonks, op: '+' },
       { source: card.cardMiscUltraStonks, op: '+' },
     ],
   },

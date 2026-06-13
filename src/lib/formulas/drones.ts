@@ -136,7 +136,6 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: up.upgrGoldenVoidChance, op: '+' },
       { source: tr.trDuneEelwormT2GVPM, op: '×' },
       { source: card.cardLegDuneEelworm, op: '×1+' },
-      { source: card.cardMiscGoldenVoidPortal, op: '×' },
     ],
   },
   rainbow_void_portal_chance: {
