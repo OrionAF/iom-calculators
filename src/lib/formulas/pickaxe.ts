@@ -108,7 +108,7 @@ export const pickaxeFormulas: FormulaMap = defineFormulas({
       // ── Workshop: W1 × W3 × W4 (wiki: all multiplicative) ──
       { source: ws.wsPickaxeDmgW1, op: '×1+' },
       { source: ws.wsPickaxeDmgW3, op: '×' },
-      { source: ws.wsPickaxeBombDmgW4, op: '×' },
+      { source: ws.wsPickaxeDmgW4, op: '×' },
       // ── Challenges: per-X damage upgrades sum within the menu ──
       {
         label: 'Challenges',
@@ -139,7 +139,7 @@ export const pickaxeFormulas: FormulaMap = defineFormulas({
       // ── Construct: Rhythm × Craftmanship × Comfort ×? Rodentia ──
       { source: con.staRhythmPickaxe, op: '×' },
       { source: con.staCraftPickaxeDmg, op: '×' },
-      { source: con.staComfortDmg, op: '×1+' }, // fn uses rt.w4StatueCount
+      { source: con.staComfortPickaxeDmg, op: '×1+' }, // fn uses rt.w4StatueCount
       { source: con.staRodentiaPickaxe, op: '×1+' }, // fn uses rt.w4StatueCount; wiki marks ×?
       // ── Stargazing: Taurus + Scorpio sum within the menu ──
       {

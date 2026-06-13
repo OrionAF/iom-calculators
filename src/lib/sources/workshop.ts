@@ -50,8 +50,9 @@ export const wsDronePowerW3 = ws('dronePowerW3', 'Fishing Drone Power (W3)', 52,
 
 // ─── World 4 ──────────────────────────────────────────────────────────────────
 
-// Feeds both pickaxe_damage and bomb_damage: no single statKey, op '×' (both agree).
-export const wsPickaxeBombDmgW4 = ws('pickaxeBombDmgW4', 'Pickaxe & Bomb Damage (W4)', 52, undefined, '×', (n) => 1 + n * 0.1)
+// One upgrade feeding two stats → two Source objects sharing the key, one statKey each.
+export const wsPickaxeDmgW4 = ws('pickaxeBombDmgW4', 'Pickaxe & Bomb Damage (W4)', 52, 'pickaxe_damage', '×', (n) => 1 + n * 0.1)
+export const wsBombDmgW4 = ws('pickaxeBombDmgW4', 'Pickaxe & Bomb Damage (W4)', 52, 'bomb_damage', '×', (n) => 1 + n * 0.1)
 export const wsStarfruitAllStarMultiW4 = ws('StarfruitAllStarMultiW4', 'Starfruit All Star Multi (W4)', 52, 'all_star_multi', '+', (n) => n * 0.005)
 export const wsBOPoreMultiW4 = ws('BOPoreMultiW4', 'Bomb of Plenty Ore Multi (W4)', 52, 'bomb_of_plenty_multi', '+', (n) => n * 1)
 export const wsBombRechargeW4 = ws('bombRechargeW4', 'Bomb Recharge Speed (W4)', 52, 'bomb_recharge_speed', '+', (n) => n * 0.0025)
@@ -74,7 +75,8 @@ export const workshopSources = {
   wsHamburgerBonusW3,
   wsBOPoreMultiW3,
   wsBoPgoldenChanceW3,
-  wsPickaxeBombDmgW4,
+  wsPickaxeDmgW4,
+  wsBombDmgW4,
   wsStarfruitAllStarMultiW4,
   wsBOPoreMultiW4,
   wsBombRechargeW4,

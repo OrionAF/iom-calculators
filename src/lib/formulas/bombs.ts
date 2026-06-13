@@ -54,7 +54,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       { source: ws.wsBombDmgW1, op: '×1+' }, // not on the wiki list — possibly the Basic & Chain upgrade (Additional Bomb Multiplier); verify
       { source: ws.wsBombDmgW2, op: '×1+' },
       { source: ws.wsBombDmgW3, op: '×' },
-      { source: ws.wsPickaxeBombDmgW4, op: '×' },
+      { source: ws.wsBombDmgW4, op: '×' },
       // ── Contracts: (per-contract W2) × W3 multiplier ──
       {
         label: 'Contracts',
@@ -73,7 +73,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
       // ── Construct: Awareness × Propulsion × Comfort ──
       { source: con.staAwarenessBombDmg, op: '×' },
       { source: con.staPropBombDmg, op: '×' },
-      { source: con.staComfortDmg, op: '×1+' }, // fn uses rt.w4StatueCount
+      { source: con.staComfortBombDmg, op: '×1+' }, // fn uses rt.w4StatueCount
       // ── Cards: Radioactive Slug × Bone ──
       { source: card.cardMiscBone, op: '×' },
       { source: card.cardLegRadioactiveSlugBomb, op: '×1+' },
