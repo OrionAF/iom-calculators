@@ -184,7 +184,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: rel.divineRelicSupernovaMulSuper, op: '+' },
       { source: con.staWarmthSuperStarSupernova, op: '+' },
       { source: st.storeVpSupernovaSuperStarNovaMul, op: '+' },
-      { source: tr.trMegalodonT2ASM, op: '×' },
+      { source: tr.trMegalodonT2ASMSuper, op: '×' },
       { source: UNKNOWN, op: '×', unknown: true }, // Fishing: Tier 1 Notice (×)
     ],
   },
