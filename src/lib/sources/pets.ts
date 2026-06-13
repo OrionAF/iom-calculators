@@ -1,753 +1,218 @@
-import type { Source } from '$lib/engine/types'
+import type { Op, Source } from '$lib/engine/types'
 
-// ─── Pet Bonuses (per level) ──────────────────────────────────────────────────
-// fn(petLevel) → contribution. Level 0 = pet at base / inactive.
-// Reduction sources (Floor Clear, Bar Craft, etc.) use POSITIVE fn values,
-// consistent with all other reduction sources in the codebase.
+// Pet sources own all pet effect numbers. Base pet bonuses scale per pet level
+// (maxLevel undefined); skins are binary (maxLevel 1); quests rank to 10. Pets
+// that feed several stats use one Source object per stat sharing the key.
+// statKey/op mirror the formula wiring (consistency test enforces op where used);
+// unwired pet effects with a clear registry stat still carry it. Reduction
+// sources (floor clear, bar craft) use a signed fn matching the original.
+
+const pet = (
+  key: string,
+  name: string,
+  maxLevel: number | undefined,
+  statKey: string | undefined,
+  op: Op | undefined,
+  fn: Source['fn'],
+): Source => ({
+  key: `pets.${key}`,
+  name,
+  system: 'pets',
+  maxLevel,
+  statKey,
+  op,
+  fn,
+  inputs: [],
+})
 
 // ─── Crab (max 25) ────────────────────────────────────────────────────────────
 
-/** Crab: Bomb Capacity +3% per level. → bomb_cap_multiplier (additive) */
-export const petCrabBombCap: Source = {
-  key: 'pets.crab',
-  name: 'Pet: Crab (Bomb Capacity)',
-  system: 'pets',
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-/** Crab: Bomb Recharge Rate +1% per level. → bomb_recharge_speed */
-export const petCrabBombRecharge: Source = {
-  key: 'pets.crab',
-  name: 'Pet: Crab (Bomb Recharge)',
-  system: 'pets',
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Crab skin: Workshop Upgrade Cap +1 (binary). → bomb_workshop_cap_increase */
-export const petCrabSkinWorkshopCap: Source = {
-  key: 'pets.crabSkin',
-  name: 'Pet Skin: Crab (Workshop Cap)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o,
-  inputs: [],
-}
-/** Crab quest: Plenty Bomb Multiplier +0.5× per rank. → bomb_of_plenty_multi */
-export const petCrabQuestBomBofPlenty: Source = {
-  key: 'pets.crabQuest',
-  name: 'Pet Quest: Crab (Plenty Bomb Multi)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.5,
-  inputs: [],
-}
+export const petCrabBombCap = pet('crab', 'Pet: Crab (Bomb Capacity)', undefined, 'bomb_capacity', '+', (n) => n * 0.03)
+export const petCrabBombRecharge = pet('crab', 'Pet: Crab (Bomb Recharge)', undefined, 'bomb_recharge_speed', '+', (n) => n * 0.01)
+export const petCrabSkinWorkshopCap = pet('crabSkin', 'Pet Skin: Crab (Workshop Cap)', 1, 'bomb_workshop_cap_increase', '+', (o) => o)
+export const petCrabQuestBomBofPlenty = pet('crabQuest', 'Pet Quest: Crab (Plenty Bomb Multi)', 10, 'bomb_of_plenty_multi', '+', (n) => n * 0.5)
 // TODO no registry key: 'Exp Bomb Multiplies +0.5× per Rank' (Crab quest)
 
 // ─── Dwarf (max 20) ───────────────────────────────────────────────────────────
 
-/** Dwarf: Pickaxe Damage +20% per level. → pickaxe_damage */
-export const petDwarfPickaxeDmg: Source = {
-  key: 'pets.dwarf',
-  name: 'Pet: Dwarf (Pickaxe Damage)',
-  system: 'pets',
-  fn: (n) => n * 0.2,
-  inputs: [],
-}
-/** Dwarf: Ultra Crit Chance +1% per level. → pickaxe_ultra_crit_chance */
-export const petDwarfUltraCrit: Source = {
-  key: 'pets.dwarf',
-  name: 'Pet: Dwarf (Ultra Crit)',
-  system: 'pets',
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Dwarf skin: Pickaxe Damage +50% (binary). → pickaxe_damage */
-export const petDwarfSkinPickaxeDmg: Source = {
-  key: 'pets.dwarfSkin',
-  name: 'Pet Skin: Dwarf (Pickaxe Damage)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o * 0.5,
-  inputs: [],
-}
-/** Dwarf Quest: Prestige Point Gain +12% per rank. → prestige_point_multi */
-export const petDwarfQuestPrestigePts: Source = {
-  key: 'pets.dwarfQuest',
-  name: 'Pet Quest: Dwarf (Prestige Points)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.12,
-  inputs: [],
-}
-/** Dwarf Quest: Floor Clear Requirement -2% per rank. → floor_clear_requirement_multi (negative fn: reduction convention) */
-export const petDwarfQuestFloorClear: Source = {
-  key: 'pets.dwarfQuest',
-  name: 'Pet Quest: Dwarf (Floor Clear)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * -0.02,
-  inputs: [],
-}
+export const petDwarfPickaxeDmg = pet('dwarf', 'Pet: Dwarf (Pickaxe Damage)', undefined, 'pickaxe_damage', '+', (n) => n * 0.2)
+export const petDwarfUltraCrit = pet('dwarf', 'Pet: Dwarf (Ultra Crit)', undefined, 'pickaxe_ultra_crit_chance', '+', (n) => n * 0.01)
+export const petDwarfSkinPickaxeDmg = pet('dwarfSkin', 'Pet Skin: Dwarf (Pickaxe Damage)', 1, 'pickaxe_damage', '+', (o) => o * 0.5)
+export const petDwarfQuestPrestigePts = pet('dwarfQuest', 'Pet Quest: Dwarf (Prestige Points)', 10, 'prestige_point_multi', '+', (n) => n * 0.12)
+export const petDwarfQuestFloorClear = pet('dwarfQuest', 'Pet Quest: Dwarf (Floor Clear)', 10, 'floor_clear_requirement_multi', '+', (n) => n * -0.02)
 
 // ─── Duck (max 20) ────────────────────────────────────────────────────────────
 
-/** Duck: Experience Gain +12% per level. → experience_multi */
-export const petDuckExp: Source = {
-  key: 'pets.duck',
-  name: 'Pet: Duck (EXP Gain)',
-  system: 'pets',
-  fn: (n) => n * 0.12,
-  inputs: [],
-}
-/** Duck: Lootbug Spawn Rate +2.5% per level. → lootbug_spawn_rate */
-export const petDuckLootbugSpawn: Source = {
-  key: 'pets.duck',
-  name: 'Pet: Duck (Lootbug Spawn)',
-  system: 'pets',
-  fn: (n) => n * 0.025,
-  inputs: [],
-}
-/** Duck skin: Obelisk Armor -10% (binary). → obelisk_armor_reduction */
-export const petDuckSkinObeliskArmor: Source = {
-  key: 'pets.duckSkin',
-  name: 'Pet Skin: Duck (Obelisk Armor)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o * 0.1,
-  inputs: [],
-}
-/** Duck Quest: Vein Income Multiplier +2% per rank. → vein_income_multi */
-export const petDuckQuestVeinIncome: Source = {
-  key: 'pets.duckQuest',
-  name: 'Pet Quest: Duck (Vein Income)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Duck Quest: Golden Vein Multiplier +2% per rank. → golden_vein_multi */
-export const petDuckQuestGoldenVeinMul: Source = {
-  key: 'pets.duckQuest',
-  name: 'Pet Quest: Duck (Golden Vein Multi)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
+export const petDuckExp = pet('duck', 'Pet: Duck (EXP Gain)', undefined, 'experience_multi', '+', (n) => n * 0.12)
+export const petDuckLootbugSpawn = pet('duck', 'Pet: Duck (Lootbug Spawn)', undefined, 'lootbug_spawn_rate', '+', (n) => n * 0.025)
+export const petDuckSkinObeliskArmor = pet('duckSkin', 'Pet Skin: Duck (Obelisk Armor)', 1, 'obelisk_armor_reduction', '+', (o) => o * 0.1)
+export const petDuckQuestVeinIncome = pet('duckQuest', 'Pet Quest: Duck (Vein Income)', 10, 'vein_income_multi', '+', (n) => n * 0.02)
+export const petDuckQuestGoldenVeinMul = pet('duckQuest', 'Pet Quest: Duck (Golden Vein Multi)', 10, 'golden_vein_multi', '+', (n) => n * 0.02)
 
 // ─── Rabbit (max 20) ──────────────────────────────────────────────────────────
 
-/** Rabbit: Contract Upgrade Cost Reduction -0.03× per level. → contract_upgrade_cost_reduction */
-export const petRabbitContractCost: Source = {
-  key: 'pets.rabbit',
-  name: 'Pet: Rabbit (Contract Cost)',
-  system: 'pets',
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-/** Rabbit skin: Contract Points Rewarded +1 (binary). → contract_points_rewarded */
-export const petRabbitSkinContractPoints: Source = {
-  key: 'pets.rabbitSkin',
-  name: 'Pet Skin: Rabbit (Contract Points)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o,
-  inputs: [],
-}
-/** Rabbit Quest: 5× Contract Point Chance +1% per rank. → contract_5x_points_chance */
-export const petRabbitQuest5xContract: Source = {
-  key: 'pets.rabbitQuest',
-  name: 'Pet Quest: Rabbit (5× Contract Chance)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Rabbit Quest: Contract Upgrade Cost -1% per rank. → contract_upgrade_cost_reduction */
-export const petRabbitQuestContractCost: Source = {
-  key: 'pets.rabbitQuest',
-  name: 'Pet Quest: Rabbit (Contract Cost)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
+export const petRabbitContractCost = pet('rabbit', 'Pet: Rabbit (Contract Cost)', undefined, 'contract_upgrade_cost_reduction', '+', (n) => n * 0.03)
+export const petRabbitSkinContractPoints = pet('rabbitSkin', 'Pet Skin: Rabbit (Contract Points)', 1, 'contract_points_rewarded', '+', (o) => o)
+export const petRabbitQuest5xContract = pet('rabbitQuest', 'Pet Quest: Rabbit (5× Contract Chance)', 10, 'contract_5x_points_chance', '+', (n) => n * 0.01)
+export const petRabbitQuestContractCost = pet('rabbitQuest', 'Pet Quest: Rabbit (Contract Cost)', 10, 'contract_upgrade_cost_reduction', '+', (n) => n * 0.01)
 
 // ─── Penguin (max 20) ─────────────────────────────────────────────────────────
 
-/** Penguin: Golden Floor Multi +0.05× per level. Additive. → golden_floor_multi */
-export const petPenguinGoldenFloor: Source = {
-  key: 'pets.penguin',
-  name: 'Pet: Penguin (Golden Floor Multi)',
-  system: 'pets',
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
-/** Penguin skin: Ore Sell Price +50% (binary). → ore_sell_price_multi */
-export const petPenguinSkinOreSell: Source = {
-  key: 'pets.penguinSkin',
-  name: 'Pet Skin: Penguin (Ore Sell Price)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o * 0.5,
-  inputs: [],
-}
-/** Penguin Quest: Golden Floor Multiplier +2% per rank. → golden_floor_multi */
-export const petPenguinQuestGoldenFloor: Source = {
-  key: 'pets.penguinQuest',
-  name: 'Pet Quest: Penguin (Golden Floor Multi)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Penguin Quest: Rainbow Floor Chance +0.25% per rank. → rainbow_floor_chance */
-export const petPenguinQuestRainbowFloor: Source = {
-  key: 'pets.penguinQuest',
-  name: 'Pet Quest: Penguin (Rainbow Floor Chance)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.0025,
-  inputs: [],
-}
+export const petPenguinGoldenFloor = pet('penguin', 'Pet: Penguin (Golden Floor Multi)', undefined, 'golden_floor_multi', '+', (n) => n * 0.05)
+export const petPenguinSkinOreSell = pet('penguinSkin', 'Pet Skin: Penguin (Ore Sell Price)', 1, 'ore_sell_price_multi', '+', (o) => o * 0.5)
+export const petPenguinQuestGoldenFloor = pet('penguinQuest', 'Pet Quest: Penguin (Golden Floor Multi)', 10, 'golden_floor_multi', '+', (n) => n * 0.02)
+export const petPenguinQuestRainbowFloor = pet('penguinQuest', 'Pet Quest: Penguin (Rainbow Floor Chance)', 10, 'rainbow_floor_chance', '+', (n) => n * 0.0025)
 
 // ─── Axolotl (max 20) ─────────────────────────────────────────────────────────
 
-/** Axolotl: Double Craft Chance +2% per level. → double_craft_chance */
-export const petAxolotlDoubleCraft: Source = {
-  key: 'pets.axolotl',
-  name: 'Pet: Axolotl (Double Craft)',
-  system: 'pets',
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Axolotl: Bar Craft Cost -1% per level. → bar_craft_cost_multi (negative fn: reduction convention) */
-export const petAxolotlBarCraft: Source = {
-  key: 'pets.axolotl',
-  name: 'Pet: Axolotl (Bar Craft Cost)',
-  system: 'pets',
-  fn: (n) => n * -0.01,
-  inputs: [],
-}
-/** Axolotl skin: Fuel Duration +10% (binary). → coal_fuel_duration_multi */
-export const petAxolotlSkinFuelDuration: Source = {
-  key: 'pets.axolotlSkin',
-  name: 'Pet Skin: Axolotl (Fuel Duration)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o * 0.1,
-  inputs: [],
-}
-/** Axolotl Quest: Archaeology Fragment Gain +3% per rank. → archaeology_fragment_gain_multi */
-export const petAxolotlQuestArchFragment: Source = {
-  key: 'pets.axolotlQuest',
-  name: 'Pet Quest: Axolotl (Arch Fragment)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-/** Axolotl Quest: Star Supernova Multi +3% per rank. → star_supernova_multi */
-export const petAxolotlQuestSupernovaMul: Source = {
-  key: 'pets.axolotlQuest',
-  name: 'Pet Quest: Axolotl (Supernova Multi)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
+export const petAxolotlDoubleCraft = pet('axolotl', 'Pet: Axolotl (Double Craft)', undefined, 'double_craft_chance', '+', (n) => n * 0.02)
+export const petAxolotlBarCraft = pet('axolotl', 'Pet: Axolotl (Bar Craft Cost)', undefined, 'bar_craft_cost_multi', '+', (n) => n * -0.01)
+export const petAxolotlSkinFuelDuration = pet('axolotlSkin', 'Pet Skin: Axolotl (Fuel Duration)', 1, 'coal_fuel_duration_multi', '+', (o) => o * 0.1)
+export const petAxolotlQuestArchFragment = pet('axolotlQuest', 'Pet Quest: Axolotl (Arch Fragment)', 10, 'archaeology_fragment_gain_multi', '+', (n) => n * 0.03)
+export const petAxolotlQuestSupernovaMul = pet('axolotlQuest', 'Pet Quest: Axolotl (Supernova Multi)', 10, 'star_supernova_multi', '+', (n) => n * 0.03)
 
 // ─── Whale (max 20) ───────────────────────────────────────────────────────────
 
-/** Whale: Pickaxe Damage +10% per level. → pickaxe_damage */
-export const petWhalePickaxeDmg: Source = {
-  key: 'pets.whale',
-  name: 'Pet: Whale (Pickaxe Damage)',
-  system: 'pets',
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
-/** Whale: Triple Lootbug Chance +3% per level. → lootbug_triple_chance */
-export const petWhaleLootbugTriple: Source = {
-  key: 'pets.whale',
-  name: 'Pet: Whale (Triple Lootbug)',
-  system: 'pets',
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-/** Whale skin: Lootbug Gem Cost -2 (binary). → lootbug_gem_cost_reduction */
-export const petWhaleSkinLootbugGem: Source = {
-  key: 'pets.whaleSkin',
-  name: 'Pet Skin: Whale (Lootbug Gem Cost)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o * 2,
-  inputs: [],
-}
-/** Whale Quest: Gem Bomb Gem Chance +0.10% per rank. → gem_bomb_gem_chance */
-export const petWhaleQuestGemBombGem: Source = {
-  key: 'pets.whaleQuest',
-  name: 'Pet Quest: Whale (Gem Bomb Gem Chance)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.001,
-  inputs: [],
-}
-/** Whale Quest: Banked Lootbug Cap +1 per rank. → lootbug_bank_cap */
-export const petWhaleQuestLootbugBank: Source = {
-  key: 'pets.whaleQuest',
-  name: 'Pet Quest: Whale (Lootbug Bank Cap)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n,
-  inputs: [],
-}
+export const petWhalePickaxeDmg = pet('whale', 'Pet: Whale (Pickaxe Damage)', undefined, 'pickaxe_damage', '+', (n) => n * 0.1)
+export const petWhaleLootbugTriple = pet('whale', 'Pet: Whale (Triple Lootbug)', undefined, 'lootbug_triple_chance', '+', (n) => n * 0.03)
+export const petWhaleSkinLootbugGem = pet('whaleSkin', 'Pet Skin: Whale (Lootbug Gem Cost)', 1, 'lootbug_gem_cost_reduction', '+', (o) => o * 2)
+export const petWhaleQuestGemBombGem = pet('whaleQuest', 'Pet Quest: Whale (Gem Bomb Gem Chance)', 10, 'gem_bomb_gem_chance', '+', (n) => n * 0.001)
+export const petWhaleQuestLootbugBank = pet('whaleQuest', 'Pet Quest: Whale (Lootbug Bank Cap)', 10, 'lootbug_bank_cap', '+', (n) => n)
 
 // ─── Totem (max 25) ───────────────────────────────────────────────────────────
 
-/** Totem: Vein Spawn Rate +3% per level. → vein_spawn_rate_multi */
-export const petTotemVeinSpawn: Source = {
-  key: 'pets.totem',
-  name: 'Pet: Totem (Vein Spawn)',
-  system: 'pets',
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-/** Totem: Golden Vein Chance +1% per level. → golden_vein_chance */
-export const petTotemGoldenVeinChance: Source = {
-  key: 'pets.totem',
-  name: 'Pet: Totem (Golden Vein Chance)',
-  system: 'pets',
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Totem: Golden Vein Multi +1% per level. Additive. → golden_vein_multi */
-export const petTotemGoldenVeinMul: Source = {
-  key: 'pets.totem',
-  name: 'Pet: Totem (Golden Vein Multi)',
-  system: 'pets',
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Totem skin: Rainbow Vein Chance +2% (binary). → rainbow_vein_chance */
-export const petTotemSkinRainbowVein: Source = {
-  key: 'pets.totemSkin',
-  name: 'Pet Skin: Totem (Rainbow Vein Chance)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o * 0.02,
-  inputs: [],
-}
-/** Totem Quest: Drone Experience Gain +4% per rank. → coal_drone_exp_multi */
-export const petTotemQuestDroneExp: Source = {
-  key: 'pets.totemQuest',
-  name: 'Pet Quest: Totem (Drone Exp)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.04,
-  inputs: [],
-}
-/** Totem Quest: Chain Drone Grade Cap +2 per rank. → drone_chain_grade_cap_increase */
-export const petTotemQuestChainDroneCap: Source = {
-  key: 'pets.totemQuest',
-  name: 'Pet Quest: Totem (Chain Drone Cap)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 2,
-  inputs: [],
-}
+export const petTotemVeinSpawn = pet('totem', 'Pet: Totem (Vein Spawn)', undefined, 'vein_spawn_rate_multi', '+', (n) => n * 0.03)
+export const petTotemGoldenVeinChance = pet('totem', 'Pet: Totem (Golden Vein Chance)', undefined, 'golden_vein_chance', '+', (n) => n * 0.01)
+export const petTotemGoldenVeinMul = pet('totem', 'Pet: Totem (Golden Vein Multi)', undefined, 'golden_vein_multi', '+', (n) => n * 0.01)
+export const petTotemSkinRainbowVein = pet('totemSkin', 'Pet Skin: Totem (Rainbow Vein Chance)', 1, 'rainbow_vein_chance', '+', (o) => o * 0.02)
+export const petTotemQuestDroneExp = pet('totemQuest', 'Pet Quest: Totem (Drone Exp)', 10, 'coal_drone_exp_multi', '+', (n) => n * 0.04)
+export const petTotemQuestChainDroneCap = pet('totemQuest', 'Pet Quest: Totem (Chain Drone Cap)', 10, 'drone_chain_grade_cap_increase', '+', (n) => n * 2)
 
 // ─── Happy-Bot (max 20) ───────────────────────────────────────────────────────
 
-/** Happy-Bot: T4 Artifact Cap +1 per level. → artifact_tier4_cap_increase */
-export const petHappyBotArtifactT4Cap: Source = {
-  key: 'pets.happyBot',
-  name: 'Pet: Happy-Bot (T4 Artifact Cap)',
-  system: 'pets',
-  fn: (n) => n,
-  inputs: [],
-}
-/** Happy-Bot skin: Contract Upgrade Cap +1 (binary). → contract_cap_increase */
-export const petHappyBotSkinContractCap: Source = {
-  key: 'pets.happyBotSkin',
-  name: 'Pet Skin: Happy-Bot (Contract Cap)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o,
-  inputs: [],
-}
-/** Happy-Bot Quest: Poly Ore Card Multi +2% per rank. → polychrome_card_bonus_ore */
-export const petHappyBotQuestPolyOre: Source = {
-  key: 'pets.happyBotQuest',
-  name: 'Pet Quest: Happy-Bot (Poly Ore)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Happy-Bot Quest: Poly Star Card Multi +2% per rank. → polychrome_card_bonus_star */
-export const petHappyBotQuestPolyStar: Source = {
-  key: 'pets.happyBotQuest',
-  name: 'Pet Quest: Happy-Bot (Poly Star)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Happy-Bot Quest: Poly Vein Card Multi +2% per rank. → polychrome_card_bonus_vein */
-export const petHappyBotQuestPolyVein: Source = {
-  key: 'pets.happyBotQuest',
-  name: 'Pet Quest: Happy-Bot (Poly Vein)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Happy-Bot Quest: Banked Freebies +1 per rank. → freebie_bank_cap */
-export const petHappyBotQuestFreebieBank: Source = {
-  key: 'pets.happyBotQuest',
-  name: 'Pet Quest: Happy-Bot (Freebie Bank)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n,
-  inputs: [],
-}
+export const petHappyBotArtifactT4Cap = pet('happyBot', 'Pet: Happy-Bot (T4 Artifact Cap)', undefined, 'artifact_tier4_cap_increase', '+', (n) => n)
+export const petHappyBotSkinContractCap = pet('happyBotSkin', 'Pet Skin: Happy-Bot (Contract Cap)', 1, 'contract_cap_increase', '+', (o) => o)
+export const petHappyBotQuestPolyOre = pet('happyBotQuest', 'Pet Quest: Happy-Bot (Poly Ore)', 10, 'polychrome_card_bonus_ore', '×1+', (n) => n * 0.02)
+export const petHappyBotQuestPolyStar = pet('happyBotQuest', 'Pet Quest: Happy-Bot (Poly Star)', 10, 'polychrome_card_bonus_star', '×1+', (n) => n * 0.02)
+export const petHappyBotQuestPolyVein = pet('happyBotQuest', 'Pet Quest: Happy-Bot (Poly Vein)', 10, 'polychrome_card_bonus_vein', '×1+', (n) => n * 0.02)
+export const petHappyBotQuestFreebieBank = pet('happyBotQuest', 'Pet Quest: Happy-Bot (Freebie Bank)', 10, 'freebie_bank_cap', '+', (n) => n)
 
 // ─── Leprechaun (max 25) ──────────────────────────────────────────────────────
 
-/** Leprechaun: Base Game Speed +1.5% per level. → game_speed_multi */
-export const petLeprechaunGameSpeed: Source = {
-  key: 'pets.leprechaun',
-  name: 'Pet: Leprechaun (Game Speed)',
-  system: 'pets',
-  fn: (n) => n * 0.015,
-  inputs: [],
-}
-/** Leprechaun: Golden Floor Multi +1.25% per level. Additive. → golden_floor_multi */
-export const petLeprechaunGoldenFloor: Source = {
-  key: 'pets.leprechaun',
-  name: 'Pet: Leprechaun (Golden Floor Multi)',
-  system: 'pets',
-  fn: (n) => n * 0.0125,
-  inputs: [],
-}
-/** Leprechaun: Rainbow Floor Chance +0.25% per level. → rainbow_floor_chance */
-export const petLeprechaunRainbowFloor: Source = {
-  key: 'pets.leprechaun',
-  name: 'Pet: Leprechaun (Rainbow Floor Chance)',
-  system: 'pets',
-  fn: (n) => n * 0.0025,
-  inputs: [],
-}
-/** Leprechaun skin: Rainbow Floor Chance +1% (binary). → rainbow_floor_chance */
-export const petLeprechaunSkinRainbowFloor: Source = {
-  key: 'pets.leprechaunSkin',
-  name: 'Pet Skin: Leprechaun (Rainbow Floor)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o * 0.01,
-  inputs: [],
-}
-/** Leprechaun Quest: Galactic Floor Multi +4% per rank. → galactic_floor_multi */
-export const petLeprechaunQuestGalacticMul: Source = {
-  key: 'pets.leprechaunQuest',
-  name: 'Pet Quest: Leprechaun (Galactic Floor Multi)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.04,
-  inputs: [],
-}
-/** Leprechaun Quest: Transmuter BoP Mark Chance +2% per rank. → bomb_trans_apply_bop_chance */
-export const petLeprechaunQuestTransmuterBop: Source = {
-  key: 'pets.leprechaunQuest',
-  name: 'Pet Quest: Leprechaun (Transmuter BoP)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
+export const petLeprechaunGameSpeed = pet('leprechaun', 'Pet: Leprechaun (Game Speed)', undefined, 'game_speed_multi', '+', (n) => n * 0.015)
+export const petLeprechaunGoldenFloor = pet('leprechaun', 'Pet: Leprechaun (Golden Floor Multi)', undefined, 'golden_floor_multi', '+', (n) => n * 0.0125)
+export const petLeprechaunRainbowFloor = pet('leprechaun', 'Pet: Leprechaun (Rainbow Floor Chance)', undefined, 'rainbow_floor_chance', '+', (n) => n * 0.0025)
+export const petLeprechaunSkinRainbowFloor = pet('leprechaunSkin', 'Pet Skin: Leprechaun (Rainbow Floor)', 1, 'rainbow_floor_chance', '+', (o) => o * 0.01)
+export const petLeprechaunQuestGalacticMul = pet('leprechaunQuest', 'Pet Quest: Leprechaun (Galactic Floor Multi)', 10, 'galactic_floor_multi', '+', (n) => n * 0.04)
+export const petLeprechaunQuestTransmuterBop = pet('leprechaunQuest', 'Pet Quest: Leprechaun (Transmuter BoP)', 10, 'bomb_trans_apply_bop_chance', '+', (n) => n * 0.02)
 
 // ─── Starfish (max 25) ────────────────────────────────────────────────────────
 
-/** Starfish: Super Star 10× Chance +0.2% per level. → super_star_10x_chance */
-export const petStarfishSuper10xChance: Source = {
-  key: 'pets.starfish',
-  name: 'Pet: Starfish (Super 10x Chance)',
-  system: 'pets',
-  fn: (n) => n * 0.002,
-  inputs: [],
-}
-/** Starfish: Super Star Supernova Chance +0.2% per level. → super_star_supernova_chance */
-export const petStarfishSupernovaChance: Source = {
-  key: 'pets.starfish',
-  name: 'Pet: Starfish (Supernova Chance)',
-  system: 'pets',
-  fn: (n) => n * 0.002,
-  inputs: [],
-}
-/** Starfish skin: Star Spawn Rate +10% (binary). → star_spawn_rate */
-export const petStarfishSkinStarSpawn: Source = {
-  key: 'pets.starfishSkin',
-  name: 'Pet Skin: Starfish (Star Spawn Rate)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o * 0.1,
-  inputs: [],
-}
-/** Starfish Quest: Novagiant Combo Multi +3% per rank. → novagiant_combo_multi */
-export const petStarfishQuestNovagiant: Source = {
-  key: 'pets.starfishQuest',
-  name: 'Pet Quest: Starfish (Novagiant Multi)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-/** Starfish Quest: Capricorn Cap +1 per rank. → star_capricorn_cap */
-export const petStarfishQuestCapricornCap: Source = {
-  key: 'pets.starfishQuest',
-  name: 'Pet Quest: Starfish (Capricorn Cap)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n,
-  inputs: [],
-}
+export const petStarfishSuper10xChance = pet('starfish', 'Pet: Starfish (Super 10x Chance)', undefined, 'super_star_10x_chance', '+', (n) => n * 0.002)
+export const petStarfishSupernovaChance = pet('starfish', 'Pet: Starfish (Supernova Chance)', undefined, 'super_star_supernova_chance', '+', (n) => n * 0.002)
+export const petStarfishSkinStarSpawn = pet('starfishSkin', 'Pet Skin: Starfish (Star Spawn Rate)', 1, 'star_spawn_rate', '+', (o) => o * 0.1)
+export const petStarfishQuestNovagiant = pet('starfishQuest', 'Pet Quest: Starfish (Novagiant Multi)', 10, 'novagiant_combo_multi', '+', (n) => n * 0.03)
+export const petStarfishQuestCapricornCap = pet('starfishQuest', 'Pet Quest: Starfish (Capricorn Cap)', 10, 'star_capricorn_cap', '+', (n) => n)
 // TODO no registry key: 'Ophiuchus Cap +1 per Rank' (Starfish quest)
 
 // ─── Dino (max 25) ────────────────────────────────────────────────────────────
 
-/** Dino: Pickaxe Damage ×(1 + 0.20n) per level. Multiplicative. → pickaxe_damage */
-export const petDinoPickaxeDmg: Source = {
-  key: 'pets.dino',
-  name: 'Pet: Dino (Pickaxe Damage)',
-  system: 'pets',
-  fn: (n) => 1 + n * 0.2,
-  inputs: [],
-}
-/** Dino: Rainbow Floor Multi +2.5% per level. Additive. → rainbow_floor_multi */
-export const petDinoRainbowFloor: Source = {
-  key: 'pets.dino',
-  name: 'Pet: Dino (Rainbow Floor Multi)',
-  system: 'pets',
-  fn: (n) => n * 0.025,
-  inputs: [],
-}
-// TODO no registry key: '+1 Pet Level Cap' (Dino skin)
-// TODO no registry key: 'Astraeus and Chione Idol Cap +50 per Rank' (Dino quest)
-// TODO no registry key: 'Aphrodite and Tethys Cap +30 per Rank' (Dino quest)
+export const petDinoPickaxeDmg = pet('dino', 'Pet: Dino (Pickaxe Damage)', undefined, 'pickaxe_damage', '×', (n) => 1 + n * 0.2)
+export const petDinoRainbowFloor = pet('dino', 'Pet: Dino (Rainbow Floor Multi)', undefined, 'rainbow_floor_multi', '+', (n) => n * 0.025)
+// TODO no registry key: '+1 Pet Level Cap' (Dino skin); Idol cap quests
 
 // ─── Mr Nibbles (max 25) ──────────────────────────────────────────────────────
 
-/** Mr Nibbles: Shiny Fish Multi +0.03× per level. → fishing_shiny_multi */
-export const petNibblesShinyFishMul: Source = {
-  key: 'pets.mrNibbles',
-  name: 'Pet: Mr Nibbles (Shiny Fish Multi)',
-  system: 'pets',
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-/** Mr Nibbles: Triple Tick Chance +1% per level. → fishing_triple_tick_chance */
-export const petNibblesTripleTick: Source = {
-  key: 'pets.mrNibbles',
-  name: 'Pet: Mr Nibbles (Triple Tick)',
-  system: 'pets',
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Mr Nibbles skin: Shiny Fish Chance +2% (binary). → fishing_shiny_chance */
-export const petNibblesSkinShinyChance: Source = {
-  key: 'pets.mrNibblesSkin',
-  name: 'Pet Skin: Mr Nibbles (Shiny Chance)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o * 0.02,
-  inputs: [],
-}
+export const petNibblesShinyFishMul = pet('mrNibbles', 'Pet: Mr Nibbles (Shiny Fish Multi)', undefined, 'fishing_shiny_multi', '+', (n) => n * 0.03)
+export const petNibblesTripleTick = pet('mrNibbles', 'Pet: Mr Nibbles (Triple Tick)', undefined, 'fishing_triple_tick_chance', '+', (n) => n * 0.01)
+export const petNibblesSkinShinyChance = pet('mrNibblesSkin', 'Pet Skin: Mr Nibbles (Shiny Chance)', 1, 'fishing_shiny_chance', '+', (o) => o * 0.02)
 // TODO no registry key: 'Angler Drone Grade Cap +1 per Rank' (Mr Nibbles quest)
-/** Mr Nibbles Quest: Tier 2 Dock Power +5% per rank. → fishing_tier2_dock_multi */
-export const petNibblesQuestTier2Dock: Source = {
-  key: 'pets.mrNibblesQuest',
-  name: 'Pet Quest: Mr Nibbles (Tier 2 Dock)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
+export const petNibblesQuestTier2Dock = pet('mrNibblesQuest', 'Pet Quest: Mr Nibbles (Tier 2 Dock)', 10, 'fishing_tier2_dock_multi', '+', (n) => n * 0.05)
 
 // ─── Nagini (max 25) ──────────────────────────────────────────────────────────
 
-/** Nagini: Golden Ore Multi +0.05× per level. Additive. → golden_ore_multi */
-export const petNaginiGoldenOreMul: Source = {
-  key: 'pets.nagini',
-  name: 'Pet: Nagini (Golden Ore Multi)',
-  system: 'pets',
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
-/** Nagini: All Floor Multi +2% per level. → all_floor_multipliers */
-export const petNaginiAllFloorMul: Source = {
-  key: 'pets.nagini',
-  name: 'Pet: Nagini (All Floor Multi)',
-  system: 'pets',
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Nagini skin: Golden Ore Chance +2% (binary). → golden_ore_chance */
-export const petNaginiSkinGoldenOre: Source = {
-  key: 'pets.naginiSkin',
-  name: 'Pet Skin: Nagini (Golden Ore Chance)',
-  system: 'pets',
-  maxLevel: 1,
-  fn: (o) => o * 0.02,
-  inputs: [],
-}
-/** Nagini Quest: Golden Void Portal Chance +0.5% per rank. → golden_void_portal_chance */
-export const petNaginiQuestGoldenVoidChance: Source = {
-  key: 'pets.naginiQuest',
-  name: 'Pet Quest: Nagini (Golden Void Chance)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.005,
-  inputs: [],
-}
-/** Nagini Quest: Golden Void Portal Multi +5% per rank. → golden_void_portal_multi */
-export const petNaginiQuestGoldenVoidMul: Source = {
-  key: 'pets.naginiQuest',
-  name: 'Pet Quest: Nagini (Golden Void Multi)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
+export const petNaginiGoldenOreMul = pet('nagini', 'Pet: Nagini (Golden Ore Multi)', undefined, 'golden_ore_multi', '+', (n) => n * 0.05)
+export const petNaginiAllFloorMul = pet('nagini', 'Pet: Nagini (All Floor Multi)', undefined, 'all_floor_multipliers', '+', (n) => n * 0.02)
+export const petNaginiSkinGoldenOre = pet('naginiSkin', 'Pet Skin: Nagini (Golden Ore Chance)', 1, 'golden_ore_chance', '+', (o) => o * 0.02)
+export const petNaginiQuestGoldenVoidChance = pet('naginiQuest', 'Pet Quest: Nagini (Golden Void Chance)', 10, 'golden_void_portal_chance', '+', (n) => n * 0.005)
+export const petNaginiQuestGoldenVoidMul = pet('naginiQuest', 'Pet Quest: Nagini (Golden Void Multi)', 10, 'golden_void_portal_multi', '+', (n) => n * 0.05)
 
 // ─── Butterfly (max 25) ───────────────────────────────────────────────────────
 
-/** Butterfly: Galactic Floor Chance +0.5% per level. → galactic_floor_chance */
-export const petButterflyGalacticChance: Source = {
-  key: 'pets.butterfly',
-  name: 'Pet: Butterfly (Galactic Floor Chance)',
-  system: 'pets',
-  fn: (n) => n * 0.005,
-  inputs: [],
-}
-/** Butterfly: Lootfrog Triple Spawn Chance +0.35% per level. → lootfrog_triple_spawn_chance */
-export const petButterflyLootfrogTriple: Source = {
-  key: 'pets.butterfly',
-  name: 'Pet: Butterfly (Lootfrog Triple)',
-  system: 'pets',
-  fn: (n) => n * 0.0035,
-  inputs: [],
-}
-/** Butterfly: Rainbow Portal Chance +0.25% per level. → rainbow_void_portal_chance */
-export const petButterflyRainbowPortal: Source = {
-  key: 'pets.butterfly',
-  name: 'Pet: Butterfly (Rainbow Portal)',
-  system: 'pets',
-  fn: (n) => n * 0.0025,
-  inputs: [],
-}
+export const petButterflyGalacticChance = pet('butterfly', 'Pet: Butterfly (Galactic Floor Chance)', undefined, 'galactic_floor_chance', '+', (n) => n * 0.005)
+export const petButterflyLootfrogTriple = pet('butterfly', 'Pet: Butterfly (Lootfrog Triple)', undefined, 'lootfrog_triple_spawn_chance', '+', (n) => n * 0.0035)
+export const petButterflyRainbowPortal = pet('butterfly', 'Pet: Butterfly (Rainbow Portal)', undefined, 'rainbow_void_portal_chance', '+', (n) => n * 0.0025)
 // TODO no registry key: 'Unlock Infernal Pet Cards' (Butterfly skin)
-/** Butterfly Quest: Big Lootfrog Chance +0.25% per rank. → lootfrog_big_chance */
-export const petButterflyQuestBigFrog: Source = {
-  key: 'pets.butterflyQuest',
-  name: 'Pet Quest: Butterfly (Big Frog Chance)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.0025,
-  inputs: [],
-}
-/** Butterfly Quest: Prismatic Galactic Multi +10% per rank. → prismatic_floor_multi */
-export const petButterflyQuestPrismaticMul: Source = {
-  key: 'pets.butterflyQuest',
-  name: 'Pet Quest: Butterfly (Prismatic Multi)',
-  system: 'pets',
-  maxLevel: 10,
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
+export const petButterflyQuestBigFrog = pet('butterflyQuest', 'Pet Quest: Butterfly (Big Frog Chance)', 10, 'lootfrog_big_chance', '+', (n) => n * 0.0025)
+export const petButterflyQuestPrismaticMul = pet('butterflyQuest', 'Pet Quest: Butterfly (Prismatic Multi)', 10, 'prismatic_floor_multi', '+', (n) => n * 0.1)
 
 export const petSources = {
-  // Crab
   petCrabBombCap,
   petCrabBombRecharge,
   petCrabSkinWorkshopCap,
   petCrabQuestBomBofPlenty,
-  // Dwarf
   petDwarfPickaxeDmg,
   petDwarfUltraCrit,
   petDwarfSkinPickaxeDmg,
   petDwarfQuestPrestigePts,
   petDwarfQuestFloorClear,
-  // Duck
   petDuckExp,
   petDuckLootbugSpawn,
   petDuckSkinObeliskArmor,
   petDuckQuestVeinIncome,
   petDuckQuestGoldenVeinMul,
-  // Rabbit
   petRabbitContractCost,
   petRabbitSkinContractPoints,
   petRabbitQuest5xContract,
   petRabbitQuestContractCost,
-  // Penguin
   petPenguinGoldenFloor,
   petPenguinSkinOreSell,
   petPenguinQuestGoldenFloor,
   petPenguinQuestRainbowFloor,
-  // Axolotl
   petAxolotlDoubleCraft,
   petAxolotlBarCraft,
   petAxolotlSkinFuelDuration,
   petAxolotlQuestArchFragment,
   petAxolotlQuestSupernovaMul,
-  // Whale
   petWhalePickaxeDmg,
   petWhaleLootbugTriple,
   petWhaleSkinLootbugGem,
   petWhaleQuestGemBombGem,
   petWhaleQuestLootbugBank,
-  // Totem
   petTotemVeinSpawn,
   petTotemGoldenVeinChance,
   petTotemGoldenVeinMul,
   petTotemSkinRainbowVein,
   petTotemQuestDroneExp,
   petTotemQuestChainDroneCap,
-  // Happy-Bot
   petHappyBotArtifactT4Cap,
   petHappyBotSkinContractCap,
   petHappyBotQuestPolyOre,
   petHappyBotQuestPolyStar,
   petHappyBotQuestPolyVein,
   petHappyBotQuestFreebieBank,
-  // Leprechaun
   petLeprechaunGameSpeed,
   petLeprechaunGoldenFloor,
   petLeprechaunRainbowFloor,
   petLeprechaunSkinRainbowFloor,
   petLeprechaunQuestGalacticMul,
   petLeprechaunQuestTransmuterBop,
-  // Starfish
   petStarfishSuper10xChance,
   petStarfishSupernovaChance,
   petStarfishSkinStarSpawn,
   petStarfishQuestNovagiant,
   petStarfishQuestCapricornCap,
-  // Dino
   petDinoPickaxeDmg,
   petDinoRainbowFloor,
-  // Mr Nibbles
   petNibblesShinyFishMul,
   petNibblesTripleTick,
   petNibblesSkinShinyChance,
   petNibblesQuestTier2Dock,
-  // Nagini
   petNaginiGoldenOreMul,
   petNaginiAllFloorMul,
   petNaginiSkinGoldenOre,
   petNaginiQuestGoldenVoidChance,
   petNaginiQuestGoldenVoidMul,
-  // Butterfly
   petButterflyGalacticChance,
   petButterflyLootfrogTriple,
   petButterflyRainbowPortal,

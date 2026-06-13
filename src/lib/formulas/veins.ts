@@ -43,7 +43,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
   vein_income_multi: {
     contributions: [
       { source: sk.leprechaunsLegacyVeinIncome, op: '×' },
-      { source: it.iceCreamSuperStarSpawn, op: '×' }, // also affects super star spawn
+      { source: it.iceCreamVeinIncome, op: '×' },
       { source: rel.legendaryRelicVeinIncome, op: '+' },
       { source: pet.petDuckQuestVeinIncome, op: '+' },
       { source: ct.ctVeinIncomeW2, op: '+' },
@@ -63,7 +63,8 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: ct.ctGoldenVeinChance, op: '+' },
       { source: st.storeVpVeinExtractorGoldenVeinChance, op: '+' },
       { source: up.upgrGoldenVeinChance, op: '+' },
-      { source: U, op: '+', unknown: true }, // Pets + Stargazing
+      { source: sg.starAriesGoldenVein, op: '+' },
+      { source: U, op: '+', unknown: true }, // Pets
     ],
   },
   golden_vein_multi: {
@@ -76,7 +77,6 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: ch.chGoldenVeinMul, op: '+' },
       { source: card.cardMiscGoldenVein, op: '×' },
       { source: st.storeVpVeinExtractorGoldenVeinMul, op: '×' },
-      { source: sg.starAriesGoldenVein, op: '+' },
       { source: f.noticeT1GoldenVeinMul, op: '+' },
       { source: up.upgrGoldenVeinMul, op: '+' },
       { source: U, op: '+', unknown: true }, // Drones fueled Veinseeker (temp)

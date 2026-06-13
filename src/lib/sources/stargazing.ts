@@ -62,8 +62,7 @@ const radiantChance = sg('radiantChance', 'Star Radiant Chance (Super Star)', 20
 // Stars that feed multiple stats use one Source object per stat, sharing the key.
 
 const starAriesVeinSpawn = sg('starAries', 'Aries (Star)', 28, 'vein_spawn_rate_multi', '+', (l) => l * 0.03)
-// FLAG: comment says "Golden Vein Chance" but formula wires this to golden_vein_multi.
-const starAriesGoldenVein = sg('starAries', 'Aries (Star)', 28, 'golden_vein_multi', '+', (l) => l * 0.01)
+const starAriesGoldenVein = sg('starAries', 'Aries (Star)', 28, 'golden_vein_chance', '+', (l) => l * 0.01)
 const starTaurusPickaxeDmg = sg('starTaurus', 'Taurus (Star)', 22, 'pickaxe_damage', '+', (l) => l * 0.12)
 const starTaurus = sg('starTaurus', 'Taurus (Star)', 22, 'star_auto_catch_chance', '+', (l) => l * 0.02)
 const starGeminiGoldenFloor = sg('starGemini', 'Gemini (Star)', 34, 'golden_floor_multi', '×', (l) => 1 + l * 0.02)
@@ -72,8 +71,7 @@ const starCancerDoubleContract = sg('starCancer', 'Cancer (Star)', 48, 'contract
 const starCancerContractCost = sg('starCancer', 'Cancer (Star)', 48, 'contract_upgrade_cost_reduction', '+', (l) => l * 0.01)
 // Leo feeds super-star triple chance and bomb workshop cap (one upgrade, two stats).
 const starLeo = sg('starLeo', 'Leo (Star)', 5, 'super_star_triple_chance', '+', (l) => l * 0.04)
-// FLAG: workshop cap uses the same +4%/level fn as triple chance — value may be wrong (expected +1/level).
-const starLeoWorkshopCap = sg('starLeo', 'Leo (Star)', 5, 'bomb_workshop_cap_increase', '+', (l) => l * 0.04)
+const starLeoWorkshopCap = sg('starLeo', 'Leo (Star)', 5, 'bomb_workshop_cap_increase', '+', (l) => l * 1)
 const starVirgoRecharge = sg('starVirgo', 'Virgo (Star)', 30, 'bomb_recharge_speed', '+', (l) => l * 0.01)
 const starVirgo = sg('starVirgo', 'Virgo (Star)', 30, 'super_star_spawn_multi', '+', (l) => l * 0.01)
 const starLibraPrestige = sg('starLibra', 'Libra (Star)', 22, 'prestige_point_multi', '+', (l) => l * 0.05)
@@ -97,11 +95,9 @@ const starDracoGalacticChance = sg('starDraco', 'Draco (Star)', 40, 'galactic_fl
 const starDracoGalacticMul = sg('starDraco', 'Draco (Star)', 40, 'galactic_floor_multi', '+', (l) => l * 0.1)
 const starCetusPolyCardMul = sg('starCetus', 'Cetus (Star)', 32, 'polychrome_card_bonus_ore', '+', (l) => l * 0.15)
 const starCetusFishIncome = sg('starCetus', 'Cetus (Star)', 32, 'fishing_income_multi', '+', (l) => l * 0.02)
-// FLAG: comment says "All Floor Multi" but formula wires this to multi_rock_chance.
-const starEridanusAllFloor = sg('starEridanus', 'Eridanus (Star)', 22, 'multi_rock_chance', '+', (l) => l * 0.02)
+const starEridanusAllFloor = sg('starEridanus', 'Eridanus (Star)', 22, 'all_floor_multipliers', '+', (l) => l * 0.02)
 const starEridanusStonksMul = sg('starEridanus', 'Eridanus (Star)', 22, 'stonks_multi', '+', (l) => l * 0.02)
-// FLAG: comment says "Super Stonks Chance" but formula wires this to chest_meter_multi.
-const starEridanusSuperStonks = sg('starEridanus', 'Eridanus (Star)', 22, 'chest_meter_multi', '+', (l) => l * 0.001)
+const starEridanusSuperStonks = sg('starEridanus', 'Eridanus (Star)', 22, 'super_stonks_chance', '+', (l) => l * 0.001)
 
 // ─── Export ───────────────────────────────────────────────────────────────────
 

@@ -123,7 +123,8 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: pet.petNaginiQuestGoldenVoidChance, op: '+' },
       { source: ct.ctGoldenVoidChance, op: '+' },
       { source: st.storeVpVoidOverdriveGoldenPortalChance, op: '+' },
-      { source: U, op: '+', unknown: true }, // Pets + Fishing + Upgrades + Contracts
+      { source: up.upgrGoldenVoidChance, op: '+' },
+      { source: U, op: '+', unknown: true }, // Pets + Fishing + Contracts
       { source: tr.trDuneEelwormT1GVPC, op: '+' },
     ],
   },
@@ -133,10 +134,8 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: pet.petNaginiQuestGoldenVoidMul, op: '+' },
       { source: st.storeVpVoidOverdriveGoldenPortalMul, op: '×' },
       { source: arch.idolThemis, op: '+' },
-      { source: up.upgrGoldenVoidChance, op: '+' },
       { source: tr.trDuneEelwormT2GVPM, op: '×' },
       { source: card.cardLegDuneEelworm, op: '×1+' },
-      { source: card.cardMiscGoldenVoidPortal, op: '×' },
     ],
   },
   rainbow_void_portal_chance: {

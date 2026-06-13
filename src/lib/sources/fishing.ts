@@ -79,8 +79,7 @@ const noticeT1ExpGain = fi('notice.t1.expGain', 'T1 Notice – Experience Gain',
 const noticeT1TripleContractChance = fi('notice.t1.tripleContract', 'T1 Notice – Triple Contract Chance', 30, 'contract_triple_points_chance', '+', (l) => l * 0.01)
 const noticeT1PetLevelUp = fi('notice.t1.petLevelUp', 'T1 Notice – Pet Level Up Chance', 35, 'pet_levelup_chance_multi', '+', (l) => l * 0.005)
 const noticeT1SuperStarSupernovaMul = fi('notice.t1.superStarSupernovaMul', 'T1 Notice – Super Star Supernova Multi', 30, 'super_star_supernova_multi', '+', (l) => l * 0.04)
-// FLAG: comment says "All Floor Multi" but formula wires this to multi_rock_chance.
-const noticeT1AllFloorMul = fi('notice.t1.allFloorMul', 'T1 Notice – All Floor Multi', 1, 'multi_rock_chance', '+', (l) => l * 0.2)
+const noticeT1AllFloorMul = fi('notice.t1.allFloorMul', 'T1 Notice – All Floor Multi', 1, 'all_floor_multipliers', '+', (l) => l * 0.2)
 const noticeT1BombRecharge = fi('notice.t1.bombRecharge', 'T1 Notice – Bomb Recharge Rate', 35, 'bomb_recharge_speed', '+', (l) => l * 0.005)
 const noticeT1GoldenVeinMul = fi('notice.t1.goldenVeinMul', 'T1 Notice – Golden Vein Multi', 40, 'golden_vein_multi', '+', (l) => l * 0.04)
 const noticeT1StarSupernovaMul = fi('notice.t1.starSupernovaMul', 'T1 Notice – Star Supernova Multi', 18, 'star_supernova_multi', '+', (l) => l)

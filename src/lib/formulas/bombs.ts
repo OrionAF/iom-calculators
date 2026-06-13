@@ -99,8 +99,8 @@ export const bombsFormulas: FormulaMap = defineFormulas({
           { source: up.upgrBombDmgMul3, op: '×' },
         ],
       },
-      { source: up.upgrPickaxeAndBombDmgW3, op: '×' },
-      { source: up.upgrPickaxeAndBombDmgW4, op: '×' },
+      { source: up.upgrPickaxeAndBombDmgW3Bomb, op: '×' },
+      { source: up.upgrPickaxeAndBombDmgW4Bomb, op: '×' },
     ],
   },
   bomb_crit_chance: {

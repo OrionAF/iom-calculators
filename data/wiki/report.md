@@ -1,6 +1,6 @@
 # Wiki ↔ formula cross-check
 
-Generated from data/wiki/*.json. Stats checked: 175; with findings: 52; unmatched: 0; annotated-source gaps: 12.
+Generated from data/wiki/*.json. Stats checked: 175; with findings: 47; unmatched: 0; annotated-source gaps: 12.
 
 ## Wiki stats with no matching registry name / formula
 
@@ -46,14 +46,8 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 52; unmatche
 ### Drone Exp Gain Multiplier (`coal_drone_exp_multi`)
 - missing system Skins: A Skin Reward (formula has 1 unknown placeholder(s))
 
-### Golden Void Portal Chance (`golden_void_portal_chance`)
-- missing system Upgrades: The Djinnium Bar (formula has 1 unknown placeholder(s))
-
 ### Rainbow Void Portal Chance (`rainbow_void_portal_chance`)
 - missing system Stargazing: The Eleventh Black Hole boost (formula has 1 unknown placeholder(s))
-
-### Elixir Crit Chance (`elixir_crit_chance`)
-- missing system Fishing: The Dune's Eelworm Tier 2 Tribute (formula has 1 unknown placeholder(s))
 
 ### Ore Income Multiplier (`ore_income_multi`)
 - missing system Drones: An Elixir Drone Buff (Also from Gifts, Lootbugs, and the Founder Supply Drop (formula has 1 unknown placeholder(s))
@@ -81,11 +75,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 52; unmatche
 
 ### Steaks Eaten (`steak_eaten`)
 - missing system Items: Gold Flake Steak
-
-### All Floor Multis (Gold, Rainbow, Galactic, Prismatic) (`all_floor_multipliers`)
-- missing system Items: Yummy Pizza (formula has 1 unknown placeholder(s))
-- missing system Pets: The Nagini Pet (formula has 1 unknown placeholder(s))
-- missing system Stargazing: Eridanus (formula has 1 unknown placeholder(s))
 
 ### 20x Craft Chance (`craft_20x_chance`)
 - missing system Skill-Tree: The "Super Smither" Skill (formula has 1 unknown placeholder(s))
@@ -129,9 +118,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 52; unmatche
 ### Freebie Cooldown (`freebie_cooldown_seconds`)
 - missing system Store: The Founders Bundle (formula has 1 unknown placeholder(s))
 
-### Super Stonks Chance (`super_stonks_chance`)
-- missing system Stargazing: Eridanus; The Third Black Hole Bonus
-
 ### Ultra Stonks Chance (`ultra_stonks_chance`)
 - missing system Stargazing: The 17th Black Hole Boost (formula has 1 unknown placeholder(s))
 
@@ -141,9 +127,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 52; unmatche
 
 ### Contract Cost Reduction (`contract_cost_reduction`)
 - missing system Relics: A Rare Relic (formula has 1 unknown placeholder(s))
-
-### Golden Vein Chance (`golden_vein_chance`)
-- missing system Stargazing: Aries (formula has 1 unknown placeholder(s))
 
 ### Golden Vein Multiplier (`golden_vein_multi`)
 - missing system Drones: The Fueled Veinseeker Suit (formula has 1 unknown placeholder(s))
@@ -172,6 +155,7 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 52; unmatche
 - missing system Items: Cosmic Candy
 
 ### Fishing Drone Capacity (`fishing_drone_capacity`)
+- missing system Archaeology: The Ares Idol
 - wiki has (sub-formula) in Fishing but our formula is flat: The Second Tier 1 Upgrade + The Ninth Tier 1 Upgrade + The Second Tier 1 Enhancement + The Last Tier 1 Enhancement
 
 ### Fishing Drone Base Power (`fishing_drone_power`)
