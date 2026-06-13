@@ -53,7 +53,6 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: f.droneCapE1C, op: '+' },
       { source: sk.fishingWithFriendsDrones, op: '+' },
       { source: sk.motleySchoolDrones, op: '+' },
-      { source: arch.idolAres, op: '+' },
       { source: f.droneCloner, op: '×' },
     ],
   },
