@@ -1,225 +1,61 @@
-import type { Source } from '$lib/engine/types'
+import type { Op, Source } from '$lib/engine/types'
+
+// Workshop sources own all workshop effect numbers (fn, maxLevel, statKey, op).
+// Leveled upgrades scale with workshop level. statKey/op annotations mirror
+// the formula wiring (consistency test enforces op match where a source is
+// used); a few effects have no registry stat yet and carry no statKey.
+
+const ws = (
+  key: string,
+  name: string,
+  maxLevel: number,
+  statKey: string | undefined,
+  op: Op | undefined,
+  fn: Source['fn'],
+): Source => ({
+  key: `workshop.${key}`,
+  name: `Workshop: ${name}`,
+  system: 'workshop',
+  maxLevel,
+  statKey,
+  op,
+  fn,
+  inputs: [],
+})
 
 // ─── World 1 ──────────────────────────────────────────────────────────────────
 
-/** W1: Basic & Chain Bomb Damage, additive +0.5 per level. Max 30. */
-export const wsBombDmgW1: Source = {
-  key: 'workshop.bombDmgW1',
-  name: 'Workshop: Basic & Chain Damage (W1)',
-  system: 'workshop',
-  maxLevel: 30,
-  fn: (n) => n * 0.5,
-  inputs: [],
-}
-
-/** W1: Bomb of Plenti Ore Multi, additive +1x per level. Max 25. */
-export const wsBOPoreMultiW1: Source = {
-  key: 'workshop.BOPoreMultiW1',
-  name: 'Workshop: Bomb of Plenty Ore Multi (W1)',
-  system: 'workshop',
-  maxLevel: 25,
-  fn: (n) => n * 1.0,
-  inputs: [],
-}
-
-/** W1: Pickaxe Damage +3% per level. Max 42. */
-export const wsPickaxeDmgW1: Source = {
-  key: 'workshop.pickaxeDmgW1',
-  name: 'Workshop: Pickaxe Damage (W1)',
-  system: 'workshop',
-  maxLevel: 42,
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-
-/** W1: D20 Charges +1 per level.  Max 42 */
-export const wsD20chargesW1: Source = {
-  key: 'workshop.D20chargesW1',
-  name: 'Workshop: D20 Charges (W1)',
-  system: 'workshop',
-  maxLevel: 42,
-  fn: (n) => n * 1,
-  inputs: [],
-}
-
-/** W1: Chance for 3x Cherry Bomb Charges +0.5% per level.  Max 32 */
-export const wsCherryBomb3xChanceW1: Source = {
-  key: 'workshop.CherryBomb3xChanceW1',
-  name: 'Workshop: 3x Cherry Bomb Charges (W1)',
-  system: 'workshop',
-  maxLevel: 32,
-  fn: (n) => n * 0.005,
-  inputs: [],
-}
-
-/** W1: Transmuter Bomb bar increase +1 per level.  Max 27 */
-export const wsTransmuterBombBarIncreaseW1: Source = {
-  key: 'workshop.TransmuterBombBarIncreaseW1',
-  name: 'Workshop: Transmuter Bomb Bar increase (W1)',
-  system: 'workshop',
-  maxLevel: 27,
-  fn: (n) => n * 1,
-  inputs: [],
-}
+export const wsBombDmgW1 = ws('bombDmgW1', 'Basic & Chain Damage (W1)', 30, 'bomb_damage', '×1+', (n) => n * 0.5)
+export const wsBOPoreMultiW1 = ws('BOPoreMultiW1', 'Bomb of Plenty Ore Multi (W1)', 25, 'bomb_of_plenty_multi', '+', (n) => n * 1.0)
+export const wsPickaxeDmgW1 = ws('pickaxeDmgW1', 'Pickaxe Damage (W1)', 42, 'pickaxe_damage', '×1+', (n) => n * 0.03)
+export const wsD20chargesW1 = ws('D20chargesW1', 'D20 Charges (W1)', 42, undefined, undefined, (n) => n * 1)
+export const wsCherryBomb3xChanceW1 = ws('CherryBomb3xChanceW1', '3x Cherry Bomb Charges (W1)', 32, 'bomb_cherry3x_chance', '+', (n) => n * 0.005)
+export const wsTransmuterBombBarIncreaseW1 = ws('TransmuterBombBarIncreaseW1', 'Transmuter Bomb Bar increase (W1)', 27, undefined, undefined, (n) => n * 1)
 
 // ─── World 2 ──────────────────────────────────────────────────────────────────
 
-/** W2: Bomb Damage +35% per level. Max 42. */
-export const wsBombDmgW2: Source = {
-  key: 'workshop.bombDmgW2',
-  name: 'Workshop: Bomb Damage (W2)',
-  system: 'workshop',
-  maxLevel: 42,
-  fn: (n) => n * 0.35,
-  inputs: [],
-}
-
-/** W2: Transmuter Bomb chance to apply BoP mark +25%. Max 1. */
-export const wsTransmuterBombBOPmarkW2: Source = {
-  key: 'workshop.TransmuterBombBOPmarkW2',
-  name: 'Workshop: Transmuter Bomb BoP chance (W2)',
-  system: 'workshop',
-  maxLevel: 1,
-  fn: (n) => n * 0.25,
-  inputs: [],
-}
+export const wsBombDmgW2 = ws('bombDmgW2', 'Bomb Damage (W2)', 42, 'bomb_damage', '×1+', (n) => n * 0.35)
+export const wsTransmuterBombBOPmarkW2 = ws('TransmuterBombBOPmarkW2', 'Transmuter Bomb BoP chance (W2)', 1, 'bomb_trans_apply_bop_chance', '+', (n) => n * 0.25)
 
 // ─── World 3 ──────────────────────────────────────────────────────────────────
 
-/** W3: Bomb Damage ×(1 + 0.15n). Max 42. Multiplicative. */
-export const wsBombDmgW3: Source = {
-  key: 'workshop.bombDmgW3',
-  name: 'Workshop: Bomb Damage (W3)',
-  system: 'workshop',
-  maxLevel: 42,
-  fn: (n) => 1 + n * 0.15,
-  inputs: [],
-}
-
-/** W3: Veinmorpher bomb morph chance +0.1% per level. Max 47. */
-export const wsVeinmorphMorphChanceW3: Source = {
-  key: 'workshop.VeinmorphMorphChanceW3',
-  name: 'Workshop: Veinmorpher Bomb Morph Chance (W3)',
-  system: 'workshop',
-  maxLevel: 47,
-  fn: (n) => n * 0.001,
-  inputs: [],
-}
-
-/** W3: Pickaxe Damage ×(1 + 0.08n). Max 47. Multiplicative. */
-export const wsPickaxeDmgW3: Source = {
-  key: 'workshop.pickaxeDmgW3',
-  name: 'Workshop: Pickaxe Damage (W3)',
-  system: 'workshop',
-  maxLevel: 47,
-  fn: (n) => 1 + n * 0.08,
-  inputs: [],
-}
-
-/** W3: BoP has a chance to convert ores into gold +0.15% per level. Max 47. */
-export const wsBoPgoldenChanceW3: Source = {
-  key: 'workshop.BoPgoldenChanceW3',
-  name: 'Workshop: BoP Golden Chance (W3)',
-  system: 'workshop',
-  maxLevel: 47,
-  fn: (n) => n * 0.0015,
-  inputs: [],
-}
-
-/**
- * W3: Hamburger/Golden Hamburger extra factor +0.12 per level.
- * Stacks additively with the item base factor. Max 47.
- */
-export const wsHamburgerBonusW3: Source = {
-  key: 'workshop.hamburgerBonusW3',
-  name: 'Workshop: Hamburger Bonus (W3)',
-  system: 'workshop',
-  maxLevel: 47,
-  fn: (n) => n * 0.12,
-  inputs: [],
-}
-
-/** W3: Bomb of Plenti Ore Multi, additive +0.50x per level. Max 47. */
-export const wsBOPoreMultiW3: Source = {
-  key: 'workshop.BOPoreMultiW3',
-  name: 'Workshop: Bomb of Plenty Ore Multi (W3)',
-  system: 'workshop',
-  maxLevel: 47,
-  fn: (n) => n * 0.5,
-  inputs: [],
-}
-
-/** W3: Sushi item grants +1 extra fishing tick per Workshop level. Max 42. */
-export const wsFishingTicksW3: Source = {
-  key: 'workshop.fishingTicksW3',
-  name: 'Workshop: Sushi Fishing Ticks (W3)',
-  system: 'workshop',
-  maxLevel: 42,
-  fn: (n) => n,
-  inputs: [],
-}
-
-/** W3: Fishing Drone Power ×(1 + 0.02n). Max 52. */
-export const wsDronePowerW3: Source = {
-  key: 'workshop.dronePowerW3',
-  name: 'Workshop: Fishing Drone Power (W3)',
-  system: 'workshop',
-  maxLevel: 52,
-  fn: (n) => 1 + n * 0.02,
-  inputs: [],
-}
+export const wsBombDmgW3 = ws('bombDmgW3', 'Bomb Damage (W3)', 42, 'bomb_damage', '×', (n) => 1 + n * 0.15)
+export const wsVeinmorphMorphChanceW3 = ws('VeinmorphMorphChanceW3', 'Veinmorpher Bomb Morph Chance (W3)', 47, 'veinmorpher_chance', '+', (n) => n * 0.001)
+export const wsPickaxeDmgW3 = ws('pickaxeDmgW3', 'Pickaxe Damage (W3)', 47, 'pickaxe_damage', '×', (n) => 1 + n * 0.08)
+export const wsBoPgoldenChanceW3 = ws('BoPgoldenChanceW3', 'BoP Golden Chance (W3)', 47, 'bomb_of_plenty_make_gold_chance', '+', (n) => n * 0.0015)
+export const wsHamburgerBonusW3 = ws('hamburgerBonusW3', 'Hamburger Bonus (W3)', 47, undefined, undefined, (n) => n * 0.12)
+export const wsBOPoreMultiW3 = ws('BOPoreMultiW3', 'Bomb of Plenty Ore Multi (W3)', 47, 'bomb_of_plenty_multi', '+', (n) => n * 0.5)
+export const wsFishingTicksW3 = ws('fishingTicksW3', 'Sushi Fishing Ticks (W3)', 42, 'fishing_tick_speed', '+', (n) => n)
+export const wsDronePowerW3 = ws('dronePowerW3', 'Fishing Drone Power (W3)', 52, 'fishing_drone_multiplier', '×', (n) => 1 + n * 0.02)
 
 // ─── World 4 ──────────────────────────────────────────────────────────────────
 
-/** W4: Pickaxe & Bomb Damage ×(1 + 0.10n). Max 52. Multiplicative. */
-export const wsPickaxeBombDmgW4: Source = {
-  key: 'workshop.pickaxeBombDmgW4',
-  name: 'Workshop: Pickaxe & Bomb Damage (W4)',
-  system: 'workshop',
-  maxLevel: 52,
-  fn: (n) => 1 + n * 0.1,
-  inputs: [],
-}
-
-/** W4: Starfruit increase all star multi. Max 52. Multiplicative. */
-export const wsStarfruitAllStarMultiW4: Source = {
-  key: 'workshop.StarfruitAllStarMultiW4',
-  name: 'Workshop: Starfruit All Star Multi (W4)',
-  system: 'workshop',
-  maxLevel: 52,
-  fn: (n) => n * 0.005,
-  inputs: [],
-}
-
-/** W4: Bomb of Plenti Ore Multi, additive +1x per level. Max 52. */
-export const wsBOPoreMultiW4: Source = {
-  key: 'workshop.BOPoreMultiW4',
-  name: 'Workshop: Bomb of Plenty Ore Multi (W4)',
-  system: 'workshop',
-  maxLevel: 52,
-  fn: (n) => n * 1,
-  inputs: [],
-}
-
-/** W4: Bomb Recharge Speed +0.25% per level. Max 52. Additive. */
-export const wsBombRechargeW4: Source = {
-  key: 'workshop.bombRechargeW4',
-  name: 'Workshop: Bomb Recharge Speed (W4)',
-  system: 'workshop',
-  maxLevel: 52,
-  fn: (n) => n * 0.0025,
-  inputs: [],
-}
-
-/** W4: Lootfrog Loot Multi +0.5% per level. Max 52. Additive. */
-export const wsLootfrogLootW4: Source = {
-  key: 'workshop.lootfrogLootW4',
-  name: 'Workshop: Lootfrog Loot Multi (W4)',
-  system: 'workshop',
-  maxLevel: 52,
-  fn: (n) => n * 0.005,
-  inputs: [],
-}
+// Feeds both pickaxe_damage and bomb_damage: no single statKey, op '×' (both agree).
+export const wsPickaxeBombDmgW4 = ws('pickaxeBombDmgW4', 'Pickaxe & Bomb Damage (W4)', 52, undefined, '×', (n) => 1 + n * 0.1)
+export const wsStarfruitAllStarMultiW4 = ws('StarfruitAllStarMultiW4', 'Starfruit All Star Multi (W4)', 52, 'all_star_multi', '+', (n) => n * 0.005)
+export const wsBOPoreMultiW4 = ws('BOPoreMultiW4', 'Bomb of Plenty Ore Multi (W4)', 52, 'bomb_of_plenty_multi', '+', (n) => n * 1)
+export const wsBombRechargeW4 = ws('bombRechargeW4', 'Bomb Recharge Speed (W4)', 52, 'bomb_recharge_speed', '+', (n) => n * 0.0025)
+export const wsLootfrogLootW4 = ws('lootfrogLootW4', 'Lootfrog Loot Multi (W4)', 52, 'lootfrog_loot_multi', '+', (n) => n * 0.005)
 
 export const workshopSources = {
   wsBombDmgW1,
