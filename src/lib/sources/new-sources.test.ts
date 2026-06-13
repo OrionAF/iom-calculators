@@ -23,7 +23,7 @@ describe('workshopSources', () => {
     expect(ws.wsPickaxeDmgW3.fn(25, {})).toBeCloseTo(3.0)
   })
   it('pickaxe+bomb W4: 30 levels → ×4.0 multiplicative', () => {
-    expect(ws.wsPickaxeBombDmgW4.fn(30, {})).toBeCloseTo(4.0)
+    expect(ws.wsPickaxeDmgW4.fn(30, {})).toBeCloseTo(4.0)
   })
   it('fishing ticks W3: 5 levels → +5 ticks', () => {
     expect(ws.wsFishingTicksW3.fn(5, {})).toBe(5)
@@ -119,10 +119,10 @@ describe('constructSources', () => {
     expect(con.staEastwoodExpGain.fn(3, {})).toBe(100)
   })
   it('statue of comfort W4: not owned → 0', () => {
-    expect(con.staComfortDmg.fn(0, { w4StatueCount: 9 })).toBe(0)
+    expect(con.staComfortPickaxeDmg.fn(0, { w4StatueCount: 9 })).toBe(0)
   })
   it('statue of comfort W4: owned, 9 statues → +450%', () => {
-    expect(con.staComfortDmg.fn(1, { w4StatueCount: 9 })).toBeCloseTo(4.5)
+    expect(con.staComfortPickaxeDmg.fn(1, { w4StatueCount: 9 })).toBeCloseTo(4.5)
   })
   it('statue of randomness: golden vein chance tier 3 → +10%', () => {
     expect(con.staRandomnessGoldenVeinChance.fn(3, {})).toBeCloseTo(0.1)
