@@ -26,7 +26,7 @@ const U: Source = {
 export const miscFormulas: FormulaMap = defineFormulas({
   game_speed_multi: {
     contributions: [
-      { source: it.bananaCoffee, op: '×' },
+      { source: it.bananaCoffeeGameSpeed, op: '×' },
       { source: it.blueCow, op: '×' },
       { source: pet.petLeprechaunGameSpeed, op: '+' },
       { source: ct.ctGameSpeedW2, op: '+' },

@@ -43,7 +43,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
   vein_income_multi: {
     contributions: [
       { source: sk.leprechaunsLegacyVeinIncome, op: '×' },
-      { source: it.iceCreamSuperStarSpawn, op: '×' }, // also affects super star spawn
+      { source: it.iceCreamVeinIncome, op: '×' },
       { source: rel.legendaryRelicVeinIncome, op: '+' },
       { source: pet.petDuckQuestVeinIncome, op: '+' },
       { source: ct.ctVeinIncomeW2, op: '+' },

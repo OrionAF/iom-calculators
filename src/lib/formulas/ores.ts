@@ -86,7 +86,6 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: it.lasagnaGoldenOreMul, op: '×' },
       { source: it.goldFlakeSteakBuff, op: '×' },
       { source: it.goldFlakeSteakPerm, op: '+' },
-      { source: it.goldenStrawberriesGoldenVein, op: '+' },
       { source: con.staSafetyGoldenOreMul, op: '+' },
       { source: pet.petNaginiGoldenOreMul, op: '+' },
       { source: card.cardMiscGoldenOre, op: '×' },
