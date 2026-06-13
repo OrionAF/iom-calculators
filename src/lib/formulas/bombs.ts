@@ -113,11 +113,11 @@ export const bombsFormulas: FormulaMap = defineFormulas({
   bomb_crit_damage: {
     contributions: [
       { source: rel.commonRelicBombCritDamage, op: '+' },
-      { source: art.artBombDmgT1, op: '+' },
+      { source: sk.demolitionExpertBombCritDmg, op: '+' },
       { source: ch.chBombCritDmg, op: '+' },
+      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
       { source: up.upgrBombCritDmg1, op: '+' },
       { source: up.upgrBombCritDmg2, op: '+' },
-      { source: tr.trRadioactiveSlugT1ABCM, op: '×' },
     ],
   },
   bomb_recharge_speed: {

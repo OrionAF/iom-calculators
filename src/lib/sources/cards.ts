@@ -548,12 +548,7 @@ export const infernalBonusFish = infernalSetBonus('fish', 'infernal.fish', 'Infe
 export const infernalBonusMisc = infernalSetBonus('misc', 'infernal.misc', 'Infernal Misc Card Bonus', 'Infernal Misc Cards Owned')
 export const infernalBonusDrone = infernalSetBonus('drone', 'infernal.drone', 'Infernal Drone Card Bonus', 'Infernal Drone Cards Owned')
 export const infernalBonusPet = infernalSetBonus('pet', 'infernal.pet', 'Infernal Pet Card Bonus', 'Infernal Pet Cards Owned')
-export const infernalBonusLegendaryFish = infernalSetBonus(
-  'legendaryFish',
-  'infernal.legendaryFish',
-  'Infernal Legendary Fish Card Bonus',
-  'Infernal Legendary Fish Cards Owned',
-)
+export const infernalBonusLegendaryFish = infernalSetBonus('legendaryFish', 'infernal.legendaryFish', 'Infernal Legendary Fish Card Bonus', 'Infernal Legendary Fish Cards Owned')
 
 export const {
   cardDroneBearCap,
