@@ -1,294 +1,88 @@
-import type { Source } from '$lib/engine/types'
+import type { Op, Source } from '$lib/engine/types'
 
-// Relics are owned in counts — fn(count) = count × per_relic_bonus.
-// Counts can be very large (uncapped relics reach thousands).
-// Values from iom_wiki/pages/Chests.json "List of relics" section.
+// Relics are owned in counts — fn(count) = count × per_relic_bonus. Counts can be
+// very large (uncapped relics reach thousands); uncapped relics pass maxLevel
+// undefined. statKey/op mirror the formula wiring (consistency test enforces op
+// where used). A source feeding two stats keeps its primary statKey and adds a
+// sibling object sharing the key for the second stat.
+// Values from iom_wiki/pages/Chests.json "List of relics".
+
+const rel = (
+  key: string,
+  name: string,
+  maxLevel: number | undefined,
+  statKey: string | undefined,
+  op: Op | undefined,
+  fn: Source['fn'],
+): Source => ({
+  key: `relics.${key}`,
+  name,
+  system: 'relics',
+  maxLevel,
+  statKey,
+  op,
+  fn,
+  inputs: [],
+})
 
 // ─── Common Relics ────────────────────────────────────────────────────────────
 
-/** Common: Pickaxe Damage +3% per relic. Uncapped. */
-export const commonRelicPickaxeDamage: Source = {
-  key: 'relics.common.pickaxeDamage',
-  name: 'Common Relic – Pickaxe Damage',
-  system: 'relics',
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-/** Common: Ore Sell Price +3% per relic. Uncapped. */
-export const commonRelicOreSell: Source = {
-  key: 'relics.common.oreSell',
-  name: 'Common Relic – Ore Sell Price',
-  system: 'relics',
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-/** Common: Bomb Crit Chance +1% per relic. Cap 100. */
-export const commonRelicBombCrit: Source = {
-  key: 'relics.common.bombCrit',
-  name: 'Common Relic – Bomb Crit Chance',
-  system: 'relics',
-  maxLevel: 100,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Common: Experience Gain +1% per relic. Cap 10,000. */
-export const commonRelicExp: Source = {
-  key: 'relics.common.exp',
-  name: 'Common Relic – Experience Gain',
-  system: 'relics',
-  maxLevel: 10000,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Common: Bomb Crit Damage +1% per relic. Cap 10,000. */
-export const commonRelicBombCritDamage: Source = {
-  key: 'relics.common.bombCritDamage',
-  name: 'Common Relic – Bomb Crit Damage',
-  system: 'relics',
-  maxLevel: 10000,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
+export const commonRelicPickaxeDamage = rel('common.pickaxeDamage', 'Common Relic – Pickaxe Damage', undefined, 'pickaxe_damage', '+', (n) => n * 0.03)
+export const commonRelicOreSell = rel('common.oreSell', 'Common Relic – Ore Sell Price', undefined, 'ore_sell_price_multi', '+', (n) => n * 0.03)
+export const commonRelicBombCrit = rel('common.bombCrit', 'Common Relic – Bomb Crit Chance', 100, 'bomb_crit_chance', '+', (n) => n * 0.01)
+export const commonRelicExp = rel('common.exp', 'Common Relic – Experience Gain', 10000, 'experience_multi', '+', (n) => n * 0.01)
+export const commonRelicBombCritDamage = rel('common.bombCritDamage', 'Common Relic – Bomb Crit Damage', 10000, 'bomb_crit_damage', '+', (n) => n * 0.01)
 
 // ─── Rare Relics ──────────────────────────────────────────────────────────────
 
-/** Rare: Bomb Damage +20% per relic. Uncapped. */
-export const rareRelicBombDamage: Source = {
-  key: 'relics.rare.bombDamage',
-  name: 'Rare Relic – Bomb Damage',
-  system: 'relics',
-  fn: (n) => n * 0.2,
-  inputs: [],
-}
-/** Rare: Experience Gain +3% per relic. Uncapped. */
-export const rareRelicExp: Source = {
-  key: 'relics.rare.exp',
-  name: 'Rare Relic – Experience Gain',
-  system: 'relics',
-  fn: (n) => n * 0.03,
-  inputs: [],
-}
-/** Rare: Triple Rock Chance +1% per relic. Cap 100. */
-export const rareRelicTripleRock: Source = {
-  key: 'relics.rare.tripleRock',
-  name: 'Rare Relic – Triple Rock Chance',
-  system: 'relics',
-  maxLevel: 100,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Rare: Contract Bar Reduction +2% per relic. Cap 25,000. */
-export const rareRelicContractBar: Source = {
-  key: 'relics.rare.contractBar',
-  name: 'Rare Relic – Contract Cost Reduction',
-  system: 'relics',
-  maxLevel: 25000,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Rare: Fuel Duration +0.01% per relic. Cap 2,500. */
-export const rareRelicFuelDuration: Source = {
-  key: 'relics.rare.fuelDuration',
-  name: 'Rare Relic – Fuel Duration',
-  system: 'relics',
-  maxLevel: 2500,
-  fn: (n) => n * 0.0001,
-  inputs: [],
-}
+export const rareRelicBombDamage = rel('rare.bombDamage', 'Rare Relic – Bomb Damage', undefined, 'bomb_damage', '×1+', (n) => n * 0.2)
+export const rareRelicExp = rel('rare.exp', 'Rare Relic – Experience Gain', undefined, 'experience_multi', '+', (n) => n * 0.03)
+export const rareRelicTripleRock = rel('rare.tripleRock', 'Rare Relic – Triple Rock Chance', 100, 'multi_rock_chance', '+', (n) => n * 0.01)
+// Unwired: contract bar cost reduction, no unambiguous registry stat.
+export const rareRelicContractBar = rel('rare.contractBar', 'Rare Relic – Contract Cost Reduction', 25000, undefined, undefined, (n) => n * 0.02)
+export const rareRelicFuelDuration = rel('rare.fuelDuration', 'Rare Relic – Fuel Duration', 2500, 'coal_fuel_duration_multi', '+', (n) => n * 0.0001)
 
 // ─── Epic Relics ──────────────────────────────────────────────────────────────
 
-/** Epic: Pickaxe Damage +10% per relic. Uncapped. */
-export const epicRelicPickaxeDamage: Source = {
-  key: 'relics.epic.pickaxeDamage',
-  name: 'Epic Relic – Pickaxe Damage',
-  system: 'relics',
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
-/** Epic: Bomb Recharge Speed +2% per relic. Cap 250. */
-export const epicRelicBombRecharge: Source = {
-  key: 'relics.epic.bombRecharge',
-  name: 'Epic Relic – Bomb Recharge Speed',
-  system: 'relics',
-  maxLevel: 250,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Epic: Multi Chest Chance (Chance For 2x Chests) +2% per relic. Cap 50. */
-export const epicRelicChestDouble: Source = {
-  key: 'relics.epic.chestDouble',
-  name: 'Epic Relic – Multi Chest Chance',
-  system: 'relics',
-  maxLevel: 50,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Epic: Bomb Capacity +1 per relic. Cap 2,500. */
-export const epicRelicBombCapacity: Source = {
-  key: 'relics.epic.bombCapacity',
-  name: 'Epic Relic – Bomb Capacity',
-  system: 'relics',
-  maxLevel: 2500,
-  fn: (n) => n,
-  inputs: [],
-}
-/** Epic: Golden Floor Multi +0.10% per relic. Cap 500. */
-export const epicRelicGoldenFloor: Source = {
-  key: 'relics.epic.goldenFloor',
-  name: 'Epic Relic – Golden Floor Multi',
-  system: 'relics',
-  maxLevel: 500,
-  fn: (n) => n * 0.001,
-  inputs: [],
-}
+export const epicRelicPickaxeDamage = rel('epic.pickaxeDamage', 'Epic Relic – Pickaxe Damage', undefined, 'pickaxe_damage', '+', (n) => n * 0.1)
+export const epicRelicBombRecharge = rel('epic.bombRecharge', 'Epic Relic – Bomb Recharge Speed', 250, 'bomb_recharge_speed', '+', (n) => n * 0.02)
+// Unwired: multi-chest chance, no unambiguous registry stat.
+export const epicRelicChestDouble = rel('epic.chestDouble', 'Epic Relic – Multi Chest Chance', 50, undefined, undefined, (n) => n * 0.02)
+export const epicRelicBombCapacity = rel('epic.bombCapacity', 'Epic Relic – Bomb Capacity', 2500, 'bomb_capacity', '+', (n) => n)
+export const epicRelicGoldenFloor = rel('epic.goldenFloor', 'Epic Relic – Golden Floor Multi', 500, 'golden_floor_multi', '+', (n) => n * 0.001)
 
 // ─── Legendary Relics ────────────────────────────────────────────────────────
 
-/** Legendary: 5x Craft Chance +1% per relic. Cap 100. */
-export const legendaryRelicCraft5x: Source = {
-  key: 'relics.legendary.craft5x',
-  name: 'Legendary Relic – 5x Craft Chance',
-  system: 'relics',
-  maxLevel: 100,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Legendary: Prestige Point Gain +15% per relic. Uncapped. */
-export const legendaryRelicPrestigePts: Source = {
-  key: 'relics.legendary.prestigePts',
-  name: 'Legendary Relic – Prestige Points',
-  system: 'relics',
-  fn: (n) => n * 0.15,
-  inputs: [],
-}
-/** Legendary: Obelisk Fight Length +12% per relic. Cap 100. */
-export const legendaryRelicObeliskTimer: Source = {
-  key: 'relics.legendary.obeliskTimer',
-  name: 'Legendary Relic – Obelisk Fight Length',
-  system: 'relics',
-  maxLevel: 100,
-  fn: (n) => n * 0.12,
-  inputs: [],
-}
-/** Legendary: Vein Income Multiplier +0.10% per relic. Cap 500. */
-export const legendaryRelicVeinIncome: Source = {
-  key: 'relics.legendary.veinIncome',
-  name: 'Legendary Relic – Vein Income',
-  system: 'relics',
-  maxLevel: 500,
-  fn: (n) => n * 0.001,
-  inputs: [],
-}
-/** Legendary: Star Spawn Rate +0.10% per relic. Cap 300. */
-export const legendaryRelicStarSpawn: Source = {
-  key: 'relics.legendary.starSpawn',
-  name: 'Legendary Relic – Star Spawn Rate',
-  system: 'relics',
-  maxLevel: 300,
-  fn: (n) => n * 0.001,
-  inputs: [],
-}
+export const legendaryRelicCraft5x = rel('legendary.craft5x', 'Legendary Relic – 5x Craft Chance', 100, 'craft_5x_chance', '+', (n) => n * 0.01)
+export const legendaryRelicPrestigePts = rel('legendary.prestigePts', 'Legendary Relic – Prestige Points', undefined, 'prestige_point_multi', '+', (n) => n * 0.15)
+// Unwired: obelisk fight length, no unambiguous registry stat.
+export const legendaryRelicObeliskTimer = rel('legendary.obeliskTimer', 'Legendary Relic – Obelisk Fight Length', 100, undefined, undefined, (n) => n * 0.12)
+// Vein Income feeds two stats: primary vein_income_multi + sibling golden_vein_multi.
+export const legendaryRelicVeinIncome = rel('legendary.veinIncome', 'Legendary Relic – Vein Income', 500, 'vein_income_multi', '+', (n) => n * 0.001)
+export const legendaryRelicVeinIncomeGolden = rel('legendary.veinIncome', 'Legendary Relic – Vein Income', 500, 'golden_vein_multi', '+', (n) => n * 0.001)
+export const legendaryRelicStarSpawn = rel('legendary.starSpawn', 'Legendary Relic – Star Spawn Rate', 300, 'star_spawn_rate', '+', (n) => n * 0.001)
 
 // ─── Mythic Relics ────────────────────────────────────────────────────────────
 
-/** Mythic: 20x Craft Chance +1% per relic. Cap 100. */
-export const mythicRelicCraft20x: Source = {
-  key: 'relics.mythic.craft20x',
-  name: 'Mythic Relic – 20x Craft Chance',
-  system: 'relics',
-  maxLevel: 100,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Mythic: All Bomb Multipliers +5x per relic. Uncapped. */
-export const mythicRelicBombMulti: Source = {
-  key: 'relics.mythic.bombMulti',
-  name: 'Mythic Relic – All Bomb Multipliers',
-  system: 'relics',
-  fn: (n) => n * 5,
-  inputs: [],
-}
-/** Mythic: Golden Floor Chance +5% per relic. Cap 20. */
-export const mythicRelicGoldenFloorChance: Source = {
-  key: 'relics.mythic.goldenFloorChance',
-  name: 'Mythic Relic – Golden Floor Chance',
-  system: 'relics',
-  maxLevel: 20,
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
-/** Mythic: Pet Level Up Chance +0.50% per relic. Cap 50. */
-export const mythicRelicPetLevelup: Source = {
-  key: 'relics.mythic.petLevelup',
-  name: 'Mythic Relic – Pet Level Up Chance',
-  system: 'relics',
-  maxLevel: 50,
-  fn: (n) => n * 0.005,
-  inputs: [],
-}
-/** Mythic: Star Supernova Chance +0.10% per relic. Cap 100. */
-export const mythicRelicNovaChance: Source = {
-  key: 'relics.mythic.novaChance',
-  name: 'Mythic Relic – Star Supernova Chance',
-  system: 'relics',
-  maxLevel: 100,
-  fn: (n) => n * 0.001,
-  inputs: [],
-}
-/** Mythic: Polychrome Vein Card Multi +0.05% per relic. Cap 500. */
-export const mythicRelicPolyVeinCard: Source = {
-  key: 'relics.mythic.polyVeinCard',
-  name: 'Mythic Relic – Polychrome Vein Card Multi',
-  system: 'relics',
-  maxLevel: 500,
-  fn: (n) => n * 0.0005,
-  inputs: [],
-}
+export const mythicRelicCraft20x = rel('mythic.craft20x', 'Mythic Relic – 20x Craft Chance', 100, 'craft_20x_chance', '+', (n) => n * 0.01)
+export const mythicRelicBombMulti = rel('mythic.bombMulti', 'Mythic Relic – All Bomb Multipliers', undefined, 'bomb_additional_multiplier', '+', (n) => n * 5)
+export const mythicRelicGoldenFloorChance = rel('mythic.goldenFloorChance', 'Mythic Relic – Golden Floor Chance', 20, 'golden_floor_chance', '+', (n) => n * 0.05)
+export const mythicRelicPetLevelup = rel('mythic.petLevelup', 'Mythic Relic – Pet Level Up Chance', 50, 'pet_levelup_chance_multi', '+', (n) => n * 0.005)
+export const mythicRelicNovaChance = rel('mythic.novaChance', 'Mythic Relic – Star Supernova Chance', 100, 'star_supernova_chance', '+', (n) => n * 0.001)
+// Unwired: polychrome vein card multi, no unambiguous registry stat.
+export const mythicRelicPolyVeinCard = rel('mythic.polyVeinCard', 'Mythic Relic – Polychrome Vein Card Multi', 500, undefined, undefined, (n) => n * 0.0005)
 
 // ─── Divine Relics ────────────────────────────────────────────────────────────
-// Divine relics have a base cap of 5, extendable to 26 total.
+// Base cap of 5, extendable to 26 total.
 
-/** Divine: Rainbow Floor Chance +1% per relic. Uncapped. */
-export const divineRelicRainbowFloor: Source = {
-  key: 'relics.divine.rainbowFloor',
-  name: 'Divine Relic – Rainbow Floor Chance',
-  system: 'relics',
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Divine: Supernova Multipliers +2x per relic (both star and super star). Cap 5 base, extendable. */
-export const divineRelicSupernovaMul: Source = {
-  key: 'relics.divine.supernovaMul',
-  name: 'Divine Relic – Supernova Multipliers',
-  system: 'relics',
-  fn: (n) => n * 2,
-  inputs: [],
-}
-/** Divine: Rainbow Floor Multi +20% per relic. Cap 5. */
-export const divineRelicRainbowFloorMul: Source = {
-  key: 'relics.divine.rainbowFloorMul',
-  name: 'Divine Relic – Rainbow Floor Multi',
-  system: 'relics',
-  fn: (n) => n * 0.2,
-  inputs: [],
-}
-/** Divine: Fishing Ticks 5x Chance +2% per relic. Cap 5. */
-export const divineRelicFishing5xTick: Source = {
-  key: 'relics.divine.fishing5xTick',
-  name: 'Divine Relic – 5x Fishing Tick Chance',
-  system: 'relics',
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Divine: Rainbow Portal Chance +0.50% per relic. Cap 5. */
-export const divineRelicRainbowPortal: Source = {
-  key: 'relics.divine.rainbowPortal',
-  name: 'Divine Relic – Rainbow Portal Chance',
-  system: 'relics',
-  fn: (n) => n * 0.005,
-  inputs: [],
-}
+export const divineRelicRainbowFloor = rel('divine.rainbowFloor', 'Divine Relic – Rainbow Floor Chance', undefined, 'rainbow_floor_chance', '+', (n) => n * 0.01)
+// Supernova Multipliers feed two stats: primary star + sibling super-star.
+export const divineRelicSupernovaMul = rel('divine.supernovaMul', 'Divine Relic – Supernova Multipliers', undefined, 'star_supernova_multi', '+', (n) => n * 2)
+export const divineRelicSupernovaMulSuper = rel('divine.supernovaMul', 'Divine Relic – Supernova Multipliers', undefined, 'super_star_supernova_multi', '+', (n) => n * 2)
+export const divineRelicRainbowFloorMul = rel('divine.rainbowFloorMul', 'Divine Relic – Rainbow Floor Multi', undefined, 'rainbow_floor_multi', '+', (n) => n * 0.2)
+// Unwired: 5x fishing tick chance, no unambiguous registry stat.
+export const divineRelicFishing5xTick = rel('divine.fishing5xTick', 'Divine Relic – 5x Fishing Tick Chance', undefined, undefined, undefined, (n) => n * 0.02)
+export const divineRelicRainbowPortal = rel('divine.rainbowPortal', 'Divine Relic – Rainbow Portal Chance', undefined, 'rainbow_void_portal_chance', '+', (n) => n * 0.005)
 
 export const relicSources = {
   commonRelicPickaxeDamage,
@@ -310,6 +104,7 @@ export const relicSources = {
   legendaryRelicPrestigePts,
   legendaryRelicObeliskTimer,
   legendaryRelicVeinIncome,
+  legendaryRelicVeinIncomeGolden,
   legendaryRelicStarSpawn,
   mythicRelicCraft20x,
   mythicRelicBombMulti,
@@ -319,6 +114,7 @@ export const relicSources = {
   mythicRelicPolyVeinCard,
   divineRelicRainbowFloor,
   divineRelicSupernovaMul,
+  divineRelicSupernovaMulSuper,
   divineRelicRainbowFloorMul,
   divineRelicFishing5xTick,
   divineRelicRainbowPortal,

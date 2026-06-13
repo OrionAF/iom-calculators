@@ -68,7 +68,7 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
       { source: arch.idolTheseusBankUnlock, op: '+' },
       { source: tr.trStormSerpentT1LBC, op: '+' },
       { source: U, op: '×', unknown: true }, // Stargazing: 8th Black Hole boost (multiplies everything)
-      { source: sn.snBankedFreebiesLootbugs, op: '×1+' },
+      { source: sn.snBankedFreebiesLootbugsBug, op: '×1+' },
     ],
   },
   lootbug_gem_cost_reduction: {

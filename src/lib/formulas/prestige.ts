@@ -63,7 +63,7 @@ export const prestigeFormulas: FormulaMap = defineFormulas({
       { source: con.staEastwoodExpGain, op: '×' },
       { source: pet.petDuckExp, op: '+' },
       { source: ct.ctExpGainW1, op: '+' },
-      { source: ch.chExpPrestigePts, op: '+' },
+      { source: ch.chExpPrestigePtsExp, op: '+' },
       { source: card.cardMiscMinerName, op: '×' },
       { source: st.storeVpPetTrainerExp, op: '×' },
       { source: sg.starCapricornExp, op: '+' },

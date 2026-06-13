@@ -1,308 +1,83 @@
-import type { Source } from '$lib/engine/types'
+import type { Op, Source } from '$lib/engine/types'
+
+// Drone sources own all drone effect numbers (fn, maxLevel, statKey, op).
+// All are leveled with no runtime inputs. statKey/op mirror the formula
+// wiring (consistency test enforces op where a source is used); a few
+// effects have no registry stat yet and carry no statKey.
+
+const dr = (
+  key: string,
+  name: string,
+  maxLevel: number,
+  statKey: string | undefined,
+  op: Op | undefined,
+  fn: Source['fn'],
+): Source => ({
+  key: `drones.${key}`,
+  name,
+  system: 'drones',
+  maxLevel,
+  statKey,
+  op,
+  fn,
+  inputs: [],
+})
 
 // ─── Drone Upgrades Menu ──────────────────────────────────────────────────────
-// Permanent upgrades from the Drones → Upgrades tab.
 
-/** Drone Damage (Pickaxe %) +20% per level. Max 10. → drone_damage_percent */
-export const droneUpgradeUnlockDrone: Source = {
-  key: 'drones.upgrade.unlock',
-  name: 'Drone Upgrade – Unlock',
-  system: 'drones',
-  maxLevel: 1,
-  fn: (n) => n * 1,
-  inputs: [],
-}
-/** Drone Damage (Pickaxe %) +20% per level. Max 10. → drone_damage_percent */
-export const droneUpgradeDamage: Source = {
-  key: 'drones.upgrade.damage',
-  name: 'Drone Upgrade – Damage',
-  system: 'drones',
-  maxLevel: 10,
-  fn: (n) => n * 0.2,
-  inputs: [],
-}
-/** Drone Radius +12% per level. Max 10. → drone_radius_percent */
-export const droneUpgradeRadius: Source = {
-  key: 'drones.upgrade.radius',
-  name: 'Drone Upgrade – Radius',
-  system: 'drones',
-  maxLevel: 10,
-  fn: (n) => n * 0.12,
-  inputs: [],
-}
-/** Drone Movespeed +10% per level. Max 10. → drone_movespeed_percent */
-export const droneUpgradeMovespeed: Source = {
-  key: 'drones.upgrade.movespeed',
-  name: 'Drone Upgrade – Movespeed',
-  system: 'drones',
-  maxLevel: 10,
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
-/** Drone Attack Speed +10% per level. Max 10. → drone_attack_speed_percent */
-export const droneUpgradeAttackSpeed: Source = {
-  key: 'drones.upgrade.attackSpeed',
-  name: 'Drone Upgrade – Attack Speed',
-  system: 'drones',
-  maxLevel: 10,
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
-/** Drone Triple Damage Chance +2% per level. Max 15. → drone_triple_damage_chance */
-export const droneUpgradeTripleDmg: Source = {
-  key: 'drones.upgrade.tripleDmg',
-  name: 'Drone Upgrade – Triple Damage Chance',
-  system: 'drones',
-  maxLevel: 15,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Drone Rapid Fire Chance +2% per level. Max 15. → drone_rapid_fire_chance */
-export const droneUpgradeRapidFire: Source = {
-  key: 'drones.upgrade.rapidFire',
-  name: 'Drone Upgrade – Rapid Fire Chance',
-  system: 'drones',
-  maxLevel: 15,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
+export const droneUpgradeUnlockDrone = dr('upgrade.unlock', 'Drone Upgrade – Unlock', 1, 'drone_count', '+', (n) => n * 1)
+export const droneUpgradeDamage = dr('upgrade.damage', 'Drone Upgrade – Damage', 10, 'drone_damage_percent', '+', (n) => n * 0.2)
+export const droneUpgradeRadius = dr('upgrade.radius', 'Drone Upgrade – Radius', 10, 'drone_radius_percent', '+', (n) => n * 0.12)
+export const droneUpgradeMovespeed = dr('upgrade.movespeed', 'Drone Upgrade – Movespeed', 10, 'drone_movespeed_percent', '+', (n) => n * 0.1)
+export const droneUpgradeAttackSpeed = dr('upgrade.attackSpeed', 'Drone Upgrade – Attack Speed', 10, 'drone_attack_speed_percent', '+', (n) => n * 0.1)
+export const droneUpgradeTripleDmg = dr('upgrade.tripleDmg', 'Drone Upgrade – Triple Damage Chance', 15, 'drone_triple_damage_chance', '+', (n) => n * 0.02)
+export const droneUpgradeRapidFire = dr('upgrade.rapidFire', 'Drone Upgrade – Rapid Fire Chance', 15, 'drone_rapid_fire_chance', '+', (n) => n * 0.02)
 
 // ─── Drone Suit Passives ──────────────────────────────────────────────────────
-// Permanent stat bonuses from having a suit slot equipped (binary, maxLevel 1).
-// These are active regardless of drone fuel state.
+// Permanent passives from an equipped suit slot (binary), active regardless of fuel.
 
-/** Veinseeker: Vein Spawn Rate +10% permanent passive. → vein_spawn_rate_multi */
-export const droneSuitVeinseekerPassive: Source = {
-  key: 'drones.suit.veinseeker.passive',
-  name: 'Veinseeker Suit (Passive)',
-  system: 'drones',
-  maxLevel: 1,
-  fn: (o) => o * 0.1,
-  inputs: [],
-}
-/** Starburst: Triple Star Chance +6% permanent passive. → star_triple_spawn_chance */
-export const droneSuitStarburstPassive: Source = {
-  key: 'drones.suit.starburst.passive',
-  name: 'Starburst Suit (Passive)',
-  system: 'drones',
-  maxLevel: 1,
-  fn: (o) => o * 0.06,
-  inputs: [],
-}
-/**
- * Void: Ore Portal Chance +10% permanent passive (base chance when Void suit is equipped).
- * → void_portal_chance
- */
-export const droneSuitVoidPassive: Source = {
-  key: 'drones.suit.void.passive',
-  name: 'Void Suit (Passive)',
-  system: 'drones',
-  maxLevel: 1,
-  fn: (o) => o * 0.1,
-  inputs: [],
-}
+export const droneSuitVeinseekerPassive = dr('suit.veinseeker.passive', 'Veinseeker Suit (Passive)', 1, 'vein_spawn_rate_multi', '+', (o) => o * 0.1)
+export const droneSuitStarburstPassive = dr('suit.starburst.passive', 'Starburst Suit (Passive)', 1, 'star_triple_spawn_chance', '+', (o) => o * 0.06)
+export const droneSuitVoidPassive = dr('suit.void.passive', 'Void Suit (Passive)', 1, 'void_portal_chance', '+', (o) => o * 0.1)
 
 // ─── Drone Suit Upgrades ──────────────────────────────────────────────────────
-// Permanent per-level bonuses from upgrading individual drone suits.
-// Base max level 5, raised to 15 via: Mechanical Evolution skill (+3),
-// Coal Upgrades (+2 standard), Dionysus idol (+5 via increased coal cap).
-// NOTE: Chain (2x chain size), Frogger (autofire interval), Elixir (buff interval),
-//       Midas (ore value) upgrades have no registry keys — see TODOs below.
+// Per-level bonuses from upgrading individual suits. Angler/Prism reductions and
+// chance effects aren't yet referenced by a formula but their stats exist.
+// NOTE: Chain (2x chain size), Midas (ore value), Frogger (autofire interval),
+//       Elixir (buff interval) suit upgrades have no registry keys.
 
-/**
- * Bomb Bear suit upgrade: Bomb Damage +15% per level when Bear suit is equipped.
- * Conditional on suit selection. Max 15. → bomb_damage
- */
-export const droneSuitBearUpgrade: Source = {
-  key: 'drones.suit.bear.upgrade',
-  name: 'Bomb Bear Suit Upgrade (Bomb Damage)',
-  system: 'drones',
-  maxLevel: 15,
-  fn: (n) => n * 0.15,
-  inputs: [],
-}
-// TODO no registry key: Chain Bomber suit upgrade — Chance For 2x Chain Size +4%/level, max 15
-
-/** Veinseeker suit upgrade: Vein Spawn Rate +2% per level. Max 15. → vein_spawn_rate_multi */
-export const droneSuitVeinseekerUpgrade: Source = {
-  key: 'drones.suit.veinseeker.upgrade',
-  name: 'Veinseeker Suit Upgrade',
-  system: 'drones',
-  maxLevel: 15,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/** Starburst suit upgrade: Triple Star Chance +1% per level. Max 15. → star_triple_spawn_chance */
-export const droneSuitStarburstUpgrade: Source = {
-  key: 'drones.suit.starburst.upgrade',
-  name: 'Starburst Suit Upgrade',
-  system: 'drones',
-  maxLevel: 15,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Void suit upgrade: Portal Ore Chance +2% per level. Max 15. → void_portal_chance */
-export const droneSuitVoidUpgrade: Source = {
-  key: 'drones.suit.void.upgrade',
-  name: 'Void Suit Upgrade (Portal Chance)',
-  system: 'drones',
-  maxLevel: 15,
-  fn: (n) => n * 0.02,
-  inputs: [],
-}
-/**
- * Angler suit upgrade: Time Between Fishing Ticks -40s per level. Max 15.
- * Positive fn per reduction convention. → fishing_tick_reduction_seconds
- */
-export const droneSuitAnglerUpgrade: Source = {
-  key: 'drones.suit.angler.upgrade',
-  name: 'Angler Suit Upgrade',
-  system: 'drones',
-  maxLevel: 15,
-  fn: (n) => n * 40,
-  inputs: [],
-}
-/** Prism suit upgrade: Galactic Floor Chance +0.25% per level. Max 15. → galactic_floor_chance */
-export const droneSuitPrismUpgrade: Source = {
-  key: 'drones.suit.prism.upgrade',
-  name: 'Prism Suit Upgrade',
-  system: 'drones',
-  maxLevel: 15,
-  fn: (n) => n * 0.0025,
-  inputs: [],
-}
-// TODO no registry key: Midas suit upgrade — Ore Value Gained +1%/level, max 15
-// TODO no registry key: Frogger suit upgrade — Time Between Autofires -1.5s/level, max 15
-// TODO no registry key: Elixir suit upgrade — Time Between Buffs -15s/level, max 15
+export const droneSuitBearUpgrade = dr('suit.bear.upgrade', 'Bomb Bear Suit Upgrade (Bomb Damage)', 15, 'bomb_damage', '×1+', (n) => n * 0.15)
+export const droneSuitVeinseekerUpgrade = dr('suit.veinseeker.upgrade', 'Veinseeker Suit Upgrade', 15, 'vein_spawn_rate_multi', '+', (n) => n * 0.02)
+export const droneSuitStarburstUpgrade = dr('suit.starburst.upgrade', 'Starburst Suit Upgrade', 15, 'star_triple_spawn_chance', '+', (n) => n * 0.01)
+export const droneSuitVoidUpgrade = dr('suit.void.upgrade', 'Void Suit Upgrade (Portal Chance)', 15, 'void_portal_chance', '+', (n) => n * 0.02)
+// Reduction convention: positive fn, formula subtracts.
+export const droneSuitAnglerUpgrade = dr('suit.angler.upgrade', 'Angler Suit Upgrade', 15, 'fishing_tick_reduction_seconds', '+', (n) => n * 40)
+export const droneSuitPrismUpgrade = dr('suit.prism.upgrade', 'Prism Suit Upgrade', 15, 'galactic_floor_chance', '+', (n) => n * 0.0025)
 
 // ─── Drone Grade Passives ─────────────────────────────────────────────────────
-// Permanent stats that scale with the drone's grade rather than an upgrade level.
+// Permanent stats scaling with the drone's grade rather than an upgrade level.
 
-/**
- * Prism drone grade passive: Galactic Floor Chance +0.25% per grade. Max grade 40.
- * Separate from the suit upgrade (which also adds +0.25% per upgrade level).
- * → galactic_floor_chance
- */
-export const dronePrismGradePassive: Source = {
-  key: 'drones.grade.prism',
-  name: 'Prism Drone Grade (Galactic Chance)',
-  system: 'drones',
-  maxLevel: 40,
-  fn: (n) => n * 0.0025,
-  inputs: [],
-}
-
-/**
- * Midas drone enhancement: All Star Multi +0.5% per grade (permanent passive,
- * unlocked via Tier 2 Fishing Notice Upgrade). Max grade 100. → all_star_multi
- */
-export const droneMidasEnhancementAllStar: Source = {
-  key: 'drones.grade.midasEnhancement',
-  name: 'Midas Drone Enhancement (All Star Multi)',
-  system: 'drones',
-  maxLevel: 100,
-  fn: (n) => n * 0.005,
-  inputs: [],
-}
+export const dronePrismGradePassive = dr('grade.prism', 'Prism Drone Grade (Galactic Chance)', 40, 'galactic_floor_chance', '+', (n) => n * 0.0025)
+export const droneMidasEnhancementAllStar = dr('grade.midasEnhancement', 'Midas Drone Enhancement (All Star Multi)', 100, 'all_star_multi', '+', (n) => n * 0.005)
 // TODO no registry key: Frogger drone enhancement — Lootfrog Spawn Chance +0.003%/grade (max 45)
-//   unlocked via Black Hole; grade-scaled permanent passive
 
 // ─── Coal Upgrades ────────────────────────────────────────────────────────────
-// Permanent upgrades purchased with coal from the Generator.
-// All max level 25 unless noted.
+// Permanent upgrades purchased with coal. Coal Production is a reduction
+// (positive fn, formula subtracts from base 90s).
 
-/**
- * Coal Production -1s per level. Max 25.
- * Positive fn per reduction convention (formula subtracts from base 90s).
- * → coal_generation_seconds
- */
-export const coalCoalProduction: Source = {
-  key: 'drones.coal.coalProduction',
-  name: 'Coal Upgrade – Coal Production',
-  system: 'drones',
-  maxLevel: 25,
-  fn: (n) => n * 1,
-  inputs: [],
-}
-/** Fuel Duration +1% per level. Max 25. → coal_fuel_duration_multi */
-export const coalFuelDuration: Source = {
-  key: 'drones.coal.fuelDuration',
-  name: 'Coal Upgrade – Fuel Duration',
-  system: 'drones',
-  maxLevel: 25,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Coal Capacity +10% per level. Max 25. → coal_capacity_multi */
-export const coalCoalCapacity: Source = {
-  key: 'drones.coal.coalCapacity',
-  name: 'Coal Upgrade – Coal Capacity',
-  system: 'drones',
-  maxLevel: 25,
-  fn: (n) => n * 0.1,
-  inputs: [],
-}
-/** Fuel Save Chance +1% per level. Max 25. → coal_fuel_save_chance */
-export const coalFuelSave: Source = {
-  key: 'drones.coal.fuelSave',
-  name: 'Coal Upgrade – Fuel Save Chance',
-  system: 'drones',
-  maxLevel: 25,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Drone Exp Gain +5% per level. Max 25. → coal_drone_exp_multi */
-export const coalDroneExp: Source = {
-  key: 'drones.coal.droneExp',
-  name: 'Coal Upgrade – Drone Exp Gain',
-  system: 'drones',
-  maxLevel: 25,
-  fn: (n) => n * 0.05,
-  inputs: [],
-}
-/** Drone Suit Upgrade Cap +1 per level. Max 7. → drone_suit_cap */
-export const coalSuitCap: Source = {
-  key: 'drones.coal.suitCap',
-  name: 'Coal Upgrade – Suit Upgrade Cap',
-  system: 'drones',
-  maxLevel: 7,
-  fn: (n) => n,
-  inputs: [],
-}
+export const coalCoalProduction = dr('coal.coalProduction', 'Coal Upgrade – Coal Production', 25, 'coal_generation_seconds', '+', (n) => n * 1)
+export const coalFuelDuration = dr('coal.fuelDuration', 'Coal Upgrade – Fuel Duration', 25, 'coal_fuel_duration_multi', '+', (n) => n * 0.01)
+export const coalCoalCapacity = dr('coal.coalCapacity', 'Coal Upgrade – Coal Capacity', 25, 'coal_capacity_multi', '+', (n) => n * 0.1)
+export const coalFuelSave = dr('coal.fuelSave', 'Coal Upgrade – Fuel Save Chance', 25, 'coal_fuel_save_chance', '+', (n) => n * 0.01)
+export const coalDroneExp = dr('coal.droneExp', 'Coal Upgrade – Drone Exp Gain', 25, 'coal_drone_exp_multi', '+', (n) => n * 0.05)
+export const coalSuitCap = dr('coal.suitCap', 'Coal Upgrade – Suit Upgrade Cap', 7, 'drone_suit_cap', '+', (n) => n)
 // TODO no registry key: Starburst Drone Grade Cap +1/level, max 10
-//   no drone_starburst_grade_cap_increase key exists; drone_chain/frogger/void exist
-
-/** Void Portal Base Multi +1% per level. Max 20. → void_portal_base_multi */
-export const coalVoidPortalMul: Source = {
-  key: 'drones.coal.voidPortalMul',
-  name: 'Coal Upgrade – Void Portal Base Multi',
-  system: 'drones',
-  maxLevel: 20,
-  fn: (n) => n * 0.01,
-  inputs: [],
-}
-/** Gleaming Vein Multiplier +6% per level. Max 20. → gleaming_vein_multi */
-export const coalGleamingVein: Source = {
-  key: 'drones.coal.gleamingVein',
-  name: 'Coal Upgrade – Gleaming Vein Multi',
-  system: 'drones',
-  maxLevel: 20,
-  fn: (n) => n * 0.06,
-  inputs: [],
-}
-/** Lootfrog 10× Spawn Chance +0.05% per level. Max 20. → lootfrog_10x_spawn_chance */
-export const coalLootfrog10x: Source = {
-  key: 'drones.coal.lootfrog10x',
-  name: 'Coal Upgrade – Lootfrog 10x Spawn Chance',
-  system: 'drones',
-  maxLevel: 20,
-  fn: (n) => n * 0.0005,
-  inputs: [],
-}
+export const coalVoidPortalMul = dr('coal.voidPortalMul', 'Coal Upgrade – Void Portal Base Multi', 20, 'void_portal_base_multi', '+', (n) => n * 0.01)
+export const coalGleamingVein = dr('coal.gleamingVein', 'Coal Upgrade – Gleaming Vein Multi', 20, 'gleaming_vein_multi', '+', (n) => n * 0.06)
+export const coalLootfrog10x = dr('coal.lootfrog10x', 'Coal Upgrade – Lootfrog 10x Spawn Chance', 20, 'lootfrog_10x_spawn_chance', '+', (n) => n * 0.0005)
 // NOTE: 'Unlock Drone Infernal Cards' (max 1) — unlock mechanic, no stat key.
 
 export const droneSources = {
-  // Drone upgrade menu
   droneUpgradeUnlockDrone,
   droneUpgradeDamage,
   droneUpgradeRadius,
@@ -310,21 +85,17 @@ export const droneSources = {
   droneUpgradeAttackSpeed,
   droneUpgradeTripleDmg,
   droneUpgradeRapidFire,
-  // Suit passives
   droneSuitVeinseekerPassive,
   droneSuitStarburstPassive,
   droneSuitVoidPassive,
-  // Suit upgrades
   droneSuitBearUpgrade,
   droneSuitVeinseekerUpgrade,
   droneSuitStarburstUpgrade,
   droneSuitVoidUpgrade,
   droneSuitAnglerUpgrade,
   droneSuitPrismUpgrade,
-  // Grade passives
   dronePrismGradePassive,
   droneMidasEnhancementAllStar,
-  // Coal upgrades
   coalCoalProduction,
   coalFuelDuration,
   coalCoalCapacity,
