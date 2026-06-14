@@ -1787,6 +1787,30 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
     icon: 'Scorpio.png',
     sign: '+',
   },
+  star_cancer_cap: {
+    name: 'Cancer Star Cap',
+    description: 'Increases the level cap of Cancer star.',
+    icon: 'Cancer.png',
+    sign: '+',
+  },
+  star_cetus_cap: {
+    name: 'Cetus Star Cap',
+    description: 'Increases the level cap of Cetus star.',
+    icon: 'Cetus.png',
+    sign: '+',
+  },
+  star_draco_cap: {
+    name: 'Draco Star Cap',
+    description: 'Increases the level cap of Draco star.',
+    icon: 'Draco.png',
+    sign: '+',
+  },
+  star_hercules_cap: {
+    name: 'Hercules Star Cap',
+    description: 'Increases the level cap of Hercules star.',
+    icon: 'Hercules.png',
+    sign: '+',
+  },
   fishing_abyss_dock_tick_req: {
     name: 'Abyss Dock Tick Req',
     description: 'Reduces the amount of ticks required on the Abyss Dock',
