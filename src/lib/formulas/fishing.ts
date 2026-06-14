@@ -12,6 +12,7 @@ import { challengeSources as ch } from '$lib/sources/challenges'
 import { upgradeSources as up } from '$lib/sources/upgrades'
 import { workshopSources as ws } from '$lib/sources/workshop'
 import { tributesSources as tr } from '$lib/sources/tributes'
+import { droneSources as drone } from '$lib/sources/drones'
 
 // Placeholder for contributions whose per-level values are not yet known.
 // Marked unknown: true so the engine skips them and the UI flags them.
@@ -138,6 +139,7 @@ export const fishingFormulas: FormulaMap = defineFormulas({
       { source: f.tickSpeedT1, op: '+' },
       { source: f.tickSpeedE1, op: '+' },
       { source: sk.letsPickUpThePaceTick, op: '+' },
+      { source: drone.droneSuitAnglerUpgrade, op: '+' },
     ],
   },
 
@@ -266,6 +268,6 @@ export const fishingFormulas: FormulaMap = defineFormulas({
    * Left as fully unknown pending further research.
    */
   fishing_tick_speed: {
-    contributions: [{ source: UNKNOWN, op: '+', unknown: true }],
+    contributions: [{ source: ws.wsFishingTicksW3, op: '+' }],
   },
 })

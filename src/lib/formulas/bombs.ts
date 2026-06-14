@@ -213,7 +213,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
     ],
   },
   bomb_cherry3x_chance: {
-    contributions: [{ source: U, op: '+', unknown: true }],
+    contributions: [{ source: ws.wsCherryBomb3xChanceW1, op: '+' }],
   },
   bomb_battery_cap_increases: {
     contributions: [{ source: U, op: '+', unknown: true }],
@@ -234,17 +234,25 @@ export const bombsFormulas: FormulaMap = defineFormulas({
     ],
   },
   bomb_of_plenty_make_gold_chance: {
-    contributions: [{ source: U, op: '+', unknown: true }],
+    contributions: [{ source: ws.wsBoPgoldenChanceW3, op: '+' }],
   },
   bomb_of_plenty_multi: {
     contributions: [
       { source: st.storeFounderBomBofPlenty, op: '+' },
       { source: st.storeVpBomberBopMulti, op: '+' },
-      { source: U, op: '+', unknown: true },
+      { source: ws.wsBOPoreMultiW1, op: '+' },
+      { source: ws.wsBOPoreMultiW3, op: '+' },
+      { source: ws.wsBOPoreMultiW4, op: '+' },
+      { source: sn.snBoPmultiT1, op: '+' },
+      { source: sn.snBoPmultiT2, op: '+' },
+      { source: pet.petCrabQuestBomBofPlenty, op: '+' },
     ],
   },
   bomb_trans_apply_bop_chance: {
-    contributions: [{ source: U, op: '+', unknown: true }],
+    contributions: [
+      { source: ws.wsTransmuterBombBOPmarkW2, op: '+' },
+      { source: pet.petLeprechaunQuestTransmuterBop, op: '+' },
+    ],
   },
   bomb_transmuter_multi: {
     contributions: [

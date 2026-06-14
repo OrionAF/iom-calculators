@@ -1,61 +1,11 @@
 # Wiki ↔ formula cross-check
 
-Generated from data/wiki/*.json. Stats checked: 175; with findings: 47; unmatched: 0; unwired annotated sources: 50; stats with no formula yet: 30 (70 sources).
+Generated from data/wiki/*.json. Stats checked: 175; with findings: 41; unmatched: 0; unwired annotated sources: 0; stats with no formula yet: 30 (70 sources).
 
 ## Wiki stats with no matching registry name / formula
 
 ## Annotated sources not wired into their (existing) stat formula
-
-- archaeology/idolCephalus (arch.idol.cephalus) not wired into 'game_speed_multi'
-- archaeology/idolDemeter (arch.idol.demeter) not wired into 'golden_vein_multi'
-- archaeology/idolHephaestus (arch.idol.hephaestus) not wired into 'coal_generation_seconds'
-- archaeology/idolIris (arch.idol.iris) not wired into 'golden_floor_multi'
-- archaeology/idolMnemosynePrismUnlock (arch.idol.mnemosynePrismUnlock) not wired into 'drone_prism_grade_cap_increase'
-- archaeology/idolNyx (arch.idol.nyx) not wired into 'drone_void_grade_cap_increase'
-- challenges/chPickaxeSuperCritDmg (challenges.pickaxeSuperCritDmg) not wired into 'pickaxe_super_crit_damage'
-- construct/staAntagonismFroggerCap (construct.staAntagonismFroggerCap) not wired into 'drone_frogger_grade_cap_increase'
-- construct/staFallacyVeinseekerCap (construct.staFallacyVeinseekerCap) not wired into 'drone_veinseeker_grade_cap_increase'
-- construct/staRodentiaChainCap (construct.staRodentiaChainCap) not wired into 'drone_chain_grade_cap_increase'
-- construct/staSemblancePrismCap (construct.staSemblancePrismCap) not wired into 'drone_prism_grade_cap_increase'
-- construct/staSemblanceVoidCap (construct.staSemblanceVoidCap) not wired into 'drone_void_grade_cap_increase'
-- construct/staWarmthMidasCap (construct.staWarmthMidasCap) not wired into 'drone_midas_grade_cap_increase'
-- contracts/ctPrestigePtsW1 (contracts.prestigePtsW1) not wired into 'prestige_point_multi'
-- contracts/ctRainbowFloorChance (contracts.rainbowFloorChance) not wired into 'rainbow_floor_chance'
-- drones/dronePrismGradePassive (drones.grade.prism) not wired into 'galactic_floor_chance'
-- drones/droneSuitAnglerUpgrade (drones.suit.angler.upgrade) not wired into 'fishing_tick_reduction_seconds'
-- drones/droneSuitPrismUpgrade (drones.suit.prism.upgrade) not wired into 'galactic_floor_chance'
-- fishing/noticeT1SuperStarSupernovaMul (fishing.notice.t1.superStarSupernovaMul) not wired into 'super_star_supernova_multi'
-- fishing/noticeT2LasagnaGoldenOreMul (fishing.notice.t2.lasagnaGoldenOre) not wired into 'golden_ore_multi'
-- fishing/noticeT2VeinseekerGradeCap (fishing.notice.t2.veinseekerGradeCap) not wired into 'drone_veinseeker_grade_cap_increase'
-- items/droneJuiceDroneRadius (items.droneJuice) not wired into 'drone_radius_percent'
-- items/droneJuiceDroneSpeed (items.droneJuice) not wired into 'drone_movespeed_percent'
-- pets/petCrabQuestBomBofPlenty (pets.crabQuest) not wired into 'bomb_of_plenty_multi'
-- pets/petLeprechaunQuestTransmuterBop (pets.leprechaunQuest) not wired into 'bomb_trans_apply_bop_chance'
-- pets/petTotemQuestChainDroneCap (pets.totemQuest) not wired into 'drone_chain_grade_cap_increase'
-- pets/petWhaleSkinLootbugGem (pets.whaleSkin) not wired into 'lootbug_gem_cost_reduction'
-- relics/legendaryRelicStarSpawn (relics.legendary.starSpawn) not wired into 'star_spawn_rate'
-- skillTree/callOfTheVoidGradeCap (skillTree.callOfTheVoid) not wired into 'drone_void_grade_cap_increase'
-- skillTree/frogFrenzyFroggerGradeCap (skillTree.frogFrenzy) not wired into 'drone_frogger_grade_cap_increase'
-- skillTree/iBuriedItHereChainDroneCap (skillTree.iBuriedItHere) not wired into 'drone_chain_grade_cap_increase'
-- skillTree/ingotIntuitionBarCost (skillTree.ingotIntuition) not wired into 'bar_upgrade_cost_reduction'
-- skillTree/insaneInTheVeinGainVeinPoly (skillTree.insaneInTheVeinGain) not wired into 'polychrome_card_bonus_vein'
-- skillTree/pondYieldGoldenFrogMul (skillTree.pondYield) not wired into 'lootfrog_golden_multi'
-- skins/snBoPmultiT1 (skins.BoPmultiT1) not wired into 'bomb_of_plenty_multi'
-- skins/snBoPmultiT2 (skins.BoPmultiT2) not wired into 'bomb_of_plenty_multi'
-- stargazing/starAquariusGoldenLootbug (stargazing.starAquarius) not wired into 'lootbug_golden_chance'
-- stargazing/starCetusPolyCardMul (stargazing.starCetus) not wired into 'polychrome_card_bonus_ore'
-- upgrades/upgrGalacticFloorChance1 (upgrades.galacticFloorChance1) not wired into 'galactic_floor_chance'
-- upgrades/upgrGalacticFloorChance2 (upgrades.galacticFloorChance2) not wired into 'galactic_floor_chance'
-- upgrades/upgrPetSkinLevelUpChance (upgrades.petSkinLevelUpChance) not wired into 'pet_levelup_chance_multi'
-- workshop/wsBOPoreMultiW1 (workshop.BOPoreMultiW1) not wired into 'bomb_of_plenty_multi'
-- workshop/wsBOPoreMultiW3 (workshop.BOPoreMultiW3) not wired into 'bomb_of_plenty_multi'
-- workshop/wsBOPoreMultiW4 (workshop.BOPoreMultiW4) not wired into 'bomb_of_plenty_multi'
-- workshop/wsBoPgoldenChanceW3 (workshop.BoPgoldenChanceW3) not wired into 'bomb_of_plenty_make_gold_chance'
-- workshop/wsCherryBomb3xChanceW1 (workshop.CherryBomb3xChanceW1) not wired into 'bomb_cherry3x_chance'
-- workshop/wsFishingTicksW3 (workshop.fishingTicksW3) not wired into 'fishing_tick_speed'
-- workshop/wsStarfruitAllStarMultiW4 (workshop.StarfruitAllStarMultiW4) not wired into 'all_star_multi'
-- workshop/wsTransmuterBombBOPmarkW2 (workshop.TransmuterBombBOPmarkW2) not wired into 'bomb_trans_apply_bop_chance'
-- worldquests/wqElixirDroneGradeCapQ9 (worldquests.ElixirDroneGradeCapQ9) not wired into 'drone_elixir_grade_cap_increase'
+_none — every annotated source with a formula is wired._
 
 ## Annotated stats with no formula yet (known debt)
 - archaeology_ability_cd (5): archaeology/archEnrageCD, archaeology/archFlurryCD, archaeology/archAbilityCD, archaeology/archQuakeCD, skillTree/avadaKedaAbilityCooldown
@@ -103,9 +53,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 47; unmatche
 ### Bomb Ultra Crit Chance (`bomb_ultra_crit_chance`)
 - missing system Items: Rock Cake (Requires the Cassandra Idol
 
-### Cherry Charge 3x Chance (`bomb_cherry3x_chance`)
-- missing system Workshop: The Cherry 3x Charge Chance Upgrade (formula has 1 unknown placeholder(s))
-
 ### Bomb Cap Multiplier (`bomb_cap_multiplier`)
 - missing system Store: The Bomber Extraordinaire Bundle (formula has 1 unknown placeholder(s))
 - missing system Pets: The Crab Pet (formula has 1 unknown placeholder(s))
@@ -128,13 +75,6 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 47; unmatche
 - wiki has (sub-formula) in Items but our formula is flat: Eye of Newt (requires the Iris Idol + Yummy Pizza
 - wiki has (sub-formula) in Pets but our formula is flat: The Penguin Pet(The Leprechaun Pet + The Penguin Pet Quest
 
-### Rainbow Floor Chance (`rainbow_floor_chance`)
-- missing system Contracts: A World 3 Contract Upgrade (formula has 1 unknown placeholder(s))
-
-### Galactic Rainbow Floor Chance (`galactic_floor_chance`)
-- missing system Drones: The Prism Drone (formula has 1 unknown placeholder(s))
-- missing system Upgrades: The Guardium Bar; The Pishalvite Bar (formula has 1 unknown placeholder(s))
-
 ### Prismatic Galactic Floor Chance (`prismatic_floor_chance`)
 - missing system Drones: The Fueled Prism Drone (formula has 1 unknown placeholder(s))
 
@@ -156,23 +96,14 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 47; unmatche
 ### Obelisk Cooldown (`obelisk_cooldown_multi`)
 - missing system Prestige: A Tier 1 Artifact
 
-### Prestige Point Gain Multiplier (`prestige_point_multi`)
-- missing system Contracts: A World 1 Contract Upgrade (formula has 1 unknown placeholder(s))
-
 ### Experience Gain Multiplier (`experience_multi`)
 - missing system Drones: An Elixir Drone Buff (Also from the Founder Supply Drop (formula has 1 unknown placeholder(s))
 
 ### Lootbug Spawn Rate Multiplier (`lootbug_spawn_rate`)
 - missing system Drones: Fueled Bomb Bear Drone (formula has 1 unknown placeholder(s))
 
-### Golden Lootbug Chance (`lootbug_golden_chance`)
-- missing system Stargazing: Aquarius (formula has 1 unknown placeholder(s))
-
 ### Banked Lootbug Cap (`lootbug_bank_cap`)
 - wiki has (sub-formula) in Stargazing but our formula is flat: Ophiuchus + Super Star Upgrades
-
-### Lootbug Gem Cost Reduction (`lootbug_gem_cost_reduction`)
-- missing system Pets: The Whale Pet Skin (formula has 1 unknown placeholder(s))
 
 ### Lanterns Used (`lootfrog_lanterns_used`)
 - missing system Items: Lootbug Lantern
@@ -206,8 +137,7 @@ Generated from data/wiki/*.json. Stats checked: 175; with findings: 47; unmatche
 - missing system Stargazing: The Fourteenth Black Hole boost (formula has 1 unknown placeholder(s))
 
 ### Star Spawn Rate Multiplier (`star_spawn_rate`)
-- missing system Drones: The Fueled Starburst Suit; An Elixir Drone Buff (Also from Gifts, the Founder Supply Drop, and Lootbugs (formula has 3 unknown placeholder(s))
-- missing system Relics: A Legendary Relic (formula has 3 unknown placeholder(s))
+- missing system Drones: The Fueled Starburst Suit; An Elixir Drone Buff (Also from Gifts, the Founder Supply Drop, and Lootbugs (formula has 2 unknown placeholder(s))
 
 ### Auto-Catch Chance (`star_auto_catch_chance`)
 - missing system Drones: The Fueled Starburst Suit; An Elixir Drone Buff (Also from the Founder Supply Drop and Lootbugs (formula has 2 unknown placeholder(s))

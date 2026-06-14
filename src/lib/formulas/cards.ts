@@ -7,6 +7,8 @@ import { petSources as pet } from '$lib/sources/pets'
 import { storeSources as st } from '$lib/sources/store'
 import { tributesSources as tr } from '$lib/sources/tributes'
 import { fishingSources as f } from '$lib/sources/fishing'
+import { stargazingSources as sg } from '$lib/sources/stargazing'
+import { skillTreeSources as sk } from '$lib/sources/skillTree'
 
 const U: Source = {
   key: '_unknown',
@@ -29,7 +31,7 @@ const U: Source = {
 export const cardsFormulas: FormulaMap = defineFormulas({
   polychrome_card_bonus_ore: {
     contributions: [
-      { source: U, op: '+', unknown: true }, // Stargazing: Cetus (+0.15/rank)
+      { source: sg.starCetusPolyCardMul, op: '+' },
       { source: up.upgrPolychromeOreCardMulti, op: '+' },
       { source: pet.petHappyBotQuestPolyOre, op: '×1+' },
       { source: st.storeVpPolyPotencyOre, op: '×' },
@@ -45,7 +47,8 @@ export const cardsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: pet.petHappyBotQuestPolyVein, op: '×1+' },
       { source: st.storeVpPolyPotencyVein, op: '×' },
-      { source: U, op: '+', unknown: true }, // Skill-Tree: Insane In The Vein Gain; Relics: last Mythic
+      { source: sk.insaneInTheVeinGainVeinPoly, op: '+' },
+      { source: U, op: '+', unknown: true }, // Relics: last Mythic
     ],
   },
   polychrome_card_bonus_star: {

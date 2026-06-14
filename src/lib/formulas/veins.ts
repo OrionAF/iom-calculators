@@ -79,6 +79,7 @@ export const veinsFormulas: FormulaMap = defineFormulas({
       { source: st.storeVpVeinExtractorGoldenVeinMul, op: '×' },
       { source: f.noticeT1GoldenVeinMul, op: '+' },
       { source: up.upgrGoldenVeinMul, op: '+' },
+      { source: arch.idolDemeter, op: '+' },
       { source: U, op: '+', unknown: true }, // Drones fueled Veinseeker (temp)
     ],
   },

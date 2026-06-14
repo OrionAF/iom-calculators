@@ -16,6 +16,7 @@ import { constructSources as con } from '$lib/sources/construct'
 import { upgradeSources as up } from '$lib/sources/upgrades'
 import { tributesSources as tr } from '$lib/sources/tributes'
 import { worldquestsSources as wq } from '$lib/sources/worldquests'
+import { workshopSources as ws } from '$lib/sources/workshop'
 
 const UNKNOWN: Source = {
   key: '_unknown',
@@ -38,7 +39,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: UNKNOWN, op: '×', unknown: true }, // Drones: Elixir Drone (×)
       { source: pet.petStarfishSkinStarSpawn, op: '+' },
       { source: ch.chStarSpawnRate, op: '+' },
-      { source: UNKNOWN, op: '+', unknown: true }, // Relics: Legendary Relic
+      { source: rel.legendaryRelicStarSpawn, op: '+' },
     ],
   },
 
@@ -185,7 +186,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: con.staWarmthSuperStarSupernova, op: '+' },
       { source: st.storeVpSupernovaSuperStarNovaMul, op: '+' },
       { source: tr.trMegalodonT2ASMSuper, op: '×' },
-      { source: UNKNOWN, op: '×', unknown: true }, // Fishing: Tier 1 Notice (×)
+      { source: f.noticeT1SuperStarSupernovaMul, op: '+' },
     ],
   },
 
@@ -315,6 +316,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
       { source: st.storeVpSingularityAllStar, op: '×' },
       { source: f.noticeT1AllStarMul, op: '+' },
       { source: drone.droneMidasEnhancementAllStar, op: '+' },
+      { source: ws.wsStarfruitAllStarMultiW4, op: '+' },
       { source: tr.trMeltingGibbousT1ASM, op: '×' },
     ],
   },

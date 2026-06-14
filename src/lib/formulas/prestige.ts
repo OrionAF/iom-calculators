@@ -38,6 +38,7 @@ export const prestigeFormulas: FormulaMap = defineFormulas({
       { source: card.cardMiscCeliosHat, op: '×' },
       { source: st.storePerkPrestigePts, op: '×' },
       { source: sg.starLibraPrestige, op: '+' },
+      { source: ct.ctPrestigePtsW1, op: '+' },
       { source: U, op: '+', unknown: true }, // Prestige + Store + Cards + Construct + Skins
       { source: sn.snPrestigePointGain, op: '×1+' },
     ],

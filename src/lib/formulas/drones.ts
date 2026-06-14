@@ -12,6 +12,8 @@ import { petSources as pet } from '$lib/sources/pets'
 import { upgradeSources as up } from '$lib/sources/upgrades'
 import { tributesSources as tr } from '$lib/sources/tributes'
 import { worldquestsSources as wq } from '$lib/sources/worldquests'
+import { fishingSources as fish } from '$lib/sources/fishing'
+import { itemSources as it } from '$lib/sources/items'
 
 const U: Source = {
   key: '_unknown',
@@ -35,10 +37,16 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     contributions: [{ source: drone.droneUpgradeDamage, op: '+' }],
   },
   drone_radius_percent: {
-    contributions: [{ source: drone.droneUpgradeRadius, op: '+' }],
+    contributions: [
+      { source: drone.droneUpgradeRadius, op: '+' },
+      { source: it.droneJuiceDroneRadius, op: '+' },
+    ],
   },
   drone_movespeed_percent: {
-    contributions: [{ source: drone.droneUpgradeMovespeed, op: '+' }],
+    contributions: [
+      { source: drone.droneUpgradeMovespeed, op: '+' },
+      { source: it.droneJuiceDroneSpeed, op: '+' },
+    ],
   },
   drone_attack_speed_percent: {
     contributions: [{ source: drone.droneUpgradeAttackSpeed, op: '+' }],
@@ -59,6 +67,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sk.gasolineGuzzlerCoalTime, op: '+' },
       { source: drone.coalCoalProduction, op: '+' },
+      { source: arch.idolHephaestus, op: '+' },
       { source: U, op: '+', unknown: true }, // Elixir Drone (temp)
     ],
   },
@@ -182,24 +191,32 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: card.cardDroneChainCap, op: '+' },
       { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+      { source: con.staRodentiaChainCap, op: '+' },
+      { source: pet.petTotemQuestChainDroneCap, op: '+' },
+      { source: sk.iBuriedItHereChainDroneCap, op: '+' },
     ],
   },
   drone_midas_grade_cap_increase: {
     contributions: [
       { source: card.cardDroneMidasCap, op: '+' },
       { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+      { source: con.staWarmthMidasCap, op: '+' },
     ],
   },
   drone_frogger_grade_cap_increase: {
     contributions: [
       { source: card.cardDroneFroggerCap, op: '+' },
       { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+      { source: con.staAntagonismFroggerCap, op: '+' },
+      { source: sk.frogFrenzyFroggerGradeCap, op: '+' },
     ],
   },
   drone_veinseeker_grade_cap_increase: {
     contributions: [
       { source: card.cardDroneVeinseekerCap, op: '+' },
       { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+      { source: con.staFallacyVeinseekerCap, op: '+' },
+      { source: fish.noticeT2VeinseekerGradeCap, op: '+' },
     ],
   },
   drone_starburst_grade_cap_increase: {
@@ -212,6 +229,7 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: card.cardDroneElixirCap, op: '+' },
       { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+      { source: wq.wqElixirDroneGradeCapQ9, op: '+' },
     ],
   },
   drone_void_grade_cap_increase: {
@@ -219,6 +237,9 @@ export const dronesFormulas: FormulaMap = defineFormulas({
       { source: card.cardDroneVoidCap, op: '+' },
       { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
       { source: tr.trGlacialShellstealerT2VDGC, op: '+' },
+      { source: con.staSemblanceVoidCap, op: '+' },
+      { source: sk.callOfTheVoidGradeCap, op: '+' },
+      { source: arch.idolNyx, op: '+' },
     ],
   },
   drone_angler_grade_cap_increase: {
@@ -231,6 +252,8 @@ export const dronesFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: card.cardDronePrismCap, op: '+' },
       { source: tr.trBlackenedBaskerT1ADGC, op: '+' },
+      { source: con.staSemblancePrismCap, op: '+' },
+      { source: arch.idolMnemosynePrismUnlock, op: '+' },
     ],
   },
 })

@@ -87,7 +87,7 @@ export const craftingFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: ch.chBarUpgradeCosts, op: '+' },
       { source: ct.ctBarCostReductionW1, op: '+' },
-      { source: U, op: '+', unknown: true },
+      { source: sk.ingotIntuitionBarCost, op: '+' },
     ],
   },
   bar_craft_cost_multi: {
