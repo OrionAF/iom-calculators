@@ -1,22 +1,93 @@
 # Wiki ↔ formula cross-check
 
-Generated from data/wiki/*.json. Stats checked: 175; with findings: 47; unmatched: 0; annotated-source gaps: 12.
+Generated from data/wiki/*.json. Stats checked: 175; with findings: 47; unmatched: 0; unwired annotated sources: 50; stats with no formula yet: 30 (70 sources).
 
 ## Wiki stats with no matching registry name / formula
 
-## Annotated sources missing from their stat's formula
-- storeFounderSupplyDropCd (store.founder) → statKey 'founder_supply_drop_cd' has no formula
-- storeFounderDoubleSupplyDrop (store.founder) → statKey 'founder_double_supply_drop_chance' has no formula
-- storeFounderTripleSupplyDrop (store.founder) → statKey 'founder_triple_supply_drop_chance' has no formula
-- storeFounderGoldenSupplyDrop (store.founder) → statKey 'founder_golden_supply_drop_chance' has no formula
-- storeFounderGemBombGemChance (store.founder) → statKey 'gem_bomb_gem_chance' has no formula
-- storeVpArchFragmentGain (store.vp.archaeologyBundle) → statKey 'archaeology_fragment_gain_multi' has no formula
-- storeVpAscensionArchExp (store.vp.ascensionBundle) → statKey 'archaeology_exp_gain_multi' has no formula
-- storeVpAscensionAutoTap (store.vp.ascensionBundle) → statKey 'archaeology_crosshair_auto_tap' has no formula
-- storeVpAscensionLootMod (store.vp.ascensionBundle) → statKey 'archaeology_lood_mod_chance' has no formula
-- storeVpAscensionGoldenCrosshair (store.vp.ascensionBundle) → statKey 'archaeology_golden_crosshair_chance' has no formula
-- storeVpCapitalistRelicChance (store.vp.capitalistBundle) → statKey 'freebie_chance_for_bonus_relic' has no formula
-- storeVpSkillSurgeSkillShard (store.vp.skillSurgeBundle) → statKey 'freebie_chance_for_skill_shard' has no formula
+## Annotated sources not wired into their (existing) stat formula
+
+- archaeology/idolCephalus (arch.idol.cephalus) not wired into 'game_speed_multi'
+- archaeology/idolDemeter (arch.idol.demeter) not wired into 'golden_vein_multi'
+- archaeology/idolHephaestus (arch.idol.hephaestus) not wired into 'coal_generation_seconds'
+- archaeology/idolIris (arch.idol.iris) not wired into 'golden_floor_multi'
+- archaeology/idolMnemosynePrismUnlock (arch.idol.mnemosynePrismUnlock) not wired into 'drone_prism_grade_cap_increase'
+- archaeology/idolNyx (arch.idol.nyx) not wired into 'drone_void_grade_cap_increase'
+- challenges/chPickaxeSuperCritDmg (challenges.pickaxeSuperCritDmg) not wired into 'pickaxe_super_crit_damage'
+- construct/staAntagonismFroggerCap (construct.staAntagonismFroggerCap) not wired into 'drone_frogger_grade_cap_increase'
+- construct/staFallacyVeinseekerCap (construct.staFallacyVeinseekerCap) not wired into 'drone_veinseeker_grade_cap_increase'
+- construct/staRodentiaChainCap (construct.staRodentiaChainCap) not wired into 'drone_chain_grade_cap_increase'
+- construct/staSemblancePrismCap (construct.staSemblancePrismCap) not wired into 'drone_prism_grade_cap_increase'
+- construct/staSemblanceVoidCap (construct.staSemblanceVoidCap) not wired into 'drone_void_grade_cap_increase'
+- construct/staWarmthMidasCap (construct.staWarmthMidasCap) not wired into 'drone_midas_grade_cap_increase'
+- contracts/ctPrestigePtsW1 (contracts.prestigePtsW1) not wired into 'prestige_point_multi'
+- contracts/ctRainbowFloorChance (contracts.rainbowFloorChance) not wired into 'rainbow_floor_chance'
+- drones/dronePrismGradePassive (drones.grade.prism) not wired into 'galactic_floor_chance'
+- drones/droneSuitAnglerUpgrade (drones.suit.angler.upgrade) not wired into 'fishing_tick_reduction_seconds'
+- drones/droneSuitPrismUpgrade (drones.suit.prism.upgrade) not wired into 'galactic_floor_chance'
+- fishing/noticeT1SuperStarSupernovaMul (fishing.notice.t1.superStarSupernovaMul) not wired into 'super_star_supernova_multi'
+- fishing/noticeT2LasagnaGoldenOreMul (fishing.notice.t2.lasagnaGoldenOre) not wired into 'golden_ore_multi'
+- fishing/noticeT2VeinseekerGradeCap (fishing.notice.t2.veinseekerGradeCap) not wired into 'drone_veinseeker_grade_cap_increase'
+- items/droneJuiceDroneRadius (items.droneJuice) not wired into 'drone_radius_percent'
+- items/droneJuiceDroneSpeed (items.droneJuice) not wired into 'drone_movespeed_percent'
+- pets/petCrabQuestBomBofPlenty (pets.crabQuest) not wired into 'bomb_of_plenty_multi'
+- pets/petLeprechaunQuestTransmuterBop (pets.leprechaunQuest) not wired into 'bomb_trans_apply_bop_chance'
+- pets/petTotemQuestChainDroneCap (pets.totemQuest) not wired into 'drone_chain_grade_cap_increase'
+- pets/petWhaleSkinLootbugGem (pets.whaleSkin) not wired into 'lootbug_gem_cost_reduction'
+- relics/legendaryRelicStarSpawn (relics.legendary.starSpawn) not wired into 'star_spawn_rate'
+- skillTree/callOfTheVoidGradeCap (skillTree.callOfTheVoid) not wired into 'drone_void_grade_cap_increase'
+- skillTree/frogFrenzyFroggerGradeCap (skillTree.frogFrenzy) not wired into 'drone_frogger_grade_cap_increase'
+- skillTree/iBuriedItHereChainDroneCap (skillTree.iBuriedItHere) not wired into 'drone_chain_grade_cap_increase'
+- skillTree/ingotIntuitionBarCost (skillTree.ingotIntuition) not wired into 'bar_upgrade_cost_reduction'
+- skillTree/insaneInTheVeinGainVeinPoly (skillTree.insaneInTheVeinGain) not wired into 'polychrome_card_bonus_vein'
+- skillTree/pondYieldGoldenFrogMul (skillTree.pondYield) not wired into 'lootfrog_golden_multi'
+- skins/snBoPmultiT1 (skins.BoPmultiT1) not wired into 'bomb_of_plenty_multi'
+- skins/snBoPmultiT2 (skins.BoPmultiT2) not wired into 'bomb_of_plenty_multi'
+- stargazing/starAquariusGoldenLootbug (stargazing.starAquarius) not wired into 'lootbug_golden_chance'
+- stargazing/starCetusPolyCardMul (stargazing.starCetus) not wired into 'polychrome_card_bonus_ore'
+- upgrades/upgrGalacticFloorChance1 (upgrades.galacticFloorChance1) not wired into 'galactic_floor_chance'
+- upgrades/upgrGalacticFloorChance2 (upgrades.galacticFloorChance2) not wired into 'galactic_floor_chance'
+- upgrades/upgrPetSkinLevelUpChance (upgrades.petSkinLevelUpChance) not wired into 'pet_levelup_chance_multi'
+- workshop/wsBOPoreMultiW1 (workshop.BOPoreMultiW1) not wired into 'bomb_of_plenty_multi'
+- workshop/wsBOPoreMultiW3 (workshop.BOPoreMultiW3) not wired into 'bomb_of_plenty_multi'
+- workshop/wsBOPoreMultiW4 (workshop.BOPoreMultiW4) not wired into 'bomb_of_plenty_multi'
+- workshop/wsBoPgoldenChanceW3 (workshop.BoPgoldenChanceW3) not wired into 'bomb_of_plenty_make_gold_chance'
+- workshop/wsCherryBomb3xChanceW1 (workshop.CherryBomb3xChanceW1) not wired into 'bomb_cherry3x_chance'
+- workshop/wsFishingTicksW3 (workshop.fishingTicksW3) not wired into 'fishing_tick_speed'
+- workshop/wsStarfruitAllStarMultiW4 (workshop.StarfruitAllStarMultiW4) not wired into 'all_star_multi'
+- workshop/wsTransmuterBombBOPmarkW2 (workshop.TransmuterBombBOPmarkW2) not wired into 'bomb_trans_apply_bop_chance'
+- worldquests/wqElixirDroneGradeCapQ9 (worldquests.ElixirDroneGradeCapQ9) not wired into 'drone_elixir_grade_cap_increase'
+
+## Annotated stats with no formula yet (known debt)
+- archaeology_ability_cd (5): archaeology/archEnrageCD, archaeology/archFlurryCD, archaeology/archAbilityCD, archaeology/archQuakeCD, skillTree/avadaKedaAbilityCooldown
+- archaeology_ability_dur (1): skillTree/avadaKedaAbilityDuration
+- archaeology_ability_insta (3): archaeology/archAbilityInsta, archaeology/archAbilityInstaA1, skillTree/avadaKedaInstacharge
+- archaeology_crosshair_auto_tap (3): store/storeVpAscensionAutoTap, archaeology/archAutoTapChance, archaeology/archAutoTapA1
+- archaeology_dmg_per_stage (1): skillTree/blockBonkerDamagePerStage
+- archaeology_exp_gain_multi (7): store/storeVpAscensionArchExp, archaeology/archExpGainGem, archaeology/archExpGainCommon, archaeology/archExpGainEpic, archaeology/archExpGainLegendary, archaeology/archExpGain2x, archaeology/archExpGainA1
+- archaeology_fragment_gain_multi (6): store/storeVpArchFragmentGain, pets/petAxolotlQuestArchFragment, archaeology/archFragGainGem, archaeology/archFragGainEpic, archaeology/archFragGain125x, archaeology/idolHestia
+- archaeology_golden_crosshair_chance (2): store/storeVpAscensionGoldenCrosshair, archaeology/archGoldCrosshairChance
+- archaeology_lood_mod_chance (3): store/storeVpAscensionLootMod, archaeology/archAllModChances, archaeology/archAllModChancesA1
+- archaeology_spd_mod_gain (4): archaeology/archLootModGain, archaeology/archLootModGainA2, archaeology/archStaminaModGain, skillTree/blockBonkerSpeedMod
+- archaeology_stm_per_stage (1): skillTree/blockBonkerStaminaPerStage
+- fishing_abyss_dock_tick_req (2): fishing/tier2DockTicksE2, skillTree/motleySchoolAbyssDockTick
+- founder_double_supply_drop_chance (1): store/storeFounderDoubleSupplyDrop
+- founder_golden_supply_drop_chance (1): store/storeFounderGoldenSupplyDrop
+- founder_supply_drop_cd (1): store/storeFounderSupplyDropCd
+- founder_triple_supply_drop_chance (1): store/storeFounderTripleSupplyDrop
+- freebie_100x_gift_chance (1): construct/staSoprano100xGiftChance
+- freebie_chance_for_bonus_relic (2): store/storeVpCapitalistRelicChance, skillTree/freeThatsGreatRelicChance
+- freebie_chance_for_skill_shard (3): store/storeVpSkillSurgeSkillShard, construct/staFriendshipSkillShard, challenges/chSkillShardChance
+- freebie_gift_chance (1): construct/staSopranoFreebieGiftChance
+- gem_bomb_gem_chance (4): store/storeFounderGemBombGemChance, construct/staNatureGemBombGem, skins/snGemBombGemChance, pets/petWhaleQuestGemBombGem
+- item_unlock_golden_cosmic_candy (1): worldquests/wqUnlockGoldenCosmicCandyQ20
+- item_unlock_golden_yummy_pizza (1): worldquests/wqUnlockGoldenYummyPizzaQ14
+- pet_level_cap_butterfly (1): worldquests/wqButterflyPetLevelCapQ19
+- star_capricorn_cap (3): construct/staComfortCapricornCap, pets/petStarfishQuestCapricornCap, skillTree/whyAreThereStarsCapricornCap
+- star_gemini_cap (1): skillTree/whyAreThereStarsGeminiCap
+- star_orion_cap (2): archaeology/idolAtlasOrion, skillTree/ctrlCCtrlVStarsOrionCap
+- star_scorpio_cap (2): construct/staComfortScorpioCap, skillTree/idleObeliskMincerScorpioCap
+- veinmorpher_chance (1): workshop/wsVeinmorphMorphChanceW3
+- wq_world4_speedmodifier (5): worldquests/wqWorld4SpeedModifierQ1, worldquests/wqWorld4SpeedModifierQ4, worldquests/wqWorld4SpeedModifierQ7, worldquests/wqWorld4SpeedModifierQ12, worldquests/wqWorld4SpeedModifierQ15
 
 ## Per-stat findings
 

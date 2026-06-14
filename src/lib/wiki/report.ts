@@ -6,6 +6,46 @@ import { STAT_REGISTRY } from '$lib/stats/registry'
 import { parseStatsPage, type WikiStat } from './parse'
 import { storeSources } from '$lib/sources/store'
 import { cardSources } from '$lib/sources/cards'
+import { worldquestsSources } from '$lib/sources/worldquests'
+import { workshopSources } from '$lib/sources/workshop'
+import { constructSources } from '$lib/sources/construct'
+import { droneSources } from '$lib/sources/drones'
+import { artifactSources } from '$lib/sources/artifacts'
+import { relicSources } from '$lib/sources/relics'
+import { contractSources } from '$lib/sources/contracts'
+import { challengeSources } from '$lib/sources/challenges'
+import { skinsSources } from '$lib/sources/skins'
+import { tributesSources } from '$lib/sources/tributes'
+import { stargazingSources } from '$lib/sources/stargazing'
+import { fishingSources } from '$lib/sources/fishing'
+import { upgradeSources } from '$lib/sources/upgrades'
+import { itemSources } from '$lib/sources/items'
+import { petSources } from '$lib/sources/pets'
+import { archaeologySources } from '$lib/sources/archaeology'
+import { skillTreeSources } from '$lib/sources/skillTree'
+
+// Every source aggregate, labelled by system, for the annotated-source audit.
+const ALL_SOURCE_AGGREGATES: Array<[string, Record<string, unknown>]> = [
+  ['store', storeSources],
+  ['cards', cardSources],
+  ['worldquests', worldquestsSources],
+  ['workshop', workshopSources],
+  ['construct', constructSources],
+  ['drones', droneSources],
+  ['artifacts', artifactSources],
+  ['relics', relicSources],
+  ['contracts', contractSources],
+  ['challenges', challengeSources],
+  ['skins', skinsSources],
+  ['tributes', tributesSources],
+  ['stargazing', stargazingSources],
+  ['fishing', fishingSources],
+  ['upgrades', upgradeSources],
+  ['items', itemSources],
+  ['pets', petSources],
+  ['archaeology', archaeologySources],
+  ['skillTree', skillTreeSources],
+]
 
 /**
  * Cross-checks our formulas against the wiki Stats dumps (data/wiki/).
@@ -121,25 +161,43 @@ function formulaOpsBySystem(formula: StatFormula): Map<SourceSystem, Set<string>
  * source already present in the formula (the omission class that left nine
  * stargazing bundles unwired).
  */
-export function annotatedSourceGaps(): string[] {
-  const gaps: string[] = []
-  const aggregates: Array<Record<string, unknown>> = [storeSources, cardSources]
-  for (const aggregate of aggregates) {
+export interface AnnotatedSourceGaps {
+  /**
+   * Actionable: the source declares a statKey whose formula EXISTS, but the
+   * formula never references this source object. A real wiring miss — fix it.
+   */
+  unwired: string[]
+  /**
+   * Known debt: statKeys declared by sources that have no formula at all,
+   * grouped by statKey so the report stays compact instead of one line per
+   * source. Each entry is [statKey, ['system/name', ...]].
+   */
+  noFormula: Array<[string, string[]]>
+}
+
+export function annotatedSourceGaps(): AnnotatedSourceGaps {
+  const unwired: string[] = []
+  const noFormulaBy = new Map<string, string[]>()
+  for (const [system, aggregate] of ALL_SOURCE_AGGREGATES) {
     for (const [name, value] of Object.entries(aggregate)) {
       const src = value as { key?: string; statKey?: string }
       if (typeof src?.key !== 'string' || typeof src.statKey !== 'string') continue
       const formula = ALL_FORMULAS[src.statKey]
       if (!formula) {
-        gaps.push(`${name} (${src.key}) → statKey '${src.statKey}' has no formula`)
+        const list = noFormulaBy.get(src.statKey) ?? []
+        list.push(`${system}/${name}`)
+        noFormulaBy.set(src.statKey, list)
         continue
       }
       const wired = flattenContributions(formula).some((c) => c.source === value)
       if (!wired) {
-        gaps.push(`${name} (${src.key}) not wired into '${src.statKey}'`)
+        unwired.push(`${system}/${name} (${src.key}) not wired into '${src.statKey}'`)
       }
     }
   }
-  return gaps
+  unwired.sort()
+  const noFormula = [...noFormulaBy.entries()].sort((a, b) => a[0].localeCompare(b[0]))
+  return { unwired, noFormula }
 }
 
 export function buildWikiReport(readFile: (path: string) => string): string {
@@ -220,17 +278,23 @@ export function buildWikiReport(readFile: (path: string) => string): string {
   }
 
   const sourceGaps = annotatedSourceGaps()
+  const debtStats = sourceGaps.noFormula.length
+  const debtSources = sourceGaps.noFormula.reduce((n, [, names]) => n + names.length, 0)
 
   const header = [
     '# Wiki ↔ formula cross-check',
     '',
-    `Generated from data/wiki/*.json. Stats checked: ${statsChecked}; with findings: ${statsWithFindings}; unmatched: ${unmatched.length}; annotated-source gaps: ${sourceGaps.length}.`,
+    `Generated from data/wiki/*.json. Stats checked: ${statsChecked}; with findings: ${statsWithFindings}; unmatched: ${unmatched.length}; unwired annotated sources: ${sourceGaps.unwired.length}; stats with no formula yet: ${debtStats} (${debtSources} sources).`,
     '',
     '## Wiki stats with no matching registry name / formula',
     ...unmatched.map((n) => `- ${n}`),
     '',
-    "## Annotated sources missing from their stat's formula",
-    ...sourceGaps.map((g) => `- ${g}`),
+    '## Annotated sources not wired into their (existing) stat formula',
+    sourceGaps.unwired.length ? '' : '_none — every annotated source with a formula is wired._',
+    ...sourceGaps.unwired.map((g) => `- ${g}`),
+    '',
+    '## Annotated stats with no formula yet (known debt)',
+    ...sourceGaps.noFormula.map(([statKey, names]) => `- ${statKey} (${names.length}): ${names.join(', ')}`),
     '',
     '## Per-stat findings',
   ]
