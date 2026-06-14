@@ -38,8 +38,7 @@ export const commonRelicBombCritDamage = rel('common.bombCritDamage', 'Common Re
 export const rareRelicBombDamage = rel('rare.bombDamage', 'Rare Relic – Bomb Damage', undefined, 'bomb_damage', '×1+', (n) => n * 0.2)
 export const rareRelicExp = rel('rare.exp', 'Rare Relic – Experience Gain', undefined, 'experience_multi', '+', (n) => n * 0.03)
 export const rareRelicTripleRock = rel('rare.tripleRock', 'Rare Relic – Triple Rock Chance', 100, 'multi_rock_chance', '+', (n) => n * 0.01)
-// Unwired: contract bar cost reduction, no unambiguous registry stat.
-export const rareRelicContractBar = rel('rare.contractBar', 'Rare Relic – Contract Cost Reduction', 25000, undefined, undefined, (n) => n * 0.02)
+export const rareRelicContractBar = rel('rare.contractBar', 'Rare Relic – Contract Cost Reduction', 25000, 'contract_cost_reduction', '+', (n) => n * 0.02)
 export const rareRelicFuelDuration = rel('rare.fuelDuration', 'Rare Relic – Fuel Duration', 2500, 'coal_fuel_duration_multi', '+', (n) => n * 0.0001)
 
 // ─── Epic Relics ──────────────────────────────────────────────────────────────

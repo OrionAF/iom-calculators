@@ -56,6 +56,7 @@ export const lootfrogsFormulas: FormulaMap = defineFormulas({
   lootfrog_golden_multi: {
     contributions: [
       { source: con.staAntagonismGoldenFrogMul, op: '+' },
+      { source: sk.pondYieldGoldenFrogMul, op: '+' },
       { source: U, op: '+', unknown: true },
     ],
   },

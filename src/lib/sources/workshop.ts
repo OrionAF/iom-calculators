@@ -28,9 +28,9 @@ const ws = (
 export const wsBombDmgW1 = ws('bombDmgW1', 'Basic & Chain Damage (W1)', 30, 'bomb_damage', '×1+', (n) => n * 0.5)
 export const wsBOPoreMultiW1 = ws('BOPoreMultiW1', 'Bomb of Plenty Ore Multi (W1)', 25, 'bomb_of_plenty_multi', '+', (n) => n * 1.0)
 export const wsPickaxeDmgW1 = ws('pickaxeDmgW1', 'Pickaxe Damage (W1)', 42, 'pickaxe_damage', '×1+', (n) => n * 0.03)
-export const wsD20chargesW1 = ws('D20chargesW1', 'D20 Charges (W1)', 42, undefined, undefined, (n) => n * 1)
+export const wsD20chargesW1 = ws('D20chargesW1', 'D20 Charges (W1)', 42, 'bomb_d20_charges', '+', (n) => n * 1)
 export const wsCherryBomb3xChanceW1 = ws('CherryBomb3xChanceW1', '3x Cherry Bomb Charges (W1)', 32, 'bomb_cherry3x_chance', '+', (n) => n * 0.005)
-export const wsTransmuterBombBarIncreaseW1 = ws('TransmuterBombBarIncreaseW1', 'Transmuter Bomb Bar increase (W1)', 27, undefined, undefined, (n) => n * 1)
+export const wsTransmuterBombBarIncreaseW1 = ws('TransmuterBombBarIncreaseW1', 'Transmuter Bomb Bar increase (W1)', 27, 'bomb_transmuter_multi', '+', (n) => n * 1)
 
 // ─── World 2 ──────────────────────────────────────────────────────────────────
 
@@ -43,7 +43,7 @@ export const wsBombDmgW3 = ws('bombDmgW3', 'Bomb Damage (W3)', 42, 'bomb_damage'
 export const wsVeinmorphMorphChanceW3 = ws('VeinmorphMorphChanceW3', 'Veinmorpher Bomb Morph Chance (W3)', 47, 'veinmorpher_chance', '+', (n) => n * 0.001)
 export const wsPickaxeDmgW3 = ws('pickaxeDmgW3', 'Pickaxe Damage (W3)', 47, 'pickaxe_damage', '×', (n) => 1 + n * 0.08)
 export const wsBoPgoldenChanceW3 = ws('BoPgoldenChanceW3', 'BoP Golden Chance (W3)', 47, 'bomb_of_plenty_make_gold_chance', '+', (n) => n * 0.0015)
-export const wsHamburgerBonusW3 = ws('hamburgerBonusW3', 'Hamburger Bonus (W3)', 47, undefined, undefined, (n) => n * 0.12)
+export const wsHamburgerBonusW3 = ws('hamburgerBonusW3', 'Hamburger Bonus (W3)', 47, 'item_hamburger_multi', '+', (n) => n * 0.12)
 export const wsBOPoreMultiW3 = ws('BOPoreMultiW3', 'Bomb of Plenty Ore Multi (W3)', 47, 'bomb_of_plenty_multi', '+', (n) => n * 0.5)
 export const wsFishingTicksW3 = ws('fishingTicksW3', 'Sushi Fishing Ticks (W3)', 42, 'fishing_tick_speed', '+', (n) => n)
 export const wsDronePowerW3 = ws('dronePowerW3', 'Fishing Drone Power (W3)', 52, 'fishing_drone_multiplier', '×', (n) => 1 + n * 0.02)

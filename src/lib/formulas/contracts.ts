@@ -9,6 +9,7 @@ import { stargazingSources as sg } from '$lib/sources/stargazing'
 import { upgradeSources as up } from '$lib/sources/upgrades'
 import { skinsSources as sn } from '$lib/sources/skins'
 import { cardSources as card } from '$lib/sources/cards'
+import { relicSources as rel } from '$lib/sources/relics'
 
 const U: Source = {
   key: '_unknown',
@@ -21,7 +22,7 @@ const U: Source = {
 export const contractsFormulas: FormulaMap = defineFormulas({
   contract_cost_reduction: {
     contributions: [
-      { source: U, op: '+', unknown: true }, // Relics: Rare Relic
+      { source: rel.rareRelicContractBar, op: '+' },
     ],
   },
   contract_double_points_chance: {

@@ -17,6 +17,7 @@ import { upgradeSources as up } from '$lib/sources/upgrades'
 import { tributesSources as tr } from '$lib/sources/tributes'
 import { worldquestsSources as wq } from '$lib/sources/worldquests'
 import { skinsSources as sn } from '$lib/sources/skins'
+import { droneSources as drone } from '$lib/sources/drones'
 
 const U: Source = {
   key: '_unknown',
@@ -93,6 +94,7 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: sg.starHerculesGoldenOreMul, op: '+' },
       { source: sg.ssGoldenOreMul, op: '+' },
       { source: up.upgrGoldenOreMul, op: '+' },
+      { source: f.noticeT2LasagnaGoldenOreMul, op: '+' },
       { source: card.cardPetPenguinInf, op: '×1+' },
     ],
   },
@@ -118,7 +120,8 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: sg.starGeminiGoldenFloor, op: '×' },
       { source: f.noticeT1GoldenFloor, op: '+' },
       { source: up.upgrGoldenFloorMul, op: '+' },
-      { source: U, op: '+', unknown: true }, // Drones (fueled Chain) + Items (Eye of Newt+Iris)
+      { source: arch.idolIris, op: '+' },
+      { source: U, op: '+', unknown: true }, // Drones (fueled Chain) + Items (Eye of Newt)
       { source: card.cardMiscFloor73, op: '×' },
       { source: card.cardDroneChainInf, op: '×1+' },
     ],
@@ -134,6 +137,7 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: con.staSafetyRainbowFloorChance, op: '+' },
       { source: pet.petLeprechaunRainbowFloor, op: '+' },
       { source: pet.petPenguinQuestRainbowFloor, op: '+' },
+      { source: ct.ctRainbowFloorChance, op: '+' },
       { source: st.storeFounderRainbowFloor, op: '+' },
       { source: st.storeVpPetTrainerRainbowFloor, op: '+' },
       { source: pet.petLeprechaunSkinRainbowFloor, op: '+' },
@@ -171,7 +175,10 @@ export const oresFormulas: FormulaMap = defineFormulas({
       { source: sg.starDracoGalacticChance, op: '+' },
       { source: sg.ssGalacticFloorChance, op: '+' },
       { source: arch.idolSisyphusGalactic, op: '+' },
-      { source: U, op: '+', unknown: true },
+      { source: drone.dronePrismGradePassive, op: '+' },
+      { source: drone.droneSuitPrismUpgrade, op: '+' },
+      { source: up.upgrGalacticFloorChance1, op: '+' },
+      { source: up.upgrGalacticFloorChance2, op: '+' },
       { source: wq.wqGalacticRainbowFloorChanceQ13, op: '+' },
       { source: card.cardPetLeprechaunInf, op: '+' },
     ],

@@ -218,6 +218,7 @@ export const pickaxeFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: ct.ctPickaxeDmgPerContractSuperCritDmg, op: '+' },
       { source: up.upgrSuperCritDmg, op: '+' },
+      { source: ch.chPickaxeSuperCritDmg, op: '+' },
     ],
   },
   pickaxe_ultra_crit_chance: {

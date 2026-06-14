@@ -49,7 +49,8 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
       { source: card.cardMiscGoldenLootbug, op: '+' },
       { source: st.storeFounderGoldenLootbug, op: '+' },
       { source: st.storeVpGoldenLootbug, op: '+' },
-      { source: U, op: '+', unknown: true }, // Stargazing: Aquarius + Cards
+      { source: sg.starAquariusGoldenLootbug, op: '+' },
+      { source: U, op: '+', unknown: true }, // Cards
     ],
   },
   lootbug_bank_cap: {
@@ -74,7 +75,7 @@ export const lootbugsFormulas: FormulaMap = defineFormulas({
   lootbug_gem_cost_reduction: {
     contributions: [
       { source: sk.savingForARainyDayLootbugGem, op: '+' },
-      { source: U, op: '+', unknown: true }, // Pets + Skins
+      { source: pet.petWhaleSkinLootbugGem, op: '+' },
       { source: sn.snLootbugGemPrice, op: '+' },
     ],
   },

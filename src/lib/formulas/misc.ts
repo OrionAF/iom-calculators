@@ -35,6 +35,7 @@ export const miscFormulas: FormulaMap = defineFormulas({
       { source: sg.ssGameSpeed, op: '+' },
       { source: f.noticeT1RemoveW3SpeedMod, op: '+' },
       { source: up.upgrGameSpeed, op: '+' },
+      { source: arch.idolCephalus, op: '+' },
       // Wiki: two Skin Rewards sum within the Skins menu, group joins ×
       {
         label: 'Skins',
@@ -74,7 +75,7 @@ export const miscFormulas: FormulaMap = defineFormulas({
       { source: st.storeVpPetTrainerPetLevel, op: '×' },
       { source: f.noticeT1PetLevelUp, op: '+' },
       { source: up.upgrPetLevelChance, op: '+' },
-      { source: U, op: '+', unknown: true }, // Relics: Mythic; Construct: Feline; Misc: pet skins
+      { source: up.upgrPetSkinLevelUpChance, op: '+' },
       { source: sn.snPetLevelUpChance, op: '×1+' },
     ],
   },
