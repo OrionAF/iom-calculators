@@ -6,13 +6,7 @@ import type { Op, Source } from '$lib/engine/types'
 // but no single statKey. The two-stat tribute keeps its primary statKey and adds a
 // sibling sharing the key. Cap/unlock tributes with no registry stat carry neither.
 
-const tr = (
-  key: string,
-  name: string,
-  statKey: string | undefined,
-  op: Op | undefined,
-  fn: Source['fn'],
-): Source => ({
+const tr = (key: string, name: string, statKey: string | undefined, op: Op | undefined, fn: Source['fn']): Source => ({
   key: `tribute.${key}`,
   name,
   system: 'tributes',
@@ -64,7 +58,7 @@ export const trStormSerpentT2CSC = tr('StormSerpentT2CSC', 'Tribute: Storm Serpe
 export const trStormSerpentT2LLM = tr('StormSerpentT2LLM', 'Tribute: Storm Serpent T2 - Lootbug Loot Multi 1.20×', 'lootbug_loot_multi', '×', (n) => 1 + n * 0.2)
 export const trMeltingGibbousT1ASM = tr('MeltingGibbousT1ASM', 'Tribute: Melting Gibbous T1 - All Star Multi 1.20×', 'all_star_multi', '×', (n) => 1 + n * 0.2)
 export const trMeltingGibbousT1RPC = tr('MeltingGibbousT1RPC', 'Tribute: Melting Gibbous T1 - Rainbow Portal Chance +2%', 'rainbow_void_portal_chance', '+', (n) => n * 0.02)
-export const trMeltingGibbousT1NUC = tr('MeltingGibbousT1NUC', 'Tribute: Melting Gibbous T1 - Note Upgrade Cap +5', undefined, undefined, (n) => n * 5)
+export const trMeltingGibbousT1NUC = tr('MeltingGibbousT1NUC', 'Tribute: Melting Gibbous T1 - Notice Upgrade Cap +5', undefined, undefined, (n) => n * 5)
 export const trMeltingGibbousT2PQC = tr('MeltingGibbousT2PQC', 'Tribute: Melting Gibbous T2 - Pet Quest Cap +1', undefined, undefined, (n) => n * 1)
 export const trMeltingGibbousT2UGLL = tr('MeltingGibbousT2UGLL', 'Tribute: Melting Gibbous T2 - Unlock Golden Lootbug Lantern', undefined, undefined, (n) => n * 1)
 export const trMeltingGibbousT2GFC = tr('MeltingGibbousT2GFC', 'Tribute: Melting Gibbous T2 - Golden Frog Chance +1%', 'lootfrog_golden_chance', '+', (n) => n * 0.01)
