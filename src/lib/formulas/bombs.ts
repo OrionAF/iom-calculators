@@ -257,7 +257,7 @@ export const bombsFormulas: FormulaMap = defineFormulas({
   bomb_transmuter_multi: {
     contributions: [
       { source: st.storeVpBomberTransmuterMulti, op: '+' },
-      { source: U, op: '+', unknown: true },
+      { source: ws.wsTransmuterBombBarIncreaseW1, op: '+' },
     ],
   },
 })

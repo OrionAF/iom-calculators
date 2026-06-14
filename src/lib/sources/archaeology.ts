@@ -64,8 +64,7 @@ export const archGleamingMul = arch('upgrade.gleamingMul', 'Arch Upgrade A2: Gle
 // ─── Ascension 0 Common Idols ─────────────────────────────────────────────────
 
 export const idolAthenaExp = arch('idol.athenaExp', 'Idol: Athena (Exp Gain)', 500, 'experience_multi', '+', (n) => n * 0.01)
-// Unwired: no super_star_spawn_rate registry stat (only super_star_spawn_multi).
-export const idolAthenaSuperStar = arch('idol.athenaSuperStar', 'Idol: Athena (Super Star Chance)', 500, undefined, undefined, (n) => n * 0.0005)
+export const idolAthenaSuperStar = arch('idol.athenaSuperStar', 'Idol: Athena (Super Star Chance)', 500, 'super_star_spawn_multi', '+', (n) => n * 0.0005)
 // Unwired: feeds bomb super + ultra crit chance (dual-intent); no single statKey.
 export const idolCassandra = arch('idol.cassandra', 'Idol: Cassandra (Bomb Crit Chances)', 150, undefined, '+', (n) => n * 0.001)
 export const idolDemeter = arch('idol.demeter', 'Idol: Demeter (Golden Vein Multi)', 100, 'golden_vein_multi', '+', (n) => n * 0.02)

@@ -1,6 +1,6 @@
 # Wiki ↔ formula cross-check
 
-Generated from data/wiki/*.json. Stats checked: 175; with findings: 41; unmatched: 0; unwired annotated sources: 0; stats with no formula yet: 30 (70 sources).
+Generated from data/wiki/*.json. Stats checked: 175; with findings: 40; unmatched: 0; unwired annotated sources: 0; stats with no formula yet: 43 (83 sources).
 
 ## Wiki stats with no matching registry name / formula
 
@@ -19,7 +19,9 @@ _none — every annotated source with a formula is wired._
 - archaeology_lood_mod_chance (3): store/storeVpAscensionLootMod, archaeology/archAllModChances, archaeology/archAllModChancesA1
 - archaeology_spd_mod_gain (4): archaeology/archLootModGain, archaeology/archLootModGainA2, archaeology/archStaminaModGain, skillTree/blockBonkerSpeedMod
 - archaeology_stm_per_stage (1): skillTree/blockBonkerStaminaPerStage
+- bomb_d20_charges (1): workshop/wsD20chargesW1
 - fishing_abyss_dock_tick_req (2): fishing/tier2DockTicksE2, skillTree/motleySchoolAbyssDockTick
+- fishing_notice_upgrade_cap (1): tributes/trMeltingGibbousT1NUC
 - founder_double_supply_drop_chance (1): store/storeFounderDoubleSupplyDrop
 - founder_golden_supply_drop_chance (1): store/storeFounderGoldenSupplyDrop
 - founder_supply_drop_cd (1): store/storeFounderSupplyDropCd
@@ -29,11 +31,22 @@ _none — every annotated source with a formula is wired._
 - freebie_chance_for_skill_shard (3): store/storeVpSkillSurgeSkillShard, construct/staFriendshipSkillShard, challenges/chSkillShardChance
 - freebie_gift_chance (1): construct/staSopranoFreebieGiftChance
 - gem_bomb_gem_chance (4): store/storeFounderGemBombGemChance, construct/staNatureGemBombGem, skins/snGemBombGemChance, pets/petWhaleQuestGemBombGem
+- item_hamburger_multi (1): workshop/wsHamburgerBonusW3
 - item_unlock_golden_cosmic_candy (1): worldquests/wqUnlockGoldenCosmicCandyQ20
 - item_unlock_golden_yummy_pizza (1): worldquests/wqUnlockGoldenYummyPizzaQ14
 - pet_level_cap_butterfly (1): worldquests/wqButterflyPetLevelCapQ19
+- pet_level_cap_crab (1): tributes/trStormSerpentT1CPC
+- pet_level_cap_leprechaun (1): tributes/trRainbowTroutT1LC
+- pet_level_cap_mr_nibbles (1): tributes/trRainbowTroutT2MNC
+- pet_level_cap_totem (1): tributes/trGlacialShellstealerT1TC
+- pet_quest_level_cap (1): tributes/trMeltingGibbousT2PQC
+- pickaxe_bar_cost_reduction (1): artifacts/artPickaxeCostT1
+- star_cancer_cap (1): tributes/trMegalodonT1CC
 - star_capricorn_cap (3): construct/staComfortCapricornCap, pets/petStarfishQuestCapricornCap, skillTree/whyAreThereStarsCapricornCap
+- star_cetus_cap (1): tributes/trStormSerpentT2CSC
+- star_draco_cap (1): tributes/trDuneEelwormT1DC
 - star_gemini_cap (1): skillTree/whyAreThereStarsGeminiCap
+- star_hercules_cap (1): tributes/trDuneEelwormT1HC
 - star_orion_cap (2): archaeology/idolAtlasOrion, skillTree/ctrlCCtrlVStarsOrionCap
 - star_scorpio_cap (2): construct/staComfortScorpioCap, skillTree/idleObeliskMincerScorpioCap
 - veinmorpher_chance (1): workshop/wsVeinmorphMorphChanceW3
@@ -126,9 +139,6 @@ _none — every annotated source with a formula is wired._
 ### All Stonks Multi (`all_stonks_multi`)
 - missing system Challenges: A Divine Challenge Upgrade (formula has 2 unknown placeholder(s))
 - missing system Construct: The Statue of Combat (formula has 2 unknown placeholder(s))
-
-### Contract Cost Reduction (`contract_cost_reduction`)
-- missing system Relics: A Rare Relic (formula has 1 unknown placeholder(s))
 
 ### Golden Vein Multiplier (`golden_vein_multi`)
 - missing system Drones: The Fueled Veinseeker Suit (formula has 1 unknown placeholder(s))

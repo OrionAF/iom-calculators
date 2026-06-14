@@ -46,8 +46,7 @@ const artStatue = (
 // ─── Tier 1 Artifacts ─────────────────────────────────────────────────────────
 
 export const artPickaxeDmgT1 = art('pickaxeDmgT1', 'Artifact: Pickaxe Damage (T1)', 32, 'pickaxe_damage', '+', (n) => n * 0.1)
-// Unwired: flat pickaxe upgrade cost reduction, no matching registry stat yet.
-export const artPickaxeCostT1 = art('pickaxeCostT1', 'Artifact: Pickaxe Cost (T1)', 12, undefined, undefined, (n) => n * -3)
+export const artPickaxeCostT1 = art('pickaxeCostT1', 'Artifact: Pickaxe Cost (T1)', 12, 'pickaxe_bar_cost_reduction', '+', (n) => n * -3)
 export const artExpGainT1 = art('expGainT1', 'Artifact: EXP Gain (T1)', 27, 'experience_multi', '+', (n) => n * 0.1)
 export const artFreeCraftT1 = art('freeCraftT1', 'Artifact: Free Craft Chance (T1)', 17, 'free_craft_chance', '+', (n) => n * 0.02)
 export const artTripleCraftT1 = art('tripleCraftT1', 'Artifact: Triple Craft Chance (T1)', 17, 'triple_craft_chance', '+', (n) => n * 0.02)

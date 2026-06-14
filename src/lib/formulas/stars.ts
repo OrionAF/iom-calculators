@@ -89,6 +89,7 @@ export const starsFormulas: FormulaMap = defineFormulas({
     contributions: [
       { source: sg.superStarSpawn, op: '+' },
       { source: sg.starVirgo, op: '+' },
+      { source: arch.idolAthenaSuperStar, op: '+' },
       { source: it.goldenPrimalMeatSuperStar, op: '×' },
       // Wiki: Items group is Primal Meat × Ice Cream (multiplied, not added)
       { source: it.iceCreamSuperStarSpawn, op: '×' },
