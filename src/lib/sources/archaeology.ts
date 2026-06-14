@@ -65,8 +65,10 @@ export const archGleamingMul = arch('upgrade.gleamingMul', 'Arch Upgrade A2: Gle
 
 export const idolAthenaExp = arch('idol.athenaExp', 'Idol: Athena (Exp Gain)', 500, 'experience_multi', '+', (n) => n * 0.01)
 export const idolAthenaSuperStar = arch('idol.athenaSuperStar', 'Idol: Athena (Super Star Chance)', 500, 'super_star_spawn_multi', '+', (n) => n * 0.0005)
-// Unwired: feeds bomb super + ultra crit chance (dual-intent); no single statKey.
-export const idolCassandra = arch('idol.cassandra', 'Idol: Cassandra (Bomb Crit Chances)', 150, undefined, '+', (n) => n * 0.001)
+// Wiki: "Rock Cake gives Bomb Super and Ultra Crit Chance +0.10%" — dual stat,
+// split into siblings sharing the idol.cassandra key (one per crit tier).
+export const idolCassandra = arch('idol.cassandra', 'Idol: Cassandra (Bomb Super Crit Chance)', 150, 'bomb_super_crit_chance', '+', (n) => n * 0.001)
+export const idolCassandraUltra = arch('idol.cassandra', 'Idol: Cassandra (Bomb Ultra Crit Chance)', 150, 'bomb_ultra_crit_chance', '+', (n) => n * 0.001)
 export const idolDemeter = arch('idol.demeter', 'Idol: Demeter (Golden Vein Multi)', 100, 'golden_vein_multi', '+', (n) => n * 0.02)
 export const idolEros = arch('idol.eros', 'Idol: Eros (Lootbug Spawn Rate)', 50, 'lootbug_spawn_rate', '+', (n) => n * 0.004)
 export const idolHera = arch('idol.hera', 'Idol: Hera (Contract Cap)', 3, 'contract_cap_increase', '+', (n) => n)
@@ -167,6 +169,7 @@ export const archaeologySources = {
   idolAthenaExp,
   idolAthenaSuperStar,
   idolCassandra,
+  idolCassandraUltra,
   idolDemeter,
   idolEros,
   idolHera,

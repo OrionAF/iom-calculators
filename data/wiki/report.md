@@ -153,8 +153,8 @@ _none — every annotated source with a formula is wired._
 - missing system Drones: The Fueled Starburst Suit; An Elixir Drone Buff (Also from the Founder Supply Drop and Lootbugs (formula has 2 unknown placeholder(s))
 
 ### Super Star Spawn Rate Multiplier (`super_star_spawn_multi`)
-- missing system Drones: An Elixir Drone Buff (formula has 3 unknown placeholder(s))
-- missing system Fishing: A Tier 1 Notice Upgrade (formula has 3 unknown placeholder(s))
+- missing system Drones: An Elixir Drone Buff (formula has 2 unknown placeholder(s))
+- missing system Fishing: A Tier 1 Notice Upgrade (formula has 2 unknown placeholder(s))
 
 ### Super Star Supergiant Multiplier (`super_star_supergiant_multi`)
 - missing system Store: The "Stargazing Supergiant Bundle!" Value Pack (formula has 1 unknown placeholder(s))

@@ -230,7 +230,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   bomb_d20_charges: {
     name: 'D20 Charges',
-    description: 'Increases the number of charges available for the D20 Bomb.',
+    description: 'Increases the number of other bomb charges refilled by the D20 Bomb.',
     icon: 'D20_Bomb.png',
     unit: 'count',
     sign: '+',
@@ -1421,7 +1421,7 @@ export const STAT_REGISTRY: Readonly<Record<string, StatMeta>> = {
   },
   item_hamburger_multi: {
     name: 'Hamburger Bonus',
-    description: "Increases the Hamburger item's pickaxe damage multiplier.",
+    description: "Increases the Hamburger item's Pickaxe and Bomb Damage multiplier.",
     icon: 'Hamburger.png',
     unit: 'multiplier',
     sign: '+',
